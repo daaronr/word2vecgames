@@ -10,6 +10,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY word_bocce_mvp_fastapi.py .
 COPY index.html .
 COPY presentation.html .
+COPY puzzles.json .
 COPY setup_embeddings.py .
 
 # Download embeddings at build time (smaller model for Docker image)

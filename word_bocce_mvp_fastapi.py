@@ -24,6 +24,7 @@ import math
 import time
 import random
 import threading
+import json
 from typing import Dict, List, Literal, Optional, Tuple
 
 import numpy as np
@@ -568,6 +569,144 @@ def visualize_move(start_word: str, target_word: str,
         })
 
     return {"points": points}
+
+# -------------------------------
+# Puzzle Mode Endpoints
+# -------------------------------
+
+# Load puzzles from JSON file
+puzzles_data = []
+try:
+    with open("puzzles.json", "r") as f:
+        puzzles_data = json.load(f)
+except FileNotFoundError:
+    print("Warning: puzzles.json not found. Puzzle mode will not be available.")
+except json.JSONDecodeError:
+    print("Warning: puzzles.json is invalid. Puzzle mode will not be available.")
+
+@app.get("/puzzles")
+def list_puzzles(difficulty: Optional[str] = None):
+    """Get list of available puzzles, optionally filtered by difficulty"""
+    if not puzzles_data:
+        raise HTTPException(503, "Puzzles not available")
+
+    result = puzzles_data
+    if difficulty:
+        result = [p for p in puzzles_data if p.get("difficulty") == difficulty.lower()]
+
+    # Return summary without solution hints
+    return [{
+        "id": p["id"],
+        "difficulty": p["difficulty"],
+        "name": p["name"],
+        "description": p["description"],
+        "start_word": p["start_word"],
+        "target_word": p["target_word"]
+    } for p in result]
+
+@app.get("/puzzle/{puzzle_id}")
+def get_puzzle(puzzle_id: int):
+    """Get a specific puzzle by ID"""
+    if not puzzles_data:
+        raise HTTPException(503, "Puzzles not available")
+
+    puzzle = next((p for p in puzzles_data if p["id"] == puzzle_id), None)
+    if not puzzle:
+        raise HTTPException(404, f"Puzzle {puzzle_id} not found")
+
+    return puzzle
+
+class PuzzleSolution(BaseModel):
+    public_token: str
+    public_sign: int  # 1 or -1
+    private_token: str
+    private_sign: int  # 1 or -1
+
+@app.post("/puzzle/{puzzle_id}/solve")
+def solve_puzzle(puzzle_id: int, solution: PuzzleSolution):
+    """Submit a solution to a puzzle and get rating"""
+    if not puzzles_data:
+        raise HTTPException(503, "Puzzles not available")
+
+    if store is None:
+        raise HTTPException(503, "Embeddings not loaded")
+
+    puzzle = next((p for p in puzzles_data if p["id"] == puzzle_id), None)
+    if not puzzle:
+        raise HTTPException(404, f"Puzzle {puzzle_id} not found")
+
+    # Check if used cards are in allowed list
+    allowed = puzzle.get("allowed_cards", [])
+    if solution.public_token not in allowed:
+        return {
+            "valid": False,
+            "error": f"'{solution.public_token}' is not an allowed card for this puzzle"
+        }
+    if solution.private_token not in allowed:
+        return {
+            "valid": False,
+            "error": f"'{solution.private_token}' is not an allowed card for this puzzle"
+        }
+
+    # Check if all words exist in vocabulary
+    start_word = puzzle["start_word"]
+    target_word = puzzle["target_word"]
+
+    for word in [start_word, target_word, solution.public_token, solution.private_token]:
+        if word not in store.kv:
+            return {
+                "valid": False,
+                "error": f"Word '{word}' not in vocabulary"
+            }
+
+    # Calculate result vector
+    v_start = store.vec_unit(start_word)
+    v_public = store.vec_unit(solution.public_token)
+    v_private = store.vec_unit(solution.private_token)
+
+    s1 = float(solution.public_sign)
+    s2 = float(solution.private_sign)
+
+    v_result = v_start + s1 * v_public + s2 * v_private
+    v_result_unit = v_result / (np.linalg.norm(v_result) + 1e-12)
+
+    # Calculate similarity to target
+    v_target = store.vec_unit(target_word)
+    similarity = float(store.cosine(v_result_unit, v_target))
+
+    # Find nearest word
+    nearest_word = start_word
+    best_sim = -1.0
+    for token in deck_tokens[:1000]:
+        if token in [start_word, target_word]:
+            continue
+        v_tok = store._norms[token]
+        sim = store.cosine(v_result_unit, v_tok)
+        if sim > best_sim:
+            best_sim = sim
+            nearest_word = token
+
+    # Calculate star rating
+    thresholds = puzzle.get("stars_thresholds", {"3": 0.70, "2": 0.50, "1": 0.30})
+    stars = 0
+    if similarity >= thresholds["3"]:
+        stars = 3
+    elif similarity >= thresholds["2"]:
+        stars = 2
+    elif similarity >= thresholds["1"]:
+        stars = 1
+
+    return {
+        "valid": True,
+        "similarity": similarity,
+        "nearest_word": nearest_word,
+        "stars": stars,
+        "optimal_similarity": puzzle.get("optimal_similarity", 0.70),
+        "public_used": solution.public_token,
+        "private_used": solution.private_token,
+        "public_sign": "+" if solution.public_sign > 0 else "-",
+        "private_sign": "+" if solution.private_sign > 0 else "-"
+    }
 
 # -------------------------------
 # Dev utility: quick local smoke (no HTTP)

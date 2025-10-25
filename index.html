@@ -450,6 +450,14 @@
                 <span>— OR —</span>
             </div>
 
+            <button onclick="showPuzzleMode()" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                Puzzle Mode (Solo)
+            </button>
+
+            <div style="margin: 30px 0; text-align: center; color: #999;">
+                <span>— OR —</span>
+            </div>
+
             <div class="form-group">
                 <label for="match-id">Match ID</label>
                 <input type="text" id="match-id" placeholder="Enter match ID to join" />
@@ -578,6 +586,96 @@
         </div>
     </div>
 
+    <!-- Puzzle Mode Screens -->
+    <!-- Puzzle Selection Screen -->
+    <div id="puzzle-select-screen" class="screen">
+        <h2 style="text-align: center; color: #667eea; margin-bottom: 20px;">Puzzle Mode</h2>
+        <p style="text-align: center; color: #666; margin-bottom: 30px;">
+            Solve word vector puzzles solo. Use the allowed cards to navigate from start to target!
+        </p>
+
+        <div style="margin-bottom: 20px;">
+            <label>Filter by Difficulty:</label>
+            <select id="puzzle-difficulty-filter" onchange="filterPuzzles()" style="width: 100%; padding: 10px; border-radius: 8px; border: 2px solid #e0e0e0; font-size: 16px;">
+                <option value="">All</option>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+        </div>
+
+        <div id="puzzle-list" style="max-height: 400px; overflow-y: auto;">
+            <!-- Puzzles will be loaded here -->
+        </div>
+
+        <button onclick="showScreen('lobby-screen')" class="btn-secondary" style="margin-top: 20px;">Back to Lobby</button>
+    </div>
+
+    <!-- Puzzle Play Screen -->
+    <div id="puzzle-play-screen" class="screen">
+        <div class="status-message status-info" style="margin-bottom: 20px;">
+            <strong id="puzzle-name">Puzzle Name</strong><br>
+            <span id="puzzle-description">Description</span><br>
+            <span id="puzzle-difficulty-badge"></span>
+        </div>
+
+        <div class="game-header">
+            <div class="word-label">Start Word</div>
+            <div class="word-display" id="puzzle-start-word">—</div>
+            <div class="word-label" style="margin-top: 15px;">Target Word</div>
+            <div class="word-display" id="puzzle-target-word">—</div>
+        </div>
+
+        <div class="cards-section">
+            <h3>Available Cards (choose two)</h3>
+            <div class="cards-grid" id="puzzle-cards"></div>
+        </div>
+
+        <div style="margin: 20px 0; text-align: center;">
+            <button onclick="showHint()" class="btn-secondary" style="width: auto; display: inline-block; margin-right: 10px;">
+                💡 Show Hint
+            </button>
+            <span id="hint-display" style="color: #667eea; font-style: italic;"></span>
+        </div>
+
+        <button onclick="submitPuzzleSolution()" id="puzzle-submit-btn">Submit Solution</button>
+        <button onclick="showScreen('puzzle-select-screen')" class="btn-secondary">Back to Puzzles</button>
+    </div>
+
+    <!-- Puzzle Result Screen -->
+    <div id="puzzle-result-screen" class="screen">
+        <div class="status-message status-success">
+            <strong>Puzzle Complete!</strong>
+        </div>
+
+        <div style="text-align: center; margin: 30px 0;">
+            <div id="stars-display" style="font-size: 3em; margin-bottom: 15px;">
+                ⭐⭐⭐
+            </div>
+            <div style="font-size: 1.2em; color: #667eea; font-weight: 600; margin-bottom: 10px;">
+                <span id="puzzle-result-similarity">0.75</span> similarity
+            </div>
+            <div style="color: #666;">
+                Nearest word: <strong id="puzzle-result-nearest">word</strong>
+            </div>
+        </div>
+
+        <div style="background: #f5f5f5; padding: 20px; border-radius: 12px; margin: 20px 0;">
+            <h3 style="margin-bottom: 15px; color: #333;">Your Solution</h3>
+            <div style="font-family: monospace; font-size: 0.9em; color: #666;">
+                <div><strong id="puzzle-result-start">start</strong></div>
+                <div style="margin: 10px 0 10px 20px;">
+                    <span id="puzzle-result-public-sign">+</span> <span id="puzzle-result-public">public</span><br>
+                    <span id="puzzle-result-private-sign">+</span> <span id="puzzle-result-private">private</span>
+                </div>
+                <div>→ <strong id="puzzle-result-target">target</strong></div>
+            </div>
+        </div>
+
+        <button onclick="nextPuzzle()">Next Puzzle</button>
+        <button onclick="showScreen('puzzle-select-screen')" class="btn-secondary">Back to Puzzles</button>
+    </div>
+
     <script>
         const API_URL = 'http://localhost:8000';
 
@@ -585,6 +683,10 @@
             playerId: null,
             playerName: null,
             matchId: null,
+            // Puzzle mode state
+            currentPuzzle: null,
+            allPuzzles: [],
+            puzzleSelectedCards: { public: null, private: null },
             roundId: null,
             selectedPublic: null,
             selectedPublicSign: '+',
@@ -1278,6 +1380,214 @@
             ctx.rotate(-Math.PI / 2);
             ctx.fillText('Dimension 2 (PCA)', 0, 0);
             ctx.restore();
+        }
+
+        // ============================================
+        // Puzzle Mode Functions
+        // ============================================
+
+        async function showPuzzleMode() {
+            try {
+                const resp = await fetch(`${API_URL}/puzzles`);
+                const puzzles = await resp.json();
+                state.allPuzzles = puzzles;
+                renderPuzzleList(puzzles);
+                showScreen('puzzle-select-screen');
+            } catch (error) {
+                console.error('Error loading puzzles:', error);
+                alert('Failed to load puzzles. Please try again.');
+            }
+        }
+
+        function renderPuzzleList(puzzles) {
+            const container = document.getElementById('puzzle-list');
+            container.innerHTML = puzzles.map(p => `
+                <div style="background: white; border: 2px solid #e0e0e0; border-radius: 12px; padding: 20px; margin-bottom: 15px; cursor: pointer; transition: all 0.3s;"
+                     onmouseover="this.style.borderColor='#667eea'; this.style.transform='translateY(-2px)'"
+                     onmouseout="this.style.borderColor='#e0e0e0'; this.style.transform='translateY(0)'"
+                     onclick="loadPuzzle(${p.id})">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <strong style="font-size: 1.1em; color: #333;">${p.name}</strong>
+                        <span style="padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600;
+                            ${p.difficulty === 'easy' ? 'background: #4caf50; color: white;' :
+                              p.difficulty === 'medium' ? 'background: #ff9800; color: white;' :
+                              'background: #f44336; color: white;'}">
+                            ${p.difficulty.toUpperCase()}
+                        </span>
+                    </div>
+                    <div style="color: #666; margin-bottom: 8px;">${p.description}</div>
+                    <div style="font-size: 0.9em; color: #999;">
+                        <strong style="color: #667eea;">${p.start_word}</strong> →
+                        <strong style="color: #e74c3c;">${p.target_word}</strong>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function filterPuzzles() {
+            const difficulty = document.getElementById('puzzle-difficulty-filter').value;
+            let filtered = state.allPuzzles;
+            if (difficulty) {
+                filtered = state.allPuzzles.filter(p => p.difficulty === difficulty);
+            }
+            renderPuzzleList(filtered);
+        }
+
+        async function loadPuzzle(puzzleId) {
+            try {
+                const resp = await fetch(`${API_URL}/puzzle/${puzzleId}`);
+                const puzzle = await resp.json();
+                state.currentPuzzle = puzzle;
+                state.puzzleSelectedCards = { public: null, private: null };
+
+                // Display puzzle info
+                document.getElementById('puzzle-name').textContent = puzzle.name;
+                document.getElementById('puzzle-description').textContent = puzzle.description;
+                document.getElementById('puzzle-difficulty-badge').innerHTML = `
+                    <span style="padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600;
+                        ${puzzle.difficulty === 'easy' ? 'background: #4caf50; color: white;' :
+                          puzzle.difficulty === 'medium' ? 'background: #ff9800; color: white;' :
+                          'background: #f44336; color: white;'}">
+                        ${puzzle.difficulty.toUpperCase()}
+                    </span>
+                `;
+                document.getElementById('puzzle-start-word').textContent = puzzle.start_word;
+                document.getElementById('puzzle-target-word').textContent = puzzle.target_word;
+                document.getElementById('hint-display').textContent = '';
+
+                // Render cards
+                const cardsContainer = document.getElementById('puzzle-cards');
+                cardsContainer.innerHTML = puzzle.allowed_cards.map(card => `
+                    <div class="card" onclick="selectPuzzleCard('${card}')" id="puzzle-card-${card}">
+                        <div class="card-token">${card}</div>
+                        <div class="card-controls">
+                            <button class="sign-btn active" onclick="event.stopPropagation(); togglePuzzleSign('${card}', '+')">+</button>
+                            <button class="sign-btn" onclick="event.stopPropagation(); togglePuzzleSign('${card}', '-')">−</button>
+                        </div>
+                    </div>
+                `).join('');
+
+                showScreen('puzzle-play-screen');
+            } catch (error) {
+                console.error('Error loading puzzle:', error);
+                alert('Failed to load puzzle. Please try again.');
+            }
+        }
+
+        function selectPuzzleCard(card) {
+            const cardElement = document.getElementById(`puzzle-card-${card}`);
+
+            // If clicking already selected card, deselect it
+            if (state.puzzleSelectedCards.public === card) {
+                state.puzzleSelectedCards.public = null;
+                cardElement.classList.remove('selected');
+                return;
+            }
+            if (state.puzzleSelectedCards.private === card) {
+                state.puzzleSelectedCards.private = null;
+                cardElement.classList.remove('selected');
+                return;
+            }
+
+            // Select card
+            if (!state.puzzleSelectedCards.public) {
+                // Deselect previous public if any
+                const prevPublic = document.querySelector('#puzzle-cards .card.selected');
+                if (prevPublic) prevPublic.classList.remove('selected');
+
+                state.puzzleSelectedCards.public = card;
+                cardElement.classList.add('selected');
+            } else if (!state.puzzleSelectedCards.private) {
+                state.puzzleSelectedCards.private = card;
+                cardElement.classList.add('selected');
+            } else {
+                alert('You can only select two cards. Deselect one first.');
+            }
+        }
+
+        function togglePuzzleSign(card, sign) {
+            const buttons = document.querySelectorAll(`#puzzle-card-${card} .sign-btn`);
+            buttons.forEach(btn => {
+                if (btn.textContent.trim() === sign) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        function showHint() {
+            if (state.currentPuzzle && state.currentPuzzle.hint) {
+                document.getElementById('hint-display').textContent = state.currentPuzzle.hint;
+            }
+        }
+
+        async function submitPuzzleSolution() {
+            if (!state.puzzleSelectedCards.public || !state.puzzleSelectedCards.private) {
+                alert('Please select exactly two cards');
+                return;
+            }
+
+            try {
+                // Get signs from buttons
+                const publicCard = state.puzzleSelectedCards.public;
+                const privateCard = state.puzzleSelectedCards.private;
+
+                const publicSignBtn = document.querySelector(`#puzzle-card-${publicCard} .sign-btn.active`);
+                const privateSignBtn = document.querySelector(`#puzzle-card-${privateCard} .sign-btn.active`);
+
+                const publicSign = publicSignBtn?.textContent.trim() === '+' ? 1 : -1;
+                const privateSign = privateSignBtn?.textContent.trim() === '+' ? 1 : -1;
+
+                const solution = {
+                    public_token: publicCard,
+                    public_sign: publicSign,
+                    private_token: privateCard,
+                    private_sign: privateSign
+                };
+
+                const resp = await fetch(`${API_URL}/puzzle/${state.currentPuzzle.id}/solve`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(solution)
+                });
+
+                const result = await resp.json();
+
+                if (!result.valid) {
+                    alert(result.error || 'Invalid solution');
+                    return;
+                }
+
+                // Display results
+                const starsHTML = '⭐'.repeat(result.stars) + '☆'.repeat(3 - result.stars);
+                document.getElementById('stars-display').textContent = starsHTML;
+                document.getElementById('puzzle-result-similarity').textContent = result.similarity.toFixed(4);
+                document.getElementById('puzzle-result-nearest').textContent = result.nearest_word;
+
+                document.getElementById('puzzle-result-start').textContent = state.currentPuzzle.start_word;
+                document.getElementById('puzzle-result-target').textContent = state.currentPuzzle.target_word;
+                document.getElementById('puzzle-result-public-sign').textContent = result.public_sign;
+                document.getElementById('puzzle-result-public').textContent = result.public_used;
+                document.getElementById('puzzle-result-private-sign').textContent = result.private_sign;
+                document.getElementById('puzzle-result-private').textContent = result.private_used;
+
+                showScreen('puzzle-result-screen');
+            } catch (error) {
+                console.error('Error submitting solution:', error);
+                alert('Failed to submit solution. Please try again.');
+            }
+        }
+
+        function nextPuzzle() {
+            // Find next puzzle
+            const currentIdx = state.allPuzzles.findIndex(p => p.id === state.currentPuzzle.id);
+            if (currentIdx < state.allPuzzles.length - 1) {
+                loadPuzzle(state.allPuzzles[currentIdx + 1].id);
+            } else {
+                alert('You completed all puzzles! 🎉');
+                showScreen('puzzle-select-screen');
+            }
         }
 
         // Auto-refresh lobby every 3 seconds when waiting

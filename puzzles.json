@@ -1,0 +1,162 @@
+[
+  {
+    "id": 1,
+    "difficulty": "easy",
+    "name": "Royal Relations",
+    "description": "Navigate from royalty to royalty",
+    "start_word": "king",
+    "target_word": "queen",
+    "allowed_cards": ["woman", "female", "male", "man", "royal", "crown"],
+    "hint": "Think about gender",
+    "optimal_similarity": 0.85,
+    "stars_thresholds": {
+      "3": 0.80,
+      "2": 0.65,
+      "1": 0.50
+    }
+  },
+  {
+    "id": 2,
+    "difficulty": "easy",
+    "name": "Animal to Habitat",
+    "description": "Send the fish home",
+    "start_word": "fish",
+    "target_word": "ocean",
+    "allowed_cards": ["water", "sea", "lake", "deep", "blue", "swim"],
+    "hint": "Where do fish live?",
+    "optimal_similarity": 0.75,
+    "stars_thresholds": {
+      "3": 0.70,
+      "2": 0.55,
+      "1": 0.40
+    }
+  },
+  {
+    "id": 3,
+    "difficulty": "easy",
+    "name": "Day and Night",
+    "description": "From brightness to darkness",
+    "start_word": "day",
+    "target_word": "night",
+    "allowed_cards": ["dark", "light", "moon", "sun", "evening", "morning"],
+    "hint": "Opposite of day is...",
+    "optimal_similarity": 0.72,
+    "stars_thresholds": {
+      "3": 0.68,
+      "2": 0.52,
+      "1": 0.38
+    }
+  },
+  {
+    "id": 4,
+    "difficulty": "medium",
+    "name": "Fruit Transform",
+    "description": "Turn one fruit into another",
+    "start_word": "apple",
+    "target_word": "orange",
+    "allowed_cards": ["red", "green", "yellow", "fruit", "citrus", "sweet", "sour", "round"],
+    "hint": "Consider color and fruit type",
+    "optimal_similarity": 0.70,
+    "stars_thresholds": {
+      "3": 0.65,
+      "2": 0.50,
+      "1": 0.35
+    }
+  },
+  {
+    "id": 5,
+    "difficulty": "medium",
+    "name": "Tech Evolution",
+    "description": "From old to new technology",
+    "start_word": "radio",
+    "target_word": "internet",
+    "allowed_cards": ["computer", "digital", "network", "broadcast", "modern", "electronic", "web", "technology"],
+    "hint": "Think about communication evolution",
+    "optimal_similarity": 0.62,
+    "stars_thresholds": {
+      "3": 0.58,
+      "2": 0.45,
+      "1": 0.32
+    }
+  },
+  {
+    "id": 6,
+    "difficulty": "medium",
+    "name": "Weather Shift",
+    "description": "Change the climate",
+    "start_word": "hot",
+    "target_word": "cold",
+    "allowed_cards": ["warm", "cool", "freeze", "ice", "snow", "summer", "winter", "temperature"],
+    "hint": "Temperature opposites",
+    "optimal_similarity": 0.68,
+    "stars_thresholds": {
+      "3": 0.64,
+      "2": 0.50,
+      "1": 0.36
+    }
+  },
+  {
+    "id": 7,
+    "difficulty": "hard",
+    "name": "Emotion Journey",
+    "description": "Transform a negative emotion to positive",
+    "start_word": "anger",
+    "target_word": "joy",
+    "allowed_cards": ["happy", "sad", "calm", "peace", "smile", "laugh", "sorrow", "rage", "love", "hate"],
+    "hint": "Think about emotional opposites and transitions",
+    "optimal_similarity": 0.55,
+    "stars_thresholds": {
+      "3": 0.52,
+      "2": 0.40,
+      "1": 0.28
+    }
+  },
+  {
+    "id": 8,
+    "difficulty": "hard",
+    "name": "Abstract Concept",
+    "description": "From physical to metaphysical",
+    "start_word": "stone",
+    "target_word": "idea",
+    "allowed_cards": ["hard", "soft", "concrete", "abstract", "mind", "thought", "solid", "mental", "physical", "concept"],
+    "hint": "Contrast material vs mental",
+    "optimal_similarity": 0.48,
+    "stars_thresholds": {
+      "3": 0.45,
+      "2": 0.35,
+      "1": 0.25
+    }
+  },
+  {
+    "id": 9,
+    "difficulty": "hard",
+    "name": "Time Travel",
+    "description": "Journey through eras",
+    "start_word": "ancient",
+    "target_word": "future",
+    "allowed_cards": ["past", "present", "time", "modern", "old", "new", "history", "tomorrow", "yesterday", "today"],
+    "hint": "Navigate the timeline",
+    "optimal_similarity": 0.52,
+    "stars_thresholds": {
+      "3": 0.48,
+      "2": 0.38,
+      "1": 0.28
+    }
+  },
+  {
+    "id": 10,
+    "difficulty": "easy",
+    "name": "Size Matters",
+    "description": "Go from small to large",
+    "start_word": "small",
+    "target_word": "large",
+    "allowed_cards": ["big", "tiny", "huge", "little", "giant", "mini"],
+    "hint": "Size opposites",
+    "optimal_similarity": 0.78,
+    "stars_thresholds": {
+      "3": 0.74,
+      "2": 0.60,
+      "1": 0.45
+    }
+  }
+]
