@@ -497,6 +497,16 @@
                 <div class="word-display" id="target-word">—</div>
             </div>
 
+            <!-- Real-time Nearest Word Feedback -->
+            <div id="nearest-word-feedback" style="display: none; background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); padding: 20px; border-radius: 12px; margin: 20px 0; text-align: center; color: white;">
+                <div style="font-size: 0.9em; opacity: 0.95; margin-bottom: 5px;">You reached:</div>
+                <div style="font-size: 1.8em; font-weight: 700; margin: 5px 0;" id="nearest-word-display">—</div>
+                <div style="font-size: 0.95em; opacity: 0.9; margin-top: 5px;">
+                    Target similarity: <strong id="target-similarity-display">—</strong> |
+                    Nearest similarity: <strong id="nearest-similarity-display">—</strong>
+                </div>
+            </div>
+
             <div class="timer" id="timer">Time: --</div>
 
             <div class="cards-section">
@@ -534,7 +544,7 @@
                             <th>Rank</th>
                             <th>Player</th>
                             <th>Similarity</th>
-                            <th>Nearest Word</th>
+                            <th>Nearest Word Reached</th>
                             <th>Closeness</th>
                         </tr>
                     </thead>
@@ -581,6 +591,10 @@
                 <div class="viz-legend-item">
                     <span class="viz-legend-dot" style="background: #2ecc71;"></span>
                     <span>Result Vector</span>
+                </div>
+                <div class="viz-legend-item">
+                    <span class="viz-legend-dot" style="background: #f6d365; border: 2px solid #fda085;"></span>
+                    <span>Nearest Word Reached</span>
                 </div>
             </div>
         </div>
@@ -873,6 +887,9 @@
         }
 
         function displayRound(roundData) {
+            // Hide nearest word feedback from previous round
+            document.getElementById('nearest-word-feedback').style.display = 'none';
+
             document.getElementById('start-word').textContent = roundData.start_word;
             document.getElementById('target-word').textContent = roundData.target_word;
 
@@ -1075,7 +1092,13 @@
                 }
 
                 const result = await response.json();
-                alert(`Move submitted! Similarity: ${result.similarity.toFixed(4)}, Nearest: ${result.nearest}`);
+
+                // Show real-time feedback
+                const feedbackDiv = document.getElementById('nearest-word-feedback');
+                feedbackDiv.style.display = 'block';
+                document.getElementById('nearest-word-display').textContent = result.nearest;
+                document.getElementById('target-similarity-display').textContent = result.similarity.toFixed(4);
+                document.getElementById('nearest-similarity-display').textContent = result.nearest_sim.toFixed(4);
 
                 document.getElementById('submit-btn').disabled = true;
                 document.getElementById('submit-btn').textContent = 'Move Submitted - Waiting for others...';
@@ -1140,12 +1163,18 @@
             const tbody = document.getElementById('leaderboard-body');
             tbody.innerHTML = leaderboard.map((entry, idx) => {
                 const badge = getSimilarityBadge(entry.similarity);
+                const nearestSim = entry.nearest_sim || 0;
                 return `
                     <tr class="${idx === 0 ? 'rank-1' : ''}">
                         <td>${idx + 1}</td>
                         <td>${entry.player_name}</td>
                         <td>${entry.similarity.toFixed(4)}</td>
-                        <td>${entry.nearest}</td>
+                        <td>
+                            <strong style="color: #667eea; font-size: 1.1em;">${entry.nearest}</strong>
+                            <div style="font-size: 0.85em; color: #999; margin-top: 2px;">
+                                similarity: ${nearestSim.toFixed(4)}
+                            </div>
+                        </td>
                         <td><span class="similarity-badge ${badge.class}">${badge.label}</span></td>
                     </tr>
                 `;
@@ -1250,6 +1279,7 @@
                 const privateWord = bestMove.private_token;
                 const publicSign = bestMove.public_sign === 1 ? '+' : '-';
                 const privateSign = bestMove.private_sign === 1 ? '+' : '-';
+                const nearestWord = bestMove.nearest;
 
                 // Fetch visualization data
                 const url = `${API_URL}/visualize/move/${startWord}/${targetWord}?` +
@@ -1259,8 +1289,30 @@
                 const resp = await fetch(url);
                 const data = await resp.json();
 
+                // Fetch nearest word coordinates separately if not in original data
+                const nearestUrl = `${API_URL}/visualize/move/${startWord}/${targetWord}?` +
+                                  `public_word=${nearestWord}&private_word=&` +
+                                  `public_sign=&private_sign=`;
+
+                try {
+                    const nearestResp = await fetch(nearestUrl);
+                    const nearestData = await nearestResp.json();
+                    // Find the point that matches the nearest word
+                    const nearestPoint = nearestData.points.find(p =>
+                        p.word.toLowerCase() === nearestWord.toLowerCase()
+                    );
+                    if (nearestPoint) {
+                        // Add nearest word to visualization points
+                        nearestPoint.word = `${nearestWord} (nearest)`;
+                        nearestPoint.isNearest = true;
+                        data.points.push(nearestPoint);
+                    }
+                } catch (e) {
+                    console.warn('Could not fetch nearest word coordinates:', e);
+                }
+
                 // Render visualization
-                renderVisualization(data.points);
+                renderVisualization(data.points, nearestWord);
 
                 // Show modal
                 document.getElementById('viz-modal').classList.add('active');
@@ -1275,7 +1327,7 @@
             document.getElementById('viz-modal').classList.remove('active');
         }
 
-        function renderVisualization(points) {
+        function renderVisualization(points, nearestWord) {
             const canvas = document.getElementById('viz-canvas');
             const ctx = canvas.getContext('2d');
 
@@ -1344,30 +1396,44 @@
                 const x = scaleX(p.x);
                 const y = scaleY(p.y);
 
-                // Determine color based on word type
-                let color;
-                if (idx === 0) color = '#667eea'; // Start word (first point)
-                else if (idx === 1) color = '#e74c3c'; // Target word (second point)
-                else if (p.word === 'RESULT') color = '#2ecc71'; // Result vector
-                else if (idx === 2) color = '#f39c12'; // Public card (third point)
-                else if (idx === 3) color = '#9b59b6'; // Private card (fourth point)
-                else color = '#999'; // Other
+                // Determine color and style based on word type
+                let color, radius = 8, strokeWidth = 2, strokeColor = '#fff';
+
+                if (p.isNearest) {
+                    // Nearest word - special highlighting
+                    color = '#f6d365';
+                    radius = 10;
+                    strokeWidth = 3;
+                    strokeColor = '#fda085';
+                } else if (idx === 0) {
+                    color = '#667eea'; // Start word
+                } else if (idx === 1) {
+                    color = '#e74c3c'; // Target word
+                } else if (p.word === 'RESULT') {
+                    color = '#2ecc71'; // Result vector
+                } else if (idx === 2) {
+                    color = '#f39c12'; // Public card
+                } else if (idx === 3) {
+                    color = '#9b59b6'; // Private card
+                } else {
+                    color = '#999'; // Other
+                }
 
                 // Draw circle
                 ctx.beginPath();
-                ctx.arc(x, y, 8, 0, 2 * Math.PI);
+                ctx.arc(x, y, radius, 0, 2 * Math.PI);
                 ctx.fillStyle = color;
                 ctx.fill();
-                ctx.strokeStyle = '#fff';
-                ctx.lineWidth = 2;
+                ctx.strokeStyle = strokeColor;
+                ctx.lineWidth = strokeWidth;
                 ctx.stroke();
 
                 // Draw label
-                ctx.fillStyle = '#333';
-                ctx.font = 'bold 12px sans-serif';
+                ctx.fillStyle = p.isNearest ? '#f6d365' : '#333';
+                ctx.font = p.isNearest ? 'bold 14px sans-serif' : 'bold 12px sans-serif';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'bottom';
-                ctx.fillText(p.word, x, y - 12);
+                ctx.fillText(p.word, x, y - 12 - (p.isNearest ? 2 : 0));
             });
 
             // Draw axes labels
