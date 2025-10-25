@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3:*)",
+      "Bash(chmod:*)",
+      "Bash(curl:*)",
+      "Bash(python -m json.tool:*)",
+      "Bash(lsof:*)",
+      "Bash(awk:*)",
+      "Bash(xargs kill:*)",
+      "Bash(export MODEL_PATH=./embeddings/glove-100.bin:*)",
+      "Bash(uvicorn:*)",
+      "Bash(python test_game.py:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

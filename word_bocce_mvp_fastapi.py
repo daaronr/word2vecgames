@@ -1,0 +1,417 @@
+"""
+Word Bocce — MVP backend
+FastAPI server that runs the vector game using real word embeddings (Word2Vec/GloVe/FastText).
+
+▶ How to run (with real embeddings):
+1) Install deps:  pip install fastapi uvicorn[standard] numpy gensim annoy
+2) Download a keyed vectors file, e.g. GoogleNews negative300 (binary):
+   - https://code.google.com/archive/p/word2vec/
+   - Or via Gensim once (gensim.downloader) and save to disk.
+3) Set MODEL_PATH to the file path (e.g., GoogleNews-vectors-negative300.bin.gz):
+   export MODEL_PATH=/path/to/GoogleNews-vectors-negative300.bin.gz
+4) (Optional) limit deck size: export DECK_SIZE=100000 (default)
+5) Run: uvicorn word_bocce_mvp_fastapi:app --reload
+
+Notes:
+- This server requires a *local* embeddings file; it does not auto-download.
+- Uses unit-normalized vectors for cosine. Nearest search is over the curated deck
+  with brute force (fast enough up to ~200k tokens). Annoy index included (optional).
+"""
+
+from __future__ import annotations
+import os
+import math
+import time
+import random
+import threading
+from typing import Dict, List, Literal, Optional, Tuple
+
+import numpy as np
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, Field
+
+try:
+    from gensim.models import KeyedVectors
+except Exception as e:  # pragma: no cover
+    KeyedVectors = None  # type: ignore
+
+try:
+    from annoy import AnnoyIndex
+except Exception:
+    AnnoyIndex = None  # type: ignore
+
+# -------------------------------
+# Config
+# -------------------------------
+MODEL_PATH = os.environ.get("MODEL_PATH")
+DECK_SIZE = int(os.environ.get("DECK_SIZE", "100000"))
+N_PUBLIC = int(os.environ.get("N_PUBLIC", "10"))
+M_PRIVATE = int(os.environ.get("M_PRIVATE", "2"))
+WILDCARD_RATIO = float(os.environ.get("WILDCARD_RATIO", "0.02"))
+ROUND_TIMEOUT_SECS = int(os.environ.get("ROUND_TIMEOUT_SECS", "60"))
+USE_ANNOY = os.environ.get("USE_ANNOY", "0") == "1"
+RNG_SEED = int(os.environ.get("RNG_SEED", "12345"))
+
+random.seed(RNG_SEED)
+np.random.seed(RNG_SEED)
+
+# -------------------------------
+# Data models
+# -------------------------------
+Sign = Literal["+", "-"]
+CardType = Literal["PUBLIC", "PRIVATE", "JOKER"]
+MatchStatus = Literal["LOBBY", "IN_PROGRESS", "DONE"]
+
+class Card(BaseModel):
+    token: str
+    type: CardType
+
+class PlayerResult(BaseModel):
+    similarity: float
+    nearest: str
+    nearest_sim: float
+
+class Player(BaseModel):
+    id: str
+    name: str
+    private_cards: List[Card] = Field(default_factory=list)
+    submitted_move: bool = False
+    result: Optional[PlayerResult] = None
+
+class RoundState(BaseModel):
+    id: str
+    start_word: str
+    target_word: str
+    public_cards: List[Card]
+    moves_deadline_ts: int
+    results: Dict[str, PlayerResult] = Field(default_factory=dict)
+
+class Match(BaseModel):
+    id: str
+    players: Dict[str, Player] = Field(default_factory=dict)
+    deck_id: str
+    settings: Dict[str, object]
+    rounds: List[RoundState] = Field(default_factory=list)
+    status: MatchStatus = "LOBBY"
+
+class CreateMatchReq(BaseModel):
+    name: str
+    settings: Optional[Dict[str, object]] = None
+
+class JoinReq(BaseModel):
+    player_name: str
+
+class SubmitReq(BaseModel):
+    player_id: str
+    public_token: str
+    public_sign: Sign
+    private_token: str
+    private_sign: Sign
+    joker_override_token: Optional[str] = None
+
+class ResolveResp(BaseModel):
+    leaderboard: List[Dict[str, object]]
+
+# -------------------------------
+# Embedding store
+# -------------------------------
+class VectorStore:
+    def __init__(self, path: Optional[str]):
+        if not path:
+            raise RuntimeError(
+                "MODEL_PATH env var not set. Point it to a KeyedVectors file (e.g., GoogleNews .bin.gz)."
+            )
+        if KeyedVectors is None:
+            raise RuntimeError("gensim not installed. pip install gensim")
+
+        self.kv: KeyedVectors = KeyedVectors.load_word2vec_format(path, binary=path.endswith('.bin') or path.endswith('.bin.gz'))
+        self.dim = int(self.kv.vector_size)
+        # Unit-normalize into contiguous float32 array
+        self._norms: Dict[str, np.ndarray] = {}
+        self._deck_tokens: List[str] = []
+        self._annoy: Optional[AnnoyIndex] = None
+
+    def build_deck(self, size: int) -> List[str]:
+        # Curate tokens: simple heuristic — alphabetic, lowercase-ish, length 3..12
+        toks = []
+        for t in self.kv.index_to_key:
+            if len(toks) >= size:
+                break
+            if t.isalpha() and t.islower() and 3 <= len(t) <= 12:
+                toks.append(t)
+        if len(toks) < max(1000, size // 10):
+            # Fallback: just take first N tokens (still in-vocab)
+            toks = self.kv.index_to_key[:size]
+        self._deck_tokens = toks
+        # Precompute unit vectors
+        for t in toks:
+            v = self.kv.get_vector(t).astype(np.float32)
+            n = np.linalg.norm(v)
+            self._norms[t] = (v / n) if n else v
+        return toks
+
+    def vec_unit(self, token: str) -> np.ndarray:
+        v = self.kv.get_vector(token).astype(np.float32)
+        n = np.linalg.norm(v)
+        if n == 0:
+            return v
+        return v / n
+
+    def cosine(self, u: np.ndarray, v: np.ndarray) -> float:
+        return float(np.dot(u, v))
+
+    def ensure_annoy(self) -> None:
+        if AnnoyIndex is None:
+            raise RuntimeError("annoy not installed. pip install annoy or set USE_ANNOY=0")
+        if self._annoy is not None:
+            return
+        idx = AnnoyIndex(self.dim, metric='angular')
+        for i, t in enumerate(self._deck_tokens):
+            idx.add_item(i, self._norms[t])
+        idx.build(20)
+        self._annoy = idx
+
+    def nearest(self, u: np.ndarray, k: int = 1) -> Tuple[str, float]:
+        # Search only over deck tokens
+        if USE_ANNOY:
+            self.ensure_annoy()
+            assert self._annoy is not None
+            ids = self._annoy.get_nns_by_vector(u, k, include_distances=False)
+            best_t = self._deck_tokens[ids[0]]
+            sim = self.cosine(u, self._norms[best_t])
+            return best_t, sim
+        # Brute force
+        best_t = None
+        best = -2.0
+        for t, v in self._norms.items():
+            sc = self.cosine(u, v)
+            if sc > best:
+                best, best_t = sc, t
+        return best_t or "", best
+
+# -------------------------------
+# Game logic
+# -------------------------------
+class Game:
+    def __init__(self, store: VectorStore):
+        self.store = store
+        self.matches: Dict[str, Match] = {}
+        self.lock = threading.Lock()
+
+    def new_match(self, name: str, settings: Optional[Dict[str, object]]) -> Match:
+        mid = f"m_{int(time.time()*1000)}_{random.randint(1000,9999)}"
+        s = {
+            "N_public": N_PUBLIC,
+            "M_private": M_PRIVATE,
+            "wildcard_ratio": WILDCARD_RATIO,
+            "timeout_secs": ROUND_TIMEOUT_SECS,
+        }
+        if settings:
+            s.update(settings)
+        m = Match(id=mid, deck_id="default", settings=s)
+        with self.lock:
+            self.matches[mid] = m
+        return m
+
+    def join(self, match_id: str, player_name: str) -> Tuple[Match, Player]:
+        m = self._get_match(match_id)
+        if m.status != "LOBBY":
+            raise HTTPException(400, "Match already started")
+        pid = f"p_{random.randint(100000,999999)}"
+        p = Player(id=pid, name=player_name)
+        m.players[pid] = p
+        return m, p
+
+    def start(self, match_id: str) -> RoundState:
+        m = self._get_match(match_id)
+        if m.status != "LOBBY":
+            raise HTTPException(400, "Match already in progress or done")
+        m.status = "IN_PROGRESS"
+        rs = self._new_round(m)
+        m.rounds.append(rs)
+        return rs
+
+    def current_round(self, match_id: str) -> RoundState:
+        m = self._get_match(match_id)
+        if not m.rounds:
+            raise HTTPException(404, "No rounds yet")
+        return m.rounds[-1]
+
+    def submit(self, match_id: str, round_id: str, req: SubmitReq) -> PlayerResult:
+        m = self._get_match(match_id)
+        rs = self._get_round(m, round_id)
+        p = m.players.get(req.player_id)
+        if not p:
+            raise HTTPException(404, "Unknown player")
+
+        # Validate joker usage
+        priv_token = req.private_token
+        if priv_token.upper() == "JOKER":
+            if not req.joker_override_token:
+                raise HTTPException(400, "joker_override_token required for JOKER")
+            priv_token = req.joker_override_token
+
+        # Validate tokens exist
+        for tok in [rs.start_word, rs.target_word, req.public_token, priv_token]:
+            if tok not in store.kv:
+                raise HTTPException(400, f"Token not in vocabulary: {tok}")
+
+        # Compute move vector
+        s1 = 1.0 if req.public_sign == "+" else -1.0
+        s2 = 1.0 if req.private_sign == "+" else -1.0
+        v = store.vec_unit(rs.start_word) + s1 * store.vec_unit(req.public_token) + s2 * store.vec_unit(priv_token)
+        n = np.linalg.norm(v)
+        if n > 0:
+            v = v / n
+        sim = store.cosine(v, store.vec_unit(rs.target_word))
+        near_t, near_sim = store.nearest(v)
+
+        res = PlayerResult(similarity=sim, nearest=near_t, nearest_sim=near_sim)
+        p.submitted_move = True
+        p.result = res
+        rs.results[p.id] = res
+        return res
+
+    def resolve(self, match_id: str, round_id: str) -> ResolveResp:
+        m = self._get_match(match_id)
+        rs = self._get_round(m, round_id)
+        board = [
+            {
+                "player_id": pid,
+                "player_name": m.players[pid].name,
+                "similarity": r.similarity,
+                "nearest": r.nearest,
+                "nearest_sim": r.nearest_sim,
+            }
+            for pid, r in rs.results.items()
+        ]
+        board.sort(key=lambda x: x["similarity"], reverse=True)
+        return ResolveResp(leaderboard=board)
+
+    def next_round(self, match_id: str) -> RoundState:
+        m = self._get_match(match_id)
+        rs = self._new_round(m)
+        m.rounds.append(rs)
+        return rs
+
+    # --------------- helpers ---------------
+    def _new_round(self, m: Match) -> RoundState:
+        # Draw start/target from deck
+        start_word, target_word = random.sample(deck_tokens, 2)
+        # Public cards - ensure we get exactly N_public cards excluding start/target
+        excluded = {start_word, target_word}
+        available = [t for t in deck_tokens if t not in excluded]
+        n_public = int(m.settings["N_public"])
+        publics = [Card(token=t, type="PUBLIC") for t in random.sample(available, n_public)]
+        # Deal private cards to players
+        for p in m.players.values():
+            p.submitted_move = False
+            p.result = None
+            privs: List[Card] = []
+            used_tokens = {start_word, target_word}
+            for _ in range(int(m.settings["M_private"])):
+                if random.random() < float(m.settings["wildcard_ratio"]):
+                    privs.append(Card(token="JOKER", type="JOKER"))
+                else:
+                    tok = random.choice([t for t in deck_tokens if t not in used_tokens])
+                    used_tokens.add(tok)
+                    privs.append(Card(token=tok, type="PRIVATE"))
+            p.private_cards = privs
+        rid = f"r_{int(time.time()*1000)}_{random.randint(100,999)}"
+        deadline = int(time.time()) + int(m.settings["timeout_secs"])
+        return RoundState(id=rid, start_word=start_word, target_word=target_word, public_cards=publics, moves_deadline_ts=deadline)
+
+    def _get_match(self, match_id: str) -> Match:
+        m = self.matches.get(match_id)
+        if not m:
+            raise HTTPException(404, "Unknown match")
+        return m
+
+    def _get_round(self, m: Match, round_id: str) -> RoundState:
+        for r in m.rounds:
+            if r.id == round_id:
+                return r
+        raise HTTPException(404, "Unknown round id")
+
+# -------------------------------
+# App init
+# -------------------------------
+app = FastAPI(title="Word Bocce MVP")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Load embeddings and deck once
+if MODEL_PATH is None:
+    # Fail fast, but provide a helpful message at root endpoint
+    store = None  # type: ignore
+    deck_tokens: List[str] = []
+else:
+    store = VectorStore(MODEL_PATH)
+    deck_tokens = store.build_deck(DECK_SIZE)
+
+game = Game(store) if store else None  # type: ignore
+
+# -------------------------------
+# Routes
+# -------------------------------
+@app.get("/")
+def root():
+    if store is None:
+        return {
+            "status": "ok",
+            "detail": "Set MODEL_PATH env var to a KeyedVectors file (e.g., GoogleNews-vectors-negative300.bin.gz) and restart.",
+        }
+    return {"status": "ok", "dim": store.dim, "deck_size": len(deck_tokens)}
+
+@app.post("/match")
+def create_match(req: CreateMatchReq):
+    if store is None:
+        raise HTTPException(503, "Embeddings not loaded. Set MODEL_PATH and restart.")
+    m = game.new_match(req.name, req.settings)
+    return m
+
+@app.post("/match/{match_id}/join")
+def join_match(match_id: str, req: JoinReq):
+    m, p = game.join(match_id, req.player_name)
+    return {"match": m, "player": p}
+
+@app.post("/match/{match_id}/start")
+def start_match(match_id: str):
+    return game.start(match_id)
+
+@app.get("/match/{match_id}/round/current")
+def get_current_round(match_id: str):
+    return game.current_round(match_id)
+
+@app.get("/match/{match_id}/player/{player_id}")
+def get_player_state(match_id: str, player_id: str):
+    m = game._get_match(match_id)
+    p = m.players.get(player_id)
+    if not p:
+        raise HTTPException(404, "Unknown player")
+    return {"player": p, "match_status": m.status}
+
+@app.post("/match/{match_id}/round/{round_id}/submit")
+def submit_move(match_id: str, round_id: str, req: SubmitReq):
+    return game.submit(match_id, round_id, req)
+
+@app.post("/match/{match_id}/round/{round_id}/resolve")
+def resolve_round(match_id: str, round_id: str):
+    return game.resolve(match_id, round_id)
+
+@app.post("/match/{match_id}/round/next")
+def next_round(match_id: str):
+    return game.next_round(match_id)
+
+# -------------------------------
+# Dev utility: quick local smoke (no HTTP)
+# -------------------------------
+if __name__ == "__main__":  # pragma: no cover
+    import uvicorn
+    uvicorn.run("word_bocce_mvp_fastapi:app", host="0.0.0.0", port=8000, reload=True)

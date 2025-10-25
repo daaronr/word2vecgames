@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Bocce</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.1s;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #5568d3;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            color: white;
+        }
+
+        .word-display {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+
+        .word-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cards-section {
+            margin: 30px 0;
+        }
+
+        .cards-section h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: white;
+            border: 3px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .card.selected {
+            border-color: #667eea;
+            background: #f0f3ff;
+        }
+
+        .card-token {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .card-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .sign-btn {
+            background: #e0e0e0;
+            color: #333;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            width: auto;
+            margin: 0;
+        }
+
+        .sign-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .joker-input {
+            margin-top: 10px;
+            padding: 8px;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .timer {
+            text-align: center;
+            font-size: 1.5em;
+            margin: 20px 0;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .leaderboard {
+            margin-top: 30px;
+        }
+
+        .leaderboard table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .leaderboard th,
+        .leaderboard td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .leaderboard th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .leaderboard tr:hover {
+            background: #f8f9fa;
+        }
+
+        .rank-1 {
+            background: #fff9e6;
+        }
+
+        .status-message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .status-info {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .status-success {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .players-list {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .players-list h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .player-item {
+            padding: 8px 0;
+            color: #666;
+        }
+
+        .similarity-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .sim-very-close { background: #4caf50; color: white; }
+        .sim-warm { background: #ff9800; color: white; }
+        .sim-lukewarm { background: #ffc107; color: #333; }
+        .sim-cold { background: #2196f3; color: white; }
+        .sim-ice-cold { background: #607d8b; color: white; }
+
+        .match-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-family: monospace;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .private-cards-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Word Bocce</h1>
+
+        <!-- Lobby Screen -->
+        <div id="lobby-screen" class="screen active">
+            <div class="form-group">
+                <label for="player-name">Your Name</label>
+                <input type="text" id="player-name" placeholder="Enter your name" />
+            </div>
+
+            <button onclick="createMatch()">Create New Match</button>
+
+            <div style="margin: 30px 0; text-align: center; color: #999;">
+                <span>— OR —</span>
+            </div>
+
+            <div class="form-group">
+                <label for="match-id">Match ID</label>
+                <input type="text" id="match-id" placeholder="Enter match ID to join" />
+            </div>
+
+            <button onclick="joinMatch()" class="btn-secondary">Join Existing Match</button>
+        </div>
+
+        <!-- Waiting Screen -->
+        <div id="waiting-screen" class="screen">
+            <div class="status-message status-info">
+                <strong>Waiting in Lobby</strong>
+            </div>
+
+            <div class="match-info">
+                <div>Match ID: <strong id="waiting-match-id"></strong></div>
+            </div>
+
+            <div class="players-list">
+                <h3>Players</h3>
+                <div id="waiting-players"></div>
+            </div>
+
+            <button onclick="startMatch()">Start Game</button>
+            <button onclick="refreshLobby()" class="btn-secondary">Refresh</button>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen">
+            <div class="game-header">
+                <div class="word-label">Start Word</div>
+                <div class="word-display" id="start-word">—</div>
+                <div class="word-label" style="margin-top: 15px;">Target Word</div>
+                <div class="word-display" id="target-word">—</div>
+            </div>
+
+            <div class="timer" id="timer">Time: --</div>
+
+            <div class="cards-section">
+                <h3>Public Cards (choose one)</h3>
+                <div class="cards-grid" id="public-cards"></div>
+            </div>
+
+            <div class="cards-section">
+                <h3>Your Private Cards (choose one)</h3>
+                <div class="cards-grid private-cards-grid" id="private-cards"></div>
+            </div>
+
+            <button onclick="submitMove()" id="submit-btn">Submit Move</button>
+            <button onclick="refreshRound()" class="btn-secondary">Refresh</button>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="screen">
+            <div class="status-message status-success">
+                <strong>Round Complete!</strong>
+            </div>
+
+            <div class="game-header">
+                <div class="word-label">Start Word</div>
+                <div class="word-display" id="results-start-word">—</div>
+                <div class="word-label" style="margin-top: 15px;">Target Word</div>
+                <div class="word-display" id="results-target-word">—</div>
+            </div>
+
+            <div class="leaderboard">
+                <h3>Leaderboard</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Player</th>
+                            <th>Similarity</th>
+                            <th>Nearest Word</th>
+                            <th>Closeness</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-body"></tbody>
+                </table>
+            </div>
+
+            <button onclick="nextRound()">Next Round</button>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:8000';
+
+        let state = {
+            playerId: null,
+            playerName: null,
+            matchId: null,
+            roundId: null,
+            selectedPublic: null,
+            selectedPublicSign: '+',
+            selectedPrivate: null,
+            selectedPrivateSign: '+',
+            jokerToken: null,
+            currentRound: null,
+            timerInterval: null,
+            privateCards: []
+        };
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        async function createMatch() {
+            const name = document.getElementById('player-name').value.trim();
+            if (!name) {
+                alert('Please enter your name');
+                return;
+            }
+
+            state.playerName = name;
+
+            try {
+                const response = await fetch(`${API_URL}/match`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: `${name}'s match` })
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    alert(`Error: ${error.detail}`);
+                    return;
+                }
+
+                const match = await response.json();
+                state.matchId = match.id;
+
+                // Auto-join the match we just created
+                await joinMatchById(state.matchId);
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        }
+
+        async function joinMatch() {
+            const name = document.getElementById('player-name').value.trim();
+            const matchId = document.getElementById('match-id').value.trim();
+
+            if (!name) {
+                alert('Please enter your name');
+                return;
+            }
+
+            if (!matchId) {
+                alert('Please enter a match ID');
+                return;
+            }
+
+            state.playerName = name;
+            state.matchId = matchId;
+
+            await joinMatchById(matchId);
+        }
+
+        async function joinMatchById(matchId) {
+            try {
+                const response = await fetch(`${API_URL}/match/${matchId}/join`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ player_name: state.playerName })
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    alert(`Error: ${error.detail}`);
+                    return;
+                }
+
+                const data = await response.json();
+                state.playerId = data.player.id;
+                state.matchId = data.match.id;
+
+                document.getElementById('waiting-match-id').textContent = state.matchId;
+
+                updatePlayersList(data.match.players);
+                showScreen('waiting-screen');
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        }
+
+        function updatePlayersList(players) {
+            const container = document.getElementById('waiting-players');
+            const playersList = Object.values(players).map(p =>
+                `<div class="player-item">${p.name}${p.id === state.playerId ? ' (You)' : ''}</div>`
+            ).join('');
+            container.innerHTML = playersList || '<div class="player-item">No players yet</div>';
+        }
+
+        async function refreshLobby() {
+            if (!state.matchId) return;
+
+            try {
+                const response = await fetch(`${API_URL}/match/${state.matchId}/round/current`);
+                if (response.ok) {
+                    // Match has started!
+                    const roundData = await response.json();
+                    state.roundId = roundData.id;
+                    state.currentRound = roundData;
+                    displayRound(roundData);
+                    showScreen('game-screen');
+                }
+            } catch (error) {
+                // Still in lobby
+            }
+        }
+
+        async function startMatch() {
+            if (!state.matchId) return;
+
+            try {
+                const response = await fetch(`${API_URL}/match/${state.matchId}/start`, {
+                    method: 'POST'
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    alert(`Error: ${error.detail}`);
+                    return;
+                }
+
+                const roundData = await response.json();
+                state.roundId = roundData.id;
+                state.currentRound = roundData;
+
+                displayRound(roundData);
+                showScreen('game-screen');
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        }
+
+        function displayRound(roundData) {
+            document.getElementById('start-word').textContent = roundData.start_word;
+            document.getElementById('target-word').textContent = roundData.target_word;
+
+            // Display public cards
+            const publicContainer = document.getElementById('public-cards');
+            publicContainer.innerHTML = roundData.public_cards.map((card, idx) => `
+                <div class="card" onclick="selectPublicCard(${idx}, '${card.token}')">
+                    <div class="card-token">${card.token}</div>
+                    <div class="card-controls">
+                        <button class="sign-btn ${state.selectedPublic === idx && state.selectedPublicSign === '+' ? 'active' : ''}"
+                                onclick="event.stopPropagation(); setPublicSign(${idx}, '${card.token}', '+')">+</button>
+                        <button class="sign-btn ${state.selectedPublic === idx && state.selectedPublicSign === '-' ? 'active' : ''}"
+                                onclick="event.stopPropagation(); setPublicSign(${idx}, '${card.token}', '-')">−</button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Get private cards for this player
+            // We need to fetch the full match state to get private cards
+            fetchPrivateCards();
+
+            // Start timer
+            startTimer(roundData.moves_deadline_ts);
+        }
+
+        async function fetchPrivateCards() {
+            try {
+                const response = await fetch(`${API_URL}/match/${state.matchId}/player/${state.playerId}`);
+                const data = await response.json();
+
+                const privateCards = data.player.private_cards || [];
+                const privateContainer = document.getElementById('private-cards');
+
+                if (privateCards.length === 0) {
+                    privateContainer.innerHTML = `
+                        <div class="status-message status-info">
+                            No private cards dealt yet. Wait for the round to start.
+                        </div>
+                    `;
+                    return;
+                }
+
+                privateContainer.innerHTML = privateCards.map((card, idx) => {
+                    if (card.type === 'JOKER') {
+                        return `
+                            <div class="card" onclick="selectPrivateCard(${idx}, 'JOKER')">
+                                <div class="card-token">🃏 JOKER</div>
+                                <input type="text" class="joker-input" placeholder="Enter any word"
+                                       id="joker-input-${idx}" onclick="event.stopPropagation()">
+                                <div class="card-controls">
+                                    <button class="sign-btn ${state.selectedPrivate === idx && state.selectedPrivateSign === '+' ? 'active' : ''}"
+                                            onclick="event.stopPropagation(); setPrivateSign(${idx}, 'JOKER', '+')">+</button>
+                                    <button class="sign-btn ${state.selectedPrivate === idx && state.selectedPrivateSign === '-' ? 'active' : ''}"
+                                            onclick="event.stopPropagation(); setPrivateSign(${idx}, 'JOKER', '-')">−</button>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    return `
+                        <div class="card" onclick="selectPrivateCard(${idx}, '${card.token}')">
+                            <div class="card-token">${card.token}</div>
+                            <div class="card-controls">
+                                <button class="sign-btn ${state.selectedPrivate === idx && state.selectedPrivateSign === '+' ? 'active' : ''}"
+                                        onclick="event.stopPropagation(); setPrivateSign(${idx}, '${card.token}', '+')">+</button>
+                                <button class="sign-btn ${state.selectedPrivate === idx && state.selectedPrivateSign === '-' ? 'active' : ''}"
+                                        onclick="event.stopPropagation(); setPrivateSign(${idx}, '${card.token}', '-')">−</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                // Store private cards in state
+                state.privateCards = privateCards;
+            } catch (error) {
+                console.error('Error fetching private cards:', error);
+                const privateContainer = document.getElementById('private-cards');
+                privateContainer.innerHTML = `
+                    <div class="status-message status-error">
+                        Error loading private cards. Please refresh.
+                    </div>
+                `;
+            }
+        }
+
+        function selectPublicCard(idx, token) {
+            state.selectedPublic = idx;
+            updateCardSelection();
+        }
+
+        function setPublicSign(idx, token, sign) {
+            state.selectedPublic = idx;
+            state.selectedPublicSign = sign;
+            updateCardSelection();
+        }
+
+        function selectPrivateCard(idx, token) {
+            state.selectedPrivate = idx;
+            updateCardSelection();
+        }
+
+        function setPrivateSign(idx, token, sign) {
+            state.selectedPrivate = idx;
+            state.selectedPrivateSign = sign;
+            updateCardSelection();
+        }
+
+        function updateCardSelection() {
+            // Update visual selection
+            document.querySelectorAll('#public-cards .card').forEach((card, idx) => {
+                if (idx === state.selectedPublic) {
+                    card.classList.add('selected');
+                } else {
+                    card.classList.remove('selected');
+                }
+            });
+
+            document.querySelectorAll('#private-cards .card').forEach((card, idx) => {
+                if (idx === state.selectedPrivate) {
+                    card.classList.add('selected');
+                } else {
+                    card.classList.remove('selected');
+                }
+            });
+        }
+
+        function startTimer(deadline) {
+            if (state.timerInterval) {
+                clearInterval(state.timerInterval);
+            }
+
+            const updateTimer = () => {
+                const now = Math.floor(Date.now() / 1000);
+                const remaining = deadline - now;
+
+                if (remaining <= 0) {
+                    document.getElementById('timer').textContent = 'Time: 00:00';
+                    clearInterval(state.timerInterval);
+                    return;
+                }
+
+                const minutes = Math.floor(remaining / 60);
+                const seconds = remaining % 60;
+                document.getElementById('timer').textContent =
+                    `Time: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            };
+
+            updateTimer();
+            state.timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        async function submitMove() {
+            if (state.selectedPublic === null) {
+                alert('Please select a public card');
+                return;
+            }
+
+            if (state.selectedPrivate === null) {
+                alert('Please select a private card');
+                return;
+            }
+
+            const publicToken = state.currentRound.public_cards[state.selectedPublic].token;
+            const privateCard = state.privateCards[state.selectedPrivate];
+
+            let privateToken = privateCard.token;
+            let jokerOverride = null;
+
+            // Handle JOKER card
+            if (privateCard.type === 'JOKER') {
+                const jokerInput = document.getElementById(`joker-input-${state.selectedPrivate}`);
+                jokerOverride = jokerInput ? jokerInput.value.trim() : null;
+
+                if (!jokerOverride) {
+                    alert('Please enter a word for your JOKER card');
+                    return;
+                }
+            }
+
+            try {
+                const response = await fetch(
+                    `${API_URL}/match/${state.matchId}/round/${state.roundId}/submit`,
+                    {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            player_id: state.playerId,
+                            public_token: publicToken,
+                            public_sign: state.selectedPublicSign,
+                            private_token: privateToken,
+                            private_sign: state.selectedPrivateSign,
+                            joker_override_token: jokerOverride
+                        })
+                    }
+                );
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    alert(`Error: ${error.detail}`);
+                    return;
+                }
+
+                const result = await response.json();
+                alert(`Move submitted! Similarity: ${result.similarity.toFixed(4)}, Nearest: ${result.nearest}`);
+
+                document.getElementById('submit-btn').disabled = true;
+                document.getElementById('submit-btn').textContent = 'Move Submitted - Waiting for others...';
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        }
+
+        async function refreshRound() {
+            try {
+                const response = await fetch(`${API_URL}/match/${state.matchId}/round/current`);
+                const roundData = await response.json();
+
+                // Check if we can resolve
+                const resolveBtn = document.createElement('button');
+                resolveBtn.textContent = 'View Results';
+                resolveBtn.onclick = viewResults;
+                resolveBtn.className = 'btn-secondary';
+                resolveBtn.style.marginTop = '10px';
+
+                if (!document.querySelector('button[onclick="viewResults()"]')) {
+                    document.getElementById('game-screen').appendChild(resolveBtn);
+                }
+            } catch (error) {
+                console.error('Error refreshing round:', error);
+            }
+        }
+
+        async function viewResults() {
+            try {
+                const response = await fetch(
+                    `${API_URL}/match/${state.matchId}/round/${state.roundId}/resolve`,
+                    { method: 'POST' }
+                );
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    alert(`Error: ${error.detail}`);
+                    return;
+                }
+
+                const data = await response.json();
+                displayResults(data.leaderboard);
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        }
+
+        function displayResults(leaderboard) {
+            document.getElementById('results-start-word').textContent =
+                state.currentRound.start_word;
+            document.getElementById('results-target-word').textContent =
+                state.currentRound.target_word;
+
+            const tbody = document.getElementById('leaderboard-body');
+            tbody.innerHTML = leaderboard.map((entry, idx) => {
+                const badge = getSimilarityBadge(entry.similarity);
+                return `
+                    <tr class="${idx === 0 ? 'rank-1' : ''}">
+                        <td>${idx + 1}</td>
+                        <td>${entry.player_name}</td>
+                        <td>${entry.similarity.toFixed(4)}</td>
+                        <td>${entry.nearest}</td>
+                        <td><span class="similarity-badge ${badge.class}">${badge.label}</span></td>
+                    </tr>
+                `;
+            }).join('');
+
+            showScreen('results-screen');
+
+            if (state.timerInterval) {
+                clearInterval(state.timerInterval);
+            }
+        }
+
+        function getSimilarityBadge(sim) {
+            if (sim >= 0.80) return { class: 'sim-very-close', label: 'Very Close' };
+            if (sim >= 0.60) return { class: 'sim-warm', label: 'Getting Warmer' };
+            if (sim >= 0.40) return { class: 'sim-lukewarm', label: 'Lukewarm' };
+            if (sim >= 0.20) return { class: 'sim-cold', label: 'Cold' };
+            return { class: 'sim-ice-cold', label: 'Ice Cold' };
+        }
+
+        async function nextRound() {
+            try {
+                const response = await fetch(
+                    `${API_URL}/match/${state.matchId}/round/next`,
+                    { method: 'POST' }
+                );
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    alert(`Error: ${error.detail}`);
+                    return;
+                }
+
+                const roundData = await response.json();
+                state.roundId = roundData.id;
+                state.currentRound = roundData;
+                state.selectedPublic = null;
+                state.selectedPrivate = null;
+                state.selectedPublicSign = '+';
+                state.selectedPrivateSign = '+';
+                state.jokerToken = null;
+
+                document.getElementById('submit-btn').disabled = false;
+                document.getElementById('submit-btn').textContent = 'Submit Move';
+
+                displayRound(roundData);
+                showScreen('game-screen');
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        }
+
+        // Auto-refresh lobby every 3 seconds when waiting
+        setInterval(() => {
+            if (document.getElementById('waiting-screen').classList.contains('active')) {
+                refreshLobby();
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

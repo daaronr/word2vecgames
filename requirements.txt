@@ -1,0 +1,6 @@
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+numpy>=1.24.0
+gensim>=4.3.0
+annoy>=1.17.0
+pydantic>=2.0.0
