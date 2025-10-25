@@ -15,9 +15,15 @@ COPY setup_embeddings.py .
 # Download embeddings at build time (smaller model for Docker image)
 RUN python setup_embeddings.py --model glove-100 --output ./embeddings
 
+# Environment variables with defaults
 ENV MODEL_PATH=./embeddings/glove-100.bin
 ENV PYTHONUNBUFFERED=1
+ENV PORT=8000
+ENV DECK_SIZE=10000
+ENV WILDCARD_RATIO=0.2
+ENV ROUND_TIMEOUT_SECS=120
 
-EXPOSE 8000
+EXPOSE ${PORT}
 
-CMD ["uvicorn", "word_bocce_mvp_fastapi:app", "--host", "0.0.0.0", "--port", "8000"]
+# Use PORT environment variable (Railway, Render, etc. set this dynamically)
+CMD uvicorn word_bocce_mvp_fastapi:app --host 0.0.0.0 --port ${PORT}

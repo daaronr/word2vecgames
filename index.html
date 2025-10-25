@@ -330,12 +330,28 @@
 
         <!-- Lobby Screen -->
         <div id="lobby-screen" class="screen active">
+            <div class="status-message status-info" id="url-match-info" style="display: none;">
+                <strong>🎯 Joining match from link...</strong>
+            </div>
+
             <div class="form-group">
                 <label for="player-name">Your Name</label>
                 <input type="text" id="player-name" placeholder="Enter your name" />
             </div>
 
-            <button onclick="createMatch()">Create New Match</button>
+            <button onclick="quickPlay()" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); font-size: 1.2em; padding: 15px;">
+                🎮 Quick Play
+            </button>
+
+            <div style="margin: 20px 0; text-align: center; color: #999; font-size: 0.9em;">
+                <span>Quick Play creates a new match and gives you a shareable link</span>
+            </div>
+
+            <div style="margin: 30px 0; text-align: center; color: #999;">
+                <span>— OR —</span>
+            </div>
+
+            <button onclick="createMatch()">Create Match & Get Link</button>
 
             <div style="margin: 30px 0; text-align: center; color: #999;">
                 <span>— OR —</span>
@@ -346,7 +362,7 @@
                 <input type="text" id="match-id" placeholder="Enter match ID to join" />
             </div>
 
-            <button onclick="joinMatch()" class="btn-secondary">Join Existing Match</button>
+            <button onclick="joinMatch()" class="btn-secondary">Join by Match ID</button>
         </div>
 
         <!-- Waiting Screen -->
@@ -357,6 +373,9 @@
 
             <div class="match-info">
                 <div>Match ID: <strong id="waiting-match-id"></strong></div>
+                <button onclick="copyShareLink()" style="margin-top: 10px; padding: 8px 16px;">
+                    📋 Copy Invite Link
+                </button>
             </div>
 
             <div class="players-list">
@@ -449,6 +468,30 @@
             document.getElementById(screenId).classList.add('active');
         }
 
+        // Check URL for match ID on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const matchId = urlParams.get('match');
+
+            if (matchId) {
+                document.getElementById('url-match-info').style.display = 'block';
+                document.getElementById('match-id').value = matchId;
+                // Auto-join if name is provided
+                const name = urlParams.get('name');
+                if (name) {
+                    document.getElementById('player-name').value = name;
+                }
+            }
+        });
+
+        async function quickPlay() {
+            const name = document.getElementById('player-name').value.trim() ||
+                         `Player${Math.floor(Math.random() * 1000)}`;
+
+            document.getElementById('player-name').value = name;
+            await createMatch();
+        }
+
         async function createMatch() {
             const name = document.getElementById('player-name').value.trim();
             if (!name) {
@@ -476,6 +519,21 @@
 
                 // Auto-join the match we just created
                 await joinMatchById(state.matchId);
+
+                // Show shareable link
+                const shareUrl = `${window.location.origin}${window.location.pathname}?match=${state.matchId}`;
+                setTimeout(() => {
+                    const shareMsg = `🎯 Share this link with friends to join:\n\n${shareUrl}\n\nMatch ID: ${state.matchId}`;
+                    if (navigator.clipboard && window.isSecureContext) {
+                        navigator.clipboard.writeText(shareUrl).then(() => {
+                            alert(`${shareMsg}\n\n✅ Link copied to clipboard!`);
+                        }).catch(() => {
+                            alert(shareMsg);
+                        });
+                    } else {
+                        alert(shareMsg);
+                    }
+                }, 500);
             } catch (error) {
                 alert(`Error: ${error.message}`);
             }
@@ -895,6 +953,36 @@
                 showScreen('game-screen');
             } catch (error) {
                 alert(`Error: ${error.message}`);
+            }
+        }
+
+        function copyShareLink() {
+            if (!state.matchId) {
+                alert('No active match');
+                return;
+            }
+
+            const shareUrl = `${window.location.origin}${window.location.pathname}?match=${state.matchId}`;
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(shareUrl).then(() => {
+                    alert(`✅ Link copied to clipboard!\n\n${shareUrl}\n\nShare this with friends to join the match.`);
+                }).catch(() => {
+                    alert(`📋 Copy this link to share:\n\n${shareUrl}`);
+                });
+            } else {
+                // Fallback for non-secure contexts
+                const textArea = document.createElement('textarea');
+                textArea.value = shareUrl;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    alert(`✅ Link copied!\n\n${shareUrl}`);
+                } catch (err) {
+                    alert(`📋 Copy this link to share:\n\n${shareUrl}`);
+                }
+                document.body.removeChild(textArea);
             }
         }
 

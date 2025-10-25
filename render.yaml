@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: wordbocce
+    env: docker
+    plan: free
+    healthCheckPath: /api
+    envVars:
+      - key: MODEL_PATH
+        value: ./embeddings/glove-100.bin
+      - key: DECK_SIZE
+        value: 10000
+      - key: WILDCARD_RATIO
+        value: 0.2
+      - key: ROUND_TIMEOUT_SECS
+        value: 120
