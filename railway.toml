@@ -1,0 +1,8 @@
+[build]
+builder = "DOCKERFILE"
+
+[deploy]
+startCommand = "uvicorn word_bocce_mvp_fastapi:app --host 0.0.0.0 --port $PORT"
+restartPolicyType = "ON_FAILURE"
+healthcheckPath = "/api"
+healthcheckTimeout = 100
