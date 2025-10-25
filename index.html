@@ -264,6 +264,99 @@
             color: #c62828;
         }
 
+        /* Visualization Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow: auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #999;
+            background: none;
+            border: none;
+            padding: 0;
+            width: auto;
+            margin: 0;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .viz-canvas {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 700px;
+            height: 500px;
+            cursor: crosshair;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .viz-controls {
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .viz-legend {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+
+        .viz-legend-item {
+            display: inline-block;
+            margin: 5px 15px;
+        }
+
+        .viz-legend-dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .btn-viz {
+            background: #28a745;
+            margin-top: 5px;
+        }
+
+        .btn-viz:hover {
+            background: #218838;
+        }
+
         .players-list {
             margin: 20px 0;
             padding: 15px;
@@ -442,6 +535,46 @@
             </div>
 
             <button onclick="nextRound()">Next Round</button>
+            <button onclick="visualizeRound()" class="btn-viz">Visualize Round</button>
+        </div>
+    </div>
+
+    <!-- Visualization Modal -->
+    <div id="viz-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeVisualization()">&times;</button>
+            <h2 style="text-align: center; color: #667eea; margin-bottom: 20px;">Word Vector Visualization</h2>
+
+            <div class="viz-controls">
+                <p style="color: #666; margin-bottom: 15px;">
+                    2D projection of word vectors in semantic space
+                </p>
+            </div>
+
+            <canvas id="viz-canvas" class="viz-canvas" width="700" height="500"></canvas>
+
+            <div class="viz-legend">
+                <div class="viz-legend-item">
+                    <span class="viz-legend-dot" style="background: #667eea;"></span>
+                    <span>Start Word</span>
+                </div>
+                <div class="viz-legend-item">
+                    <span class="viz-legend-dot" style="background: #e74c3c;"></span>
+                    <span>Target Word</span>
+                </div>
+                <div class="viz-legend-item">
+                    <span class="viz-legend-dot" style="background: #f39c12;"></span>
+                    <span>Public Card</span>
+                </div>
+                <div class="viz-legend-item">
+                    <span class="viz-legend-dot" style="background: #9b59b6;"></span>
+                    <span>Private Card</span>
+                </div>
+                <div class="viz-legend-item">
+                    <span class="viz-legend-dot" style="background: #2ecc71;"></span>
+                    <span>Result Vector</span>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -890,6 +1023,13 @@
         }
 
         function displayResults(leaderboard) {
+            // Store results in state for visualization
+            state.lastRoundResults = {
+                leaderboard: leaderboard,
+                startWord: state.currentRound.start_word,
+                targetWord: state.currentRound.target_word
+            };
+
             document.getElementById('results-start-word').textContent =
                 state.currentRound.start_word;
             document.getElementById('results-target-word').textContent =
@@ -984,6 +1124,160 @@
                 }
                 document.body.removeChild(textArea);
             }
+        }
+
+        // ============================================
+        // Visualization Functions
+        // ============================================
+
+        async function visualizeRound() {
+            try {
+                // Get current round data from state
+                const startWord = document.getElementById('results-start-word').textContent;
+                const targetWord = document.getElementById('results-target-word').textContent;
+
+                // Get the winning player's move (first in leaderboard)
+                const leaderboard = state.lastRoundResults?.leaderboard;
+                if (!leaderboard || leaderboard.length === 0) {
+                    alert('No round results available to visualize');
+                    return;
+                }
+
+                const bestMove = leaderboard[0];
+                const publicWord = bestMove.public_token;
+                const privateWord = bestMove.private_token;
+                const publicSign = bestMove.public_sign === 1 ? '+' : '-';
+                const privateSign = bestMove.private_sign === 1 ? '+' : '-';
+
+                // Fetch visualization data
+                const url = `${API_URL}/visualize/move/${startWord}/${targetWord}?` +
+                           `public_word=${publicWord}&private_word=${privateWord}&` +
+                           `public_sign=${publicSign}&private_sign=${privateSign}`;
+
+                const resp = await fetch(url);
+                const data = await resp.json();
+
+                // Render visualization
+                renderVisualization(data.points);
+
+                // Show modal
+                document.getElementById('viz-modal').classList.add('active');
+
+            } catch (error) {
+                console.error('Visualization error:', error);
+                alert('Failed to load visualization. Make sure the round has completed.');
+            }
+        }
+
+        function closeVisualization() {
+            document.getElementById('viz-modal').classList.remove('active');
+        }
+
+        function renderVisualization(points) {
+            const canvas = document.getElementById('viz-canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Find min/max for scaling
+            let minX = Infinity, maxX = -Infinity;
+            let minY = Infinity, maxY = -Infinity;
+
+            points.forEach(p => {
+                minX = Math.min(minX, p.x);
+                maxX = Math.max(maxX, p.x);
+                minY = Math.min(minY, p.y);
+                maxY = Math.max(maxY, p.y);
+            });
+
+            // Add padding
+            const padding = 60;
+            const width = canvas.width - 2 * padding;
+            const height = canvas.height - 2 * padding;
+
+            // Scale function
+            const scaleX = (x) => padding + ((x - minX) / (maxX - minX)) * width;
+            const scaleY = (y) => padding + ((y - minY) / (maxY - minY)) * height;
+
+            // Draw grid
+            ctx.strokeStyle = '#f0f0f0';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 10; i++) {
+                const x = padding + (i / 10) * width;
+                const y = padding + (i / 10) * height;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, padding + height);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(padding + width, y);
+                ctx.stroke();
+            }
+
+            // Define colors for different word types
+            const colorMap = {
+                'RESULT': '#2ecc71',
+                'default': '#999'
+            };
+
+            // Draw lines from start to other points
+            const startPoint = points.find(p => p.word.toLowerCase() === points[0].word.toLowerCase());
+            if (startPoint) {
+                ctx.strokeStyle = '#ddd';
+                ctx.lineWidth = 1;
+                points.forEach(p => {
+                    if (p !== startPoint) {
+                        ctx.beginPath();
+                        ctx.moveTo(scaleX(startPoint.x), scaleY(startPoint.y));
+                        ctx.lineTo(scaleX(p.x), scaleY(p.y));
+                        ctx.stroke();
+                    }
+                });
+            }
+
+            // Draw points
+            points.forEach((p, idx) => {
+                const x = scaleX(p.x);
+                const y = scaleY(p.y);
+
+                // Determine color based on word type
+                let color;
+                if (idx === 0) color = '#667eea'; // Start word (first point)
+                else if (idx === 1) color = '#e74c3c'; // Target word (second point)
+                else if (p.word === 'RESULT') color = '#2ecc71'; // Result vector
+                else if (idx === 2) color = '#f39c12'; // Public card (third point)
+                else if (idx === 3) color = '#9b59b6'; // Private card (fourth point)
+                else color = '#999'; // Other
+
+                // Draw circle
+                ctx.beginPath();
+                ctx.arc(x, y, 8, 0, 2 * Math.PI);
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Draw label
+                ctx.fillStyle = '#333';
+                ctx.font = 'bold 12px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'bottom';
+                ctx.fillText(p.word, x, y - 12);
+            });
+
+            // Draw axes labels
+            ctx.fillStyle = '#666';
+            ctx.font = '11px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Dimension 1 (PCA)', canvas.width / 2, canvas.height - 10);
+            ctx.save();
+            ctx.translate(15, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('Dimension 2 (PCA)', 0, 0);
+            ctx.restore();
         }
 
         // Auto-refresh lobby every 3 seconds when waiting
