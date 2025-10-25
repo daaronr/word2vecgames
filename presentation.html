@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Bocce - Game Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a2e;
+            color: white;
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .slide.active {
+            display: flex;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 4em;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        p {
+            font-size: 1.5em;
+            line-height: 1.6;
+            max-width: 800px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .cards-display {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 30px 0;
+            max-width: 900px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px 30px;
+            border-radius: 12px;
+            font-size: 1.3em;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .card.private {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .card.joker {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            position: relative;
+        }
+
+        .card.joker::before {
+            content: "🃏";
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 1.2em;
+        }
+
+        .word-display {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .word-box {
+            background: rgba(255, 255, 255, 0.1);
+            border: 3px solid #667eea;
+            border-radius: 15px;
+            padding: 30px 50px;
+            font-size: 2em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .word-box .label {
+            font-size: 0.5em;
+            opacity: 0.7;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .move-display {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            max-width: 600px;
+        }
+
+        .move-display h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            font-family: 'Courier New', monospace;
+            font-size: 1.3em;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .leaderboard {
+            width: 100%;
+            max-width: 700px;
+            margin: 30px 0;
+        }
+
+        .leaderboard-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px 30px;
+            border-radius: 10px;
+            margin: 10px 0;
+            font-size: 1.3em;
+        }
+
+        .leaderboard-row.first {
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            font-size: 1.5em;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #5568d3;
+            transform: scale(1.05);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slide-number {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            font-size: 1.2em;
+            opacity: 0.5;
+        }
+
+        .vector-viz {
+            width: 600px;
+            height: 400px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vector-point {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .vector-label {
+            position: absolute;
+            font-size: 0.9em;
+            font-weight: 600;
+            transform: translate(-50%, -150%);
+            white-space: nowrap;
+        }
+
+        .vector-line {
+            position: absolute;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.3);
+            transform-origin: left center;
+        }
+
+        .highlight {
+            color: #f6d365;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>🎯 Word Bocce</h1>
+            <p style="font-size: 2em;">Navigate Semantic Space with Vector Arithmetic</p>
+            <p>A multiplayer game where you manipulate word embeddings<br>to reach target words</p>
+        </div>
+
+        <!-- Slide 2: The Challenge -->
+        <div class="slide">
+            <h2>The Challenge</h2>
+            <div class="word-display">
+                <div class="word-box">
+                    <div class="label">You Start Here</div>
+                    WATER
+                </div>
+                <div style="font-size: 3em;">⬇️</div>
+                <div class="word-box" style="border-color: #f6d365;">
+                    <div class="label">Try to Reach</div>
+                    OCEAN
+                </div>
+            </div>
+            <p>Use word vectors to navigate from START to TARGET</p>
+        </div>
+
+        <!-- Slide 3: Your Tools -->
+        <div class="slide">
+            <h2>Your Tools: The Cards</h2>
+            <p><strong class="highlight">Public Cards</strong> (everyone sees these):</p>
+            <div class="cards-display">
+                <div class="card">blue</div>
+                <div class="card">deep</div>
+                <div class="card">wave</div>
+                <div class="card">salt</div>
+                <div class="card">fish</div>
+                <div class="card">ship</div>
+                <div class="card">shore</div>
+                <div class="card">tide</div>
+                <div class="card">beach</div>
+                <div class="card">pacific</div>
+            </div>
+            <p><strong class="highlight">Your Private Cards</strong> (only you see these):</p>
+            <div class="cards-display">
+                <div class="card private">vast</div>
+                <div class="card private joker">JOKER</div>
+            </div>
+        </div>
+
+        <!-- Slide 4: How to Play -->
+        <div class="slide">
+            <h2>How to Play</h2>
+            <div class="move-display">
+                <h3>Choose Your Move:</h3>
+                <p style="font-size: 1.2em;">1. Pick one PUBLIC card (+ or −)</p>
+                <p style="font-size: 1.2em;">2. Pick one PRIVATE card (+ or −)</p>
+                <div class="formula">
+                    result = v(water) + v(deep) + v(vast)
+                </div>
+                <p style="color: #f6d365; margin-top: 20px;">Your result vector is scored by cosine similarity to TARGET</p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Example Move -->
+        <div class="slide">
+            <h2>Example: Alice's Move</h2>
+            <div class="word-box" style="font-size: 1.5em;">water → ocean</div>
+            <div class="move-display">
+                <div class="formula">
+                    v* = v(water) <span class="highlight">+ v(deep) + v(vast)</span>
+                </div>
+                <p style="margin-top: 20px;">Result: <strong class="highlight">0.7823</strong> similarity to "ocean"</p>
+                <p>Nearest word: <strong class="highlight">"seas"</strong></p>
+            </div>
+        </div>
+
+        <!-- Slide 6: Competing Players -->
+        <div class="slide">
+            <h2>Bob's Competing Move</h2>
+            <div class="word-box" style="font-size: 1.5em;">water → ocean</div>
+            <div class="move-display">
+                <div class="formula">
+                    v* = v(water) <span class="highlight">+ v(pacific) + v(salt)</span>
+                </div>
+                <p style="margin-top: 20px;">Result: <strong class="highlight">0.8241</strong> similarity to "ocean"</p>
+                <p>Nearest word: <strong class="highlight">"oceans"</strong></p>
+            </div>
+        </div>
+
+        <!-- Slide 7: Leaderboard -->
+        <div class="slide">
+            <h2>🏆 Round Results</h2>
+            <div class="leaderboard">
+                <div class="leaderboard-row first">
+                    <span>🥇 Bob</span>
+                    <span>0.8241</span>
+                    <span>→ "oceans"</span>
+                </div>
+                <div class="leaderboard-row">
+                    <span>🥈 Alice</span>
+                    <span>0.7823</span>
+                    <span>→ "seas"</span>
+                </div>
+            </div>
+            <p style="margin-top: 30px;">Highest similarity wins the round!</p>
+        </div>
+
+        <!-- Slide 8: Vector Space Visualization -->
+        <div class="slide">
+            <h2>What's Really Happening</h2>
+            <p>Words exist as points in 100-dimensional space</p>
+            <div class="vector-viz" id="vectorViz"></div>
+            <p style="font-size: 1em; opacity: 0.8;">(Simplified to 2D for visualization)</p>
+        </div>
+
+        <!-- Slide 9: Strategy -->
+        <div class="slide">
+            <h2>Strategic Depth</h2>
+            <div class="cards-display" style="flex-direction: column; align-items: center;">
+                <p style="font-size: 1.3em; margin: 20px 0;">💡 <strong>Addition:</strong> Combine similar concepts</p>
+                <div class="formula">king − man + woman ≈ queen</div>
+                <p style="font-size: 1.3em; margin: 20px 0;">💡 <strong>Subtraction:</strong> Remove concepts</p>
+                <div class="formula">france − paris + tokyo ≈ japan</div>
+                <p style="font-size: 1.3em; margin: 20px 0;">💡 <strong>JOKER Cards:</strong> Use ANY word!</p>
+                <div class="card joker" style="display: inline-block;">wildcard strategy</div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Why It's Fun -->
+        <div class="slide">
+            <h2>Why Play Word Bocce?</h2>
+            <p>✨ <strong>Learn intuitive semantics</strong> - understand how words relate</p>
+            <p>🧠 <strong>Strategic thinking</strong> - plan your vector path</p>
+            <p>🎮 <strong>Competitive multiplayer</strong> - outsmart your friends</p>
+            <p>🔥 <strong>Fast-paced rounds</strong> - 2 minutes to make your move</p>
+            <p>🎯 <strong>Simple rules, deep strategy</strong> - easy to learn, hard to master</p>
+        </div>
+
+        <!-- Slide 11: Call to Action -->
+        <div class="slide">
+            <h1 style="font-size: 5em;">Ready to Play?</h1>
+            <p style="font-size: 2em; margin: 40px 0;">Start navigating semantic space!</p>
+            <button onclick="window.location.href='index.html'" style="font-size: 1.5em; padding: 20px 60px;">
+                Play Now →
+            </button>
+        </div>
+    </div>
+
+    <div class="slide-number">
+        <span id="currentSlide">1</span> / <span id="totalSlides">11</span>
+    </div>
+
+    <div class="navigation">
+        <button id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+
+            // Trigger vector visualization on that slide
+            if (currentSlide === 7) {
+                createVectorVisualization();
+            }
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Create vector space visualization
+        function createVectorVisualization() {
+            const viz = document.getElementById('vectorViz');
+            if (viz.children.length > 0) return; // Already created
+
+            const words = [
+                { word: 'water', x: 200, y: 300, color: '#667eea' },
+                { word: 'ocean', x: 450, y: 150, color: '#f6d365' },
+                { word: 'deep', x: 350, y: 200, color: '#764ba2' },
+                { word: 'vast', x: 380, y: 180, color: '#f5576c' },
+                { word: 'seas', x: 420, y: 170, color: '#fda085' }
+            ];
+
+            words.forEach(w => {
+                const point = document.createElement('div');
+                point.className = 'vector-point';
+                point.style.left = w.x + 'px';
+                point.style.top = w.y + 'px';
+                point.style.background = w.color;
+                viz.appendChild(point);
+
+                const label = document.createElement('div');
+                label.className = 'vector-label';
+                label.textContent = w.word;
+                label.style.left = w.x + 'px';
+                label.style.top = w.y + 'px';
+                label.style.color = w.color;
+                viz.appendChild(label);
+            });
+
+            // Draw arrow from water to ocean
+            const line = document.createElement('div');
+            line.className = 'vector-line';
+            const dx = 450 - 200;
+            const dy = 150 - 300;
+            const length = Math.sqrt(dx * dx + dy * dy);
+            const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+            line.style.width = length + 'px';
+            line.style.left = 200 + 'px';
+            line.style.top = 300 + 'px';
+            line.style.transform = `rotate(${angle}deg)`;
+            line.style.background = '#f6d365';
+            viz.appendChild(line);
+        }
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>

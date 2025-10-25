@@ -29,6 +29,8 @@ from typing import Dict, List, Literal, Optional, Tuple
 import numpy as np
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse, HTMLResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 try:
@@ -45,11 +47,11 @@ except Exception:
 # Config
 # -------------------------------
 MODEL_PATH = os.environ.get("MODEL_PATH")
-DECK_SIZE = int(os.environ.get("DECK_SIZE", "100000"))
+DECK_SIZE = int(os.environ.get("DECK_SIZE", "10000"))  # Smaller deck = more common words
 N_PUBLIC = int(os.environ.get("N_PUBLIC", "10"))
 M_PRIVATE = int(os.environ.get("M_PRIVATE", "2"))
-WILDCARD_RATIO = float(os.environ.get("WILDCARD_RATIO", "0.02"))
-ROUND_TIMEOUT_SECS = int(os.environ.get("ROUND_TIMEOUT_SECS", "60"))
+WILDCARD_RATIO = float(os.environ.get("WILDCARD_RATIO", "0.2"))  # 20% chance for wildcards
+ROUND_TIMEOUT_SECS = int(os.environ.get("ROUND_TIMEOUT_SECS", "120"))  # More time to think
 USE_ANNOY = os.environ.get("USE_ANNOY", "0") == "1"
 RNG_SEED = int(os.environ.get("RNG_SEED", "12345"))
 
@@ -133,16 +135,37 @@ class VectorStore:
         self._annoy: Optional[AnnoyIndex] = None
 
     def build_deck(self, size: int) -> List[str]:
-        # Curate tokens: simple heuristic — alphabetic, lowercase-ish, length 3..12
+        # Curate tokens: focus on common, readable words
+        # GloVe/Word2Vec put most frequent words first, so we prioritize early tokens
         toks = []
+
+        # Common word patterns to exclude
+        exclude_patterns = ['_', '-', '.', '/', "'"]
+
         for t in self.kv.index_to_key:
             if len(toks) >= size:
                 break
-            if t.isalpha() and t.islower() and 3 <= len(t) <= 12:
-                toks.append(t)
+
+            # Must be alphabetic, lowercase, reasonable length
+            if not (t.isalpha() and t.islower() and 3 <= len(t) <= 10):
+                continue
+
+            # Skip tokens with special characters
+            if any(p in t for p in exclude_patterns):
+                continue
+
+            # Skip very uncommon letter patterns (heuristic: needs vowels)
+            vowels = set('aeiou')
+            if not any(c in vowels for c in t):
+                continue
+
+            toks.append(t)
+
         if len(toks) < max(1000, size // 10):
-            # Fallback: just take first N tokens (still in-vocab)
-            toks = self.kv.index_to_key[:size]
+            # Fallback: just take first N alphabetic tokens
+            toks = [t for t in self.kv.index_to_key[:size * 2]
+                   if t.isalpha() and t.islower()][:size]
+
         self._deck_tokens = toks
         # Precompute unit vectors
         for t in toks:
@@ -360,14 +383,37 @@ game = Game(store) if store else None  # type: ignore
 # -------------------------------
 # Routes
 # -------------------------------
-@app.get("/")
-def root():
+@app.get("/api")
+def api_root():
     if store is None:
         return {
             "status": "ok",
             "detail": "Set MODEL_PATH env var to a KeyedVectors file (e.g., GoogleNews-vectors-negative300.bin.gz) and restart.",
         }
     return {"status": "ok", "dim": store.dim, "deck_size": len(deck_tokens)}
+
+@app.get("/", response_class=HTMLResponse)
+def serve_game():
+    try:
+        with open("index.html", "r") as f:
+            html_content = f.read()
+            # Update API_URL to use current host
+            html_content = html_content.replace(
+                "const API_URL = 'http://localhost:8000';",
+                "const API_URL = window.location.origin;"
+            )
+            return HTMLResponse(content=html_content)
+    except FileNotFoundError:
+        return HTMLResponse(content="<h1>index.html not found</h1>", status_code=404)
+
+@app.get("/presentation", response_class=HTMLResponse)
+@app.get("/presentation.html", response_class=HTMLResponse)
+def serve_presentation():
+    try:
+        with open("presentation.html", "r") as f:
+            return HTMLResponse(content=f.read())
+    except FileNotFoundError:
+        return HTMLResponse(content="<h1>presentation.html not found</h1>", status_code=404)
 
 @app.post("/match")
 def create_match(req: CreateMatchReq):
@@ -408,6 +454,120 @@ def resolve_round(match_id: str, round_id: str):
 @app.post("/match/{match_id}/round/next")
 def next_round(match_id: str):
     return game.next_round(match_id)
+
+@app.get("/visualize/{word}")
+def visualize_word(word: str, neighbors: int = 10):
+    """Get word vector and its nearest neighbors for visualization"""
+    if store is None:
+        raise HTTPException(503, "Embeddings not loaded")
+
+    if word not in store.kv:
+        raise HTTPException(404, f"Word '{word}' not in vocabulary")
+
+    # Get the word vector
+    word_vec = store.vec_unit(word)
+
+    # Find nearest neighbors
+    from sklearn.decomposition import PCA
+    import numpy as np
+
+    # Collect vectors for PCA
+    neighbor_words = []
+    vectors = [word_vec]
+
+    for t in deck_tokens[:5000]:  # Search in first 5000 words
+        if t == word:
+            continue
+        sim = store.cosine(word_vec, store._norms[t])
+        if len(neighbor_words) < neighbors:
+            neighbor_words.append((t, sim))
+            neighbor_words.sort(key=lambda x: x[1], reverse=True)
+        elif sim > neighbor_words[-1][1]:
+            neighbor_words[-1] = (t, sim)
+            neighbor_words.sort(key=lambda x: x[1], reverse=True)
+
+    # Add neighbor vectors
+    for w, _ in neighbor_words:
+        vectors.append(store._norms[w])
+
+    # Reduce to 2D with PCA
+    pca = PCA(n_components=2)
+    coords_2d = pca.fit_transform(np.array(vectors))
+
+    # Format response
+    points = [{"word": word, "x": float(coords_2d[0][0]), "y": float(coords_2d[0][1]), "similarity": 1.0}]
+    for i, (w, sim) in enumerate(neighbor_words):
+        points.append({
+            "word": w,
+            "x": float(coords_2d[i+1][0]),
+            "y": float(coords_2d[i+1][1]),
+            "similarity": float(sim)
+        })
+
+    return {"word": word, "points": points}
+
+@app.get("/visualize/move/{start_word}/{target_word}")
+def visualize_move(start_word: str, target_word: str,
+                  public_word: str = None, private_word: str = None,
+                  public_sign: str = "+", private_sign: str = "+"):
+    """Visualize a word bocce move in 2D space"""
+    if store is None:
+        raise HTTPException(503, "Embeddings not loaded")
+
+    words_to_check = [start_word, target_word]
+    if public_word:
+        words_to_check.append(public_word)
+    if private_word:
+        words_to_check.append(private_word)
+
+    for w in words_to_check:
+        if w not in store.kv:
+            raise HTTPException(404, f"Word '{w}' not in vocabulary")
+
+    from sklearn.decomposition import PCA
+    import numpy as np
+
+    # Calculate result vector if moves provided
+    result_vec = None
+    if public_word and private_word:
+        s1 = 1.0 if public_sign == "+" else -1.0
+        s2 = 1.0 if private_sign == "+" else -1.0
+        result_vec = store.vec_unit(start_word) + s1 * store.vec_unit(public_word) + s2 * store.vec_unit(private_word)
+        n = np.linalg.norm(result_vec)
+        if n > 0:
+            result_vec = result_vec / n
+
+    # Collect vectors
+    vectors = [
+        store.vec_unit(start_word),
+        store.vec_unit(target_word)
+    ]
+    labels = [start_word, target_word]
+
+    if public_word:
+        vectors.append(store.vec_unit(public_word))
+        labels.append(public_word)
+    if private_word:
+        vectors.append(store.vec_unit(private_word))
+        labels.append(private_word)
+    if result_vec is not None:
+        vectors.append(result_vec)
+        labels.append("RESULT")
+
+    # Reduce to 2D
+    pca = PCA(n_components=2)
+    coords_2d = pca.fit_transform(np.array(vectors))
+
+    # Format response
+    points = []
+    for i, label in enumerate(labels):
+        points.append({
+            "word": label,
+            "x": float(coords_2d[i][0]),
+            "y": float(coords_2d[i][1])
+        })
+
+    return {"points": points}
 
 # -------------------------------
 # Dev utility: quick local smoke (no HTTP)

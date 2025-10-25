@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  wordbocce:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - MODEL_PATH=./embeddings/glove-100.bin
+      - DECK_SIZE=10000
+      - WILDCARD_RATIO=0.2
+      - ROUND_TIMEOUT_SECS=120
+    restart: unless-stopped
