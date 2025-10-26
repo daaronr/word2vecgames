@@ -696,6 +696,46 @@ def solve_puzzle(puzzle_id: int, solution: PuzzleSolution):
     elif similarity >= thresholds["1"]:
         stars = 1
 
+    # Calculate all possible moves to find the best one
+    all_moves = []
+    best_move = None
+    best_similarity = -1.0
+
+    for pub_card in allowed:
+        if pub_card not in store.kv:
+            continue
+        for priv_card in allowed:
+            if priv_card not in store.kv:
+                continue
+            for pub_sign in [1, -1]:
+                for priv_sign in [1, -1]:
+                    # Calculate this move's result
+                    v_pub = store.vec_unit(pub_card)
+                    v_priv = store.vec_unit(priv_card)
+                    v_res = v_start + float(pub_sign) * v_pub + float(priv_sign) * v_priv
+                    v_res_unit = v_res / (np.linalg.norm(v_res) + 1e-12)
+
+                    # Calculate similarity to target
+                    move_sim = float(store.cosine(v_res_unit, v_target))
+
+                    # Track this move
+                    move_info = {
+                        "public_card": pub_card,
+                        "private_card": priv_card,
+                        "public_sign": "+" if pub_sign > 0 else "-",
+                        "private_sign": "+" if priv_sign > 0 else "-",
+                        "similarity": round(move_sim, 4)
+                    }
+                    all_moves.append(move_info)
+
+                    # Track best move
+                    if move_sim > best_similarity:
+                        best_similarity = move_sim
+                        best_move = move_info.copy()
+
+    # Sort all moves by similarity (best first)
+    all_moves.sort(key=lambda m: m["similarity"], reverse=True)
+
     return {
         "valid": True,
         "similarity": similarity,
@@ -705,7 +745,9 @@ def solve_puzzle(puzzle_id: int, solution: PuzzleSolution):
         "public_used": solution.public_token,
         "private_used": solution.private_token,
         "public_sign": "+" if solution.public_sign > 0 else "-",
-        "private_sign": "+" if solution.private_sign > 0 else "-"
+        "private_sign": "+" if solution.private_sign > 0 else "-",
+        "best_move": best_move,
+        "all_moves": all_moves[:20]  # Return top 20 moves to avoid huge payload
     }
 
 # -------------------------------

@@ -7,12 +7,44 @@
     "start_word": "king",
     "target_word": "queen",
     "allowed_cards": ["woman", "female", "male", "man", "royal", "crown"],
-    "hint": "Think about gender",
+    "hint": "Gender transformation: king - man + woman",
     "optimal_similarity": 0.85,
     "stars_thresholds": {
       "3": 0.80,
       "2": 0.65,
       "1": 0.50
+    }
+  },
+  {
+    "id": 11,
+    "difficulty": "easy",
+    "name": "The Cheese Stands Alone",
+    "description": "What pairs perfectly with wine?",
+    "start_word": "wine",
+    "target_word": "cheese",
+    "allowed_cards": ["food", "drink", "milk", "grape", "bread", "dairy", "red", "white"],
+    "hint": "Wine goes with food made from milk",
+    "optimal_similarity": 0.68,
+    "stars_thresholds": {
+      "3": 0.64,
+      "2": 0.50,
+      "1": 0.38
+    }
+  },
+  {
+    "id": 12,
+    "difficulty": "medium",
+    "name": "Silicon Valley Journey",
+    "description": "From fruit to tech giant",
+    "start_word": "apple",
+    "target_word": "computer",
+    "allowed_cards": ["fruit", "technology", "machine", "digital", "electronic", "device", "steve", "mac"],
+    "hint": "Not the fruit kind of apple!",
+    "optimal_similarity": 0.58,
+    "stars_thresholds": {
+      "3": 0.54,
+      "2": 0.42,
+      "1": 0.30
     }
   },
   {
@@ -157,6 +189,134 @@
       "3": 0.74,
       "2": 0.60,
       "1": 0.45
+    }
+  },
+  {
+    "id": 13,
+    "difficulty": "medium",
+    "name": "Musical Chairs",
+    "description": "Transform one instrument into another",
+    "start_word": "guitar",
+    "target_word": "piano",
+    "allowed_cards": ["strings", "keys", "music", "notes", "acoustic", "electric", "black", "white"],
+    "hint": "Think about how the instruments differ: strings vs keys",
+    "optimal_similarity": 0.62,
+    "stars_thresholds": {
+      "3": 0.58,
+      "2": 0.45,
+      "1": 0.32
+    }
+  },
+  {
+    "id": 14,
+    "difficulty": "hard",
+    "name": "The Breakfast Riddle",
+    "description": "What comes before breakfast?",
+    "start_word": "breakfast",
+    "target_word": "sleep",
+    "allowed_cards": ["morning", "night", "bed", "wake", "dream", "rest", "dawn", "midnight"],
+    "hint": "What do you do right before breakfast?",
+    "optimal_similarity": 0.48,
+    "stars_thresholds": {
+      "3": 0.44,
+      "2": 0.35,
+      "1": 0.25
+    }
+  },
+  {
+    "id": 15,
+    "difficulty": "medium",
+    "name": "From Page to Screen",
+    "description": "Evolution of storytelling",
+    "start_word": "book",
+    "target_word": "movie",
+    "allowed_cards": ["story", "film", "read", "watch", "paper", "screen", "text", "visual"],
+    "hint": "Different media for the same stories",
+    "optimal_similarity": 0.60,
+    "stars_thresholds": {
+      "3": 0.56,
+      "2": 0.44,
+      "1": 0.32
+    }
+  },
+  {
+    "id": 16,
+    "difficulty": "hard",
+    "name": "The Olympian",
+    "description": "From metal to glory",
+    "start_word": "gold",
+    "target_word": "victory",
+    "allowed_cards": ["medal", "win", "champion", "first", "metal", "prize", "trophy", "success"],
+    "hint": "Gold medals represent victory",
+    "optimal_similarity": 0.52,
+    "stars_thresholds": {
+      "3": 0.48,
+      "2": 0.38,
+      "1": 0.28
+    }
+  },
+  {
+    "id": 17,
+    "difficulty": "easy",
+    "name": "Sweet Tooth",
+    "description": "Opposite flavors",
+    "start_word": "sweet",
+    "target_word": "sour",
+    "allowed_cards": ["bitter", "sugar", "lemon", "candy", "taste", "flavor"],
+    "hint": "Think opposite tastes",
+    "optimal_similarity": 0.74,
+    "stars_thresholds": {
+      "3": 0.70,
+      "2": 0.56,
+      "1": 0.42
+    }
+  },
+  {
+    "id": 18,
+    "difficulty": "medium",
+    "name": "The Writer's Journey",
+    "description": "From idea to reality",
+    "start_word": "thought",
+    "target_word": "word",
+    "allowed_cards": ["idea", "language", "speak", "think", "write", "mind", "voice", "text"],
+    "hint": "Thoughts become words",
+    "optimal_similarity": 0.64,
+    "stars_thresholds": {
+      "3": 0.60,
+      "2": 0.48,
+      "1": 0.36
+    }
+  },
+  {
+    "id": 19,
+    "difficulty": "hard",
+    "name": "Urban to Rural",
+    "description": "From metropolis to countryside",
+    "start_word": "city",
+    "target_word": "farm",
+    "allowed_cards": ["urban", "rural", "country", "town", "field", "building", "crop", "land"],
+    "hint": "Opposite environments",
+    "optimal_similarity": 0.50,
+    "stars_thresholds": {
+      "3": 0.46,
+      "2": 0.36,
+      "1": 0.26
+    }
+  },
+  {
+    "id": 20,
+    "difficulty": "medium",
+    "name": "The Shapeshifter",
+    "description": "Geometric transformation",
+    "start_word": "circle",
+    "target_word": "square",
+    "allowed_cards": ["round", "shape", "corner", "angle", "curved", "straight", "geometry", "edge"],
+    "hint": "How are these shapes different?",
+    "optimal_similarity": 0.66,
+    "stars_thresholds": {
+      "3": 0.62,
+      "2": 0.50,
+      "1": 0.38
     }
   }
 ]
