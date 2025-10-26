@@ -2144,13 +2144,13 @@
                     }
                     explanation += `</p>`;
 
-                    explanation += `<p><strong>Result:</strong> Your combined move landed you at "<em>${puzzleResult.nearest_word}</em>", which is ${puzzleResult.distance.toFixed(3)} units away from the target "<em>${state.currentPuzzle.target_word}</em>" (similarity: ${puzzleResult.similarity.toFixed(3)}).</p>`;
+                    explanation += `<p><strong>Result:</strong> Your combined move landed you at "<em>${puzzleResult.nearest_word}</em>", with a similarity of ${puzzleResult.similarity.toFixed(3)} to the target "<em>${state.currentPuzzle.target_word}</em>".</p>`;
 
                     // Add optimal move explanation if available
                     if (puzzleResult.best_move) {
-                        const bestDist = puzzleResult.best_move.distance;
-                        if (Math.abs(bestDist - puzzleResult.distance) > 0.01) {
-                            explanation += `<p style="background: #f0f4ff; padding: 10px; border-radius: 6px; margin-top: 10px;"><strong>💡 Optimal strategy:</strong> The best move was to ${puzzleResult.best_move.public_sign === '+' ? 'add' : 'subtract'} "${puzzleResult.best_move.public_card}" and ${puzzleResult.best_move.private_sign === '+' ? 'add' : 'subtract'} "${puzzleResult.best_move.private_card}", reaching a distance of ${bestDist.toFixed(3)}.</p>`;
+                        const bestSim = puzzleResult.best_move.similarity;
+                        if (Math.abs(bestSim - puzzleResult.similarity) > 0.01) {
+                            explanation += `<p style="background: #f0f4ff; padding: 10px; border-radius: 6px; margin-top: 10px;"><strong>💡 Optimal strategy:</strong> The best move was to ${puzzleResult.best_move.public_sign === '+' ? 'add' : 'subtract'} "${puzzleResult.best_move.public_card}" and ${puzzleResult.best_move.private_sign === '+' ? 'add' : 'subtract'} "${puzzleResult.best_move.private_card}", reaching a similarity of ${bestSim.toFixed(3)}.</p>`;
                         } else {
                             explanation += `<p style="background: #e8f5e9; padding: 10px; border-radius: 6px; margin-top: 10px;"><strong>🎯 Perfect!</strong> You found the optimal solution!</p>`;
                         }
