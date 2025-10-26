@@ -689,6 +689,27 @@
             </div>
         </div>
 
+        <!-- Best Possible Move Section -->
+        <div id="best-move-section" style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); padding: 20px; border-radius: 12px; margin: 20px 0; border: 2px solid #81c784;">
+            <h3 style="margin-bottom: 15px; color: #2e7d32; display: flex; align-items: center;">
+                <span style="font-size: 1.3em; margin-right: 8px;">🏆</span> Best Possible Move
+            </h3>
+            <div id="best-move-content" style="font-family: monospace; font-size: 0.95em; color: #1b5e20;">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- All Moves Comparison Section -->
+        <div id="all-moves-section" style="background: #fafafa; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #ddd;">
+            <h3 style="margin-bottom: 15px; color: #333; display: flex; align-items: center;">
+                <span style="font-size: 1.2em; margin-right: 8px;">📊</span> All Possible Moves
+                <span style="font-size: 0.75em; margin-left: 10px; color: #999; font-weight: normal;">(top 20)</span>
+            </h3>
+            <div id="all-moves-content" style="max-height: 300px; overflow-y: auto;">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+
         <button onclick="nextPuzzle()">Next Puzzle</button>
         <button onclick="showScreen('puzzle-select-screen')" class="btn-secondary">Back to Puzzles</button>
     </div>
@@ -1643,6 +1664,71 @@
                 document.getElementById('puzzle-result-public').textContent = result.public_used;
                 document.getElementById('puzzle-result-private-sign').textContent = result.private_sign;
                 document.getElementById('puzzle-result-private').textContent = result.private_used;
+
+                // Display best move
+                if (result.best_move) {
+                    const bestMoveHTML = `
+                        <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                            <div style="margin-bottom: 8px;">
+                                <strong>${state.currentPuzzle.start_word}</strong>
+                            </div>
+                            <div style="margin: 10px 0 10px 20px;">
+                                ${result.best_move.public_sign} <strong>${result.best_move.public_card}</strong><br>
+                                ${result.best_move.private_sign} <strong>${result.best_move.private_card}</strong>
+                            </div>
+                            <div>
+                                → <strong>${state.currentPuzzle.target_word}</strong>
+                            </div>
+                            <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #e0e0e0; color: #2e7d32; font-weight: 600;">
+                                Similarity: ${result.best_move.similarity}
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('best-move-content').innerHTML = bestMoveHTML;
+                }
+
+                // Display all moves with highlighting of player's move
+                if (result.all_moves && result.all_moves.length > 0) {
+                    const playerMove = `${result.public_sign}${result.public_used},${result.private_sign}${result.private_used}`;
+
+                    const movesHTML = result.all_moves.map((move, index) => {
+                        const moveKey = `${move.public_sign}${move.public_card},${move.private_sign}${move.private_card}`;
+                        const isPlayerMove = moveKey === playerMove;
+
+                        return `
+                            <div style="
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                padding: 10px 15px;
+                                margin: 5px 0;
+                                background: ${isPlayerMove ? '#fff3cd' : 'white'};
+                                border-radius: 6px;
+                                border: ${isPlayerMove ? '2px solid #ffc107' : '1px solid #e0e0e0'};
+                                font-size: 0.9em;
+                            ">
+                                <div style="flex: 1;">
+                                    <span style="color: #999; font-size: 0.85em; margin-right: 10px;">#${index + 1}</span>
+                                    <span style="font-family: monospace;">
+                                        ${move.public_sign} <strong>${move.public_card}</strong>,
+                                        ${move.private_sign} <strong>${move.private_card}</strong>
+                                    </span>
+                                    ${isPlayerMove ? '<span style="margin-left: 8px; color: #f59e0b; font-weight: 600;">← You</span>' : ''}
+                                </div>
+                                <div style="
+                                    font-weight: 600;
+                                    color: ${move.similarity >= 0.7 ? '#2e7d32' : move.similarity >= 0.5 ? '#f57c00' : '#d32f2f'};
+                                    min-width: 60px;
+                                    text-align: right;
+                                ">
+                                    ${move.similarity}
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+
+                    document.getElementById('all-moves-content').innerHTML = movesHTML;
+                }
 
                 showScreen('puzzle-result-screen');
             } catch (error) {

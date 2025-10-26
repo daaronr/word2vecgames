@@ -318,5 +318,165 @@
       "2": 0.50,
       "1": 0.38
     }
+  },
+  {
+    "id": 21,
+    "difficulty": "hard",
+    "name": "Fish Needs a Bicycle",
+    "description": "A woman needs a man like a...",
+    "start_word": "fish",
+    "target_word": "bicycle",
+    "allowed_cards": ["woman", "man", "need", "want", "water", "land", "ride", "swim", "wheel", "fin"],
+    "hint": "Famous feminist saying from the 1970s",
+    "optimal_similarity": 0.42,
+    "stars_thresholds": {
+      "3": 0.38,
+      "2": 0.28,
+      "1": 0.18
+    }
+  },
+  {
+    "id": 22,
+    "difficulty": "hard",
+    "name": "Alice's Riddle",
+    "description": "Why is a raven like a writing desk?",
+    "start_word": "raven",
+    "target_word": "desk",
+    "allowed_cards": ["bird", "black", "write", "wood", "feather", "pen", "paper", "furniture", "fly", "ink"],
+    "hint": "Lewis Carroll's famous nonsense riddle",
+    "optimal_similarity": 0.40,
+    "stars_thresholds": {
+      "3": 0.36,
+      "2": 0.26,
+      "1": 0.16
+    }
+  },
+  {
+    "id": 23,
+    "difficulty": "medium",
+    "name": "Soup to Nuts",
+    "description": "From beginning to end",
+    "start_word": "soup",
+    "target_word": "nuts",
+    "allowed_cards": ["food", "meal", "first", "last", "start", "finish", "course", "dinner", "appetizer", "dessert"],
+    "hint": "Expression meaning 'everything from A to Z'",
+    "optimal_similarity": 0.58,
+    "stars_thresholds": {
+      "3": 0.54,
+      "2": 0.42,
+      "1": 0.30
+    }
+  },
+  {
+    "id": 24,
+    "difficulty": "medium",
+    "name": "Rhinestone Cowboy",
+    "description": "Glen Campbell's hit song",
+    "start_word": "rhinestone",
+    "target_word": "cowboy",
+    "allowed_cards": ["glitter", "western", "sparkle", "ranch", "shine", "horse", "rodeo", "jewelry", "country", "nashville"],
+    "hint": "Glittery performer meets the wild west",
+    "optimal_similarity": 0.50,
+    "stars_thresholds": {
+      "3": 0.46,
+      "2": 0.36,
+      "1": 0.26
+    }
+  },
+  {
+    "id": 25,
+    "difficulty": "easy",
+    "name": "Bacon to Eggs",
+    "description": "They go together like...",
+    "start_word": "bacon",
+    "target_word": "eggs",
+    "allowed_cards": ["breakfast", "food", "meat", "protein", "fry", "pan", "morning", "cook"],
+    "hint": "Classic breakfast pairing",
+    "optimal_similarity": 0.72,
+    "stars_thresholds": {
+      "3": 0.68,
+      "2": 0.54,
+      "1": 0.40
+    }
+  },
+  {
+    "id": 26,
+    "difficulty": "medium",
+    "name": "Apples to Oranges",
+    "description": "Can't compare them!",
+    "start_word": "apples",
+    "target_word": "oranges",
+    "allowed_cards": ["fruit", "compare", "different", "similar", "red", "citrus", "sweet", "round"],
+    "hint": "Expression about invalid comparisons",
+    "optimal_similarity": 0.68,
+    "stars_thresholds": {
+      "3": 0.64,
+      "2": 0.50,
+      "1": 0.38
+    }
+  },
+  {
+    "id": 27,
+    "difficulty": "hard",
+    "name": "When Pigs Fly",
+    "description": "Never gonna happen",
+    "start_word": "pig",
+    "target_word": "sky",
+    "allowed_cards": ["animal", "bird", "impossible", "fly", "wing", "air", "farm", "up", "cloud", "heaven"],
+    "hint": "Expression for something impossible",
+    "optimal_similarity": 0.45,
+    "stars_thresholds": {
+      "3": 0.42,
+      "2": 0.32,
+      "1": 0.22
+    }
+  },
+  {
+    "id": 28,
+    "difficulty": "medium",
+    "name": "Bread and Butter",
+    "description": "Basic necessities",
+    "start_word": "bread",
+    "target_word": "butter",
+    "allowed_cards": ["food", "spread", "dairy", "toast", "basic", "staple", "essential", "breakfast"],
+    "hint": "They're made for each other",
+    "optimal_similarity": 0.70,
+    "stars_thresholds": {
+      "3": 0.66,
+      "2": 0.52,
+      "1": 0.38
+    }
+  },
+  {
+    "id": 29,
+    "difficulty": "hard",
+    "name": "Rocket Science",
+    "description": "It's not exactly...",
+    "start_word": "rocket",
+    "target_word": "brain",
+    "allowed_cards": ["science", "smart", "difficult", "complex", "space", "mind", "think", "hard", "genius", "intelligence"],
+    "hint": "Expression about difficulty: 'It's not ___ ___'",
+    "optimal_similarity": 0.48,
+    "stars_thresholds": {
+      "3": 0.44,
+      "2": 0.34,
+      "1": 0.24
+    }
+  },
+  {
+    "id": 30,
+    "difficulty": "easy",
+    "name": "Lock and Key",
+    "description": "Perfect fit",
+    "start_word": "lock",
+    "target_word": "key",
+    "allowed_cards": ["door", "open", "close", "metal", "secure", "fit", "pair", "match"],
+    "hint": "They go together perfectly",
+    "optimal_similarity": 0.76,
+    "stars_thresholds": {
+      "3": 0.72,
+      "2": 0.58,
+      "1": 0.44
+    }
   }
 ]
