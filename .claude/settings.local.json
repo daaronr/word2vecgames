@@ -10,7 +10,14 @@
       "Bash(xargs kill:*)",
       "Bash(export MODEL_PATH=./embeddings/glove-100.bin:*)",
       "Bash(uvicorn:*)",
-      "Bash(python test_game.py:*)"
+      "Bash(python test_game.py:*)",
+      "Bash(pkill:*)",
+      "Read(//private/tmp/**)",
+      "Bash(git pull:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []

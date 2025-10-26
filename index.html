@@ -198,6 +198,26 @@
             box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
         }
 
+        /* Make minus button SUPER obvious when active */
+        .sign-btn[data-sign="-"].active {
+            background: #dc2626 !important;
+            color: white !important;
+            font-weight: 900 !important;
+            transform: scale(1.2) !important;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.6) !important;
+            border: 3px solid #991b1b !important;
+            animation: pulse-minus 1.5s infinite;
+        }
+
+        @keyframes pulse-minus {
+            0%, 100% {
+                box-shadow: 0 4px 12px rgba(220, 38, 38, 0.6);
+            }
+            50% {
+                box-shadow: 0 4px 20px rgba(220, 38, 38, 0.9);
+            }
+        }
+
         .joker-input {
             margin-top: 10px;
             padding: 8px;
@@ -719,10 +739,11 @@
             <div style="text-align: center;">
                 <canvas id="word-viz-canvas" width="600" height="400" style="background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); max-width: 100%;"></canvas>
                 <div id="viz-legend" style="margin-top: 15px; font-size: 0.9em; color: #1565c0;">
-                    <span style="margin: 0 10px;">🟢 Start</span>
-                    <span style="margin: 0 10px;">🔴 Target</span>
-                    <span style="margin: 0 10px;">🟡 Your Result</span>
-                    <span style="margin: 0 10px;">⚪ Cards</span>
+                    <span style="margin: 0 8px;">🟢 Start</span>
+                    <span style="margin: 0 8px;">🟣 Step 1</span>
+                    <span style="margin: 0 8px;">🟠 Step 2</span>
+                    <span style="margin: 0 8px;">🟡 Final Result</span>
+                    <span style="margin: 0 8px;">🔴 Target</span>
                 </div>
             </div>
         </div>
@@ -1571,8 +1592,10 @@
                     <div class="card" onclick="selectPuzzleCard('${card}')" id="puzzle-card-${card}">
                         <div class="card-token">${card}</div>
                         <div class="card-controls">
-                            <button class="sign-btn active" onclick="event.stopPropagation(); togglePuzzleSign('${card}', '+')">+</button>
-                            <button class="sign-btn" onclick="event.stopPropagation(); togglePuzzleSign('${card}', '-')">−</button>
+                            <button class="sign-btn active" data-sign="+" onclick="event.stopPropagation(); togglePuzzleSign('${card}', '+')">+</button>
+                            <button class="sign-btn" data-sign="-" onclick="event.stopPropagation(); togglePuzzleSign('${card}', '-')">
+                                <span style="font-size: 1.2em;">−</span> SUBTRACT
+                            </button>
                         </div>
                     </div>
                 `).join('');
@@ -1762,11 +1785,19 @@
                 // Collect all words to visualize
                 const words = [...state.currentPuzzle.allowed_cards];
 
+                // Get the move details
+                const publicSign = puzzleResult.public_sign === '+' ? 1 : -1;
+                const privateSign = puzzleResult.private_sign === '+' ? 1 : -1;
+
                 const vizRequest = {
                     words: words,
                     start_word: state.currentPuzzle.start_word,
                     target_word: state.currentPuzzle.target_word,
-                    result_word: puzzleResult.nearest_word
+                    result_word: puzzleResult.nearest_word,
+                    public_card: puzzleResult.public_used,
+                    public_sign: publicSign,
+                    private_card: puzzleResult.private_used,
+                    private_sign: privateSign
                 };
 
                 const resp = await fetch(`${API_URL}/visualize`, {
@@ -1814,6 +1845,16 @@
                             radius = 8;
                             label = true;
                             break;
+                        case 'step1':
+                            color = '#9c27b0'; // Purple - intermediate step 1
+                            radius = 7;
+                            label = true;
+                            break;
+                        case 'step2':
+                            color = '#ff9800'; // Orange - intermediate step 2
+                            radius = 7;
+                            label = true;
+                            break;
                         default:
                             color = '#9e9e9e'; // Gray
                             radius = 5;
@@ -1846,31 +1887,87 @@
                     }
                 });
 
-                // Draw connecting line from start to result to target
+                // Draw path showing each step
                 const startPoint = vizData.points.find(p => p.type === 'start');
+                const step1Point = vizData.points.find(p => p.type === 'step1');
+                const step2Point = vizData.points.find(p => p.type === 'step2');
                 const resultPoint = vizData.points.find(p => p.type === 'result');
                 const targetPoint = vizData.points.find(p => p.type === 'target');
 
-                if (startPoint && resultPoint) {
+                // Helper function to draw arrow
+                function drawArrow(fromX, fromY, toX, toY, color, label) {
+                    ctx.save();
+                    ctx.strokeStyle = color;
+                    ctx.fillStyle = color;
+                    ctx.lineWidth = 3;
+
+                    // Draw line
                     ctx.beginPath();
-                    ctx.moveTo(padding + startPoint.x * plotWidth, padding + (1 - startPoint.y) * plotHeight);
-                    ctx.lineTo(padding + resultPoint.x * plotWidth, padding + (1 - resultPoint.y) * plotHeight);
-                    ctx.strokeStyle = '#ffc107';
-                    ctx.lineWidth = 2;
-                    ctx.setLineDash([5, 5]);
+                    ctx.moveTo(fromX, fromY);
+                    ctx.lineTo(toX, toY);
                     ctx.stroke();
-                    ctx.setLineDash([]);
+
+                    // Draw arrowhead
+                    const angle = Math.atan2(toY - fromY, toX - fromX);
+                    const headlen = 10;
+                    ctx.beginPath();
+                    ctx.moveTo(toX, toY);
+                    ctx.lineTo(toX - headlen * Math.cos(angle - Math.PI / 6), toY - headlen * Math.sin(angle - Math.PI / 6));
+                    ctx.lineTo(toX - headlen * Math.cos(angle + Math.PI / 6), toY - headlen * Math.sin(angle + Math.PI / 6));
+                    ctx.closePath();
+                    ctx.fill();
+
+                    // Draw label at midpoint
+                    if (label) {
+                        const midX = (fromX + toX) / 2;
+                        const midY = (fromY + toY) / 2;
+                        ctx.fillStyle = '#fff';
+                        ctx.strokeStyle = color;
+                        ctx.lineWidth = 3;
+                        ctx.font = 'bold 11px sans-serif';
+                        ctx.textAlign = 'center';
+                        ctx.strokeText(label, midX, midY - 5);
+                        ctx.fillText(label, midX, midY - 5);
+                    }
+
+                    ctx.restore();
                 }
 
-                if (resultPoint && targetPoint) {
-                    ctx.beginPath();
-                    ctx.moveTo(padding + resultPoint.x * plotWidth, padding + (1 - resultPoint.y) * plotHeight);
-                    ctx.lineTo(padding + targetPoint.x * plotWidth, padding + (1 - targetPoint.y) * plotHeight);
+                // Draw path: start → step1 → step2 (→ result) → target
+                if (startPoint && step1Point) {
+                    drawArrow(
+                        padding + startPoint.x * plotWidth,
+                        padding + (1 - startPoint.y) * plotHeight,
+                        padding + step1Point.x * plotWidth,
+                        padding + (1 - step1Point.y) * plotHeight,
+                        '#9c27b0',
+                        puzzleResult.public_sign + ' ' + puzzleResult.public_used
+                    );
+                }
+
+                if (step1Point && step2Point) {
+                    drawArrow(
+                        padding + step1Point.x * plotWidth,
+                        padding + (1 - step1Point.y) * plotHeight,
+                        padding + step2Point.x * plotWidth,
+                        padding + (1 - step2Point.y) * plotHeight,
+                        '#ff9800',
+                        puzzleResult.private_sign + ' ' + puzzleResult.private_used
+                    );
+                }
+
+                // Draw dotted line to target showing distance remaining
+                const lastStep = step2Point || step1Point || startPoint;
+                if (lastStep && targetPoint) {
+                    ctx.save();
                     ctx.strokeStyle = '#f44336';
                     ctx.lineWidth = 2;
                     ctx.setLineDash([5, 5]);
+                    ctx.beginPath();
+                    ctx.moveTo(padding + lastStep.x * plotWidth, padding + (1 - lastStep.y) * plotHeight);
+                    ctx.lineTo(padding + targetPoint.x * plotWidth, padding + (1 - targetPoint.y) * plotHeight);
                     ctx.stroke();
-                    ctx.setLineDash([]);
+                    ctx.restore();
                 }
 
             } catch (error) {

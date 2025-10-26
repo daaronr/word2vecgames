@@ -759,6 +759,10 @@ class VisualizationRequest(BaseModel):
     start_word: Optional[str] = Field(None, description="Starting word")
     target_word: Optional[str] = Field(None, description="Target word")
     result_word: Optional[str] = Field(None, description="Result word after move")
+    public_card: Optional[str] = Field(None, description="Public card used")
+    public_sign: Optional[int] = Field(None, description="Public card sign (+1 or -1)")
+    private_card: Optional[str] = Field(None, description="Private card used")
+    private_sign: Optional[int] = Field(None, description="Private card sign (+1 or -1)")
 
 @app.post("/visualize")
 def visualize_words(req: VisualizationRequest):
@@ -780,6 +784,36 @@ def visualize_words(req: VisualizationRequest):
         special_words.append(("target", req.target_word))
     if req.result_word and req.result_word in store.kv:
         special_words.append(("result", req.result_word))
+
+    # Calculate intermediate steps if move details provided
+    intermediate_steps = []
+    if req.start_word and req.public_card and req.public_sign is not None:
+        if req.start_word in store.kv and req.public_card in store.kv:
+            # Step 1: start + public_card
+            v_start = store.vec_unit(req.start_word)
+            v_public = store.vec_unit(req.public_card)
+            v_step1 = v_start + float(req.public_sign) * v_public
+            v_step1_unit = v_step1 / (np.linalg.norm(v_step1) + 1e-12)
+            nearest_step1 = store.nearest_word(v_step1_unit)
+            special_words.append(("step1", nearest_step1))
+            intermediate_steps.append({
+                "step": 1,
+                "word": nearest_step1,
+                "operation": f"{req.start_word} {'+'  if req.public_sign > 0 else '-'} {req.public_card}"
+            })
+
+            # Step 2: step1 + private_card (if provided)
+            if req.private_card and req.private_sign is not None and req.private_card in store.kv:
+                v_private = store.vec_unit(req.private_card)
+                v_step2 = v_step1 + float(req.private_sign) * v_private
+                v_step2_unit = v_step2 / (np.linalg.norm(v_step2) + 1e-12)
+                nearest_step2 = store.nearest_word(v_step2_unit)
+                special_words.append(("step2", nearest_step2))
+                intermediate_steps.append({
+                    "step": 2,
+                    "word": nearest_step2,
+                    "operation": f"... {'+' if req.private_sign > 0 else '-'} {req.private_card}"
+                })
 
     all_words = list(set(valid_words + [w for _, w in special_words]))
 
@@ -837,6 +871,7 @@ def visualize_words(req: VisualizationRequest):
 
     return {
         "points": points,
+        "intermediate_steps": intermediate_steps,
         "variance_explained": float(eigenvalues[idx[0]] + eigenvalues[idx[1]]) / float(eigenvalues.sum()) if len(eigenvalues) > 0 else 0.0
     }
 
