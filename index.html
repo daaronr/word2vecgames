@@ -162,6 +162,16 @@
         .card.selected {
             border-color: #667eea;
             background: #f0f3ff;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* Highlight cards with MINUS selected in red */
+        .card.selected-minus {
+            border-color: #dc2626 !important;
+            background: #fee2e2 !important;
+            box-shadow: 0 4px 16px rgba(220, 38, 38, 0.5) !important;
+            transform: scale(1.05);
         }
 
         .card-token {
@@ -1613,12 +1623,12 @@
             // If clicking already selected card, deselect it
             if (state.puzzleSelectedCards.public === card) {
                 state.puzzleSelectedCards.public = null;
-                cardElement.classList.remove('selected');
+                cardElement.classList.remove('selected', 'selected-minus');
                 return;
             }
             if (state.puzzleSelectedCards.private === card) {
                 state.puzzleSelectedCards.private = null;
-                cardElement.classList.remove('selected');
+                cardElement.classList.remove('selected', 'selected-minus');
                 return;
             }
 
@@ -1626,13 +1636,15 @@
             if (!state.puzzleSelectedCards.public) {
                 // Deselect previous public if any
                 const prevPublic = document.querySelector('#puzzle-cards .card.selected');
-                if (prevPublic) prevPublic.classList.remove('selected');
+                if (prevPublic) prevPublic.classList.remove('selected', 'selected-minus');
 
                 state.puzzleSelectedCards.public = card;
                 cardElement.classList.add('selected');
+                updateCardHighlight(card);
             } else if (!state.puzzleSelectedCards.private) {
                 state.puzzleSelectedCards.private = card;
                 cardElement.classList.add('selected');
+                updateCardHighlight(card);
             } else {
                 alert('You can only select two cards. Deselect one first.');
             }
@@ -1641,12 +1653,38 @@
         function togglePuzzleSign(card, sign) {
             const buttons = document.querySelectorAll(`#puzzle-card-${card} .sign-btn`);
             buttons.forEach(btn => {
-                if (btn.textContent.trim() === sign) {
+                const btnSign = btn.getAttribute('data-sign');
+                if (btnSign === sign) {
                     btn.classList.add('active');
                 } else {
                     btn.classList.remove('active');
                 }
             });
+
+            // Update card highlight based on sign
+            updateCardHighlight(card);
+        }
+
+        function updateCardHighlight(card) {
+            const cardElement = document.getElementById(`puzzle-card-${card}`);
+            if (!cardElement) return;
+
+            // Check if this card has minus selected
+            const minusBtn = cardElement.querySelector('.sign-btn[data-sign="-"]');
+            const hasMinusActive = minusBtn && minusBtn.classList.contains('active');
+
+            // Update card appearance
+            if (hasMinusActive) {
+                cardElement.classList.remove('selected');
+                cardElement.classList.add('selected-minus');
+            } else {
+                cardElement.classList.remove('selected-minus');
+                if (cardElement.classList.contains('selected') ||
+                    state.puzzleSelectedCards.public === card ||
+                    state.puzzleSelectedCards.private === card) {
+                    cardElement.classList.add('selected');
+                }
+            }
         }
 
         function showHint() {
@@ -1894,8 +1932,43 @@
                 const resultPoint = vizData.points.find(p => p.type === 'result');
                 const targetPoint = vizData.points.find(p => p.type === 'target');
 
-                // Helper function to draw arrow
-                function drawArrow(fromX, fromY, toX, toY, color, label) {
+                // Also get the card positions for visualization
+                const publicCardPoint = vizData.points.find(p => p.word === puzzleResult.public_used);
+                const privateCardPoint = vizData.points.find(p => p.word === puzzleResult.private_used);
+
+                // Helper function to draw arrow with card highlight
+                function drawArrow(fromX, fromY, toX, toY, color, label, cardPoint) {
+                    ctx.save();
+
+                    // If we have a card point, draw a line through it to show how it affects the path
+                    if (cardPoint) {
+                        const cardX = padding + cardPoint.x * plotWidth;
+                        const cardY = padding + (1 - cardPoint.y) * plotHeight;
+
+                        // Highlight the card being used
+                        ctx.beginPath();
+                        ctx.arc(cardX, cardY, 8, 0, 2 * Math.PI);
+                        ctx.fillStyle = color;
+                        ctx.fill();
+                        ctx.strokeStyle = 'white';
+                        ctx.lineWidth = 3;
+                        ctx.stroke();
+
+                        // Draw label near card
+                        ctx.fillStyle = '#fff';
+                        ctx.strokeStyle = color;
+                        ctx.lineWidth = 3;
+                        ctx.font = 'bold 11px sans-serif';
+                        ctx.textAlign = 'center';
+                        ctx.strokeText(cardPoint.word, cardX, cardY - 15);
+                        ctx.fillText(cardPoint.word, cardX, cardY - 15);
+                    }
+
+                    ctx.restore();
+                }
+
+                // Original arrow drawing function
+                function drawPathArrow(fromX, fromY, toX, toY, color, label) {
                     ctx.save();
                     ctx.strokeStyle = color;
                     ctx.fillStyle = color;
@@ -1933,26 +2006,38 @@
                     ctx.restore();
                 }
 
-                // Draw path: start → step1 → step2 (→ result) → target
+                // Highlight the cards being used first
+                if (publicCardPoint) {
+                    drawArrow(null, null, null, null, '#9c27b0',
+                             puzzleResult.public_sign + ' ' + puzzleResult.public_used,
+                             publicCardPoint);
+                }
+                if (privateCardPoint) {
+                    drawArrow(null, null, null, null, '#ff9800',
+                             puzzleResult.private_sign + ' ' + puzzleResult.private_used,
+                             privateCardPoint);
+                }
+
+                // Draw path: start → step1 → step2 → target
                 if (startPoint && step1Point) {
-                    drawArrow(
+                    drawPathArrow(
                         padding + startPoint.x * plotWidth,
                         padding + (1 - startPoint.y) * plotHeight,
                         padding + step1Point.x * plotWidth,
                         padding + (1 - step1Point.y) * plotHeight,
                         '#9c27b0',
-                        puzzleResult.public_sign + ' ' + puzzleResult.public_used
+                        'Step 1'
                     );
                 }
 
                 if (step1Point && step2Point) {
-                    drawArrow(
+                    drawPathArrow(
                         padding + step1Point.x * plotWidth,
                         padding + (1 - step1Point.y) * plotHeight,
                         padding + step2Point.x * plotWidth,
                         padding + (1 - step2Point.y) * plotHeight,
                         '#ff9800',
-                        puzzleResult.private_sign + ' ' + puzzleResult.private_used
+                        'Step 2'
                     );
                 }
 
