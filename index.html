@@ -193,6 +193,9 @@
         .sign-btn.active {
             background: #667eea;
             color: white;
+            font-weight: 700;
+            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
         }
 
         .joker-input {
@@ -649,7 +652,7 @@
             <button onclick="showHint()" class="btn-secondary" style="width: auto; display: inline-block; margin-right: 10px;">
                 💡 Show Hint
             </button>
-            <span id="hint-display" style="color: #667eea; font-style: italic;"></span>
+            <span id="hint-display" style="color: #2d3748; font-style: italic; font-weight: 600; background: #fef3c7; padding: 8px 12px; border-radius: 6px; display: inline-block;"></span>
         </div>
 
         <button onclick="submitPuzzleSolution()" id="puzzle-submit-btn">Submit Solution</button>
@@ -669,8 +672,8 @@
             <div style="font-size: 1.2em; color: #667eea; font-weight: 600; margin-bottom: 10px;">
                 <span id="puzzle-result-similarity">0.75</span> similarity
             </div>
-            <div style="color: #666;">
-                Nearest word: <strong id="puzzle-result-nearest">word</strong>
+            <div style="color: #2d3748; font-size: 1.1em; margin-top: 8px;">
+                <span style="color: #999;">You reached:</span> <strong style="color: #f59e0b; font-size: 1.3em;" id="puzzle-result-nearest">word</strong>
             </div>
         </div>
 
