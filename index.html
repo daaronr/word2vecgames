@@ -710,6 +710,23 @@
             </div>
         </div>
 
+        <!-- 2D Visualization Section -->
+        <div id="visualization-section" style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); padding: 20px; border-radius: 12px; margin: 20px 0; border: 2px solid #64b5f6;">
+            <h3 style="margin-bottom: 15px; color: #1565c0; display: flex; align-items: center;">
+                <span style="font-size: 1.3em; margin-right: 8px;">🗺️</span> Word Space Map
+                <span style="font-size: 0.75em; margin-left: 10px; color: #1976d2; font-weight: normal;">(2D projection)</span>
+            </h3>
+            <div style="text-align: center;">
+                <canvas id="word-viz-canvas" width="600" height="400" style="background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); max-width: 100%;"></canvas>
+                <div id="viz-legend" style="margin-top: 15px; font-size: 0.9em; color: #1565c0;">
+                    <span style="margin: 0 10px;">🟢 Start</span>
+                    <span style="margin: 0 10px;">🔴 Target</span>
+                    <span style="margin: 0 10px;">🟡 Your Result</span>
+                    <span style="margin: 0 10px;">⚪ Cards</span>
+                </div>
+            </div>
+        </div>
+
         <button onclick="nextPuzzle()">Next Puzzle</button>
         <button onclick="showScreen('puzzle-select-screen')" class="btn-secondary">Back to Puzzles</button>
     </div>
@@ -1730,10 +1747,135 @@
                     document.getElementById('all-moves-content').innerHTML = movesHTML;
                 }
 
+                // Render 2D visualization
+                await renderVisualization(result);
+
                 showScreen('puzzle-result-screen');
             } catch (error) {
                 console.error('Error submitting solution:', error);
                 alert('Failed to submit solution. Please try again.');
+            }
+        }
+
+        async function renderVisualization(puzzleResult) {
+            try {
+                // Collect all words to visualize
+                const words = [...state.currentPuzzle.allowed_cards];
+
+                const vizRequest = {
+                    words: words,
+                    start_word: state.currentPuzzle.start_word,
+                    target_word: state.currentPuzzle.target_word,
+                    result_word: puzzleResult.nearest_word
+                };
+
+                const resp = await fetch(`${API_URL}/visualize`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(vizRequest)
+                });
+
+                const vizData = await resp.json();
+
+                // Draw on canvas
+                const canvas = document.getElementById('word-viz-canvas');
+                const ctx = canvas.getContext('2d');
+                const width = canvas.width;
+                const height = canvas.height;
+
+                // Clear canvas
+                ctx.clearRect(0, 0, width, height);
+
+                // Add padding
+                const padding = 40;
+                const plotWidth = width - 2 * padding;
+                const plotHeight = height - 2 * padding;
+
+                // Draw each point
+                vizData.points.forEach(point => {
+                    const x = padding + point.x * plotWidth;
+                    const y = padding + (1 - point.y) * plotHeight; // Flip Y axis
+
+                    // Set color and size based on type
+                    let color, radius, label;
+                    switch (point.type) {
+                        case 'start':
+                            color = '#4caf50'; // Green
+                            radius = 10;
+                            label = true;
+                            break;
+                        case 'target':
+                            color = '#f44336'; // Red
+                            radius = 10;
+                            label = true;
+                            break;
+                        case 'result':
+                            color = '#ffc107'; // Yellow/Amber
+                            radius = 8;
+                            label = true;
+                            break;
+                        default:
+                            color = '#9e9e9e'; // Gray
+                            radius = 5;
+                            label = false;
+                    }
+
+                    // Draw point
+                    ctx.beginPath();
+                    ctx.arc(x, y, radius, 0, 2 * Math.PI);
+                    ctx.fillStyle = color;
+                    ctx.fill();
+                    ctx.strokeStyle = 'white';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+
+                    // Draw label for special points
+                    if (label) {
+                        ctx.fillStyle = '#2d3748';
+                        ctx.font = 'bold 12px sans-serif';
+                        ctx.textAlign = 'center';
+                        ctx.fillText(point.word, x, y - radius - 5);
+                    }
+
+                    // Draw small labels for cards
+                    if (!label && point.type === 'card') {
+                        ctx.fillStyle = '#666';
+                        ctx.font = '9px sans-serif';
+                        ctx.textAlign = 'center';
+                        ctx.fillText(point.word, x, y + radius + 10);
+                    }
+                });
+
+                // Draw connecting line from start to result to target
+                const startPoint = vizData.points.find(p => p.type === 'start');
+                const resultPoint = vizData.points.find(p => p.type === 'result');
+                const targetPoint = vizData.points.find(p => p.type === 'target');
+
+                if (startPoint && resultPoint) {
+                    ctx.beginPath();
+                    ctx.moveTo(padding + startPoint.x * plotWidth, padding + (1 - startPoint.y) * plotHeight);
+                    ctx.lineTo(padding + resultPoint.x * plotWidth, padding + (1 - resultPoint.y) * plotHeight);
+                    ctx.strokeStyle = '#ffc107';
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([5, 5]);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                }
+
+                if (resultPoint && targetPoint) {
+                    ctx.beginPath();
+                    ctx.moveTo(padding + resultPoint.x * plotWidth, padding + (1 - resultPoint.y) * plotHeight);
+                    ctx.lineTo(padding + targetPoint.x * plotWidth, padding + (1 - targetPoint.y) * plotHeight);
+                    ctx.strokeStyle = '#f44336';
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([5, 5]);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                }
+
+            } catch (error) {
+                console.error('Error rendering visualization:', error);
+                // Don't show error to user, visualization is optional
             }
         }
 

@@ -750,6 +750,97 @@ def solve_puzzle(puzzle_id: int, solution: PuzzleSolution):
         "all_moves": all_moves[:20]  # Return top 20 moves to avoid huge payload
     }
 
+
+# -------------------------------
+# 2D Visualization Endpoint
+# -------------------------------
+class VisualizationRequest(BaseModel):
+    words: List[str] = Field(..., description="List of words to visualize")
+    start_word: Optional[str] = Field(None, description="Starting word")
+    target_word: Optional[str] = Field(None, description="Target word")
+    result_word: Optional[str] = Field(None, description="Result word after move")
+
+@app.post("/visualize")
+def visualize_words(req: VisualizationRequest):
+    """
+    Project word vectors into 2D space using PCA for visualization.
+    Returns 2D coordinates for each word.
+    """
+    if not store or not store.kv:
+        raise HTTPException(status_code=503, detail="Embeddings not loaded")
+
+    # Filter words that exist in vocabulary
+    valid_words = [w for w in req.words if w in store.kv]
+
+    # Add special words if provided
+    special_words = []
+    if req.start_word and req.start_word in store.kv:
+        special_words.append(("start", req.start_word))
+    if req.target_word and req.target_word in store.kv:
+        special_words.append(("target", req.target_word))
+    if req.result_word and req.result_word in store.kv:
+        special_words.append(("result", req.result_word))
+
+    all_words = list(set(valid_words + [w for _, w in special_words]))
+
+    if len(all_words) < 2:
+        raise HTTPException(status_code=400, detail="Need at least 2 valid words")
+
+    # Get vectors for all words
+    vectors = np.array([store.kv[word] for word in all_words])
+
+    # Simple PCA implementation (reduce to 2D)
+    # Center the data
+    mean_vec = np.mean(vectors, axis=0)
+    centered = vectors - mean_vec
+
+    # Compute covariance matrix
+    cov_matrix = np.cov(centered.T)
+
+    # Get eigenvalues and eigenvectors
+    eigenvalues, eigenvectors = np.linalg.eigh(cov_matrix)
+
+    # Sort by eigenvalues (descending)
+    idx = eigenvalues.argsort()[::-1]
+    eigenvectors = eigenvectors[:, idx]
+
+    # Project onto first 2 principal components
+    pca_components = eigenvectors[:, :2]
+    coords_2d = centered @ pca_components
+
+    # Normalize to [0, 1] range for easier plotting
+    min_x, max_x = coords_2d[:, 0].min(), coords_2d[:, 0].max()
+    min_y, max_y = coords_2d[:, 1].min(), coords_2d[:, 1].max()
+
+    if max_x > min_x:
+        coords_2d[:, 0] = (coords_2d[:, 0] - min_x) / (max_x - min_x)
+    if max_y > min_y:
+        coords_2d[:, 1] = (coords_2d[:, 1] - min_y) / (max_y - min_y)
+
+    # Build response
+    points = []
+    for i, word in enumerate(all_words):
+        point = {
+            "word": word,
+            "x": float(coords_2d[i, 0]),
+            "y": float(coords_2d[i, 1]),
+            "type": "card"
+        }
+
+        # Mark special words
+        for special_type, special_word in special_words:
+            if word == special_word:
+                point["type"] = special_type
+                break
+
+        points.append(point)
+
+    return {
+        "points": points,
+        "variance_explained": float(eigenvalues[idx[0]] + eigenvalues[idx[1]]) / float(eigenvalues.sum()) if len(eigenvalues) > 0 else 0.0
+    }
+
+
 # -------------------------------
 # Dev utility: quick local smoke (no HTTP)
 # -------------------------------
