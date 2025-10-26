@@ -614,7 +614,28 @@ def get_puzzle(puzzle_id: int):
     if not puzzle:
         raise HTTPException(404, f"Puzzle {puzzle_id} not found")
 
-    return puzzle
+    # Filter out WILDCARD and cards too similar to target
+    allowed = puzzle.get("allowed_cards", [])
+    has_wildcard = "WILDCARD" in allowed
+    filtered_allowed = []
+    target_word = puzzle["target_word"]
+
+    for card in allowed:
+        if card == "WILDCARD":
+            continue
+        # Check if card is too similar to target
+        if store and card in store.kv and target_word in store.kv:
+            similarity = store.cosine(store.vec_unit(card), store.vec_unit(target_word))
+            if similarity > 0.85:
+                continue
+        filtered_allowed.append(card)
+
+    # Return modified puzzle
+    result = puzzle.copy()
+    result["allowed_cards"] = filtered_allowed
+    result["has_wildcard"] = has_wildcard
+
+    return result
 
 class PuzzleSolution(BaseModel):
     public_token: str
@@ -635,18 +656,48 @@ def solve_puzzle(puzzle_id: int, solution: PuzzleSolution):
     if not puzzle:
         raise HTTPException(404, f"Puzzle {puzzle_id} not found")
 
-    # Check if used cards are in allowed list
+    # Check if used cards are in allowed list (or WILDCARD is allowed)
     allowed = puzzle.get("allowed_cards", [])
-    if solution.public_token not in allowed:
-        return {
-            "valid": False,
-            "error": f"'{solution.public_token}' is not an allowed card for this puzzle"
-        }
-    if solution.private_token not in allowed:
-        return {
-            "valid": False,
-            "error": f"'{solution.private_token}' is not an allowed card for this puzzle"
-        }
+    has_wildcard = "WILDCARD" in allowed
+
+    # Filter allowed cards to remove WILDCARD and cards too similar to target
+    filtered_allowed = []
+    target_word = puzzle["target_word"]
+    for card in allowed:
+        if card == "WILDCARD":
+            continue
+        # Check if card is too similar to target (would make puzzle trivial)
+        if card in store.kv and target_word in store.kv:
+            similarity = store.cosine(store.vec_unit(card), store.vec_unit(target_word))
+            if similarity > 0.85:  # Too similar, skip this card
+                continue
+        filtered_allowed.append(card)
+
+    # For WILDCARD puzzles, allow any reasonable word from deck
+    if has_wildcard:
+        # Check that used tokens are either in allowed list OR in vocabulary
+        if solution.public_token not in filtered_allowed and solution.public_token not in deck_tokens:
+            return {
+                "valid": False,
+                "error": f"'{solution.public_token}' is not valid for this puzzle"
+            }
+        if solution.private_token not in filtered_allowed and solution.private_token not in deck_tokens:
+            return {
+                "valid": False,
+                "error": f"'{solution.private_token}' is not valid for this puzzle"
+            }
+    else:
+        # Standard puzzle: must use cards from allowed list
+        if solution.public_token not in filtered_allowed:
+            return {
+                "valid": False,
+                "error": f"'{solution.public_token}' is not an allowed card for this puzzle"
+            }
+        if solution.private_token not in filtered_allowed:
+            return {
+                "valid": False,
+                "error": f"'{solution.private_token}' is not an allowed card for this puzzle"
+            }
 
     # Check if all words exist in vocabulary
     start_word = puzzle["start_word"]

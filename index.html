@@ -160,18 +160,48 @@
         }
 
         .card.selected {
-            border-color: #667eea;
-            background: #f0f3ff;
-            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
-            transform: scale(1.05);
+            border: 4px solid #667eea !important;
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%) !important;
+            box-shadow: 0 6px 24px rgba(102, 126, 234, 0.6) !important;
+            transform: scale(1.08);
+        }
+
+        .card.selected::before {
+            content: '✓ SELECTED';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            white-space: nowrap;
         }
 
         /* Highlight cards with MINUS selected in red */
         .card.selected-minus {
-            border-color: #dc2626 !important;
-            background: #fee2e2 !important;
-            box-shadow: 0 4px 16px rgba(220, 38, 38, 0.5) !important;
-            transform: scale(1.05);
+            border: 4px solid #dc2626 !important;
+            background: linear-gradient(135deg, #fee2e2 0%, #fca5a5 100%) !important;
+            box-shadow: 0 6px 24px rgba(220, 38, 38, 0.7) !important;
+            transform: scale(1.08);
+        }
+
+        .card.selected-minus::before {
+            content: '✓ SUBTRACT';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #dc2626;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            white-space: nowrap;
         }
 
         .card-token {
@@ -1675,6 +1705,14 @@
         }
 
         function togglePuzzleSign(card, sign) {
+            const cardElement = document.getElementById(`puzzle-card-${card}`);
+
+            // First, select the card if it's not already selected
+            if (state.puzzleSelectedCards.public !== card && state.puzzleSelectedCards.private !== card) {
+                selectPuzzleCard(card);
+            }
+
+            // Then toggle the sign buttons
             const buttons = document.querySelectorAll(`#puzzle-card-${card} .sign-btn`);
             buttons.forEach(btn => {
                 const btnSign = btn.getAttribute('data-sign');
@@ -1862,13 +1900,19 @@
                     private_sign: privateSign
                 };
 
+                console.log('Fetching visualization...', vizRequest);
                 const resp = await fetch(`${API_URL}/visualize`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(vizRequest)
                 });
 
+                if (!resp.ok) {
+                    throw new Error(`Visualization API error: ${resp.status}`);
+                }
+
                 const vizData = await resp.json();
+                console.log('Visualization data received:', vizData);
 
                 // Draw on canvas
                 const canvas = document.getElementById('word-viz-canvas');
@@ -2081,6 +2125,7 @@
 
                 // Generate natural language explanation
                 const explDiv = document.getElementById('explanation-text');
+                console.log('Explanation div:', explDiv);
                 if (explDiv) {
                     const publicOp = puzzleResult.public_sign === '+' ? 'added' : 'subtracted';
                     const privateOp = puzzleResult.private_sign === '+' ? 'added' : 'subtracted';
