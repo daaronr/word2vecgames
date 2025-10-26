@@ -2145,27 +2145,25 @@
                 if (explDiv) {
                     let explanation = `<p><strong>🎯 Your Journey:</strong> <em>${state.currentPuzzle.start_word}</em> → <em>${state.currentPuzzle.target_word}</em></p>`;
 
-                    // Explain Step 1 with semantic reasoning
-                    explanation += `<p><strong>Step 1:</strong> `;
-                    if (puzzleResult.public_sign === '+') {
-                        explanation += `By <span style="color: #6A1B9A; font-weight: 600;">adding "${puzzleResult.public_used}"</span>, you're blending the semantic concepts - imagine mixing the meanings of "${state.currentPuzzle.start_word}" and "${puzzleResult.public_used}" together. This creates a new conceptual space that combines qualities of both words.`;
-                    } else {
-                        explanation += `By <span style="color: #dc2626; font-weight: 600;">subtracting "${puzzleResult.public_used}"</span>, you're removing that aspect from "${state.currentPuzzle.start_word}" - moving away from concepts associated with "${puzzleResult.public_used}" while keeping what's left.`;
-                    }
-                    if (step1Point) {
-                        explanation += ` This landed you near "<strong>${step1Point.word}</strong>".`;
-                    }
-                    explanation += `</p>`;
+                    // Explain the semantic reasoning
+                    explanation += `<p><strong>Your word arithmetic:</strong> `;
+                    explanation += `<code style="background: #f5f5f5; padding: 4px 8px; border-radius: 4px; font-family: monospace;">`;
+                    explanation += `${state.currentPuzzle.start_word}`;
+                    explanation += ` ${puzzleResult.public_sign} ${puzzleResult.public_used}`;
+                    explanation += ` ${puzzleResult.private_sign} ${puzzleResult.private_used}`;
+                    explanation += `</code></p>`;
 
-                    // Explain Step 2 with semantic reasoning
-                    explanation += `<p><strong>Step 2:</strong> `;
-                    if (puzzleResult.private_sign === '+') {
-                        explanation += `Then <span style="color: #EF6C00; font-weight: 600;">adding "${puzzleResult.private_used}"</span> brings in additional qualities - layering on the semantic features of "${puzzleResult.private_used}" to refine your position and get closer to "${state.currentPuzzle.target_word}".`;
+                    explanation += `<p><strong>The semantic journey:</strong> `;
+                    if (puzzleResult.public_sign === '+') {
+                        explanation += `Adding "<span style="color: #6A1B9A; font-weight: 600;">${puzzleResult.public_used}</span>" blends its meaning with "${state.currentPuzzle.start_word}" - combining the semantic features of both concepts. `;
                     } else {
-                        explanation += `Then <span style="color: #dc2626; font-weight: 600;">subtracting "${puzzleResult.private_used}"</span> strips away those unwanted associations, moving you further from "${puzzleResult.private_used}" concepts and closer to your target.`;
+                        explanation += `Subtracting "<span style="color: #dc2626; font-weight: 600;">${puzzleResult.public_used}</span>" removes those qualities from "${state.currentPuzzle.start_word}" - moving away from anything associated with "${puzzleResult.public_used}". `;
                     }
-                    if (step2Point) {
-                        explanation += ` This brought you to "<strong>${step2Point.word}</strong>".`;
+
+                    if (puzzleResult.private_sign === '+') {
+                        explanation += `Then adding "<span style="color: #EF6C00; font-weight: 600;">${puzzleResult.private_used}</span>" layers on more semantic features to refine your position.`;
+                    } else {
+                        explanation += `Then subtracting "<span style="color: #dc2626; font-weight: 600;">${puzzleResult.private_used}</span>" further strips away unwanted associations.`;
                     }
                     explanation += `</p>`;
 
