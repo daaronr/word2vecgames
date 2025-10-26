@@ -1976,18 +1976,25 @@
                     ctx.lineWidth = 2;
                     ctx.stroke();
 
-                    // Draw label for special points
+                    // Draw label for special points with background for readability
                     if (label) {
-                        ctx.fillStyle = '#2d3748';
-                        ctx.font = 'bold 12px sans-serif';
+                        ctx.font = 'bold 14px sans-serif';
                         ctx.textAlign = 'center';
-                        ctx.fillText(point.word, x, y - radius - 5);
+                        const textWidth = ctx.measureText(point.word).width;
+
+                        // Draw dark background rectangle
+                        ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
+                        ctx.fillRect(x - textWidth/2 - 6, y - radius - 25, textWidth + 12, 18);
+
+                        // Draw white text
+                        ctx.fillStyle = '#ffffff';
+                        ctx.fillText(point.word, x, y - radius - 12);
                     }
 
-                    // Draw small labels for cards
+                    // Draw small labels for cards (faded so path stands out)
                     if (!label && point.type === 'card') {
-                        ctx.fillStyle = '#666';
-                        ctx.font = '9px sans-serif';
+                        ctx.fillStyle = '#999';
+                        ctx.font = '8px sans-serif';
                         ctx.textAlign = 'center';
                         ctx.fillText(point.word, x, y + radius + 10);
                     }
@@ -2022,25 +2029,29 @@
                         ctx.lineWidth = 3;
                         ctx.stroke();
 
-                        // Draw label near card
-                        ctx.fillStyle = '#fff';
-                        ctx.strokeStyle = color;
-                        ctx.lineWidth = 3;
-                        ctx.font = 'bold 11px sans-serif';
+                        // Draw label near card with dark background
+                        ctx.font = 'bold 12px sans-serif';
                         ctx.textAlign = 'center';
-                        ctx.strokeText(cardPoint.word, cardX, cardY - 15);
-                        ctx.fillText(cardPoint.word, cardX, cardY - 15);
+                        const cardTextWidth = ctx.measureText(cardPoint.word).width;
+
+                        // Dark background
+                        ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+                        ctx.fillRect(cardX - cardTextWidth/2 - 5, cardY - 26, cardTextWidth + 10, 16);
+
+                        // White text
+                        ctx.fillStyle = '#ffffff';
+                        ctx.fillText(cardPoint.word, cardX, cardY - 14);
                     }
 
                     ctx.restore();
                 }
 
-                // Original arrow drawing function
+                // Original arrow drawing function - THICK arrows to show movement clearly
                 function drawPathArrow(fromX, fromY, toX, toY, color, label) {
                     ctx.save();
                     ctx.strokeStyle = color;
                     ctx.fillStyle = color;
-                    ctx.lineWidth = 3;
+                    ctx.lineWidth = 6;  // THICKER arrows to emphasize movement
 
                     // Draw line
                     ctx.beginPath();
@@ -2048,9 +2059,9 @@
                     ctx.lineTo(toX, toY);
                     ctx.stroke();
 
-                    // Draw arrowhead
+                    // Draw larger arrowhead
                     const angle = Math.atan2(toY - fromY, toX - fromX);
-                    const headlen = 10;
+                    const headlen = 16;
                     ctx.beginPath();
                     ctx.moveTo(toX, toY);
                     ctx.lineTo(toX - headlen * Math.cos(angle - Math.PI / 6), toY - headlen * Math.sin(angle - Math.PI / 6));
@@ -2058,16 +2069,21 @@
                     ctx.closePath();
                     ctx.fill();
 
-                    // Draw label at midpoint
+                    // Draw label with dark background for readability
                     if (label) {
                         const midX = (fromX + toX) / 2;
                         const midY = (fromY + toY) / 2;
-                        ctx.fillStyle = '#fff';
-                        ctx.strokeStyle = color;
-                        ctx.lineWidth = 3;
-                        ctx.font = 'bold 11px sans-serif';
+
+                        ctx.font = 'bold 13px sans-serif';
                         ctx.textAlign = 'center';
-                        ctx.strokeText(label, midX, midY - 5);
+                        const textWidth = ctx.measureText(label).width;
+
+                        // Dark background
+                        ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+                        ctx.fillRect(midX - textWidth/2 - 6, midY - 17, textWidth + 12, 18);
+
+                        // White text
+                        ctx.fillStyle = '#ffffff';
                         ctx.fillText(label, midX, midY - 5);
                     }
 
@@ -2127,24 +2143,43 @@
                 const explDiv = document.getElementById('explanation-text');
                 console.log('Explanation div:', explDiv);
                 if (explDiv) {
-                    const publicOp = puzzleResult.public_sign === '+' ? 'added' : 'subtracted';
-                    const privateOp = puzzleResult.private_sign === '+' ? 'added' : 'subtracted';
+                    let explanation = `<p><strong>🎯 Your Journey:</strong> <em>${state.currentPuzzle.start_word}</em> → <em>${state.currentPuzzle.target_word}</em></p>`;
 
-                    let explanation = `<p><strong>Your strategy:</strong> Starting from "<em>${state.currentPuzzle.start_word}</em>", you ${publicOp} the concept of "<em>${puzzleResult.public_used}</em>" and then ${privateOp} "<em>${puzzleResult.private_used}</em>".</p>`;
-
-                    explanation += `<p><strong>Step 1:</strong> ${puzzleResult.public_sign === '+' ? 'Adding' : 'Subtracting'} "${puzzleResult.public_used}" shifted your position in semantic space`;
+                    // Explain Step 1 with semantic reasoning
+                    explanation += `<p><strong>Step 1:</strong> `;
+                    if (puzzleResult.public_sign === '+') {
+                        explanation += `By <span style="color: #6A1B9A; font-weight: 600;">adding "${puzzleResult.public_used}"</span>, you're blending the semantic concepts - imagine mixing the meanings of "${state.currentPuzzle.start_word}" and "${puzzleResult.public_used}" together. This creates a new conceptual space that combines qualities of both words.`;
+                    } else {
+                        explanation += `By <span style="color: #dc2626; font-weight: 600;">subtracting "${puzzleResult.public_used}"</span>, you're removing that aspect from "${state.currentPuzzle.start_word}" - moving away from concepts associated with "${puzzleResult.public_used}" while keeping what's left.`;
+                    }
                     if (step1Point) {
-                        explanation += ` toward concepts related to ${puzzleResult.public_used}.`;
+                        explanation += ` This landed you near "<strong>${step1Point.word}</strong>".`;
                     }
                     explanation += `</p>`;
 
-                    explanation += `<p><strong>Step 2:</strong> Then ${puzzleResult.private_sign === '+' ? 'adding' : 'subtracting'} "${puzzleResult.private_used}" moved you further`;
+                    // Explain Step 2 with semantic reasoning
+                    explanation += `<p><strong>Step 2:</strong> `;
+                    if (puzzleResult.private_sign === '+') {
+                        explanation += `Then <span style="color: #EF6C00; font-weight: 600;">adding "${puzzleResult.private_used}"</span> brings in additional qualities - layering on the semantic features of "${puzzleResult.private_used}" to refine your position and get closer to "${state.currentPuzzle.target_word}".`;
+                    } else {
+                        explanation += `Then <span style="color: #dc2626; font-weight: 600;">subtracting "${puzzleResult.private_used}"</span> strips away those unwanted associations, moving you further from "${puzzleResult.private_used}" concepts and closer to your target.`;
+                    }
                     if (step2Point) {
-                        explanation += `, bringing you closer to the target.`;
+                        explanation += ` This brought you to "<strong>${step2Point.word}</strong>".`;
                     }
                     explanation += `</p>`;
 
-                    explanation += `<p><strong>Result:</strong> Your combined move landed you at "<em>${puzzleResult.nearest_word}</em>", with a similarity of ${puzzleResult.similarity.toFixed(3)} to the target "<em>${state.currentPuzzle.target_word}</em>".</p>`;
+                    // Final result with semantic similarity explanation
+                    const simPercent = (puzzleResult.similarity * 100).toFixed(1);
+                    explanation += `<p><strong>📍 Final Result:</strong> Your path led to "<em style="color: #f59e0b; font-size: 1.1em;">${puzzleResult.nearest_word}</em>", which shares ${simPercent}% semantic similarity with the target "<em>${state.currentPuzzle.target_word}</em>". `;
+                    if (puzzleResult.similarity > 0.8) {
+                        explanation += `<span style="color: #2e7d32;">Excellent! Very close in meaning!</span>`;
+                    } else if (puzzleResult.similarity > 0.6) {
+                        explanation += `<span style="color: #f57c00;">Good attempt - you captured some related concepts.</span>`;
+                    } else {
+                        explanation += `<span style="color: #666;">There's still conceptual distance to cover.</span>`;
+                    }
+                    explanation += `</p>`;
 
                     // Add optimal move explanation if available
                     if (puzzleResult.best_move) {
