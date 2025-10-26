@@ -845,7 +845,7 @@ def visualize_words(req: VisualizationRequest):
             v_public = store.vec_unit(req.public_card)
             v_step1 = v_start + float(req.public_sign) * v_public
             v_step1_unit = v_step1 / (np.linalg.norm(v_step1) + 1e-12)
-            nearest_step1 = store.nearest_word(v_step1_unit)
+            nearest_step1, _ = store.nearest(v_step1_unit)
             special_words.append(("step1", nearest_step1))
             intermediate_steps.append({
                 "step": 1,
@@ -858,7 +858,7 @@ def visualize_words(req: VisualizationRequest):
                 v_private = store.vec_unit(req.private_card)
                 v_step2 = v_step1 + float(req.private_sign) * v_private
                 v_step2_unit = v_step2 / (np.linalg.norm(v_step2) + 1e-12)
-                nearest_step2 = store.nearest_word(v_step2_unit)
+                nearest_step2, _ = store.nearest(v_step2_unit)
                 special_words.append(("step2", nearest_step2))
                 intermediate_steps.append({
                     "step": 2,
