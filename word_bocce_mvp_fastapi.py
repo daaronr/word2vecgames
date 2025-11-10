@@ -56,6 +56,12 @@ ROUND_TIMEOUT_SECS = int(os.environ.get("ROUND_TIMEOUT_SECS", "120"))  # More ti
 USE_ANNOY = os.environ.get("USE_ANNOY", "0") == "1"
 RNG_SEED = int(os.environ.get("RNG_SEED", "12345"))
 
+# Embedding post-processing config
+# FREQ_WEIGHT: 0-1, how much to de-emphasize frequent words (0.3 recommended for more intuitive results)
+FREQ_WEIGHT = float(os.environ.get("FREQ_WEIGHT", "0.3"))
+# NORMALIZE_METHOD: 'unit' (cosine-friendly), 'standardize', or 'none'
+NORMALIZE_METHOD = os.environ.get("NORMALIZE_METHOD", "unit")
+
 random.seed(RNG_SEED)
 np.random.seed(RNG_SEED)
 
@@ -117,20 +123,111 @@ class ResolveResp(BaseModel):
     leaderboard: List[Dict[str, object]]
 
 # -------------------------------
-# Embedding store
+# Embedding space abstraction
+# -------------------------------
+class EmbeddingSpace:
+    """
+    Pluggable abstraction for word embeddings with post-processing capabilities.
+    Subclass this to implement different preprocessing strategies.
+    """
+    def __init__(self, path: str, config: Optional[Dict] = None):
+        """
+        Load embeddings from path with optional configuration.
+
+        Config options:
+        - freq_weight: float (0-1) - how much to weight by frequency (0 = no weighting, 1 = full weighting)
+        - normalize_method: str - normalization method ('unit', 'standardize', 'none')
+        - vocab_filter: List[str] - restrict to specific vocabulary
+        """
+        self.config = config or {}
+        self.path = path
+        self._load_embeddings(path)
+        self._apply_preprocessing()
+
+    def _load_embeddings(self, path: str):
+        """Load raw embeddings - override in subclasses"""
+        if KeyedVectors is None:
+            raise RuntimeError("gensim not installed. pip install gensim")
+
+        self.raw_kv: KeyedVectors = KeyedVectors.load_word2vec_format(
+            path, binary=path.endswith('.bin') or path.endswith('.bin.gz')
+        )
+        self.dim = int(self.raw_kv.vector_size)
+
+    def _apply_preprocessing(self):
+        """Apply post-processing transformations"""
+        # Can be overridden for custom preprocessing
+        pass
+
+    def vector(self, word: str) -> np.ndarray:
+        """Get (possibly preprocessed) vector for word"""
+        if word not in self.raw_kv:
+            raise KeyError(f"Word '{word}' not in vocabulary")
+        v = self.raw_kv.get_vector(word).astype(np.float32)
+
+        # Apply frequency weighting if configured
+        freq_weight = self.config.get('freq_weight', 0.0)
+        if freq_weight > 0:
+            # Words earlier in vocab are more frequent - downweight them slightly
+            # to emphasize semantic meaning over frequency
+            idx = self.raw_kv.key_to_index.get(word, len(self.raw_kv.index_to_key))
+            freq_factor = 1.0 - (freq_weight * (1.0 - idx / len(self.raw_kv.index_to_key)))
+            v = v * freq_factor
+
+        # Normalize
+        norm_method = self.config.get('normalize_method', 'unit')
+        if norm_method == 'unit':
+            n = np.linalg.norm(v)
+            if n > 0:
+                v = v / n
+        elif norm_method == 'standardize':
+            # Standardize each dimension
+            v = (v - v.mean()) / (v.std() + 1e-8)
+
+        return v
+
+    def nearest(self, vec: np.ndarray, k: int = 10, vocab_filter: Optional[List[str]] = None) -> List[Tuple[str, float]]:
+        """
+        Find k nearest words to vec, optionally filtered to vocab_filter.
+        Returns list of (word, similarity) tuples.
+        """
+        candidates = vocab_filter if vocab_filter else self.raw_kv.index_to_key
+
+        # Compute similarities
+        results = []
+        for word in candidates:
+            if word not in self.raw_kv:
+                continue
+            word_vec = self.vector(word)
+            # Cosine similarity (vectors are already normalized)
+            sim = float(np.dot(vec, word_vec))
+            results.append((word, sim))
+
+        # Sort by similarity and return top k
+        results.sort(key=lambda x: x[1], reverse=True)
+        return results[:k]
+
+    def has(self, word: str) -> bool:
+        """Check if word exists in vocabulary"""
+        return word in self.raw_kv
+
+
+# -------------------------------
+# Embedding store (refactored to use EmbeddingSpace)
 # -------------------------------
 class VectorStore:
-    def __init__(self, path: Optional[str]):
+    def __init__(self, path: Optional[str], embedding_config: Optional[Dict] = None):
         if not path:
             raise RuntimeError(
                 "MODEL_PATH env var not set. Point it to a KeyedVectors file (e.g., GoogleNews .bin.gz)."
             )
-        if KeyedVectors is None:
-            raise RuntimeError("gensim not installed. pip install gensim")
 
-        self.kv: KeyedVectors = KeyedVectors.load_word2vec_format(path, binary=path.endswith('.bin') or path.endswith('.bin.gz'))
-        self.dim = int(self.kv.vector_size)
-        # Unit-normalize into contiguous float32 array
+        # Use EmbeddingSpace abstraction
+        self.embedding_space = EmbeddingSpace(path, embedding_config)
+        self.kv = self.embedding_space.raw_kv  # For backward compatibility
+        self.dim = self.embedding_space.dim
+
+        # Cache for deck tokens
         self._norms: Dict[str, np.ndarray] = {}
         self._deck_tokens: List[str] = []
         self._annoy: Optional[AnnoyIndex] = None
@@ -176,11 +273,8 @@ class VectorStore:
         return toks
 
     def vec_unit(self, token: str) -> np.ndarray:
-        v = self.kv.get_vector(token).astype(np.float32)
-        n = np.linalg.norm(v)
-        if n == 0:
-            return v
-        return v / n
+        """Get unit-normalized vector for token"""
+        return self.embedding_space.vector(token)
 
     def cosine(self, u: np.ndarray, v: np.ndarray) -> float:
         return float(np.dot(u, v))
@@ -196,8 +290,26 @@ class VectorStore:
         idx.build(20)
         self._annoy = idx
 
-    def nearest(self, u: np.ndarray, k: int = 1) -> Tuple[str, float]:
-        # Search only over deck tokens
+    def nearest(self, u: np.ndarray, k: int = 1, vocab_filter: Optional[List[str]] = None) -> Tuple[str, float]:
+        """
+        Find nearest word(s) to vector u.
+
+        Args:
+            u: Query vector
+            k: Number of results (currently only k=1 is fully supported for backward compatibility)
+            vocab_filter: Optional list of allowed words (domain restriction)
+
+        Returns:
+            Tuple of (word, similarity) for the nearest word
+        """
+        # If vocab filter is specified, use embedding_space.nearest()
+        if vocab_filter:
+            results = self.embedding_space.nearest(u, k=k, vocab_filter=vocab_filter)
+            if results:
+                return results[0]
+            return "", -2.0
+
+        # Search only over deck tokens (existing behavior)
         if USE_ANNOY:
             self.ensure_annoy()
             assert self._annoy is not None
@@ -205,7 +317,8 @@ class VectorStore:
             best_t = self._deck_tokens[ids[0]]
             sim = self.cosine(u, self._norms[best_t])
             return best_t, sim
-        # Brute force
+
+        # Brute force over deck
         best_t = None
         best = -2.0
         for t, v in self._norms.items():
@@ -376,7 +489,12 @@ if MODEL_PATH is None:
     store = None  # type: ignore
     deck_tokens: List[str] = []
 else:
-    store = VectorStore(MODEL_PATH)
+    # Configure embedding preprocessing for more intuitive results
+    embedding_config = {
+        'freq_weight': FREQ_WEIGHT,
+        'normalize_method': NORMALIZE_METHOD,
+    }
+    store = VectorStore(MODEL_PATH, embedding_config)
     deck_tokens = store.build_deck(DECK_SIZE)
 
 game = Game(store) if store else None  # type: ignore
@@ -635,6 +753,10 @@ def get_puzzle(puzzle_id: int):
     result["allowed_cards"] = filtered_allowed
     result["has_wildcard"] = has_wildcard
 
+    # Include domain_vocab if specified (for domain-restricted nearest neighbor search)
+    if "domain_vocab" in puzzle:
+        result["domain_vocab"] = puzzle["domain_vocab"]
+
     return result
 
 class PuzzleSolution(BaseModel):
@@ -725,20 +847,28 @@ def solve_puzzle(puzzle_id: int, solution: PuzzleSolution):
     v_target = store.vec_unit(target_word)
     similarity = float(store.cosine(v_result_unit, v_target))
 
-    # Find nearest word
-    nearest_word = start_word
-    best_sim = -1.0
-    for token in deck_tokens[:1000]:
-        if token in [start_word, target_word]:
-            continue
-        v_tok = store._norms[token]
-        sim = store.cosine(v_result_unit, v_tok)
-        if sim > best_sim:
-            best_sim = sim
-            nearest_word = token
+    # Find nearest word - use domain vocab if specified
+    domain_vocab = puzzle.get("domain_vocab", None)
+    if domain_vocab:
+        # Domain-restricted vocabulary for more intuitive results
+        nearest_word, best_sim = store.nearest(v_result_unit, k=1, vocab_filter=domain_vocab)
+    else:
+        # Use default deck search
+        nearest_word = start_word
+        best_sim = -1.0
+        for token in deck_tokens[:1000]:
+            if token in [start_word, target_word]:
+                continue
+            v_tok = store._norms[token]
+            sim = store.cosine(v_result_unit, v_tok)
+            if sim > best_sim:
+                best_sim = sim
+                nearest_word = token
 
-    # Calculate star rating
+    # Calculate star rating and win condition
     thresholds = puzzle.get("stars_thresholds", {"3": 0.70, "2": 0.50, "1": 0.30})
+    win_threshold = puzzle.get("win_threshold", thresholds["1"])  # Minimum to "pass"
+
     stars = 0
     if similarity >= thresholds["3"]:
         stars = 3
@@ -746,6 +876,20 @@ def solve_puzzle(puzzle_id: int, solution: PuzzleSolution):
         stars = 2
     elif similarity >= thresholds["1"]:
         stars = 1
+
+    # Determine if puzzle is passed
+    passed = similarity >= win_threshold
+
+    # Calculate progress indicator (0-100%)
+    # Map similarity from [-1, 1] to [0, 100], with emphasis on positive similarities
+    if similarity < 0:
+        progress = max(0, (similarity + 1) * 25)  # -1 to 0 maps to 0-25%
+    else:
+        progress = 25 + (similarity * 75)  # 0 to 1 maps to 25-100%
+
+    # Calculate distance metrics for better feedback
+    start_to_target_sim = float(store.cosine(v_start, v_target))
+    improvement = similarity - start_to_target_sim  # How much closer we got
 
     # Calculate all possible moves to find the best one
     all_moves = []
@@ -792,6 +936,11 @@ def solve_puzzle(puzzle_id: int, solution: PuzzleSolution):
         "similarity": similarity,
         "nearest_word": nearest_word,
         "stars": stars,
+        "passed": passed,  # NEW: threshold-based win condition
+        "win_threshold": win_threshold,  # NEW: what similarity is needed to pass
+        "progress": round(progress, 1),  # NEW: progress indicator (0-100%)
+        "improvement": round(improvement, 4),  # NEW: how much closer to target vs. start
+        "start_similarity": round(start_to_target_sim, 4),  # NEW: baseline similarity
         "optimal_similarity": puzzle.get("optimal_similarity", 0.70),
         "public_used": solution.public_token,
         "private_used": solution.private_token,
