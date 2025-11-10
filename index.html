@@ -729,9 +729,33 @@
             <div id="stars-display" style="font-size: 3em; margin-bottom: 15px;">
                 ⭐⭐⭐
             </div>
+
+            <!-- Pass/Fail Indicator -->
+            <div id="pass-fail-indicator" style="font-size: 1.5em; font-weight: 700; margin-bottom: 15px; padding: 10px; border-radius: 8px;">
+                <!-- Will be populated by JavaScript -->
+            </div>
+
             <div style="font-size: 1.2em; color: #667eea; font-weight: 600; margin-bottom: 10px;">
                 <span id="puzzle-result-similarity">0.75</span> similarity
             </div>
+
+            <!-- Progress Bar -->
+            <div style="margin: 15px auto; max-width: 400px;">
+                <div style="background: #e0e0e0; border-radius: 10px; height: 24px; overflow: hidden;">
+                    <div id="progress-bar" style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); height: 100%; width: 0%; transition: width 0.5s ease; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 0.9em;">
+                        <span id="progress-text">0%</span>
+                    </div>
+                </div>
+                <div style="font-size: 0.85em; color: #666; margin-top: 5px;">
+                    Progress to target
+                </div>
+            </div>
+
+            <!-- Improvement Metric -->
+            <div id="improvement-display" style="font-size: 0.95em; color: #555; margin: 10px 0;">
+                <!-- Will be populated by JavaScript -->
+            </div>
+
             <div style="color: #2d3748; font-size: 1.1em; margin-top: 8px;">
                 <span style="color: #999;">You reached:</span> <strong style="color: #f59e0b; font-size: 1.3em;" id="puzzle-result-nearest">word</strong>
             </div>
@@ -1797,6 +1821,42 @@
                 document.getElementById('stars-display').textContent = starsHTML;
                 document.getElementById('puzzle-result-similarity').textContent = result.similarity.toFixed(4);
                 document.getElementById('puzzle-result-nearest').textContent = result.nearest_word;
+
+                // NEW: Display pass/fail indicator
+                const passFailEl = document.getElementById('pass-fail-indicator');
+                if (result.passed) {
+                    passFailEl.textContent = '✓ PASSED!';
+                    passFailEl.style.background = '#d4edda';
+                    passFailEl.style.color = '#155724';
+                    passFailEl.style.border = '2px solid #c3e6cb';
+                } else {
+                    passFailEl.textContent = '⚠ Keep trying!';
+                    passFailEl.style.background = '#fff3cd';
+                    passFailEl.style.color = '#856404';
+                    passFailEl.style.border = '2px solid #ffeeba';
+                }
+
+                // NEW: Display progress bar
+                const progressBar = document.getElementById('progress-bar');
+                const progressText = document.getElementById('progress-text');
+                const progressValue = result.progress || 0;
+                progressBar.style.width = progressValue + '%';
+                progressText.textContent = progressValue.toFixed(1) + '%';
+
+                // NEW: Display improvement
+                const improvementEl = document.getElementById('improvement-display');
+                if (result.improvement !== undefined) {
+                    const improvementIcon = result.improvement > 0 ? '📈' : (result.improvement < 0 ? '📉' : '➡️');
+                    const improvementColor = result.improvement > 0 ? '#2e7d32' : (result.improvement < 0 ? '#c62828' : '#666');
+                    improvementEl.innerHTML = `
+                        <span style="color: ${improvementColor};">
+                            ${improvementIcon} Improvement: <strong>${result.improvement > 0 ? '+' : ''}${result.improvement.toFixed(4)}</strong>
+                        </span>
+                        <span style="color: #999; font-size: 0.9em; margin-left: 10px;">
+                            (from ${result.start_similarity?.toFixed(4) || '?'} baseline)
+                        </span>
+                    `;
+                }
 
                 document.getElementById('puzzle-result-start').textContent = state.currentPuzzle.start_word;
                 document.getElementById('puzzle-result-target').textContent = state.currentPuzzle.target_word;
