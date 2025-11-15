@@ -57,7 +57,13 @@ USE_ANNOY = os.environ.get("USE_ANNOY", "0") == "1"
 RNG_SEED = int(os.environ.get("RNG_SEED", "12345"))
 
 # Embedding post-processing config
+# EMBEDDING_PROFILE: Controls which embedding mode to use
+#   - "classic_analogies": Standard word2vec with 3CosAdd scoring (for king-man+woman=queen)
+#   - "intuitive_game": Enhanced with frequency weighting and other transformations
+EMBEDDING_PROFILE = os.environ.get("EMBEDDING_PROFILE", "classic_analogies")
+
 # FREQ_WEIGHT: 0-1, how much to de-emphasize frequent words (0.3 recommended for more intuitive results)
+# Only used when EMBEDDING_PROFILE != "classic_analogies"
 FREQ_WEIGHT = float(os.environ.get("FREQ_WEIGHT", "0.3"))
 # NORMALIZE_METHOD: 'unit' (cosine-friendly), 'standardize', or 'none'
 NORMALIZE_METHOD = os.environ.get("NORMALIZE_METHOD", "unit")
@@ -135,14 +141,21 @@ class EmbeddingSpace:
         Load embeddings from path with optional configuration.
 
         Config options:
+        - embedding_profile: str - 'classic_analogies' or 'intuitive_game'
         - freq_weight: float (0-1) - how much to weight by frequency (0 = no weighting, 1 = full weighting)
         - normalize_method: str - normalization method ('unit', 'standardize', 'none')
         - vocab_filter: List[str] - restrict to specific vocabulary
         """
         self.config = config or {}
         self.path = path
+        self.embedding_profile = self.config.get('embedding_profile', 'classic_analogies')
+
         self._load_embeddings(path)
         self._apply_preprocessing()
+
+        # For classic_analogies mode, precompute normalized matrix for efficient 3CosAdd
+        if self.embedding_profile == 'classic_analogies':
+            self._build_normalized_matrix()
 
     def _load_embeddings(self, path: str):
         """Load raw embeddings - override in subclasses"""
@@ -159,10 +172,38 @@ class EmbeddingSpace:
         # Can be overridden for custom preprocessing
         pass
 
+    def _build_normalized_matrix(self):
+        """
+        Build normalized matrix for efficient 3CosAdd computation.
+        Only used in classic_analogies mode.
+        """
+        print(f"Building normalized matrix for {len(self.raw_kv.index_to_key)} words...")
+        self.vocab = self.raw_kv.index_to_key
+        self.word_to_idx = {word: idx for idx, word in enumerate(self.vocab)}
+
+        # Stack all vectors and normalize
+        vectors = np.vstack([self.raw_kv.get_vector(word) for word in self.vocab])
+        norms = np.linalg.norm(vectors, axis=1, keepdims=True)
+        norms[norms == 0] = 1  # Avoid division by zero
+        self.matrix = (vectors / norms).astype(np.float32)
+        print(f"Matrix shape: {self.matrix.shape}")
+
     def vector(self, word: str) -> np.ndarray:
         """Get (possibly preprocessed) vector for word"""
         if word not in self.raw_kv:
             raise KeyError(f"Word '{word}' not in vocabulary")
+
+        # In classic_analogies mode, return pure normalized vector without any transformation
+        if self.embedding_profile == 'classic_analogies':
+            if hasattr(self, 'matrix') and word in self.word_to_idx:
+                return self.matrix[self.word_to_idx[word]]
+            else:
+                # Fallback to raw_kv
+                v = self.raw_kv.get_vector(word).astype(np.float32)
+                n = np.linalg.norm(v)
+                return v / n if n > 0 else v
+
+        # For other profiles, apply transformations
         v = self.raw_kv.get_vector(word).astype(np.float32)
 
         # Apply frequency weighting if configured
@@ -210,6 +251,83 @@ class EmbeddingSpace:
     def has(self, word: str) -> bool:
         """Check if word exists in vocabulary"""
         return word in self.raw_kv
+
+    def most_similar_3cosadd(
+        self,
+        positive: List[str],
+        negative: Optional[List[str]] = None,
+        topn: int = 10,
+        exclude: Optional[List[str]] = None,
+        vocab_filter: Optional[List[str]] = None,
+    ) -> List[Tuple[str, float]]:
+        """
+        Classic 3CosAdd analogy scoring (Mikolov et al. 2013).
+
+        Computes: score(w) = sum_{p in positive} cos(w, p) - sum_{n in negative} cos(w, n)
+
+        This is the standard method that makes analogies like "king - man + woman ≈ queen" work.
+
+        Args:
+            positive: List of words to add (e.g., ['king', 'woman'])
+            negative: List of words to subtract (e.g., ['man'])
+            topn: Number of top results to return
+            exclude: Words to exclude from results (typically the input words)
+            vocab_filter: If provided, only consider words in this list
+
+        Returns:
+            List of (word, score) tuples, sorted by score descending
+        """
+        if not hasattr(self, 'matrix'):
+            raise RuntimeError("3CosAdd requires classic_analogies mode with precomputed matrix")
+
+        if negative is None:
+            negative = []
+        if exclude is None:
+            exclude = []
+
+        # Exclude input words from results
+        exclude_set = set(exclude + positive + negative)
+
+        # Determine candidate indices
+        if vocab_filter is None:
+            indices = np.arange(len(self.vocab))
+        else:
+            indices = np.array(
+                [self.word_to_idx[w] for w in vocab_filter if w in self.word_to_idx],
+                dtype=int,
+            )
+
+        # Get vectors for positive and negative words
+        pos_vecs = np.stack([self.vector(w) for w in positive])
+        neg_vecs = np.stack([self.vector(w) for w in negative]) if negative else None
+
+        # Candidate vectors: (K, d)
+        M = self.matrix[indices]
+
+        # Compute cosine similarities
+        # pos_sims: (K, |positive|) - cosine similarity to each positive word
+        pos_sims = M @ pos_vecs.T
+        scores = pos_sims.sum(axis=1)  # Sum over all positive words
+
+        if neg_vecs is not None:
+            # neg_sims: (K, |negative|) - cosine similarity to each negative word
+            neg_sims = M @ neg_vecs.T
+            scores -= neg_sims.sum(axis=1)  # Subtract all negative words
+
+        # Exclude specified words by setting their scores to -inf
+        for w in exclude_set:
+            if w in self.word_to_idx:
+                idx_in_vocab = self.word_to_idx[w]
+                # Find position in our filtered indices array
+                mask = indices == idx_in_vocab
+                if mask.any():
+                    scores[mask] = -1e9
+
+        # Get top N indices
+        top_idx = np.argsort(-scores)[:topn]
+        result = [(self.vocab[indices[i]], float(scores[i])) for i in top_idx]
+
+        return result
 
 
 # -------------------------------
@@ -489,11 +607,13 @@ if MODEL_PATH is None:
     store = None  # type: ignore
     deck_tokens: List[str] = []
 else:
-    # Configure embedding preprocessing for more intuitive results
+    # Configure embedding preprocessing
     embedding_config = {
-        'freq_weight': FREQ_WEIGHT,
+        'embedding_profile': EMBEDDING_PROFILE,
+        'freq_weight': FREQ_WEIGHT if EMBEDDING_PROFILE != 'classic_analogies' else 0.0,
         'normalize_method': NORMALIZE_METHOD,
     }
+    print(f"Loading embeddings with profile: {EMBEDDING_PROFILE}")
     store = VectorStore(MODEL_PATH, embedding_config)
     deck_tokens = store.build_deck(DECK_SIZE)
 
@@ -832,20 +952,58 @@ def solve_puzzle(puzzle_id: int, solution: PuzzleSolution):
                 "error": f"Word '{word}' not in vocabulary"
             }
 
-    # Calculate result vector
+    # Calculate result vector and similarity to target
     v_start = store.vec_unit(start_word)
-    v_public = store.vec_unit(solution.public_token)
-    v_private = store.vec_unit(solution.private_token)
-
-    s1 = float(solution.public_sign)
-    s2 = float(solution.private_sign)
-
-    v_result = v_start + s1 * v_public + s2 * v_private
-    v_result_unit = v_result / (np.linalg.norm(v_result) + 1e-12)
-
-    # Calculate similarity to target
     v_target = store.vec_unit(target_word)
-    similarity = float(store.cosine(v_result_unit, v_target))
+
+    # Use 3CosAdd if in classic_analogies mode
+    if (store.embedding_space.embedding_profile == 'classic_analogies' and
+        hasattr(store.embedding_space, 'most_similar_3cosadd')):
+        # Build positive and negative lists for 3CosAdd
+        positive = [start_word]
+        negative = []
+
+        s1 = float(solution.public_sign)
+        s2 = float(solution.private_sign)
+
+        if s1 > 0:
+            positive.append(solution.public_token)
+        else:
+            negative.append(solution.public_token)
+
+        if s2 > 0:
+            positive.append(solution.private_token)
+        else:
+            negative.append(solution.private_token)
+
+        # Compute 3CosAdd score for the target word
+        pos_vecs = np.stack([store.embedding_space.vector(w) for w in positive])
+        neg_vecs = np.stack([store.embedding_space.vector(w) for w in negative]) if negative else None
+
+        v_target_norm = store.embedding_space.vector(target_word)
+
+        similarity = float(np.sum(v_target_norm @ pos_vecs.T))
+        if neg_vecs is not None:
+            similarity -= float(np.sum(v_target_norm @ neg_vecs.T))
+
+        # For nearest word finding, we still compute the result vector
+        v_public = store.vec_unit(solution.public_token)
+        v_private = store.vec_unit(solution.private_token)
+        v_result = v_start + s1 * v_public + s2 * v_private
+        v_result_unit = v_result / (np.linalg.norm(v_result) + 1e-12)
+    else:
+        # Use vector addition method (existing behavior)
+        v_public = store.vec_unit(solution.public_token)
+        v_private = store.vec_unit(solution.private_token)
+
+        s1 = float(solution.public_sign)
+        s2 = float(solution.private_sign)
+
+        v_result = v_start + s1 * v_public + s2 * v_private
+        v_result_unit = v_result / (np.linalg.norm(v_result) + 1e-12)
+
+        # Calculate similarity to target
+        similarity = float(store.cosine(v_result_unit, v_target))
 
     # Find nearest word - use domain vocab if specified
     domain_vocab = puzzle.get("domain_vocab", None)
@@ -896,6 +1054,10 @@ def solve_puzzle(puzzle_id: int, solution: PuzzleSolution):
     best_move = None
     best_similarity = -1.0
 
+    # Use 3CosAdd if in classic_analogies mode
+    use_3cosadd = (store.embedding_space.embedding_profile == 'classic_analogies' and
+                   hasattr(store.embedding_space, 'most_similar_3cosadd'))
+
     for pub_card in allowed:
         if pub_card not in store.kv:
             continue
@@ -904,14 +1066,42 @@ def solve_puzzle(puzzle_id: int, solution: PuzzleSolution):
                 continue
             for pub_sign in [1, -1]:
                 for priv_sign in [1, -1]:
-                    # Calculate this move's result
-                    v_pub = store.vec_unit(pub_card)
-                    v_priv = store.vec_unit(priv_card)
-                    v_res = v_start + float(pub_sign) * v_pub + float(priv_sign) * v_priv
-                    v_res_unit = v_res / (np.linalg.norm(v_res) + 1e-12)
+                    if use_3cosadd:
+                        # Use 3CosAdd scoring for classic_analogies mode
+                        # Build positive and negative lists
+                        positive = [start_word]
+                        negative = []
 
-                    # Calculate similarity to target
-                    move_sim = float(store.cosine(v_res_unit, v_target))
+                        if pub_sign > 0:
+                            positive.append(pub_card)
+                        else:
+                            negative.append(pub_card)
+
+                        if priv_sign > 0:
+                            positive.append(priv_card)
+                        else:
+                            negative.append(priv_card)
+
+                        # Get score for target word using 3CosAdd
+                        # We'll compute it manually for the target
+                        pos_vecs = np.stack([store.embedding_space.vector(w) for w in positive])
+                        neg_vecs = np.stack([store.embedding_space.vector(w) for w in negative]) if negative else None
+
+                        v_target_norm = store.embedding_space.vector(target_word)
+
+                        # 3CosAdd score for target
+                        move_sim = float(np.sum(v_target_norm @ pos_vecs.T))
+                        if neg_vecs is not None:
+                            move_sim -= float(np.sum(v_target_norm @ neg_vecs.T))
+                    else:
+                        # Use vector addition method (existing behavior)
+                        v_pub = store.vec_unit(pub_card)
+                        v_priv = store.vec_unit(priv_card)
+                        v_res = v_start + float(pub_sign) * v_pub + float(priv_sign) * v_priv
+                        v_res_unit = v_res / (np.linalg.norm(v_res) + 1e-12)
+
+                        # Calculate similarity to target
+                        move_sim = float(store.cosine(v_res_unit, v_target))
 
                     # Track this move
                     move_info = {
@@ -1073,6 +1263,120 @@ def visualize_words(req: VisualizationRequest):
         "points": points,
         "intermediate_steps": intermediate_steps,
         "variance_explained": float(eigenvalues[idx[0]] + eigenvalues[idx[1]]) / float(eigenvalues.sum()) if len(eigenvalues) > 0 else 0.0
+    }
+
+
+# -------------------------------
+# Test/Sanity Check Endpoint for Classic Analogies
+# -------------------------------
+@app.get("/test/analogies")
+def test_classic_analogies():
+    """
+    Test endpoint to verify classic word2vec analogies work correctly.
+    Only functional when EMBEDDING_PROFILE=classic_analogies.
+    """
+    if not store or not store.embedding_space:
+        raise HTTPException(503, "Embeddings not loaded")
+
+    if store.embedding_space.embedding_profile != 'classic_analogies':
+        return {
+            "error": "Classic analogies require EMBEDDING_PROFILE=classic_analogies",
+            "current_profile": store.embedding_space.embedding_profile,
+            "message": "Set environment variable EMBEDDING_PROFILE=classic_analogies and restart"
+        }
+
+    # Classic analogy examples from Mikolov et al.
+    test_cases = [
+        {
+            "name": "king - man + woman = ?",
+            "positive": ["king", "woman"],
+            "negative": ["man"],
+            "expected": "queen"
+        },
+        {
+            "name": "paris - france + germany = ?",
+            "positive": ["paris", "germany"],
+            "negative": ["france"],
+            "expected": "berlin"
+        },
+        {
+            "name": "tokyo - japan + france = ?",
+            "positive": ["tokyo", "france"],
+            "negative": ["japan"],
+            "expected": "paris"
+        },
+        {
+            "name": "good - bad + ugly = ?",
+            "positive": ["good", "ugly"],
+            "negative": ["bad"],
+            "expected": "beautiful"
+        }
+    ]
+
+    results = []
+    for test in test_cases:
+        try:
+            # Check if all words exist
+            missing = []
+            for w in test["positive"] + test["negative"]:
+                if not store.embedding_space.has(w):
+                    missing.append(w)
+
+            if missing:
+                results.append({
+                    "test": test["name"],
+                    "status": "error",
+                    "message": f"Words not in vocabulary: {missing}"
+                })
+                continue
+
+            # Run 3CosAdd
+            top_results = store.embedding_space.most_similar_3cosadd(
+                positive=test["positive"],
+                negative=test["negative"],
+                topn=10
+            )
+
+            # Find rank of expected word
+            words = [w for w, s in top_results]
+            scores = {w: s for w, s in top_results}
+
+            expected_rank = None
+            expected_score = None
+            if test["expected"] in words:
+                expected_rank = words.index(test["expected"]) + 1
+                expected_score = scores[test["expected"]]
+
+            results.append({
+                "test": test["name"],
+                "expected": test["expected"],
+                "top_10": words,
+                "scores": scores,
+                "expected_rank": expected_rank,
+                "expected_score": expected_score,
+                "status": "success" if expected_rank and expected_rank <= 3 else "warning"
+            })
+
+        except Exception as e:
+            results.append({
+                "test": test["name"],
+                "status": "error",
+                "message": str(e)
+            })
+
+    # Summary
+    successful = sum(1 for r in results if r.get("expected_rank") and r["expected_rank"] == 1)
+    top_3 = sum(1 for r in results if r.get("expected_rank") and r["expected_rank"] <= 3)
+
+    return {
+        "embedding_profile": EMBEDDING_PROFILE,
+        "model_path": MODEL_PATH,
+        "summary": {
+            "total_tests": len(test_cases),
+            "rank_1": successful,
+            "top_3": top_3,
+        },
+        "results": results
     }
 
 
