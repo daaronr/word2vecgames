@@ -1017,7 +1017,7 @@ def solve_puzzle(puzzle_id: int, solution: PuzzleSolution):
             positive=positive,
             negative=negative,
             topn=1,
-            exclude=[start_word, target_word],
+            exclude=[start_word],  # Only exclude start word, not target!
             vocab_filter=vocab_filter
         )
         if results:
