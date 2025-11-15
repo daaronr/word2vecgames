@@ -960,9 +960,8 @@ def solve_puzzle(puzzle_id: int, solution: PuzzleSolution):
     if (store.embedding_space.embedding_profile == 'classic_analogies' and
         hasattr(store.embedding_space, 'most_similar_3cosadd')):
         # Build positive and negative lists for 3CosAdd
-        # Important: DON'T include start_word - only score based on the cards played
-        # This gives proper analogy behavior where order doesn't matter
-        positive = []
+        # Include start_word for proper analogy scoring (king-man+woman = queen)
+        positive = [start_word]
         negative = []
 
         s1 = float(solution.public_sign)
@@ -978,17 +977,14 @@ def solve_puzzle(puzzle_id: int, solution: PuzzleSolution):
         else:
             negative.append(solution.private_token)
 
-        # Compute 3CosAdd score for the target word (using only the cards)
-        if positive:
-            pos_vecs = np.stack([store.embedding_space.vector(w) for w in positive])
-            v_target_norm = store.embedding_space.vector(target_word)
-            similarity = float(np.sum(v_target_norm @ pos_vecs.T))
-        else:
-            similarity = 0.0
+        # Compute 3CosAdd score for the target word
+        pos_vecs = np.stack([store.embedding_space.vector(w) for w in positive])
+        neg_vecs = np.stack([store.embedding_space.vector(w) for w in negative]) if negative else None
 
-        if negative:
-            neg_vecs = np.stack([store.embedding_space.vector(w) for w in negative])
-            v_target_norm = store.embedding_space.vector(target_word)
+        v_target_norm = store.embedding_space.vector(target_word)
+
+        similarity = float(np.sum(v_target_norm @ pos_vecs.T))
+        if neg_vecs is not None:
             similarity -= float(np.sum(v_target_norm @ neg_vecs.T))
 
         # For nearest word finding, we still compute the result vector
@@ -1015,20 +1011,17 @@ def solve_puzzle(puzzle_id: int, solution: PuzzleSolution):
 
     if (store.embedding_space.embedding_profile == 'classic_analogies' and
         hasattr(store.embedding_space, 'most_similar_3cosadd')):
-        # Use 3CosAdd to find nearest word (using only cards, not start_word)
+        # Use 3CosAdd to find nearest word
         vocab_filter = domain_vocab if domain_vocab else (deck_tokens if deck_tokens else None)
 
-        # positive and negative were built above (without start_word)
-        if positive or negative:
-            results = store.embedding_space.most_similar_3cosadd(
-                positive=positive,
-                negative=negative,
-                topn=1,
-                exclude=[start_word],  # Exclude start to avoid it appearing as result
-                vocab_filter=vocab_filter
-            )
-        else:
-            results = []
+        # positive and negative were built above (with start_word included)
+        results = store.embedding_space.most_similar_3cosadd(
+            positive=positive,
+            negative=negative,
+            topn=1,
+            exclude=[start_word],  # Exclude start to avoid it appearing as result
+            vocab_filter=vocab_filter
+        )
         if results:
             nearest_word, best_sim = results[0]
         else:
@@ -1091,12 +1084,17 @@ def solve_puzzle(puzzle_id: int, solution: PuzzleSolution):
         for priv_card in allowed:
             if priv_card not in store.kv:
                 continue
+
+            # Skip duplicate cards (can't use same card twice)
+            if pub_card == priv_card:
+                continue
+
             for pub_sign in [1, -1]:
                 for priv_sign in [1, -1]:
                     if use_3cosadd:
                         # Use 3CosAdd scoring for classic_analogies mode
-                        # Build positive and negative lists (exclude start_word)
-                        positive = []
+                        # Include start_word for proper analogy scoring
+                        positive = [start_word]
                         negative = []
 
                         if pub_sign > 0:
@@ -1109,16 +1107,14 @@ def solve_puzzle(puzzle_id: int, solution: PuzzleSolution):
                         else:
                             negative.append(priv_card)
 
-                        # Get score for target word using 3CosAdd (using only cards, not start)
+                        # Get score for target word using 3CosAdd
+                        pos_vecs = np.stack([store.embedding_space.vector(w) for w in positive])
+                        neg_vecs = np.stack([store.embedding_space.vector(w) for w in negative]) if negative else None
+
                         v_target_norm = store.embedding_space.vector(target_word)
 
-                        move_sim = 0.0
-                        if positive:
-                            pos_vecs = np.stack([store.embedding_space.vector(w) for w in positive])
-                            move_sim = float(np.sum(v_target_norm @ pos_vecs.T))
-
-                        if negative:
-                            neg_vecs = np.stack([store.embedding_space.vector(w) for w in negative])
+                        move_sim = float(np.sum(v_target_norm @ pos_vecs.T))
+                        if neg_vecs is not None:
                             move_sim -= float(np.sum(v_target_norm @ neg_vecs.T))
                     else:
                         # Use vector addition method (existing behavior)
