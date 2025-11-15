@@ -1011,7 +1011,8 @@ def solve_puzzle(puzzle_id: int, solution: PuzzleSolution):
     if (store.embedding_space.embedding_profile == 'classic_analogies' and
         hasattr(store.embedding_space, 'most_similar_3cosadd')):
         # Use 3CosAdd to find nearest word
-        vocab_filter = domain_vocab if domain_vocab else deck_tokens[:1000]
+        # In classic mode, search full vocabulary or deck (no limit to 1000)
+        vocab_filter = domain_vocab if domain_vocab else (deck_tokens if deck_tokens else None)
         results = store.embedding_space.most_similar_3cosadd(
             positive=positive,
             negative=negative,
