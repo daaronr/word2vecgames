@@ -19,6 +19,7 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            color: #1a1a2e;
         }
 
         .container {
@@ -121,9 +122,11 @@
 
         .word-label {
             font-size: 0.9em;
-            opacity: 0.9;
+            opacity: 1;
             text-transform: uppercase;
             letter-spacing: 1px;
+            color: #ffffff;
+            font-weight: 600;
         }
 
         .cards-section {
@@ -465,6 +468,28 @@
             grid-template-columns: repeat(2, 1fr);
         }
 
+        .fixed-submit-container {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            z-index: 100;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            max-width: 300px;
+            display: none; /* Hidden by default */
+        }
+
+        #puzzle-play-screen.active .fixed-submit-container {
+            display: block; /* Show only when puzzle play screen is active */
+        }
+
+        .fixed-submit-container button {
+            width: 100%;
+            margin: 5px 0;
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 20px;
@@ -499,25 +524,31 @@
                 🎮 Quick Play
             </button>
 
-            <div style="margin: 20px 0; text-align: center; color: #999; font-size: 0.9em;">
+            <div style="margin: 20px 0; text-align: center; color: #666; font-size: 0.9em;">
                 <span>Quick Play creates a new match and gives you a shareable link</span>
             </div>
 
-            <div style="margin: 30px 0; text-align: center; color: #999;">
+            <div style="margin: 30px 0; text-align: center; color: #666;">
                 <span>— OR —</span>
             </div>
 
             <button onclick="createMatch()">Create Match & Get Link</button>
 
-            <div style="margin: 30px 0; text-align: center; color: #999;">
+            <div style="margin: 30px 0; text-align: center; color: #666;">
                 <span>— OR —</span>
             </div>
 
             <button onclick="showPuzzleMode()" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                Puzzle Mode (Solo)
+                🧩 Puzzle Mode (Solo)
             </button>
 
-            <div style="margin: 30px 0; text-align: center; color: #999;">
+            <div style="margin: 15px 0; text-align: center;">
+                <a href="/presentation" target="_blank" style="color: #667eea; text-decoration: none; font-weight: 600; font-size: 0.95em;">
+                    📖 How to Play (Presentation)
+                </a>
+            </div>
+
+            <div style="margin: 30px 0; text-align: center; color: #666;">
                 <span>— OR —</span>
             </div>
 
@@ -696,6 +727,15 @@
             <span id="puzzle-difficulty-badge"></span>
         </div>
 
+        <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #2196f3;">
+            <strong style="color: #1565c0;">🎯 How to Play:</strong>
+            <p style="color: #1976d2; margin: 8px 0; font-size: 0.95em;">
+                Use word vector arithmetic to navigate from the start word to the target word.
+                Select cards and choose + or − to add or subtract their semantic meaning.
+                <a href="/presentation" target="_blank" style="color: #0d47a1; font-weight: 600; text-decoration: underline; margin-left: 10px;">Learn more</a>
+            </p>
+        </div>
+
         <div class="game-header">
             <div class="word-label">Start Word</div>
             <div class="word-display" id="puzzle-start-word">—</div>
@@ -704,7 +744,7 @@
         </div>
 
         <div class="cards-section">
-            <h3>Available Cards (choose two)</h3>
+            <h3>Available Cards (select any combination)</h3>
             <div class="cards-grid" id="puzzle-cards"></div>
         </div>
 
@@ -715,8 +755,13 @@
             <span id="hint-display" style="color: #2d3748; font-style: italic; font-weight: 600; background: #fef3c7; padding: 8px 12px; border-radius: 6px; display: inline-block;"></span>
         </div>
 
-        <button onclick="submitPuzzleSolution()" id="puzzle-submit-btn">Submit Solution</button>
-        <button onclick="showScreen('puzzle-select-screen')" class="btn-secondary">Back to Puzzles</button>
+        <div class="fixed-submit-container" id="puzzle-submit-container">
+            <div id="puzzle-selected-cards-display" style="font-size: 0.85em; color: #666; margin-bottom: 10px; min-height: 20px;">
+                Select cards to continue
+            </div>
+            <button onclick="submitPuzzleSolution()" id="puzzle-submit-btn">Submit Solution</button>
+            <button onclick="showScreen('puzzle-select-screen')" class="btn-secondary">Back to Puzzles</button>
+        </div>
     </div>
 
     <!-- Puzzle Result Screen -->
@@ -835,7 +880,7 @@
             // Puzzle mode state
             currentPuzzle: null,
             allPuzzles: [],
-            puzzleSelectedCards: { public: null, private: null },
+            puzzleSelectedCards: [], // Array of {token, sign} objects
             roundId: null,
             selectedPublic: null,
             selectedPublicSign: '+',
@@ -1649,7 +1694,7 @@
                 const resp = await fetch(`${API_URL}/puzzle/${puzzleId}`);
                 const puzzle = await resp.json();
                 state.currentPuzzle = puzzle;
-                state.puzzleSelectedCards = { public: null, private: null };
+                state.puzzleSelectedCards = []; // Reset to empty array
 
                 // Display puzzle info
                 document.getElementById('puzzle-name').textContent = puzzle.name;
@@ -1698,45 +1743,31 @@
         function selectPuzzleCard(card) {
             const cardElement = document.getElementById(`puzzle-card-${card}`);
 
-            // If clicking already selected card, deselect it
-            if (state.puzzleSelectedCards.public === card) {
-                state.puzzleSelectedCards.public = null;
-                cardElement.classList.remove('selected', 'selected-minus');
-                return;
-            }
-            if (state.puzzleSelectedCards.private === card) {
-                state.puzzleSelectedCards.private = null;
-                cardElement.classList.remove('selected', 'selected-minus');
-                return;
-            }
+            // Check if card is already selected
+            const cardIndex = state.puzzleSelectedCards.findIndex(c => c.token === card);
 
-            // Select card
-            if (!state.puzzleSelectedCards.public) {
-                // Deselect previous public if any
-                const prevPublic = document.querySelector('#puzzle-cards .card.selected');
-                if (prevPublic) prevPublic.classList.remove('selected', 'selected-minus');
-
-                state.puzzleSelectedCards.public = card;
-                cardElement.classList.add('selected');
-                updateCardHighlight(card);
-            } else if (!state.puzzleSelectedCards.private) {
-                state.puzzleSelectedCards.private = card;
-                cardElement.classList.add('selected');
-                updateCardHighlight(card);
+            if (cardIndex >= 0) {
+                // Deselect card
+                state.puzzleSelectedCards.splice(cardIndex, 1);
+                cardElement.classList.remove('selected', 'selected-minus');
             } else {
-                alert('You can only select two cards. Deselect one first.');
+                // Get the current sign for this card
+                const signBtn = cardElement.querySelector('.sign-btn.active');
+                const sign = signBtn?.getAttribute('data-sign') || '+';
+
+                // Add card to selection
+                state.puzzleSelectedCards.push({ token: card, sign: sign });
+                cardElement.classList.add('selected');
+                updateCardHighlight(card);
             }
+
+            updatePuzzleSubmitDisplay();
         }
 
         function togglePuzzleSign(card, sign) {
             const cardElement = document.getElementById(`puzzle-card-${card}`);
 
-            // First, select the card if it's not already selected
-            if (state.puzzleSelectedCards.public !== card && state.puzzleSelectedCards.private !== card) {
-                selectPuzzleCard(card);
-            }
-
-            // Then toggle the sign buttons
+            // Update the sign buttons
             const buttons = document.querySelectorAll(`#puzzle-card-${card} .sign-btn`);
             buttons.forEach(btn => {
                 const btnSign = btn.getAttribute('data-sign');
@@ -1747,8 +1778,19 @@
                 }
             });
 
+            // Update the sign in selected cards array
+            const cardIndex = state.puzzleSelectedCards.findIndex(c => c.token === card);
+            if (cardIndex >= 0) {
+                state.puzzleSelectedCards[cardIndex].sign = sign;
+            } else {
+                // Select the card with this sign
+                state.puzzleSelectedCards.push({ token: card, sign: sign });
+                cardElement.classList.add('selected');
+            }
+
             // Update card highlight based on sign
             updateCardHighlight(card);
+            updatePuzzleSubmitDisplay();
         }
 
         function updateCardHighlight(card) {
@@ -1760,16 +1802,41 @@
             const hasMinusActive = minusBtn && minusBtn.classList.contains('active');
 
             // Update card appearance
-            if (hasMinusActive) {
+            const isSelected = state.puzzleSelectedCards.some(c => c.token === card);
+
+            if (isSelected && hasMinusActive) {
                 cardElement.classList.remove('selected');
                 cardElement.classList.add('selected-minus');
-            } else {
+            } else if (isSelected) {
                 cardElement.classList.remove('selected-minus');
-                if (cardElement.classList.contains('selected') ||
-                    state.puzzleSelectedCards.public === card ||
-                    state.puzzleSelectedCards.private === card) {
-                    cardElement.classList.add('selected');
-                }
+                cardElement.classList.add('selected');
+            } else {
+                cardElement.classList.remove('selected', 'selected-minus');
+            }
+        }
+
+        function updatePuzzleSubmitDisplay() {
+            const display = document.getElementById('puzzle-selected-cards-display');
+            const submitBtn = document.getElementById('puzzle-submit-btn');
+
+            if (!display || !submitBtn) return;
+
+            if (state.puzzleSelectedCards.length === 0) {
+                display.textContent = 'Select at least 2 cards to continue';
+                submitBtn.disabled = true;
+            } else if (state.puzzleSelectedCards.length === 1) {
+                const cardsText = state.puzzleSelectedCards.map(c =>
+                    `${c.sign} ${c.token}`
+                ).join(', ');
+                display.innerHTML = `<strong>Selected:</strong> ${cardsText}<br><em style="font-size: 0.9em; color: #999;">Select one more card</em>`;
+                submitBtn.disabled = true;
+            } else {
+                const cardsText = state.puzzleSelectedCards.map((c, i) =>
+                    i < 2 ? `<strong>${c.sign} ${c.token}</strong>` : `${c.sign} ${c.token}`
+                ).join(', ');
+                const note = state.puzzleSelectedCards.length > 2 ? '<br><em style="font-size: 0.85em; color: #666;">(using first 2 cards)</em>' : '';
+                display.innerHTML = `<strong>Selected:</strong> ${cardsText}${note}`;
+                submitBtn.disabled = false;
             }
         }
 
@@ -1780,27 +1847,21 @@
         }
 
         async function submitPuzzleSolution() {
-            if (!state.puzzleSelectedCards.public || !state.puzzleSelectedCards.private) {
-                alert('Please select exactly two cards');
+            if (state.puzzleSelectedCards.length < 2) {
+                alert('Please select at least two cards');
                 return;
             }
 
             try {
-                // Get signs from buttons
-                const publicCard = state.puzzleSelectedCards.public;
-                const privateCard = state.puzzleSelectedCards.private;
-
-                const publicSignBtn = document.querySelector(`#puzzle-card-${publicCard} .sign-btn.active`);
-                const privateSignBtn = document.querySelector(`#puzzle-card-${privateCard} .sign-btn.active`);
-
-                const publicSign = publicSignBtn?.textContent.trim() === '+' ? 1 : -1;
-                const privateSign = privateSignBtn?.textContent.trim() === '+' ? 1 : -1;
+                // Use first two selected cards (the API requires exactly 2)
+                const card1 = state.puzzleSelectedCards[0];
+                const card2 = state.puzzleSelectedCards[1];
 
                 const solution = {
-                    public_token: publicCard,
-                    public_sign: publicSign,
-                    private_token: privateCard,
-                    private_sign: privateSign
+                    public_token: card1.token,
+                    public_sign: card1.sign === '+' ? 1 : -1,
+                    private_token: card2.token,
+                    private_sign: card2.sign === '+' ? 1 : -1
                 };
 
                 const resp = await fetch(`${API_URL}/puzzle/${state.currentPuzzle.id}/solve`, {
@@ -1891,7 +1952,26 @@
                 if (result.all_moves && result.all_moves.length > 0) {
                     const playerMove = `${result.public_sign}${result.public_used},${result.private_sign}${result.private_used}`;
 
-                    const movesHTML = result.all_moves.map((move, index) => {
+                    // Deduplicate moves that have the same similarity (since order doesn't matter in current metric)
+                    const seenSimilarities = new Map();
+                    const uniqueMoves = [];
+
+                    for (const move of result.all_moves) {
+                        // Create a normalized key that treats A+B same as B+A
+                        const cards = [
+                            `${move.public_sign}${move.public_card}`,
+                            `${move.private_sign}${move.private_card}`
+                        ].sort().join(',');
+
+                        const simKey = `${move.similarity.toFixed(6)}_${cards}`;
+
+                        if (!seenSimilarities.has(simKey)) {
+                            seenSimilarities.set(simKey, true);
+                            uniqueMoves.push(move);
+                        }
+                    }
+
+                    const movesHTML = uniqueMoves.map((move, index) => {
                         const moveKey = `${move.public_sign}${move.public_card},${move.private_sign}${move.private_card}`;
                         const isPlayerMove = moveKey === playerMove;
 
