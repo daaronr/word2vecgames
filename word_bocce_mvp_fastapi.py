@@ -1005,13 +1005,30 @@ def solve_puzzle(puzzle_id: int, solution: PuzzleSolution):
         # Calculate similarity to target
         similarity = float(store.cosine(v_result_unit, v_target))
 
-    # Find nearest word - use domain vocab if specified
+    # Find nearest word
     domain_vocab = puzzle.get("domain_vocab", None)
-    if domain_vocab:
+
+    if (store.embedding_space.embedding_profile == 'classic_analogies' and
+        hasattr(store.embedding_space, 'most_similar_3cosadd')):
+        # Use 3CosAdd to find nearest word
+        vocab_filter = domain_vocab if domain_vocab else deck_tokens[:1000]
+        results = store.embedding_space.most_similar_3cosadd(
+            positive=positive,
+            negative=negative,
+            topn=1,
+            exclude=[start_word, target_word],
+            vocab_filter=vocab_filter
+        )
+        if results:
+            nearest_word, best_sim = results[0]
+        else:
+            nearest_word = start_word
+            best_sim = 0.0
+    elif domain_vocab:
         # Domain-restricted vocabulary for more intuitive results
         nearest_word, best_sim = store.nearest(v_result_unit, k=1, vocab_filter=domain_vocab)
     else:
-        # Use default deck search
+        # Use default deck search with vector addition result
         nearest_word = start_word
         best_sim = -1.0
         for token in deck_tokens[:1000]:
