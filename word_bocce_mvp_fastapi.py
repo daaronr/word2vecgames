@@ -952,20 +952,27 @@ def solve_puzzle(puzzle_id: int, solution: PuzzleSolution):
                 "error": f"Word '{word}' not in vocabulary"
             }
 
-    # Calculate result vector and similarity to target
+    # Calculate result vector and similarity to target using vector arithmetic
     v_start = store.vec_unit(start_word)
     v_target = store.vec_unit(target_word)
+    v_public = store.vec_unit(solution.public_token)
+    v_private = store.vec_unit(solution.private_token)
 
-    # Use 3CosAdd if in classic_analogies mode
+    s1 = float(solution.public_sign)
+    s2 = float(solution.private_sign)
+
+    # Compute result vector: start + sign1*public + sign2*private
+    v_result = v_start + s1 * v_public + s2 * v_private
+    v_result_unit = v_result / (np.linalg.norm(v_result) + 1e-12)
+
+    # Score is cosine similarity to target
+    similarity = float(store.cosine(v_result_unit, v_target))
+
+    # For classic_analogies mode, also build positive/negative lists for nearest word search
     if (store.embedding_space.embedding_profile == 'classic_analogies' and
         hasattr(store.embedding_space, 'most_similar_3cosadd')):
-        # Build positive and negative lists for 3CosAdd
-        # Include start_word for proper analogy scoring (king-man+woman = queen)
         positive = [start_word]
         negative = []
-
-        s1 = float(solution.public_sign)
-        s2 = float(solution.private_sign)
 
         if s1 > 0:
             positive.append(solution.public_token)
@@ -976,35 +983,6 @@ def solve_puzzle(puzzle_id: int, solution: PuzzleSolution):
             positive.append(solution.private_token)
         else:
             negative.append(solution.private_token)
-
-        # Compute 3CosAdd score for the target word
-        pos_vecs = np.stack([store.embedding_space.vector(w) for w in positive])
-        neg_vecs = np.stack([store.embedding_space.vector(w) for w in negative]) if negative else None
-
-        v_target_norm = store.embedding_space.vector(target_word)
-
-        similarity = float(np.sum(v_target_norm @ pos_vecs.T))
-        if neg_vecs is not None:
-            similarity -= float(np.sum(v_target_norm @ neg_vecs.T))
-
-        # For nearest word finding, we still compute the result vector
-        v_public = store.vec_unit(solution.public_token)
-        v_private = store.vec_unit(solution.private_token)
-        v_result = v_start + s1 * v_public + s2 * v_private
-        v_result_unit = v_result / (np.linalg.norm(v_result) + 1e-12)
-    else:
-        # Use vector addition method (existing behavior)
-        v_public = store.vec_unit(solution.public_token)
-        v_private = store.vec_unit(solution.private_token)
-
-        s1 = float(solution.public_sign)
-        s2 = float(solution.private_sign)
-
-        v_result = v_start + s1 * v_public + s2 * v_private
-        v_result_unit = v_result / (np.linalg.norm(v_result) + 1e-12)
-
-        # Calculate similarity to target
-        similarity = float(store.cosine(v_result_unit, v_target))
 
     # Find nearest word
     domain_vocab = puzzle.get("domain_vocab", None)
@@ -1074,10 +1052,6 @@ def solve_puzzle(puzzle_id: int, solution: PuzzleSolution):
     best_move = None
     best_similarity = -1.0
 
-    # Use 3CosAdd if in classic_analogies mode
-    use_3cosadd = (store.embedding_space.embedding_profile == 'classic_analogies' and
-                   hasattr(store.embedding_space, 'most_similar_3cosadd'))
-
     for pub_card in allowed:
         if pub_card not in store.kv:
             continue
@@ -1091,40 +1065,15 @@ def solve_puzzle(puzzle_id: int, solution: PuzzleSolution):
 
             for pub_sign in [1, -1]:
                 for priv_sign in [1, -1]:
-                    if use_3cosadd:
-                        # Use 3CosAdd scoring for classic_analogies mode
-                        # Include start_word for proper analogy scoring
-                        positive = [start_word]
-                        negative = []
+                    # Always use vector arithmetic for best move calculation
+                    # This finds which move gets closest to the target in vector space
+                    v_pub = store.vec_unit(pub_card)
+                    v_priv = store.vec_unit(priv_card)
+                    v_res = v_start + float(pub_sign) * v_pub + float(priv_sign) * v_priv
+                    v_res_unit = v_res / (np.linalg.norm(v_res) + 1e-12)
 
-                        if pub_sign > 0:
-                            positive.append(pub_card)
-                        else:
-                            negative.append(pub_card)
-
-                        if priv_sign > 0:
-                            positive.append(priv_card)
-                        else:
-                            negative.append(priv_card)
-
-                        # Get score for target word using 3CosAdd
-                        pos_vecs = np.stack([store.embedding_space.vector(w) for w in positive])
-                        neg_vecs = np.stack([store.embedding_space.vector(w) for w in negative]) if negative else None
-
-                        v_target_norm = store.embedding_space.vector(target_word)
-
-                        move_sim = float(np.sum(v_target_norm @ pos_vecs.T))
-                        if neg_vecs is not None:
-                            move_sim -= float(np.sum(v_target_norm @ neg_vecs.T))
-                    else:
-                        # Use vector addition method (existing behavior)
-                        v_pub = store.vec_unit(pub_card)
-                        v_priv = store.vec_unit(priv_card)
-                        v_res = v_start + float(pub_sign) * v_pub + float(priv_sign) * v_priv
-                        v_res_unit = v_res / (np.linalg.norm(v_res) + 1e-12)
-
-                        # Calculate similarity to target
-                        move_sim = float(store.cosine(v_res_unit, v_target))
+                    # Calculate similarity to target
+                    move_sim = float(store.cosine(v_res_unit, v_target))
 
                     # Track this move
                     move_info = {
