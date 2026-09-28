@@ -1,6 +1,11 @@
 """
-Word Bocce — MVP backend
-FastAPI server that runs the vector game using real word embeddings (Word2Vec/GloVe/FastText).
+Word Bocce — server
+
+Serves the browser game in web/ (which runs entirely client-side from the
+bundled vectors in web/data/) plus the older server-side API: multiplayer
+matches, puzzle scoring and visualisation, used by the legacy UI at /classic.
+
+The static game needs no MODEL_PATH. The legacy API endpoints do.
 
 ▶ How to run (with real embeddings):
 1) Install deps:  pip install fastapi uvicorn[standard] numpy gensim annoy
@@ -30,7 +35,7 @@ from typing import Dict, List, Literal, Optional, Tuple
 import numpy as np
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, HTMLResponse
+from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
@@ -602,8 +607,10 @@ app.add_middleware(
 )
 
 # Load embeddings and deck once
-if MODEL_PATH is None:
-    # Fail fast, but provide a helpful message at root endpoint
+if MODEL_PATH is None or not os.path.exists(MODEL_PATH):
+    # The browser game still works; only the legacy API needs full embeddings.
+    if MODEL_PATH:
+        print(f"MODEL_PATH {MODEL_PATH} not found; serving the browser game only.")
     store = None  # type: ignore
     deck_tokens: List[str] = []
 else:
@@ -631,28 +638,27 @@ def api_root():
         }
     return {"status": "ok", "dim": store.dim, "deck_size": len(deck_tokens)}
 
-@app.get("/", response_class=HTMLResponse)
-def serve_game():
-    try:
-        with open("index.html", "r") as f:
-            html_content = f.read()
-            # Update API_URL to use current host
-            html_content = html_content.replace(
-                "const API_URL = 'http://localhost:8000';",
-                "const API_URL = window.location.origin;"
-            )
-            return HTMLResponse(content=html_content)
-    except FileNotFoundError:
-        return HTMLResponse(content="<h1>index.html not found</h1>", status_code=404)
+HERE = os.path.dirname(os.path.abspath(__file__))
+WEB_DIR = os.path.join(HERE, "web")
+LEGACY_UI = os.path.join(HERE, "archive", "legacy-ui", "index.html")
 
-@app.get("/presentation", response_class=HTMLResponse)
-@app.get("/presentation.html", response_class=HTMLResponse)
+@app.get("/presentation")
 def serve_presentation():
+    return RedirectResponse("/presentation.html")
+
+@app.get("/classic", response_class=HTMLResponse)
+def serve_classic():
+    """The previous server-backed UI (online multiplayer lobby)."""
     try:
-        with open("presentation.html", "r") as f:
-            return HTMLResponse(content=f.read())
+        with open(LEGACY_UI, "r") as f:
+            html_content = f.read()
     except FileNotFoundError:
-        return HTMLResponse(content="<h1>presentation.html not found</h1>", status_code=404)
+        return HTMLResponse(content="<h1>legacy UI not found</h1>", status_code=404)
+    html_content = html_content.replace(
+        "const API_URL = 'http://localhost:8000';",
+        "const API_URL = window.location.origin;"
+    )
+    return HTMLResponse(content=html_content)
 
 @app.post("/match")
 def create_match(req: CreateMatchReq):
@@ -815,7 +821,7 @@ def visualize_move(start_word: str, target_word: str,
 # Load puzzles from JSON file
 puzzles_data = []
 try:
-    with open("puzzles.json", "r") as f:
+    with open(os.path.join(WEB_DIR, "data", "puzzles.json"), "r") as f:
         puzzles_data = json.load(f)
 except FileNotFoundError:
     print("Warning: puzzles.json not found. Puzzle mode will not be available.")
@@ -1350,6 +1356,12 @@ def test_classic_analogies():
         },
         "results": results
     }
+
+
+# -------------------------------
+# The browser game (web/). Mounted last so the API routes above win.
+# -------------------------------
+app.mount("/", StaticFiles(directory=WEB_DIR, html=True), name="web")
 
 
 # -------------------------------

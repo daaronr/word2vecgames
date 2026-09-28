@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Word Bocce</title>
+<meta name="description" content="A lawn game played in meaning-space: add and subtract words to roll your ball up to the jack.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <h1>Word Bocce<span class="dot" aria-hidden="true"></span></h1>
+      <p id="tagline">played on a court of 40,000 words</p>
+    </div>
+    <nav class="modes" role="tablist" aria-label="Game mode">
+      <button role="tab" id="tab-daily" data-mode="daily" aria-selected="true">Daily</button>
+      <button role="tab" id="tab-practice" data-mode="practice" aria-selected="false">Practice</button>
+      <button role="tab" id="tab-puzzles" data-mode="puzzles" aria-selected="false">Puzzles</button>
+      <button role="tab" id="tab-versus" data-mode="versus" aria-selected="false">Versus</button>
+    </nav>
+    <button class="iconbtn" id="helpBtn" type="button">How to play</button>
+  </header>
+
+  <main id="main">
+    <div class="loading" id="loading"><b>Raking the court…</b>Loading 40,000 word vectors (4&nbsp;MB).</div>
+  </main>
+
+  <footer class="foot">
+    <span>Vectors: GloVe 6B, 100 dimensions (public domain).</span>
+    <a href="presentation.html" target="_blank" rel="noopener">The math, in slides</a>
+  </footer>
+</div>
+
+<dialog id="help" aria-labelledby="helpTitle">
+  <div class="help">
+    <h2 id="helpTitle">How to play</h2>
+    <ol>
+      <li>The <b>yellow jack</b> is the target word. Your ball starts out as the <b>start word</b> (the dashed circle).</li>
+      <li>Tap tiles to build a throw: tap once to <b>add</b> a word, again to <b>subtract</b> it, a third time to take it back. Up to three tiles per throw.
+        <div class="eg">king − man + woman → lands on queen</div></li>
+      <li><b>Throw.</b> Every word is a direction in a 100-dimensional space, so adding and subtracting really moves the ball.</li>
+      <li>Distance is rank: <b>#12</b> means the jack is the 12th-nearest word to where your ball stopped. The rings mark the top 10, 100, 1,000 and 10,000. <b>#1</b> is a <i>bacio</i>, a kiss on the jack.</li>
+      <li>Four balls per end; your best one counts. After the end you'll see the best throw the hand allowed.</li>
+    </ol>
+    <p><b>Versus</b> uses real bocce order: whoever is <i>farther</i> from the jack throws next. When the balls run out, the closer side scores a point for each ball that beats the other side's best.</p>
+    <div class="row">
+      <a href="presentation.html" target="_blank" rel="noopener">Why vector arithmetic works (slides)</a>
+      <button class="ghost" id="helpClose" type="button">Got it</button>
+    </div>
+  </div>
+</dialog>
+
+<script src="engine.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

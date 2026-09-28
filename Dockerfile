@@ -1,30 +1,23 @@
-FROM python:3.9-slim
+FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application files
-COPY word_bocce_mvp_fastapi.py .
-COPY index.html .
-COPY presentation.html .
-COPY puzzles.json .
-COPY setup_embeddings.py .
+# The browser game (self-contained: vectors are in web/data/)
+COPY web/ ./web/
+# Server + legacy multiplayer UI at /classic
+COPY word_bocce_mvp_fastapi.py setup_embeddings.py ./
+COPY archive/legacy-ui/index.html ./archive/legacy-ui/index.html
 
-# Download embeddings at build time (smaller model for Docker image)
-RUN python setup_embeddings.py --model glove-100 --output ./embeddings
-
-# Environment variables with defaults
+# Full embeddings are only needed by the legacy API (/classic, /match, /puzzle/*/solve).
+# Build with --build-arg WITH_EMBEDDINGS=0 for a small image that serves just the game.
+ARG WITH_EMBEDDINGS=1
+RUN if [ "$WITH_EMBEDDINGS" = "1" ]; then python setup_embeddings.py --model glove-100 --output ./embeddings; fi
 ENV MODEL_PATH=./embeddings/glove-100.bin
+
 ENV PYTHONUNBUFFERED=1
 ENV PORT=8000
-ENV DECK_SIZE=10000
-ENV WILDCARD_RATIO=0.2
-ENV ROUND_TIMEOUT_SECS=120
-
 EXPOSE ${PORT}
-
-# Use PORT environment variable (Railway, Render, etc. set this dynamically)
 CMD uvicorn word_bocce_mvp_fastapi:app --host 0.0.0.0 --port ${PORT}
