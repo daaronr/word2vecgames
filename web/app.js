@@ -131,7 +131,8 @@
   const W = 400, H = 560, JX = 200, JY = 150, SY = 492, RS = SY - JY, KISS = 21;
   const rankR = (rank) => (rank <= 1 ? KISS : KISS + ((RS - KISS) * Math.log10(rank)) / Math.log10(G.space.n));
   function toXY(place, rank) {
-    const phi = place.theta * 0.6;
+    // Sideways angle is exaggerated so balls fan out; start (theta 0) stays straight down.
+    const phi = Math.max(-2.5, Math.min(2.5, place.theta * 3));
     const r = rankR(rank);
     let x = JX + r * Math.sin(phi);
     let y = JY + r * Math.cos(phi);
@@ -168,7 +169,8 @@
     for (const [rank, label] of [[10, "top 10"], [100, "top 100"], [1000, "top 1,000"], [10000, "top 10,000"]]) {
       const r = rankR(rank);
       rings.append(s("circle", { class: "ring", cx: JX, cy: JY, r: r.toFixed(1) }));
-      rings.append(s("text", { class: "ring-label", x: JX, y: (JY - r - 4).toFixed(1), "text-anchor": "middle" }, label));
+      const a = Math.PI * 0.2;
+      rings.append(s("text", { class: "ring-label", x: (JX + r * Math.cos(a) + 3).toFixed(1), y: (JY + r * Math.sin(a) + 11).toFixed(1) }, label));
     }
     svg.append(rings);
     svg.append(s("line", { class: "foul", x1: 18, x2: W - 18, y1: SY + 26, y2: SY + 26 }));
@@ -239,7 +241,7 @@
     const { x, y } = toXY(end.basis.place(sc.vec), sc.rank);
     courtEls.ghosts.replaceChildren(
       s("circle", { cx: x, cy: y, r: 12.5, style: "fill:none;stroke:var(--chalk);stroke-width:2;stroke-dasharray:4 3" }),
-      s("text", { class: "ring-label", x: x + 16, y: y + 4, style: "fill:var(--ink)" }, "best possible"));
+      s("text", { class: "ring-label", x: x + 16, y: y + 4, style: "fill:var(--ink)" }, "par"));
   }
 
   function animateBall(b) {
@@ -429,21 +431,26 @@
     const par = end.par;
     const span = par ? par.sim - end.startSim : 1;
     const pct = Math.max(0, Math.min(1, (best.sim - end.startSim) / (span || 1)));
-    const stars = pct >= 0.95 ? 3 : pct >= 0.8 ? 2 : pct >= 0.5 ? 1 : 0;
+    // Stars from whichever is kinder: share of the par distance, or the rank reached.
+    const byPct = pct >= 0.9 ? 3 : pct >= 0.7 ? 2 : pct >= 0.4 ? 1 : 0;
+    const byRank = best.rank === 1 ? 3 : best.rank <= 3 ? 2 : best.rank <= 10 ? 1 : 0;
+    const stars = Math.max(byPct, byRank);
     const head = ["A rough end", "A decent end", "A fine end", "A perfect end"][stars];
     if (end.kind === "puzzle") {
       const k = "puzzle:" + end.puzzle.id;
       if (stars > store.get(k, 0)) store.set(k, stars);
     }
     const parScore = par ? G.space.score(end.start, end.target, par.tiles) : null;
+    const beatPar = parScore && (best.sim > par.sim + 1e-6);
     const around = G.space.survey(G.space.row(end.target), end.target, [end.target], 8).near;
     const card = h("div", { class: "endcard", role: "region", "aria-label": "End summary" },
       h("h2", {}, head),
       h("div", { class: "stars-row", "aria-label": `${stars} of 3 stars` },
         [0, 1, 2].map((i) => h("span", { class: i < stars ? "" : "off" }, "●"))),
-      h("p", {}, `Your best ball: #${best.rank.toLocaleString()} (cos ${fmt(best.sim)}). You covered ${Math.round(pct * 100)}% of the distance the hand allowed.`),
+      h("p", {}, `Your best ball: #${best.rank.toLocaleString()} (cos ${fmt(best.sim)}), starting from #${end.startRank.toLocaleString()} (cos ${fmt(end.startSim)}).`
+        + (beatPar ? " Your wild word beat the par throw." : ` That's ${Math.round(pct * 100)}% of the way to par.`)),
       h("div", { class: "meter", "aria-hidden": "true" }, h("i", { style: `width:${Math.round(pct * 100)}%` })),
-      parScore && h("p", { class: "par" }, `Best possible: ${eqText(end.start, par.tiles)} → #${parScore.rank} · ${fmt(par.sim)}`),
+      parScore && h("p", { class: "par" }, `Par: ${eqText(end.start, par.tiles)} → #${parScore.rank} · ${fmt(par.sim)}`),
       h("p", { class: "neighbours" }, `Words nearest the jack: ${around.join(", ")}.`));
     const row = h("div", { class: "row" });
     if (end.kind === "daily") {
@@ -465,7 +472,7 @@
   async function share(end, best, pct) {
     const dots = { bacio: "🟡", close: "🟢", hunt: "🟤", wide: "⚪", lost: "⚫" };
     const text = [`Word Bocce · Daily No. ${end.no}`, `${end.start} → ${end.target}`,
-      end.balls.map((b) => dots[B.tier(b.rank).key]).join("") + `  best #${best.rank} · ${Math.round(pct * 100)}% of par`].join("\n");
+      end.balls.map((b) => dots[B.tier(b.rank).key]).join("") + `  best #${best.rank} · ${Math.round(pct * 100)}% to par`].join("\n");
     try {
       await navigator.clipboard.writeText(text);
       setStatus("Result copied. Paste it anywhere.");

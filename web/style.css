@@ -91,7 +91,7 @@ button:disabled { cursor: not-allowed; }
 .versus-score .side b { font: 400 22px/1 var(--display); }
 .versus-score .side.red b { color: var(--red); } .versus-score .side.blue b { color: var(--blue); }
 
-.court { display: block; width: 100%; max-width: 100%; height: auto; max-height: 62vh; margin-inline: auto; border-radius: 14px; background: var(--board);
+.court { display: block; width: min(100%, calc(64vh * 400 / 560)); max-width: 100%; height: auto; margin-inline: auto; border-radius: 14px; background: var(--board);
   touch-action: manipulation; }
 .court text { font-family: var(--ui); }
 .court .ring { fill: none; stroke: var(--chalk); stroke-opacity: 0.55; stroke-width: 1; stroke-dasharray: 2 5; }
