@@ -1,159 +1,87 @@
-# Word Bocce 🎯
+# Word Bocce
 
-A multiplayer word vector game where players manipulate word embeddings to reach target words!
+A lawn game played in word-vector space. The yellow **jack** is a target word;
+your ball starts as another word. Add and subtract word tiles to roll it closer:
 
-## What is Word Bocce?
+```
+king − man + woman  →  queen
+```
 
-Word Bocce is a competitive game where players use vector arithmetic to navigate semantic space. Each round, all players start from the same starting word and try to reach a target word by adding or subtracting word vectors from public and private cards. The player whose final vector is closest to the target word wins!
+Distance is measured as **rank**: `#12` means the jack is the 12th-nearest word
+(out of 40,000) to where your ball stopped. `#1` is a *bacio*, a kiss on the jack.
 
-### Game Mechanics
+## Modes
 
-- **Start & Target**: Each round has a starting word and a target word
-- **Cards**: Players get 10 shared public cards and 2 secret private cards
-- **Moves**: Choose one public and one private card, each with + or - operation
-- **Scoring**: Your result vector is compared to the target using cosine similarity
-- **Winner**: Highest similarity wins!
+- **Daily**: one court per day, the same for everyone. Four balls; the best
+  counts. Copy an emoji summary to share.
+- **Practice**: endless freshly dealt courts.
+- **Puzzles**: 60 hand-made courts (`web/data/puzzles.json`) with star ratings.
+- **Versus**: against a bot or a friend on one device, with real bocce rules
+  (the side farther from the jack throws next; the closer side scores a point
+  per ball that beats the other's best; first to 5).
 
-Example: Start="apple", Target="cider" → Play +juice, +ferment → Win! 🎉
+After every end you see the best throw the hand allowed, and the words nearest
+the jack.
 
-## Quick Start
+## Run it
 
-### 1. Install Dependencies
+The game runs entirely in the browser. Nothing to install:
+
+```bash
+cd web && python3 -m http.server 8000     # then open http://localhost:8000
+```
+
+Or run the full server (game at `/`, legacy multiplayer lobby at `/classic`):
 
 ```bash
 pip install -r requirements.txt
-```
-
-### 2. Download Word Embeddings
-
-Choose a model based on your needs:
-
-```bash
-# Small & fast (recommended for testing - ~130MB)
-python setup_embeddings.py --model glove-100
-
-# Medium quality (~380MB)
-python setup_embeddings.py --model glove-300
-
-# Best quality (~1.6GB, slower download)
-python setup_embeddings.py --model google-news
-```
-
-### 3. Start the Backend Server
-
-```bash
-# Set the path to your downloaded embeddings
-export MODEL_PATH=./embeddings/glove-100.bin
-
-# Start the API server
 uvicorn word_bocce_mvp_fastapi:app --reload
 ```
 
-The backend will be running at `http://localhost:8000`
+The legacy API endpoints (`/match/...`, `/puzzle/{id}/solve`, `/classic`) also
+need full embeddings: `python setup_embeddings.py --model glove-100` and
+`export MODEL_PATH=./embeddings/glove-100.bin`.
 
-### 4. Start the Frontend Server
+## Layout
 
-In a new terminal:
+| Path | What |
+| --- | --- |
+| `web/` | The game: `index.html`, `app.js` (UI), `engine.js` (vector math, dealing, scoring), `style.css`, `presentation.html` (the maths, as slides) |
+| `web/data/` | `vectors.bin` (40k × 100 int8), `vocab.txt`, `pools.json` (card and jack word pools), `puzzles.json` |
+| `tools/build_web_data.py` | Rebuilds `web/data/` from a GloVe file and word norms |
+| `tools/make_artifact.sh` | Stages `web/` for publishing as a claude.ai Artifact |
+| `tests/engine.test.js` | `node tests/engine.test.js` checks the engine against the real vectors |
+| `word_bocce_mvp_fastapi.py` | Server: static game plus the older multiplayer/puzzle API |
+| `DEPLOY.md` | Static hosting, and the Linode server |
+| `docs/original-design.md` | The original design document |
+| `archive/` | Superseded UI, docs and deploy configs |
 
-```bash
-python run_frontend.py
-```
+## How dealing works
 
-The frontend will be running at `http://localhost:8080`
+`engine.js` deals each court from a seed (the date, for Daily). It picks a jack
+from ~1,250 vivid concrete nouns, then a start word that is related but not
+close (cosine 0.12–0.35). The seven-tile hand holds two tiles that pull toward
+the jack, one worth subtracting (it carries the start word's flavour), two
+tempting near-misses, and two wildcards. Par is found by brute force over all
+378 throws the hand allows.
 
-### 5. Play!
-
-1. Open `http://localhost:8080` in your browser
-2. Enter your name and create a match
-3. Share the Match ID with friends to join
-4. Start the game and compete!
-
-## Game Files
-
-- `word_bocce_mvp_fastapi.py` - FastAPI backend server
-- `index.html` - Web-based game interface
-- `setup_embeddings.py` - Helper script to download word embeddings
-- `run_frontend.py` - Simple HTTP server for the frontend
-- `requirements.txt` - Python dependencies
-- `wordbocce_description.md` - Detailed game design document
-- `CLAUDE.md` - Developer documentation
-
-## Configuration
-
-Customize game settings via environment variables:
+## Rebuilding the vector bundle
 
 ```bash
-export DECK_SIZE=100000              # Vocabulary size
-export N_PUBLIC=10                   # Public cards per round
-export M_PRIVATE=2                   # Private cards per player
-export WILDCARD_RATIO=0.02          # Probability of JOKER cards
-export ROUND_TIMEOUT_SECS=60        # Time limit per round
-export USE_ANNOY=1                  # Use ANN for faster nearest neighbor search
-export RNG_SEED=12345               # Seed for reproducible games
+# GloVe 6B 100d (public domain), mirrored by gensim-data on GitHub
+curl -L -o embeddings/glove-100.gz \
+  https://github.com/RaRe-Technologies/gensim-data/releases/download/glove-wiki-gigaword-100/glove-wiki-gigaword-100.gz
+# Brysbaert et al. (2014) concreteness norms, used to pick familiar card and jack words
+curl -L -o embeddings/concreteness.txt \
+  https://raw.githubusercontent.com/ArtsEngine/concreteness/master/Concreteness_ratings_Brysbaert_et_al_BRM.txt
+python3 tools/build_web_data.py embeddings/glove-100.gz --lists embeddings --size 40000
+node tests/engine.test.js
 ```
 
-## API Endpoints
-
-- `POST /match` - Create new match
-- `POST /match/{id}/join` - Join a match
-- `POST /match/{id}/start` - Start the game
-- `GET /match/{id}/round/current` - Get current round state
-- `GET /match/{id}/player/{player_id}` - Get player's private cards
-- `POST /match/{id}/round/{round_id}/submit` - Submit your move
-- `POST /match/{id}/round/{round_id}/resolve` - Get leaderboard
-- `POST /match/{id}/round/next` - Start next round
-
-## Architecture
-
-The game uses:
-- **Backend**: FastAPI with in-memory state management
-- **Embeddings**: Word2Vec/GloVe via Gensim
-- **Frontend**: Vanilla HTML/CSS/JavaScript
-- **Vector Math**: NumPy for cosine similarity calculations
-
-See `CLAUDE.md` for detailed architecture documentation.
-
-## Development
-
-### Running Tests
-
-```bash
-# Syntax check
-python -m py_compile word_bocce_mvp_fastapi.py
-
-# Start server in dev mode
-uvicorn word_bocce_mvp_fastapi:app --reload --log-level debug
-```
-
-### How It Works
-
-1. Embeddings are loaded and normalized at startup
-2. Each word is represented as a 100-300 dimensional vector
-3. Your move: `v_result = v_start + sign1×v_public + sign2×v_private`
-4. Score: `cosine_similarity(v_result, v_target)`
-5. The nearest actual word to your result is also displayed
-
-## Troubleshooting
-
-**"MODEL_PATH env var not set"**
-- Make sure to run `export MODEL_PATH=./embeddings/your-model.bin` before starting the server
-
-**"Token not in vocabulary"**
-- Some words aren't in the embedding model. Try a different word or use the JOKER card
-
-**Frontend can't connect to backend**
-- Make sure the backend is running on port 8000
-- Check for CORS errors in browser console
-- Verify `API_URL` in index.html matches your backend
-
-**Slow nearest neighbor search**
-- Set `USE_ANNOY=1` to enable approximate nearest neighbor search
-- Reduce `DECK_SIZE` to use a smaller vocabulary
+`tools/blocklist.txt` keeps slurs, profanity and a few grim words out of the
+vocabulary entirely, so they never appear as tiles, jacks or landing labels.
 
 ## Credits
 
-Inspired by word embedding games and the concept of "semantic bocce ball" where you try to get close to a target in vector space.
-
-## License
-
-tbd
+Vectors: GloVe 6B (Pennington, Socher & Manning, 2014), Public Domain
+Dedication and License. Word familiarity: Brysbaert, Warriner & Kuperman (2014).

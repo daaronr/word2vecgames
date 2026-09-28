@@ -44,3 +44,9 @@ embeddings/
 # Environment variables
 .env
 .env.local
+
+# ...except the compact int8 bundle the browser game ships with
+!web/data/vectors.bin
+
+# Local build output
+dist/
