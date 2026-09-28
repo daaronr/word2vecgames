@@ -6,7 +6,7 @@ The game in `web/` is plain HTML/JS/CSS plus a 4 MB vector bundle. Any static
 host works: GitHub Pages, Netlify, Cloudflare Pages, S3, or
 `python -m http.server` inside `web/`. No Python server, no embeddings download.
 
-## Option B: the Linode server (current production, http://45.79.160.157)
+## Option B: the Linode server (current production, http://45.79.160.157:8000)
 
 The FastAPI server serves `web/` at `/` and keeps the older server-side API
 (online multiplayer lobby at `/classic`). To update an existing install:
@@ -20,7 +20,20 @@ bash /opt/word2vecgames/UPDATE_LINODE.sh
 files, which can't carry the new `web/` folder). If the pull refuses because the
 old script left modified files, run `git -C /opt/word2vecgames stash` first.
 
-The full first-time setup guide follows.
+How production is actually set up (checked 2026-09-28):
+
+- systemd unit **`word-bocce`** (`/etc/systemd/system/word-bocce.service`), not
+  `wordbocce` as in the generic guide below. Logs go to
+  `/opt/word2vecgames/server.log`.
+- uvicorn listens directly on port 8000. nginx on this box serves other sites
+  (Unjournal) and does **not** proxy Word Bocce.
+- System Python (`/usr/local/bin/uvicorn`), no venv. pip refuses to install into
+  it (PEP 668), so new dependencies have to be added by hand.
+- The box has ~4 GB RAM shared with other services; the legacy API loads GloVe
+  from `MODEL_PATH` at startup.
+
+The generic first-time setup guide follows; its names (`wordbocce`, nginx) are
+for a fresh install, not a description of the current server.
 
 ---
 
