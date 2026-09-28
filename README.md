@@ -63,10 +63,12 @@ need full embeddings: `python setup_embeddings.py --model glove-100` and
 
 `engine.js` deals each court from a seed (the date, for Daily). It picks a jack
 from ~1,250 vivid concrete nouns, then a start word that is related but not
-close (cosine 0.12–0.35). The seven-tile hand holds two tiles that pull toward
-the jack, one worth subtracting (it carries the start word's flavour), two
-tempting near-misses, and two wildcards. Par is found by brute force over all
-378 throws the hand allows.
+close (cosine 0.12–0.35). The nine-tile hand has no random filler; every tile
+is linked to the jack or the start word: two that pull toward the jack, two
+worth subtracting (they carry the start word's flavour), two lures linked to
+both (adding them drags the start along), and three near-misses that look like
+they point at the jack but more weakly than the real pulls. Par is found by
+brute force over all 834 throws the hand allows (up to three tiles, each ±).
 
 ## Rebuilding the vector bundle
 

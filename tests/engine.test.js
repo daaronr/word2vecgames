@@ -25,14 +25,18 @@ const b = B.deal(space, pools, "daily-2026-09-28");
 assert.deepStrictEqual(a, b);
 for (let i = 0; i < 25; i++) {
   const d = B.deal(space, pools, "t" + i);
-  assert.strictEqual(new Set(d.hand).size, 7);
+  assert.strictEqual(new Set(d.hand).size, B.HAND_SIZE);
+  // no filler: every tile is linked to the jack or the start word
+  for (const w of d.hand) {
+    assert(Math.max(space.sim(w, d.start), space.sim(w, d.target)) >= 0.2, `unlinked tile ${w} in ${d.start}->${d.target}`);
+  }
   assert(!d.hand.includes(d.start) && !d.hand.includes(d.target));
   const best = space.allThrows(d.start, d.target, d.hand)[0];
   assert(best.sim > space.sim(d.start, d.target) + 0.15, `weak deal ${d.start}->${d.target}`);
 }
 
-// All throws: 7 tiles, up to 3 → 7·2 + 21·4 + 35·8 = 378.
-assert.strictEqual(space.allThrows(a.start, a.target, a.hand).length, 378);
+// All throws: 9 tiles, up to 3 → 9·2 + 36·4 + 84·8 = 834.
+assert.strictEqual(space.allThrows(a.start, a.target, a.hand).length, 834);
 
 // Every puzzle is playable with the bundled vocabulary.
 const unplayable = puzzles.filter((p) => !space.has(p.start_word) || !space.has(p.target_word));

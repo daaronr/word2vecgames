@@ -35,6 +35,76 @@
     get(k, d) { try { const v = localStorage.getItem("wordbocce:" + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
     set(k, v) { try { localStorage.setItem("wordbocce:" + k, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } },
   };
+  // ---------- sound: synthesised with Web Audio, no audio files ----------
+  const sfx = (() => {
+    let ctx = null, noiseBuf = null, on = store.get("sound", true);
+    const ac = () => {
+      if (!on) return null;
+      if (!ctx) {
+        const C = window.AudioContext || window.webkitAudioContext;
+        if (!C) return null;
+        ctx = new C();
+      }
+      if (ctx.state === "suspended") ctx.resume();
+      return ctx;
+    };
+    function tone(c, freq, t0, dur, { type = "sine", gain = 0.2, to = null } = {}) {
+      const o = c.createOscillator(), g = c.createGain();
+      o.type = type;
+      o.frequency.setValueAtTime(freq, t0);
+      if (to) o.frequency.exponentialRampToValueAtTime(to, t0 + dur);
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(gain, t0 + 0.006);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      o.connect(g).connect(c.destination);
+      o.start(t0);
+      o.stop(t0 + dur + 0.05);
+    }
+    function gravel(c, t0, dur, gain) {
+      if (!noiseBuf) {
+        noiseBuf = c.createBuffer(1, c.sampleRate, c.sampleRate);
+        const d = noiseBuf.getChannelData(0);
+        for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      }
+      const src = c.createBufferSource(), bp = c.createBiquadFilter(), g = c.createGain();
+      src.buffer = noiseBuf;
+      src.loop = true;
+      bp.type = "bandpass";
+      bp.frequency.setValueAtTime(1400, t0);
+      bp.frequency.exponentialRampToValueAtTime(500, t0 + dur);
+      bp.Q.value = 0.7;
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(gain, t0 + 0.03);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      src.connect(bp).connect(g).connect(c.destination);
+      src.start(t0);
+      src.stop(t0 + dur + 0.05);
+    }
+    const play = (fn) => { try { const c = ac(); if (c) fn(c, c.currentTime); } catch (e) { /* audio unavailable */ } };
+    return {
+      get on() { return on; },
+      set(v) { on = v; store.set("sound", v); },
+      tile: (sign) => play((c, t) => tone(c, sign > 0 ? 900 : 640, t, 0.08, { type: "triangle", gain: 0.12 })),
+      untile: () => play((c, t) => tone(c, 420, t, 0.07, { type: "triangle", gain: 0.08 })),
+      nope: () => play((c, t) => tone(c, 150, t, 0.14, { type: "square", gain: 0.04 })),
+      /** A throw: the ball lands at `landAt` seconds from now, then rolls on gravel until `stopAt`. */
+      roll: (landAt, stopAt) => play((c, t) => {
+        tone(c, 160, t + landAt, 0.2, { gain: 0.35, to: 55 });
+        gravel(c, t + landAt, stopAt - landAt + 0.08, 0.22);
+      }),
+      clack: () => play((c, t) => {
+        tone(c, 2300, t, 0.05, { type: "triangle", gain: 0.16 });
+        tone(c, 3400, t + 0.004, 0.04, { gain: 0.09 });
+      }),
+      bacio: () => play((c, t) => {
+        tone(c, 1318.5, t, 0.9, { gain: 0.14 });
+        tone(c, 1975.5, t + 0.13, 1.1, { gain: 0.11 });
+      }),
+      win: () => play((c, t) => [523.3, 659.3, 784, 1046.5].forEach((f, i) => tone(c, f, t + i * 0.1, 0.35, { type: "triangle", gain: 0.12 }))),
+      lose: () => play((c, t) => [392, 293.7].forEach((f, i) => tone(c, f, t + i * 0.18, 0.4, { type: "triangle", gain: 0.1 }))),
+    };
+  })();
+
   const fmt = (x) => x.toFixed(2).replace(/^(-?)0\./, "$1.");
   const signChar = (n) => (n > 0 ? "+" : "−");
   const eqText = (start, tiles) => [start, ...tiles.map((t) => `${signChar(t.sign)} ${t.word}`)].join(" ");
@@ -53,7 +123,7 @@
   const TIPS = {
     rank: "Rank is how the game measures closeness. Take the spot where your ball is, and list all 40,000 words from closest in meaning to farthest. The jack's place in that list is its rank. #1 means the jack is the closest word of all: a perfect throw.",
     similarity: "Similarity (cosine similarity) compares two word vectors: 1 means pointing the same way, 0 means unrelated, below 0 means opposite. It moves in small steps, so it shows progress even when the rank barely changes.",
-    par: "Par is the best throw this hand allows. The game tries every combination of up to three tiles, each added or subtracted (378 throws in all), and keeps the one that gets the jack's rank lowest.",
+    par: "Par is the best throw this hand allows. The game tries every combination of up to three tiles, each added or subtracted (834 throws for a nine-tile hand), and keeps the one that brings the ball closest to the jack.",
     rings: "Each ring is a rank boundary. Inside the ‘top 10’ ring, the jack is among the 10 words closest to your ball; inside ‘top 100’, among the closest 100; and so on. Each ring inward is ten times harder to reach.",
     near: "The word closest in meaning to where your ball stopped (not counting the words you threw). It shows what your throw ‘means’.",
     versus: "Whoever is farther from the jack throws next. When both sides are out of balls, the side with the closest ball wins the round and scores one point for every ball closer than the other side's best.",
@@ -303,12 +373,17 @@
       const g = ballNode(b);
       courtEls.balls.append(g);
       const shadow = g.querySelector(".shadow");
+      // bocce contact: the ball comes to rest touching another ball
+      const touches = courtEls.end.balls.some((o) => o !== b && !o.pending &&
+        Math.hypot(toXY(o.place, o.rank).x - to.x, toXY(o.place, o.rank).y - to.y) < 27);
       if (reduceMotion) {
+        sfx.roll(0, 0.1);
         g.setAttribute("transform", `translate(${to.x} ${to.y})`);
         drawLabel(b);
         return resolve();
       }
       const dur = 950, t0 = performance.now();
+      sfx.roll(dur * 0.5 / 1000, dur / 1000);
       const bend = (to.x - SX) * 0.18;
       const step = (now) => {
         const t = Math.min(1, (now - t0) / dur);
@@ -325,6 +400,7 @@
           courtEls.labels.append(puff);
           puff.animate([{ transform: "scale(1)", opacity: 0.9 }, { transform: "scale(2.3)", opacity: 0 }],
             { duration: 450, easing: "ease-out" }).onfinish = () => puff.remove();
+          if (touches) sfx.clack();
           drawLabel(b);
           resolve();
         }
@@ -346,7 +422,8 @@
     else {
       const end = current();
       m.replaceChildren(h("div", { class: "table" },
-        h("div", { class: "court-col" }, renderMatchup(end), renderScorebar(end), buildCourt(end),
+        renderMatchup(end),
+        h("div", { class: "court-col" }, renderScorebar(end), buildCourt(end),
           h("p", { class: "legend" }, "Dotted rings: the jack is in the ball's top 10, 100, 1,000 or 10,000 closest words. ", tip("rings", "the rings"))),
         renderBench(end)));
     }
@@ -403,7 +480,7 @@
       for (const t of end.rack) {
         rack.append(h("button", { class: `chip ${t.sign > 0 ? "plus" : "minus"}`, type: "button", "data-key": "chip-" + t.word,
           title: "Tap to switch between adding and subtracting", disabled: busy || botTurn,
-          onclick: () => { t.sign = -t.sign; render(); } }, `${signChar(t.sign)} ${t.word}`));
+          onclick: () => { t.sign = -t.sign; sfx.tile(t.sign); render(); } }, `${signChar(t.sign)} ${t.word}`));
       }
       bench.append(rack);
 
@@ -559,14 +636,16 @@
     const i = end.rack.findIndex((t) => t.word === w);
     if (i < 0) {
       if (end.rack.length >= B.MAX_TILES) {
+        sfx.nope();
         setStatus("Three tiles per throw. Tap a lit tile to change it.", true);
         const again = main().querySelector(`[data-key="${CSS.escape("tile-" + w)}"]`);
         if (again) again.classList.add("shake");
         return;
       }
       end.rack.push({ word: w, sign: 1 });
-    } else if (end.rack[i].sign > 0) end.rack[i].sign = -1;
-    else end.rack.splice(i, 1);
+      sfx.tile(1);
+    } else if (end.rack[i].sign > 0) { end.rack[i].sign = -1; sfx.tile(-1); }
+    else { end.rack.splice(i, 1); sfx.untile(); }
     statusMsg = { text: "", warn: false };
     render();
   }
@@ -579,6 +658,7 @@
   async function throwBall(end, side, tiles) {
     const key = tileKey(tiles);
     if (end.balls.some((b) => tileKey(b.tiles) === key)) {
+      sfx.nope();
       return setStatus("That exact throw is already on the court. Change a tile or a sign.", true);
     }
     busy = true;
@@ -591,6 +671,7 @@
     ball.pending = false;
     busy = false;
     if (end.kind === "daily") store.set("daily:" + end.iso, end.balls.map((b) => b.tiles));
+    if (ball.rank === 1) sfx.bacio();
     const t = B.tier(ball.rank);
     statusMsg = { text: ball.rank === 1
       ? `Ball ${ball.n} landed right by ${q(end.target)}: it's the closest word to the ball. Bacio!`
@@ -611,6 +692,10 @@
       vs.first = winner;
       end.result = { winner, pts };
       if (vs.score[winner] >= VS_TARGET) vs.over = true;
+      // Against the bot, blue winning is a loss for you; two humans on one device always get the fanfare.
+      setTimeout(vs.opponent === "bot" && winner === "blue" ? sfx.lose : sfx.win, 700);
+    } else {
+      setTimeout(bestBall(end).rank <= 10 ? sfx.win : sfx.lose, 700);
     }
   }
 
@@ -701,6 +786,13 @@
   async function boot() {
     document.body.append(tipBox);
     for (const b of document.querySelectorAll(".modes button")) b.addEventListener("click", () => switchMode(b.dataset.mode));
+    const soundBtn = $("#soundBtn");
+    const showSound = () => {
+      soundBtn.textContent = sfx.on ? "Sound on" : "Sound off";
+      soundBtn.setAttribute("aria-pressed", String(sfx.on));
+    };
+    soundBtn.addEventListener("click", () => { sfx.set(!sfx.on); showSound(); sfx.tile(1); });
+    showSound();
     const dlg = $("#help");
     $("#helpBtn").addEventListener("click", () => dlg.showModal());
     $("#helpClose").addEventListener("click", () => dlg.close());
