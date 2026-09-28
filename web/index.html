@@ -42,12 +42,14 @@
     <ol>
       <li>The <b>yellow jack</b> is the target word. Your ball starts out as the <b>start word</b> (the dashed circle).</li>
       <li>Tap tiles to build a throw: tap once to <b>add</b> a word, again to <b>subtract</b> it, a third time to take it back. Up to three tiles per throw.
-        <div class="eg">king − man + woman → lands on queen</div></li>
-      <li><b>Throw.</b> Every word is a direction in a 100-dimensional space, so adding and subtracting really moves the ball.</li>
-      <li>Distance is rank: <b>#12</b> means the jack is the 12th-nearest word to where your ball stopped. The rings mark the top 10, 100, 1,000 and 10,000. <b>#1</b> is a <i>bacio</i>, a kiss on the jack.</li>
-      <li>Four balls per end; your best one counts. After the end you'll see the best throw the hand allowed.</li>
+        <div class="eg">king − man + woman → lands by queen</div></li>
+      <li><b>Why that works:</b> the game stores each word as a list of 100 numbers, learned from how the word is used across billions of words of text. Words used in similar ways get similar lists. A throw adds and subtracts those lists, so the ball really moves through meaning.</li>
+      <li><b>How close is close?</b> After a throw, list all 40,000 words from closest in meaning to your ball to farthest. The jack's place in that list is its <b>rank</b>. Rank #12 means eleven words are closer to your ball than the jack is. Rank #1 means the jack is the closest word of all: a <i>bacio</i> (Italian for "kiss", a ball touching the jack).</li>
+      <li>The dotted rings on the court mark ranks: inside "top 10" the jack is among the ten closest words, and so on out to 10,000.</li>
+      <li>You get four balls per round and your best one counts. At the end you'll see <b>par</b>, the best throw your hand allowed.</li>
     </ol>
-    <p><b>Versus</b> uses real bocce order: whoever is <i>farther</i> from the jack throws next. When the balls run out, the closer side scores a point for each ball that beats the other side's best.</p>
+    <p><b>Versus</b> follows real bocce: whoever is <i>farther</i> from the jack throws next. When both sides are out of balls, the side with the closest ball wins the round and scores a point for each of its balls that is closer than the other side's best.</p>
+    <p>Anything with a <b>?</b> or a dotted underline explains itself when you tap or hover on it.</p>
     <div class="row">
       <a href="presentation.html" target="_blank" rel="noopener">Why vector arithmetic works (slides)</a>
       <button class="ghost" id="helpClose" type="button">Got it</button>

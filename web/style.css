@@ -223,3 +223,19 @@ dialog::backdrop { background: rgba(10, 20, 16, .55); }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
+
+/* ---------- explanations ---------- */
+.tip { display: inline-grid; place-items: center; width: 18px; height: 18px; padding: 0; border-radius: 50%;
+  border: 1px solid currentColor; background: transparent; font: 700 11px/1 var(--ui); vertical-align: 1px;
+  opacity: .75; }
+.tip:hover, .tip:focus-visible { opacity: 1; }
+.endcard button.tip { color: var(--chalk); background: transparent; padding: 0; border: 1px solid currentColor; border-radius: 50%; }
+[data-tip]:not(.tip) { cursor: help; text-decoration: underline dotted; text-underline-offset: 3px; }
+.tipbox { position: fixed; z-index: 50; max-width: min(320px, calc(100vw - 16px)); padding: 10px 12px; border-radius: 8px;
+  background: var(--ink); color: var(--wall); font: 400 14px/1.45 var(--ui); box-shadow: 0 6px 24px rgba(0,0,0,.25); }
+.legend { margin: 8px 0 0; font-size: 13px; color: var(--ink-soft); }
+.log li.head { font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-soft); padding-block: 6px; }
+.log li.head .score { font: inherit; }
+.log .score b { font: 500 16px var(--mono); }
+.log .score small.sim { font: 400 11px var(--mono); letter-spacing: 0; text-transform: none; }
+.meter-ends { display: flex; justify-content: space-between; font-size: 12px; opacity: .8; margin-top: -4px; }
