@@ -6,6 +6,9 @@ The game in `web/` is plain HTML/JS/CSS plus a 4 MB vector bundle. Any static
 host works: GitHub Pages, Netlify, Cloudflare Pages, S3, or
 `python -m http.server` inside `web/`. No Python server, no embeddings download.
 
+GitHub Pages is set up: https://daaronr.github.io/word2vecgames/ redeploys from
+`web/` on every push to main (`.github/workflows/pages.yml`).
+
 ## Option B: the Linode server (current production, http://45.79.160.157)
 
 The FastAPI server serves `web/` at `/` and keeps the older server-side API
