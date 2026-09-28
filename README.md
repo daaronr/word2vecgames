@@ -25,6 +25,9 @@ the jack.
 
 ## Run it
 
+Play online: https://daaronr.github.io/word2vecgames/ (GitHub Pages, redeployed
+from `web/` on every push to main).
+
 The game runs entirely in the browser. Nothing to install:
 
 ```bash
