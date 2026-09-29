@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@400;500&display=swap">
 <!-- bump ?v= when these files change, so browsers don't pair new HTML with cached old scripts -->
-<link rel="stylesheet" href="style.css?v=5">
+<link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
 <div class="app">
@@ -24,16 +24,17 @@
       <button role="tab" id="tab-puzzles" data-mode="puzzles" aria-selected="false">Puzzles</button>
       <button role="tab" id="tab-versus" data-mode="versus" aria-selected="false">Versus</button>
     </nav>
+    <button class="iconbtn words-btn" id="wordsBtn" type="button" aria-haspopup="dialog">Words: <b id="wordsName">Common sense</b></button>
     <button class="iconbtn" id="soundBtn" type="button" aria-pressed="true">Sound on</button>
     <button class="iconbtn" id="helpBtn" type="button" aria-label="How to play"><span class="wide">How to play</span><span class="narrow">Help</span></button>
   </header>
 
   <main id="main">
-    <div class="loading" id="loading"><b>Raking the court…</b>Loading 40,000 word vectors (4&nbsp;MB).</div>
+    <div class="loading" id="loading"><b>Raking the court…</b>Loading the words (a few MB, once).</div>
   </main>
 
   <footer class="foot">
-    <span>Vectors: GloVe 6B, 100 dimensions (public domain).</span>
+    <span id="wordsCredit"></span>
     <a href="presentation.html" target="_blank" rel="noopener">The math, in slides</a>
   </footer>
 </div>
@@ -44,13 +45,14 @@
     <ol>
       <li>Your red ball starts on one word. The yellow <b>jack</b> is another word. Roll your ball as close to the jack as you can.</li>
       <li>Tap words to <b>add</b> (+) or <b>subtract</b> (−) their meaning, up to three, then tap <b>Throw</b>.
-        <div class="eg">boat + sky − water → plane</div></li>
+        <div class="eg" id="helpExample">hat + foot − head → shoe</div></li>
       <li>Closeness is a ranking. <b>1st</b> means the jack is the nearest word to your ball, a <i>bacio</i> (a kiss). You get four balls; your best counts.</li>
     </ol>
     <p><button class="primary" id="helpTutorial" type="button">Play the 30-second tutorial</button></p>
     <details>
       <summary>Why does adding words work?</summary>
-      <p>The game stores each word as a list of 100 numbers, learned from how the word is used across billions of words of text. Words used in similar ways get similar lists. A throw adds and subtracts those lists, so the ball moves through meaning.</p>
+      <p>The game stores each word as a long list of numbers: its position on a map of meaning. Words with similar meanings get similar lists. A throw adds and subtracts those lists, so the ball moves through meaning.</p>
+      <p>You can choose which map the game uses: <button class="linkish" id="helpWords" type="button">common sense, or raw text</button>.</p>
     </details>
     <details>
       <summary>Versus rules</summary>
@@ -63,8 +65,28 @@
   </div>
 </dialog>
 
-<script src="engine.js?v=5"></script>
-<script src="net.js?v=5"></script>
-<script src="app.js?v=5"></script>
+<dialog id="words" aria-labelledby="wordsTitle">
+  <div class="help">
+    <h2 id="wordsTitle">Two maps of meaning</h2>
+    <p>Every word in the game has a position on a map of meaning: a long list of numbers. Words with nearby positions count as close. You can choose where those positions come from.</p>
+    <section class="wordset" data-wordset="sense">
+      <h3>Common sense</h3>
+      <p>Built from how words are used in text, <b>plus</b> ConceptNet, a large collection of everyday facts that people have written down: "a hen lays eggs", "bacon is a kind of meat", "you wear a shoe on your foot". Throws mostly work the way you'd expect. It uses about 21,000 everyday words, and a court is only dealt if its best throw can be explained word by word.</p>
+      <button type="button">Use common-sense words</button>
+    </section>
+    <section class="wordset" data-wordset="text">
+      <h3>Raw text</h3>
+      <p>Learned only from which words appear together in billions of words of Wikipedia and news. This is the classic "word embedding" (GloVe) behind the famous king − man + woman ≈ queen. Nobody told it any facts, so it can surprise you: "ham" sits among football clubs (West Ham), and "eggs" sits nearer "meat" than "bacon", because that's how the news writes about them. Try it if you're curious how a machine that only reads text arranges words.</p>
+      <button type="button">Use raw-text words</button>
+    </section>
+    <p class="hint" id="wordsNote" role="status"></p>
+    <p class="hint">Each has its own Daily. In an online room, the host's choice applies to everyone.</p>
+    <div class="row"><span></span><button class="ghost" id="wordsClose" type="button">Close</button></div>
+  </div>
+</dialog>
+
+<script src="engine.js?v=6"></script>
+<script src="net.js?v=6"></script>
+<script src="app.js?v=6"></script>
 </body>
 </html>

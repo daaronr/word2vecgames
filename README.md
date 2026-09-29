@@ -8,14 +8,42 @@ king − man + woman  →  queen
 ```
 
 Distance is measured as **rank**: `#12` means the jack is the 12th-nearest word
-(out of 40,000) to where your ball stopped. `#1` is a *bacio*, a kiss on the jack.
+to where your ball stopped. `#1` is a *bacio*, a kiss on the jack.
+
+## Two word sets ("maps of meaning")
+
+Players choose where word positions come from (the **Words** button, or Help):
+
+- **Common sense** (default, `web/data-sense/`): ConceptNet Numberbatch 19.08,
+  which blends text statistics with a knowledge base of everyday facts ("bacon
+  is a kind of meat", "a hen lays eggs"). Limited to 21,114 everyday words, 300
+  dimensions, 6.3 MB. Courts are only dealt if one of the strongest throws can
+  be explained word by word (`explainable()` in `engine.js`: every added word
+  has cosine ≥ 0.3 with the jack, every subtracted word ≥ 0.3 with the start),
+  and par is chosen among such throws.
+- **Raw text** (`web/data/`): GloVe 6B 100d, learned only from which words
+  appear together in Wikipedia and news. The classic word embedding: it can
+  surprise ("ham" sits with football clubs, "eggs" nearer "meat" than "bacon").
+
+Why both exist: with raw-text words, the hand-made puzzles and dealt courts
+often had best throws nobody could explain (bacon → eggs couldn't get better
+than 20th; a typical dealt par read "doll − dragon + flour + puppy → peanut").
+With common-sense words, 44 of the 60 puzzles pass the quality bar (32 with raw
+text), and dealt pars read like "canal + disaster + avalanche + flow → flood".
+Each set has its own Daily, tutorial example and puzzle retirement field
+(`retired_sense` / `retired` in `puzzles.json`). An online room uses the host's
+set.
 
 ## Modes
 
 - **Daily**: one court per day, the same for everyone. Four balls; the best
   counts. Copy an emoji summary to share.
 - **Practice**: endless freshly dealt courts.
-- **Puzzles**: 32 hand-made courts (`web/data/puzzles.json`) with star ratings. 28 more are marked `retired` there: they were already solved at the start, couldn't be done well, or had a nonsensical best throw. `tests/engine.test.js` fails if an active puzzle drifts into those states.
+- **Puzzles**: hand-made courts (`web/data/puzzles.json`) with star ratings:
+  44 active with common-sense words, 32 with raw text. The rest are marked
+  `retired_sense` / `retired` with a reason (already solved at the start,
+  couldn't be done well, or no sensible best throw); `tests/engine.test.js`
+  fails if an active puzzle drifts into those states.
 - **Versus**: against a bot or a friend on one device, with real bocce rules
   (the side farther from the jack throws next; the closer side scores a point
   per ball that beats the other's best; first to 5).
@@ -28,8 +56,9 @@ Distance is measured as **rank**: `#12` means the jack is the 12th-nearest word
 After every round you see par (the best throw the hand allowed), a few nearby
 words placed on the court, and a "try your own words" box: type any throw to
 see where it would have landed and say whether those words would have made the
-court more fun. Suggestions are kept in the browser for now (`localStorage`
-key `wordbocce:suggestions`). More mode ideas: `docs/game-modes.md`.
+court more fun. Suggestions are sent to the game server's `/api/suggestions`
+(see `DEPLOY.md`) and wait in the browser until it answers. More mode ideas:
+`docs/game-modes.md`.
 
 ## Run it
 
@@ -83,8 +112,8 @@ the hand allows (up to three tiles, each ±) by similarity, then ranks the top 5
 and keeps the best. Taking the most similar throw as par, as the game used to,
 misses the rank-best throw in most deals.
 
-New visitors land in a short guided tutorial (boat + sky − water → plane)
-before the Daily.
+New visitors land in a short guided tutorial before the Daily: hat + foot −
+head → shoe with common-sense words, boat + sky − water → plane with raw text.
 
 ## Rebuilding the vector bundle
 
@@ -96,6 +125,13 @@ curl -L -o embeddings/glove-100.gz \
 curl -L -o embeddings/concreteness.txt \
   https://raw.githubusercontent.com/ArtsEngine/concreteness/master/Concreteness_ratings_Brysbaert_et_al_BRM.txt
 python3 tools/build_web_data.py embeddings/glove-100.gz --lists embeddings --size 40000
+
+# Common-sense set: ConceptNet Numberbatch 19.08 English (325 MB download), in the
+# raw-text set's word order, everyday words only
+curl -L -o embeddings/numberbatch-en.txt.gz \
+  https://conceptnet.s3.amazonaws.com/downloads/2019/numberbatch/numberbatch-en-19.08.txt.gz
+python3 tools/build_web_data.py embeddings/numberbatch-en.txt.gz --vocab-from web/data/vocab.txt \
+  --everyday 0.9 --lists embeddings --out web/data-sense
 node tests/engine.test.js
 ```
 
@@ -104,5 +140,8 @@ vocabulary entirely, so they never appear as tiles, jacks or landing labels.
 
 ## Credits
 
-Vectors: GloVe 6B (Pennington, Socher & Manning, 2014), Public Domain
-Dedication and License. Word familiarity: Brysbaert, Warriner & Kuperman (2014).
+Raw-text vectors: GloVe 6B (Pennington, Socher & Manning, 2014), Public Domain
+Dedication and License. Common-sense vectors: ConceptNet Numberbatch 19.08
+(Speer, Chin & Havasi, 2017), CC BY-SA 4.0; the derived bundle in
+`web/data-sense/` is shared under the same licence (see its `README.txt`).
+Word familiarity: Brysbaert, Warriner & Kuperman (2014).

@@ -154,7 +154,30 @@
    *   2 lures      — linked to both, so adding them drags the start along
    *   3 near-misses — look like they point at the jack, but more weakly than the pulls
    */
-  function deal(space, pools, seed) {
+  function deal(space, pools, seed, opts = {}) {
+    if (!opts.explain) return dealOnce(space, pools, seed);
+    // Re-deal (deterministically) until one of the strongest throws can be explained word by word.
+    let d = null;
+    for (let attempt = 0; attempt < 25; attempt++) {
+      d = dealOnce(space, pools, attempt ? `${seed}#${attempt}` : seed);
+      const top = space.allThrows(d.start, d.target, d.hand).slice(0, 12);
+      if (top.some((t) => explainable(space, d.start, d.target, t.tiles, opts.explain))) return d;
+    }
+    return d;
+  }
+
+  /**
+   * A throw a person could explain: every added word is clearly related to the jack, and every
+   * subtracted word is clearly related to the start word (more than to the jack). `threshold` is a
+   * cosine; it depends on the vectors (0.3 suits the common-sense set).
+   */
+  function explainable(space, start, target, tiles, threshold) {
+    return tiles.every((t) => (t.sign > 0
+      ? space.sim(t.word, target) >= threshold
+      : space.sim(t.word, start) >= threshold && space.sim(t.word, start) > space.sim(t.word, target)));
+  }
+
+  function dealOnce(space, pools, seed) {
     const R = rng(seed);
     const targets = pools.targets.filter((w) => space.has(w));
     const cards = pools.cards.filter((w) => space.has(w));
@@ -241,20 +264,21 @@
     return { key: "lost", label: "Long way off" };
   }
 
-  async function load(base, vectorsFile = "vectors.bin") {
+  /** Load a word bundle from `base`; puzzles are shared between bundles and may live elsewhere. */
+  async function load(base, vectorsFile = "vectors.bin", puzzlesURL = base + "puzzles.json") {
     const ok = (r) => { if (!r.ok) throw new Error(`${r.url}: HTTP ${r.status}`); return r; };
     const [vocabTxt, buf, pools, puzzles] = await Promise.all([
       fetch(base + "vocab.txt").then(ok).then((r) => r.text()),
       fetch(base + vectorsFile).then(ok).then((r) => r.arrayBuffer()),
       fetch(base + "pools.json").then(ok).then((r) => r.json()),
-      fetch(base + "puzzles.json").then(ok).then((r) => r.json()),
+      fetch(puzzlesURL).then(ok).then((r) => r.json()),
     ]);
     const vocab = vocabTxt.split("\n");
     const space = new Space(vocab, new Int8Array(buf), pools.dim);
     return { space, pools, puzzles };
   }
 
-  const api = { MAX_TILES, HAND_SIZE, related, rng, hashSeed, Space, deal, courtBasis, tier, load };
+  const api = { MAX_TILES, HAND_SIZE, related, explainable, rng, hashSeed, Space, deal, courtBasis, tier, load };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.Bocce = api;
 })(typeof self !== "undefined" ? self : this);

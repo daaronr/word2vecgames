@@ -338,3 +338,14 @@ dialog::backdrop { background: rgba(10, 20, 16, .55); }
 .standings li { line-height: 1.35; }
 .standings .pip { display: inline-block; vertical-align: -1px; margin-right: 5px; }
 .standings .eqs { font-family: var(--mono); font-size: 13.5px; }
+
+/* ---------- word sets (common sense / raw text) ---------- */
+.words-btn b { font-weight: 700; }
+@media (max-width: 560px) { .top .words-btn { display: none; } } /* on phones: Help → "common sense, or raw text" */
+.wordset { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+.wordset h3 { margin: 0; font: 400 19px var(--display); }
+.wordset p { margin: 0; font-size: 14.5px; }
+.wordset.current { border-color: var(--board); box-shadow: inset 4px 0 0 var(--board); }
+.wordset button { align-self: flex-start; border: 0; border-radius: 9px; padding: 8px 14px; font-weight: 700; background: var(--board); color: var(--chalk); }
+.wordset button:disabled { background: transparent; color: var(--ink-soft); border: 1px solid var(--line); cursor: default; }
+#words .row { display: flex; justify-content: space-between; }
