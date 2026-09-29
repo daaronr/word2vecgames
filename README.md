@@ -15,7 +15,7 @@ Distance is measured as **rank**: `#12` means the jack is the 12th-nearest word
 - **Daily**: one court per day, the same for everyone. Four balls; the best
   counts. Copy an emoji summary to share.
 - **Practice**: endless freshly dealt courts.
-- **Puzzles**: 60 hand-made courts (`web/data/puzzles.json`) with star ratings.
+- **Puzzles**: 32 hand-made courts (`web/data/puzzles.json`) with star ratings. 28 more are marked `retired` there: they were already solved at the start, couldn't be done well, or had a nonsensical best throw. `tests/engine.test.js` fails if an active puzzle drifts into those states.
 - **Versus**: against a bot or a friend on one device, with real bocce rules
   (the side farther from the jack throws next; the closer side scores a point
   per ball that beats the other's best; first to 5).

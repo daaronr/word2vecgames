@@ -26,7 +26,7 @@ jack's **rank** among the ball's nearest words (rank 1 = "bacio").
     opened). The host's browser holds the state; only seeds and tile choices
     are sent, and every browser scores throws itself.
   - `data/`: `vectors.bin` (int8, rows = `vocab.txt` order), `pools.json`
-    (`cards`, `targets`), `puzzles.json` (the 60 curated puzzles; the server
+    (`cards`, `targets`), `puzzles.json` (60 hand-made puzzles, 28 marked `retired` and skipped; the server
     reads this file too).
 - `tools/build_web_data.py` regenerates `web/data/` (see README).
   `tools/blocklist.txt` is the vocabulary safety filter.

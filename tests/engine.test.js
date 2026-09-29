@@ -51,6 +51,20 @@ assert(!tut1.near.some((w) => w.startsWith("boat")), `near words ${tut1.near}`);
 const unplayable = puzzles.filter((p) => !space.has(p.start_word) || !space.has(p.target_word));
 assert.deepStrictEqual(unplayable.map((p) => p.id), []);
 
+// Every active puzzle is worth playing against these vectors: the jack doesn't start among the
+// start word's 8 nearest words, and the best throw the hand allows gets it inside the top 30.
+// (Puzzles that fail are marked "retired" in puzzles.json rather than deleted.)
+const closer = (x, y) => x.rank < y.rank || (x.rank === y.rank && x.sim > y.sim);
+const weak = [];
+for (const p of puzzles.filter((q) => !q.retired)) {
+  const hand = p.allowed_cards.filter((w) => w !== "WILDCARD" && space.has(w) && w !== p.start_word && w !== p.target_word);
+  const r0 = space.survey(space.row(p.start_word), p.target_word, [p.start_word], 1).rank;
+  const par = space.allThrows(p.start_word, p.target_word, hand).slice(0, 50)
+    .map((t) => ({ ...t, rank: space.score(p.start_word, p.target_word, t.tiles).rank })).reduce((m, t) => (m && !closer(t, m) ? m : t), null);
+  if (r0 <= 8 || par.rank > 30) weak.push(`#${p.id} ${p.start_word}→${p.target_word} (start ${r0}, par ${par.rank})`);
+}
+assert.deepStrictEqual(weak, [], "weak puzzles: retire or fix them");
+
 // Court: the start ball sits at distance 1, angle 0.
 const basis = B.courtBasis(space, a.start, a.target, "x");
 const s = basis.place(space.row(a.start));

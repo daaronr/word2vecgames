@@ -1439,6 +1439,8 @@
     $("#helpTutorial").addEventListener("click", () => { dlg.close(); switchMode("tutorial"); });
     try {
       G = await B.load(DATA, window.WORD_BOCCE_VECTORS);
+      // Puzzles marked "retired" in puzzles.json failed the audit against these vectors; skip them.
+      G.puzzles = G.puzzles.filter((p) => !p.retired);
     } catch (e) {
       main().replaceChildren(h("div", { class: "loading" }, h("b", {}, "The court didn't load."),
         "The word vectors couldn't be fetched. If you opened index.html straight from disk, serve the folder instead (python -m http.server) and reload."));
