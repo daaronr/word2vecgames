@@ -28,8 +28,12 @@ How production is actually set up (checked 2026-09-28):
 - systemd unit **`word-bocce`** (`/etc/systemd/system/word-bocce.service`), not
   `wordbocce` as in the generic guide below. Logs go to
   `/opt/word2vecgames/server.log`.
-- uvicorn listens directly on port 8000. nginx on this box serves other sites
-  (Unjournal) and does **not** proxy Word Bocce.
+- uvicorn listens directly on port 8000 (http://45.79.160.157:8000). nginx on
+  this box serves the Unjournal sites, plus one Word Bocce site added
+  2026-09-29: **https://45-79-160-157.sslip.io** (`/etc/nginx/sites-available/wordbocce-sslip`)
+  proxies to :8000. sslip.io turns the IP into a hostname so it can have a
+  Let's Encrypt certificate (certbot renews it with the others). It exists so
+  the HTTPS GitHub Pages copy can post suggestions; it also serves the game.
 - System Python (`/usr/local/bin/uvicorn`), no venv. pip refuses to install into
   it (PEP 668), so new dependencies have to be added by hand.
 - The box has ~4 GB RAM shared with other services; the legacy API loads GloVe
