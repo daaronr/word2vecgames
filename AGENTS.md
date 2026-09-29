@@ -1,4 +1,4 @@
-# Claude instructions
+# Codex instructions
 
 Guidance for Claude Code and Codex working in this repository. `AGENTS.md` is
 the Codex copy of this file; keep the two in step (a commit hook checks).

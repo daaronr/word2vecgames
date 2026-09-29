@@ -254,7 +254,7 @@
     return { space, pools, puzzles };
   }
 
-  const api = { MAX_TILES, HAND_SIZE, rng, hashSeed, Space, deal, courtBasis, tier, load };
+  const api = { MAX_TILES, HAND_SIZE, related, rng, hashSeed, Space, deal, courtBasis, tier, load };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.Bocce = api;
 })(typeof self !== "undefined" ? self : this);
