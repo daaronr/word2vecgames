@@ -25,7 +25,10 @@ jack's **rank** among the ball's nearest words (rank 1 = "bacio").
   - `net.js`: online rooms over PeerJS (loaded from jsDelivr only when a room is
     opened). The host's browser holds the state; only seeds and tile choices
     are sent, and every browser scores throws itself.
-  - `data/`: `vectors.bin` (int8, rows = `vocab.txt` order), `pools.json`
+  - `data-sense/`: the **default** "common sense" word set (ConceptNet Numberbatch,
+    everyday words, 300 dims, CC BY-SA 4.0, see its README.txt). Deals and par use
+    `explainable()` (cosine bar 0.3). `WORD_SETS` in `app.js` configures both sets.
+  - `data/`: the "raw text" set (GloVe). `vectors.bin` (int8, rows = `vocab.txt` order), `pools.json`
     (`cards`, `targets`), `puzzles.json` (60 hand-made puzzles, 28 marked `retired` and skipped; the server
     reads this file too).
 - `tools/build_web_data.py` regenerates `web/data/` (see README).
@@ -54,6 +57,9 @@ uvicorn word_bocce_mvp_fastapi:app --reload
 - Keep the game static-hostable: no runtime dependency on the Python server.
 - Card/jack words must stay familiar; change pools in `build_web_data.py`
   rather than hand-editing `pools.json`.
+- Keep both word sets working: the tutorial example, Daily seed and puzzle retirement
+  field are per set (`retired` = raw text, `retired_sense` = common sense), and the
+  tests check both.
 - Deals must stay deterministic for a given seed (Daily depends on it). If you
   change `deal()` or the data bundle, today's Daily changes for everyone.
 - Visual identity: sage "clubhouse" ground, raked-gravel court, bottle-green

@@ -42,21 +42,32 @@ def read_list(path):
         return [w.strip().lower() for w in f if w.strip() and not w.startswith("#")]
 
 
-def load_vectors(path, limit):
+def load_vectors(path, limit, only=None):
+    """Read up to `limit` rows; with `only` (a set), read the whole file but keep just those words."""
     opener = gzip.open if path.endswith(".gz") else open
     words, vecs = [], []
     with opener(path, "rt", encoding="utf8") as f:
         first = f.readline().rstrip().split(" ")
-        if len(first) != 2:  # no header: first line is a vector
+        if len(first) != 2 and (only is None or first[0] in only):  # no header: first line is a vector
             words.append(first[0])
             vecs.append(np.asarray(first[1:], dtype=np.float32))
         for line in f:
-            if len(words) >= limit:
+            if only is None and len(words) >= limit:
                 break
-            parts = line.rstrip().split(" ")
-            words.append(parts[0])
-            vecs.append(np.asarray(parts[1:], dtype=np.float32))
+            w, _, rest = line.rstrip().partition(" ")
+            if only is not None and w not in only:
+                continue
+            words.append(w)
+            vecs.append(np.asarray(rest.split(" "), dtype=np.float32))
     return words, np.vstack(vecs)
+
+
+def reduce_dims(X, dims):
+    """Keep the `dims` strongest directions (PCA on unit rows), so the bundle stays small."""
+    X = X / np.linalg.norm(X, axis=1, keepdims=True)
+    X = X - X.mean(axis=0, keepdims=True)
+    _, _, vt = np.linalg.svd(X, full_matrices=False)
+    return X @ vt[:dims].T
 
 
 def main():
@@ -66,6 +77,12 @@ def main():
     ap.add_argument("--size", type=int, default=40000, help="vocabulary rows to export")
     ap.add_argument("--scan", type=int, default=120000, help="rows of the source file to scan")
     ap.add_argument("--out", default=os.path.join(ROOT, "web", "data"))
+    ap.add_argument("--vocab-from", help="use this vocab.txt's words, in its order (e.g. web/data/vocab.txt), "
+                    "for sources not sorted by frequency such as ConceptNet Numberbatch")
+    ap.add_argument("--dims", type=int, default=0, help="reduce to this many dimensions (PCA); 0 keeps all")
+    ap.add_argument("--everyday", type=float, default=0,
+                    help="keep only words at least this share of people know (e.g. 0.9, from the concreteness "
+                         "norms, plus their plurals) and the game's own words; 0 keeps all")
     args = ap.parse_args()
 
     stop = set(open(os.path.join(HERE, "stopwords.txt")).read().split())
@@ -76,14 +93,38 @@ def main():
         puzzle_words |= {p["start_word"], p["target_word"]}
         puzzle_words |= {c for c in p.get("allowed_cards", []) if c != "WILDCARD"}
 
-    words, M = load_vectors(args.vectors, args.scan)
+    order = read_list(args.vocab_from) if args.vocab_from else None
+    words, M = load_vectors(args.vectors, args.scan, set(order) | puzzle_words if order else None)
+    if order:  # put the rows in the given (frequency) order; that order is what `rank` means below
+        pos = {w: i for i, w in enumerate(words)}
+        in_order = set(order)
+        present = [w for w in order if w in pos] + sorted(w for w in puzzle_words if w in pos and w not in in_order)
+        M = M[[pos[w] for w in present]]
+        words = present
     rank = {w: i for i, w in enumerate(words)}
     print(f"scanned {len(words)} rows, dim {M.shape[1]}")
+    if args.dims:
+        M = reduce_dims(M, args.dims)
+        print(f"reduced to {args.dims} dimensions")
 
     def ok(w):
         return WORD_RE.match(w) and w not in stop and w not in block
 
-    keep = [i for i, w in enumerate(words) if ok(w)][: args.size]
+    everyday = None
+    if args.everyday:
+        known = set()
+        with open(os.path.join(args.lists, "concreteness.txt"), encoding="utf8") as f:
+            next(f)
+            for line in f:
+                c = line.rstrip("\r\n").split("\t")
+                if c[1] == "0" and float(c[6]) >= args.everyday:
+                    known.add(c[0].lower())
+
+        def everyday(w):
+            return (w in known or (w.endswith("s") and w[:-1] in known)
+                    or (w.endswith("es") and w[:-2] in known) or (w.endswith("ies") and w[:-3] + "y" in known))
+
+    keep = [i for i, w in enumerate(words) if ok(w) and (everyday is None or everyday(w) or w in puzzle_words)][: args.size]
     keep_set = set(keep)
     for w in puzzle_words:  # puzzles must always be playable
         if w in rank and rank[w] not in keep_set:

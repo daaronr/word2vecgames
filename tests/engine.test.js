@@ -76,4 +76,43 @@ for (let i = 0; i < 6; i++) {
   const sc = space.score(d.start, d.target, best.tiles);
   console.log(`${d.start} → ${d.target}  [${d.hand.join(", ")}]  par ${best.tiles.map(t => (t.sign > 0 ? "+" : "−") + t.word).join(" ")} = ${best.sim.toFixed(2)} (#${sc.rank}, near ${sc.near[0]})`);
 }
+
+// ---------- the common-sense word set (web/data-sense, ConceptNet Numberbatch) ----------
+const DS = path.join(__dirname, "..", "web", "data-sense");
+const sensePools = JSON.parse(fs.readFileSync(path.join(DS, "pools.json"), "utf8"));
+const sense = new B.Space(fs.readFileSync(path.join(DS, "vocab.txt"), "utf8").split("\n"),
+  new Int8Array(fs.readFileSync(path.join(DS, "vectors.bin"))), sensePools.dim);
+const EXPLAIN = 0.3; // WORD_SETS.sense.explain in web/app.js
+
+// Its tutorial (WORD_SETS.sense.tut): hat → shoe; "+ foot" gets closer; "+ foot − head" makes shoe the nearest word.
+const h0 = sense.survey(sense.row("hat"), "shoe", ["hat"], 1).rank;
+const h1 = sense.score("hat", "shoe", [{ word: "foot", sign: 1 }]).rank;
+const h2 = sense.score("hat", "shoe", [{ word: "foot", sign: 1 }, { word: "head", sign: -1 }]).rank;
+assert(h0 > 20 && h1 < h0 && h2 === 1, `sense tutorial ranks ${h0} → ${h1} → ${h2}`);
+for (const w of ["hand", "foot", "sock", "head", "walk", "cap"]) assert(sense.has(w), `sense tutorial word ${w}`);
+
+// Deals are deterministic, full, and their strongest throws include one a person could explain.
+assert.deepStrictEqual(B.deal(sense, sensePools, "x", { explain: EXPLAIN }), B.deal(sense, sensePools, "x", { explain: EXPLAIN }));
+let explained = 0;
+for (let i = 0; i < 15; i++) {
+  const d = B.deal(sense, sensePools, "s" + i, { explain: EXPLAIN });
+  assert.strictEqual(new Set(d.hand).size, B.HAND_SIZE);
+  if (sense.allThrows(d.start, d.target, d.hand).slice(0, 12).some((t) => B.explainable(sense, d.start, d.target, t.tiles, EXPLAIN))) explained++;
+}
+assert(explained >= 14, `explainable sense deals ${explained}/15`);
+
+// Active puzzles meet the same bar with these words (retired ones carry "retired_sense").
+const weakSense = [];
+for (const p of puzzles.filter((q) => !q.retired_sense)) {
+  const hand = p.allowed_cards.filter((w) => w !== "WILDCARD" && sense.has(w) && w !== p.start_word && w !== p.target_word);
+  assert(sense.has(p.start_word) && sense.has(p.target_word), `puzzle #${p.id} words missing from the sense set`);
+  const r0 = sense.survey(sense.row(p.start_word), p.target_word, [p.start_word], 1).rank;
+  const cands = sense.allThrows(p.start_word, p.target_word, hand).slice(0, 50);
+  const ok = cands.filter((t) => B.explainable(sense, p.start_word, p.target_word, t.tiles, EXPLAIN));
+  const par = (ok.length ? ok : cands).map((t) => ({ ...t, rank: sense.score(p.start_word, p.target_word, t.tiles).rank }))
+    .reduce((m, t) => (m && !closer(t, m) ? m : t), null);
+  if (r0 <= 8 || par.rank > 30 || !ok.length) weakSense.push(`#${p.id} ${p.start_word}→${p.target_word} (start ${r0}, par ${par.rank})`);
+}
+assert.deepStrictEqual(weakSense, [], "weak puzzles with common-sense words: mark them retired_sense");
+
 console.log("engine ok");

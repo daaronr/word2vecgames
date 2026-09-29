@@ -45,8 +45,9 @@ embeddings/
 .env
 .env.local
 
-# ...except the compact int8 bundle the browser game ships with
+# ...except the compact int8 bundles the browser game ships with
 !web/data/vectors.bin
+!web/data-sense/vectors.bin
 
 # Local build output
 dist/

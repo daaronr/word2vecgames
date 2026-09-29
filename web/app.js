@@ -2,7 +2,32 @@
 (function () {
   "use strict";
   const B = window.Bocce;
-  const DATA = (window.WORD_BOCCE_DATA || "data/");
+  // Two ways of placing words on the court; players can switch (footer and help dialog).
+  //   sense: ConceptNet Numberbatch, text statistics blended with a knowledge base of everyday facts.
+  //          Courts are only dealt if their best throw can be explained word by word (explain = cosine bar).
+  //   text:  GloVe, learned purely from which words appear together in Wikipedia and news text.
+  // Each set has its own Daily seed and puzzle retirement field (both audited against that set).
+  const WORD_SETS = {
+    sense: {
+      dir: "data-sense/", name: "Common sense", short: "common-sense", explain: 0.3,
+      dailySeed: "daily-sense-", dailyKey: "daily-sense:", retired: "retired_sense",
+      credit: "Words: ConceptNet Numberbatch 19.08 (CC BY-SA 4.0), everyday words only.",
+      // hat → shoe: 249th → "+ foot" 5th → "+ foot − head" 1st
+      tut: { start: "hat", target: "shoe", add: "foot", sub: "head", hand: ["hand", "foot", "sock", "head", "walk", "cap"],
+        first: "A shoe is a bit like a hat that you wear on your foot. Tap “foot” to add it to your throw.",
+        second: "You don't wear shoes on your head, so let's take head away." },
+    },
+    text: {
+      dir: window.WORD_BOCCE_DATA || "data/", name: "Raw text", short: "raw-text", explain: 0,
+      dailySeed: "daily-", dailyKey: "daily:", retired: "retired", vectorsFile: window.WORD_BOCCE_VECTORS,
+      credit: "Words: GloVe 6B, 100 dimensions (public domain).",
+      // boat → plane: 30th → "+ sky" 7th → "+ sky − water" 1st
+      tut: { start: "boat", target: "plane", add: "sky", sub: "water", hand: ["road", "sky", "fish", "water", "island", "engine"],
+        first: "A plane is a bit like a boat that travels through the sky. Tap “sky” to add it to your throw.",
+        second: "Planes don't float on water, so let's take water away." },
+    },
+  };
+  const PUZZLES_URL = (window.WORD_BOCCE_DATA || "data/") + "puzzles.json";
   const SOLO_BALLS = 4;
   const VS_BALLS = 3;
   const VS_TARGET = 5;
@@ -169,18 +194,37 @@
   const dailyNo = (iso) => Math.floor((Date.parse(iso + "T00:00:00Z") - LAUNCH) / 864e5) + 1;
 
   // ---------- game state ----------
-  let G = null;          // { space, pools, puzzles }
+  let G = null;          // the current word set's bundle: { space, pools, puzzles }
+  let wordSet = "sense"; // key into WORD_SETS
+  const bundles = {};    // loaded word sets, by key
+  const SET = () => WORD_SETS[wordSet];
   let mode = "daily";
   const ends = {};       // per-mode current end
   let vs = null;         // versus match
   let busy = false;      // a ball is rolling / bot is thinking
   let statusMsg = { text: "", warn: false };
 
+  /** Load a word set (once) and make it current. */
+  async function loadWordSet(key) {
+    if (!bundles[key]) {
+      const ws = WORD_SETS[key];
+      const b = await B.load(ws.dir, ws.vectorsFile, PUZZLES_URL);
+      // Puzzles that failed the audit against this word set are marked in puzzles.json; skip them.
+      b.puzzles = b.puzzles.filter((p) => !p[ws.retired]);
+      bundles[key] = b;
+    }
+    wordSet = key;
+    G = bundles[key];
+    return G;
+  }
+  const dealFor = (seed) => B.deal(G.space, G.pools, seed, { explain: SET().explain });
+
   function makeEnd(kind, seed, start, target, hand, extra) {
     const space = G.space;
+    const explain = SET().explain;
     const throws = space.allThrows(start, target, hand);
     const end = {
-      kind, seed, start, target, hand,
+      kind, seed, start, target, hand, set: wordSet,
       startSim: space.sim(start, target),
       startRank: space.survey(space.row(start), target, [start], 1).rank,
       basis: B.courtBasis(space, start, target, seed),
@@ -188,9 +232,15 @@
       // Par is judged by rank, like the balls, and only shown once the round is over, so it is worked
       // out lazily. Ranking all 800+ throws is too slow on a phone; the rank-best throw sits among the
       // 50 most similar in nearly every deal (the most similar alone is rank-best only ~1 time in 4).
+      // With common-sense words, par must also be a throw a person could explain word by word.
       get par() {
         if (this._par === undefined) {
-          this._par = this.throws.slice(0, 50).map((t) => ({ ...t, rank: space.score(start, target, t.tiles).rank }))
+          let cands = this.throws.slice(0, 50);
+          if (explain) {
+            const ok = cands.filter((t) => B.explainable(space, start, target, t.tiles, explain));
+            if (ok.length) cands = ok;
+          }
+          this._par = cands.map((t) => ({ ...t, rank: space.score(start, target, t.tiles).rank }))
             .reduce((m, t) => (m && !closer(t, m) ? m : t), null);
         }
         return this._par;
@@ -205,44 +255,45 @@
 
   function dealDaily() {
     const iso = todayISO();
-    const seed = "daily-" + iso;
-    const d = B.deal(G.space, G.pools, seed);
+    const seed = SET().dailySeed + iso;
+    const d = dealFor(seed);
     const end = makeEnd("daily", seed, d.start, d.target, d.hand, { iso, no: dailyNo(iso), sides: ["red"], perSide: SOLO_BALLS });
-    for (const tiles of store.get("daily:" + iso, [])) placeBall(end, "red", tiles);
+    for (const tiles of store.get(SET().dailyKey + iso, [])) placeBall(end, "red", tiles);
     if (end.balls.length >= SOLO_BALLS) end.done = true;
     return end;
   }
   // ---------- tutorial: a guided first game, one instruction at a time ----------
-  // boat → plane: the jack starts 30th-nearest; "+ sky" brings it to 7th; "+ sky − water" makes it 1st.
-  const TUT = { start: "boat", target: "plane", hand: ["road", "sky", "fish", "water", "island", "engine"] };
+  // Each word set has its own example (WORD_SETS[..].tut), checked in tests/engine.test.js.
   function dealTutorial() {
-    return makeEnd("tutorial", "tutorial", TUT.start, TUT.target, TUT.hand.filter((w) => G.space.has(w)),
-      { sides: ["red"], perSide: 2, intro: true });
+    const T = SET().tut;
+    return makeEnd("tutorial", "tutorial", T.start, T.target, T.hand.filter((w) => G.space.has(w)),
+      { sides: ["red"], perSide: 2, intro: true, tut: T });
   }
   /** What the tutorial asks for next: { text, tile } (tap this word) or { text, throw: true }. */
   function tutorialStep(end) {
+    const T = end.tut, A = T.add, S = T.sub;
     const inRack = (w) => end.rack.find((t) => t.word === w);
     const fixSign = (w) => `That subtracted “${w}” (the − sign). Tap it once more to take it off, then again to add it.`;
     const landed = end.balls.filter((b) => !b.pending);
     if (landed.length === 0) {
-      if (!inRack("sky")) return { text: `A plane is a bit like a boat that travels through the sky. Tap “sky” to add it to your throw.`, tile: "sky" };
-      if (inRack("sky").sign < 0) return { text: fixSign("sky"), tile: "sky" };
-      return { text: `Your throw is “boat + sky”. Tap Throw to roll the ball.`, throw: true };
+      if (!inRack(A)) return { text: T.first, tile: A };
+      if (inRack(A).sign < 0) return { text: fixSign(A), tile: A };
+      return { text: `Your throw is “${T.start} + ${A}”. Tap Throw to roll the ball.`, throw: true };
     }
     const b = landed[0];
     const lead = b.rank < end.startRank
-      ? `Closer! Your ball stopped near “${b.near[0]}”. “plane” went from the ${ordinal(end.startRank)} nearest word to the ${ordinal(b.rank)}. A perfect throw makes it 1st. `
+      ? `Closer! Your ball stopped near “${b.near[0]}”. “${T.target}” went from the ${ordinal(end.startRank)} nearest word to the ${ordinal(b.rank)}. A perfect throw makes it 1st. `
       : `Your ball stopped near “${b.near[0]}”. `;
-    if (!inRack("sky")) return { text: lead + `Planes don't float on water, so let's take water away. First tap “sky” again.`, tile: "sky" };
-    if (inRack("sky").sign < 0) return { text: fixSign("sky"), tile: "sky" };
-    if (!inRack("water")) return { text: `Now tap “water” twice. One tap adds a word (+); a second tap subtracts it (−).`, tile: "water" };
-    if (inRack("water").sign > 0) return { text: `Right, that added it. Tap “water” once more to subtract it.`, tile: "water" };
-    return { text: `Your throw is “boat + sky − water”. Throw!`, throw: true };
+    if (!inRack(A)) return { text: lead + `${T.second} First tap “${A}” again.`, tile: A };
+    if (inRack(A).sign < 0) return { text: fixSign(A), tile: A };
+    if (!inRack(S)) return { text: `Now tap “${S}” twice. One tap adds a word (+); a second tap subtracts it (−).`, tile: S };
+    if (inRack(S).sign > 0) return { text: `Right, that added it. Tap “${S}” once more to subtract it.`, tile: S };
+    return { text: `Your throw is “${T.start} + ${A} − ${S}”. Throw!`, throw: true };
   }
 
   function dealPractice() {
     const seed = "practice-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7);
-    const d = B.deal(G.space, G.pools, seed);
+    const d = dealFor(seed);
     return makeEnd("practice", seed, d.start, d.target, d.hand, { sides: ["red"], perSide: SOLO_BALLS });
   }
   function dealPuzzle(p) {
@@ -255,7 +306,7 @@
   }
   function dealVersus() {
     const seed = "vs-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7);
-    const d = B.deal(G.space, G.pools, seed);
+    const d = dealFor(seed);
     return makeEnd("versus", seed, d.start, d.target, d.hand, { sides: ["red", "blue"], perSide: VS_BALLS });
   }
 
@@ -1021,7 +1072,7 @@
     await animateBall(ball);
     ball.pending = false;
     busy = false;
-    if (end.kind === "daily") store.set("daily:" + end.iso, end.balls.map((b) => b.tiles));
+    if (end.kind === "daily") store.set(WORD_SETS[end.set].dailyKey + end.iso, end.balls.map((b) => b.tiles));
     if (ball.rank === 1) sfx.bacio();
     const verdict = ball.rank < before ? "Closer!" : ball.rank === before ? "About the same." : "Further away.";
     statusMsg = { text: ball.rank === 1
@@ -1162,7 +1213,7 @@
   async function hostRoom(name) {
     store.set("name", name);
     party = { role: "host", me: "host", code: null, net: null, error: "",
-      state: { players: [{ id: "host", name, color: PARTY_COLORS[0] }], round: 0, seed: null, throws: [], scores: { host: 0 }, over: false, result: null } };
+      state: { players: [{ id: "host", name, color: PARTY_COLORS[0] }], round: 0, seed: null, vectors: wordSet, throws: [], scores: { host: 0 }, over: false, result: null } };
     render();
     try {
       party.net = await BocceNet.host({
@@ -1215,6 +1266,7 @@
   function hostStartRound() {
     const st = party.state;
     st.round += 1;
+    st.vectors = wordSet; // the host's current word set applies to the whole room
     st.seed = `party-${party.code}-${st.round}-${Math.random().toString(36).slice(2, 7)}`;
     st.throws = [];
     st.over = false;
@@ -1259,9 +1311,19 @@
     party.state = st;
     if (busy) { party.queued = true; return; } // our own ball is rolling; catch up when it stops
     party.queued = false;
+    const roomSet = st.vectors || "text";
+    if (roomSet !== wordSet) {
+      // The room plays with the host's word set: switch to it (loading it if needed), then catch up.
+      if (!party.switching) {
+        party.switching = true;
+        loadWordSet(roomSet).then(() => { resetEnds(); party.switching = false; applyPartyState(party.state); showWordSet(); })
+          .catch(() => { party.switching = false; party.error = "Couldn't load the room's word set."; render(); });
+      }
+      return;
+    }
     let end = ends.party;
-    if (st.round && (!end || end.round !== st.round)) {
-      const d = B.deal(G.space, G.pools, st.seed);
+    if (st.round && (!end || end.round !== st.round || end.set !== roomSet)) {
+      const d = dealFor(st.seed);
       end = ends.party = makeEnd("party", st.seed, d.start, d.target, d.hand, { sides: [], perSide: PARTY_BALLS, round: st.round });
       statusMsg = { text: "", warn: false };
     }
@@ -1410,6 +1472,39 @@
     return wrap;
   }
 
+  // ---------- word sets: which map of meaning the court uses ----------
+  function resetEnds() {
+    for (const k of Object.keys(ends)) delete ends[k];
+    vs = null;
+  }
+  /** Show the current word set in the header, footer and the words dialog. */
+  function showWordSet(note) {
+    const ws = SET();
+    $("#wordsName").textContent = ws.name;
+    $("#helpExample").textContent = `${ws.tut.start} + ${ws.tut.add} − ${ws.tut.sub} → ${ws.tut.target}`;
+    $("#wordsCredit").textContent = ws.credit;
+    if (G) $("#tagline").textContent = `played on a court of ${G.space.n.toLocaleString()} ${ws.short} words`;
+    for (const el of document.querySelectorAll("[data-wordset]")) {
+      const on = el.dataset.wordset === wordSet;
+      el.classList.toggle("current", on);
+      const btn = el.querySelector("button");
+      btn.disabled = on;
+      btn.textContent = on ? "In use" : `Use ${WORD_SETS[el.dataset.wordset].name.toLowerCase()} words`;
+    }
+    $("#wordsNote").textContent = note || "";
+  }
+  async function switchWordSet(key) {
+    if (busy || key === wordSet) return;
+    if (party && party.role === "guest") return showWordSet("In a room, the host chooses the words. Leave the room to switch.");
+    if (party && party.state.round && !party.state.over) return showWordSet("Finish this round first; new words start with the next round.");
+    showWordSet("Loading…");
+    try { await loadWordSet(key); } catch (e) { return showWordSet("Couldn't load those words. Check your connection and try again."); }
+    store.set("wordSet", key);
+    resetEnds();
+    showWordSet(party ? "Done. The room uses these words from the next round." : "Done. New courts use these words.");
+    switchMode(mode);
+  }
+
   // ---------- mode switching ----------
   function switchMode(m) {
     if (busy) return;
@@ -1437,16 +1532,23 @@
     $("#helpBtn").addEventListener("click", () => dlg.showModal());
     $("#helpClose").addEventListener("click", () => dlg.close());
     $("#helpTutorial").addEventListener("click", () => { dlg.close(); switchMode("tutorial"); });
+    const wordsDlg = $("#words");
+    const openWords = () => { showWordSet(); wordsDlg.showModal(); };
+    $("#wordsBtn").addEventListener("click", openWords);
+    $("#helpWords").addEventListener("click", () => { dlg.close(); openWords(); });
+    $("#wordsClose").addEventListener("click", () => wordsDlg.close());
+    for (const el of document.querySelectorAll("[data-wordset] button")) {
+      el.addEventListener("click", () => switchWordSet(el.closest("[data-wordset]").dataset.wordset));
+    }
+    const wanted = store.get("wordSet", "sense");
     try {
-      G = await B.load(DATA, window.WORD_BOCCE_VECTORS);
-      // Puzzles marked "retired" in puzzles.json failed the audit against these vectors; skip them.
-      G.puzzles = G.puzzles.filter((p) => !p.retired);
+      await loadWordSet(WORD_SETS[wanted] ? wanted : "sense");
     } catch (e) {
       main().replaceChildren(h("div", { class: "loading" }, h("b", {}, "The court didn't load."),
         "The word vectors couldn't be fetched. If you opened index.html straight from disk, serve the folder instead (python -m http.server) and reload."));
       return;
     }
-    $("#tagline").textContent = `played on a court of ${G.space.n.toLocaleString()} words`;
+    showWordSet();
     flushSuggestions(); // deliver any suggestions left over from earlier visits
     const want = (location.hash || "").slice(1);
     // A room link (#room=CODE) goes straight to the join screen.

@@ -1,6 +1,7 @@
 [
   {
     "id": 1,
+    "retired_sense": "already solved: the jack starts among the start word's 8 nearest words (common-sense words, 2026-09-29)",
     "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "easy",
     "name": "Royal Relations",
@@ -180,6 +181,7 @@
   },
   {
     "id": 10,
+    "retired_sense": "already solved: the jack starts among the start word's 8 nearest words (common-sense words, 2026-09-29)",
     "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "easy",
     "name": "Size Matters",
@@ -362,6 +364,7 @@
   },
   {
     "id": 23,
+    "retired_sense": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (common-sense words, 2026-09-29)",
     "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
     "name": "Soup to Nuts",
@@ -413,6 +416,7 @@
   },
   {
     "id": 26,
+    "retired_sense": "already solved: the jack starts among the start word's 8 nearest words (common-sense words, 2026-09-29)",
     "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
     "name": "Apples to Oranges",
@@ -446,6 +450,7 @@
   },
   {
     "id": 28,
+    "retired_sense": "already solved: the jack starts among the start word's 8 nearest words (common-sense words, 2026-09-29)",
     "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
     "name": "Bread and Butter",
@@ -496,6 +501,7 @@
   },
   {
     "id": 31,
+    "retired_sense": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (common-sense words, 2026-09-29)",
     "difficulty": "medium",
     "name": "Winter is Coming",
     "description": "Game of Thrones",
@@ -560,6 +566,7 @@
   },
   {
     "id": 35,
+    "retired_sense": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (common-sense words, 2026-09-29)",
     "difficulty": "hard",
     "name": "Fight Club Rule #1",
     "description": "What don't we talk about?",
@@ -576,6 +583,7 @@
   },
   {
     "id": 36,
+    "retired_sense": "already solved: the jack starts among the start word's 8 nearest words (common-sense words, 2026-09-29)",
     "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "easy",
     "name": "Salt and Pepper",
@@ -625,6 +633,7 @@
   },
   {
     "id": 39,
+    "retired_sense": "already solved: the jack starts among the start word's 8 nearest words (common-sense words, 2026-09-29)",
     "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "easy",
     "name": "Thunder and Lightning",
@@ -740,6 +749,7 @@
   },
   {
     "id": 46,
+    "retired_sense": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (common-sense words, 2026-09-29)",
     "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
     "name": "Jekyll and Hyde",
@@ -757,6 +767,7 @@
   },
   {
     "id": 47,
+    "retired_sense": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (common-sense words, 2026-09-29)",
     "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "hard",
     "name": "Trojan Horse",
@@ -774,6 +785,7 @@
   },
   {
     "id": 48,
+    "retired_sense": "no best throw a person could explain word by word (common-sense words, 2026-09-29)",
     "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "easy",
     "name": "Peas in a Pod",
@@ -808,6 +820,7 @@
   },
   {
     "id": 50,
+    "retired_sense": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (common-sense words, 2026-09-29)",
     "difficulty": "hard",
     "name": "Wizard of Oz",
     "description": "There's no place like...",
@@ -824,6 +837,7 @@
   },
   {
     "id": 51,
+    "retired_sense": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (common-sense words, 2026-09-29)",
     "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
     "name": "AI Revolution",
@@ -923,6 +937,7 @@
   },
   {
     "id": 57,
+    "retired_sense": "no best throw a person could explain word by word (common-sense words, 2026-09-29)",
     "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
     "name": "Remote Work Era",
@@ -940,6 +955,7 @@
   },
   {
     "id": 58,
+    "retired_sense": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (common-sense words, 2026-09-29)",
     "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "easy",
     "name": "Social Media Age",
