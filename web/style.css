@@ -241,6 +241,12 @@ dialog::backdrop { background: rgba(10, 20, 16, .55); }
 .loading b { display: block; font: 400 26px var(--display); color: var(--ink); margin-bottom: 6px; }
 .foot { margin-top: 28px; font-size: 13px; color: var(--ink-soft); display: flex; gap: 14px; flex-wrap: wrap; }
 .foot a { color: inherit; }
+.foot .comments { flex-basis: 100%; }
+/* Hypothes.is (embed.js) pins a 33px toolbar to the top right of the window.
+   Once it has loaded, keep the game's buttons out from under it. */
+@media (max-width: 1300px) { body:has(> hypothesis-sidebar) .app { padding-right: 38px; } }
+@media (max-width: 859px) { body:has(> hypothesis-sidebar) .play { padding-right: 38px; } }
+@media (max-width: 389px) { body:has(> hypothesis-sidebar) .brand h1 { font-size: 21px; } }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 @media (prefers-reduced-motion: reduce) {
