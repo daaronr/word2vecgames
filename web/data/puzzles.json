@@ -1,6 +1,7 @@
 [
   {
     "id": 1,
+    "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "easy",
     "name": "Royal Relations",
     "description": "Navigate from royalty to royalty",
@@ -65,6 +66,7 @@
   },
   {
     "id": 3,
+    "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "easy",
     "name": "Day and Night",
     "description": "From brightness to darkness",
@@ -113,6 +115,7 @@
   },
   {
     "id": 6,
+    "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
     "name": "Weather Shift",
     "description": "Change the climate",
@@ -177,6 +180,7 @@
   },
   {
     "id": 10,
+    "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "easy",
     "name": "Size Matters",
     "description": "Go from small to large",
@@ -193,6 +197,7 @@
   },
   {
     "id": 13,
+    "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
     "name": "Musical Chairs",
     "description": "Transform one instrument into another",
@@ -209,6 +214,7 @@
   },
   {
     "id": 14,
+    "retired": "the best throw doesn't make sense to a person (audited against the game vectors, 2026-09-29)",
     "difficulty": "hard",
     "name": "The Breakfast Riddle",
     "description": "What comes before breakfast?",
@@ -257,6 +263,7 @@
   },
   {
     "id": 17,
+    "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "easy",
     "name": "Sweet Tooth",
     "description": "Opposite flavors",
@@ -305,6 +312,7 @@
   },
   {
     "id": 20,
+    "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
     "name": "The Shapeshifter",
     "description": "Geometric transformation",
@@ -337,6 +345,7 @@
   },
   {
     "id": 22,
+    "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "hard",
     "name": "Alice's Riddle",
     "description": "Why is a raven like a writing desk?",
@@ -353,6 +362,7 @@
   },
   {
     "id": 23,
+    "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
     "name": "Soup to Nuts",
     "description": "From beginning to end",
@@ -369,6 +379,7 @@
   },
   {
     "id": 24,
+    "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
     "name": "Rhinestone Cowboy",
     "description": "Glen Campbell's hit song",
@@ -385,6 +396,7 @@
   },
   {
     "id": 25,
+    "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "easy",
     "name": "Bacon to Eggs",
     "description": "They go together like...",
@@ -401,6 +413,7 @@
   },
   {
     "id": 26,
+    "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
     "name": "Apples to Oranges",
     "description": "Can't compare them!",
@@ -433,6 +446,7 @@
   },
   {
     "id": 28,
+    "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
     "name": "Bread and Butter",
     "description": "Basic necessities",
@@ -449,6 +463,7 @@
   },
   {
     "id": 29,
+    "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "hard",
     "name": "Rocket Science",
     "description": "It's not exactly...",
@@ -561,6 +576,7 @@
   },
   {
     "id": 36,
+    "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "easy",
     "name": "Salt and Pepper",
     "description": "Seasoning duo",
@@ -609,6 +625,7 @@
   },
   {
     "id": 39,
+    "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "easy",
     "name": "Thunder and Lightning",
     "description": "Storm duo",
@@ -689,6 +706,7 @@
   },
   {
     "id": 44,
+    "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "hard",
     "name": "Frankenstein's Monster",
     "description": "Man playing god",
@@ -705,6 +723,7 @@
   },
   {
     "id": 45,
+    "retired": "the best throw doesn't make sense to a person (audited against the game vectors, 2026-09-29)",
     "difficulty": "easy",
     "name": "Coffee and Donuts",
     "description": "Breakfast staples",
@@ -721,6 +740,7 @@
   },
   {
     "id": 46,
+    "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
     "name": "Jekyll and Hyde",
     "description": "Two sides of one person",
@@ -737,6 +757,7 @@
   },
   {
     "id": 47,
+    "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "hard",
     "name": "Trojan Horse",
     "description": "Ancient Greek deception",
@@ -753,6 +774,7 @@
   },
   {
     "id": 48,
+    "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "easy",
     "name": "Peas in a Pod",
     "description": "Two of a kind",
@@ -769,6 +791,7 @@
   },
   {
     "id": 49,
+    "retired": "the best throw doesn't make sense to a person (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
     "name": "Curiosity Killed the...",
     "description": "Famous warning proverb",
@@ -801,6 +824,7 @@
   },
   {
     "id": 51,
+    "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
     "name": "AI Revolution",
     "description": "From robot to intelligence",
@@ -833,6 +857,7 @@
   },
   {
     "id": 53,
+    "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "hard",
     "name": "Space Race Returns",
     "description": "From Earth to Mars",
@@ -881,6 +906,7 @@
   },
   {
     "id": 56,
+    "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "hard",
     "name": "Crypto Craze",
     "description": "From dollar to digital",
@@ -897,6 +923,7 @@
   },
   {
     "id": 57,
+    "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
     "name": "Remote Work Era",
     "description": "From office to home",
@@ -913,6 +940,7 @@
   },
   {
     "id": 58,
+    "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "easy",
     "name": "Social Media Age",
     "description": "From letter to post",
