@@ -126,6 +126,7 @@
     par: "Par is the best throw this hand allows. The game tries every combination of up to three tiles, each added or subtracted (834 throws for a nine-tile hand), then ranks the 50 most promising and keeps the one that puts the jack nearest the top of the list.",
     rings: "Each ring is a rank boundary. Inside the ‘top 10’ ring, the jack is among the 10 words closest to your ball; inside ‘top 100’, among the closest 100; and so on. Each ring inward is ten times harder to reach.",
     near: "The word closest in meaning to where your ball stopped (not counting the words you threw). It shows what your throw ‘means’.",
+    party: "Everyone plays the same court at once, three balls each. When every ball is thrown, the player with the ball nearest the jack wins the round and scores a point for each of their balls that beats everyone else's best.",
     versus: "Whoever is farther from the jack throws next. When both sides are out of balls, the side with the closest ball wins the round and scores one point for every ball closer than the other side's best.",
     tiers: "Bacio (Italian for ‘kiss’, a ball touching the jack): rank #1. Close: top 10. In the hunt: top 100. Wide: top 1,000. Long way off: further than that.",
   };
@@ -275,6 +276,11 @@
 
   /** Bocce order: the side farther from the jack throws next, while it has balls. */
   function nextSide(end) {
+    if (end.kind === "party") {
+      // Online room: everyone throws at once; you may throw while you have balls left.
+      if (end.done || !party || !partyPlayer(party.me)) return null;
+      return end.balls.filter((b) => b.pid === party.me).length < end.perSide ? myColor() : null;
+    }
     if (end.sides.length === 1) return end.balls.length < end.perSide ? "red" : null;
     const left = (sd) => end.perSide - ballsOf(end, sd).length;
     if (!left("red") && !left("blue")) return null;
@@ -305,6 +311,9 @@
 
   // ---------- court rendering ----------
   let courtEls = null;
+  // Court text is drawn in court units, so it shrinks with the court. On small screens words are
+  // scaled up (CSS var --lb) to stay readable; the layout code spaces labels by the same factor.
+  let labelBoost = 1;
   function buildCourt(end) {
     const svg = s("svg", { class: "court", viewBox: `0 0 ${W} ${H}`, role: "img",
       "aria-label": `Bocce court. Jack: ${end.target}. Start: ${end.start}.` });
@@ -342,7 +351,8 @@
     const ghosts = s("g", {});
     const balls = s("g", {});
     const labels = s("g", {});
-    svg.append(measure, ghosts);
+    const mapLayer = s("g", { class: "map" });
+    svg.append(mapLayer, measure, ghosts);
 
     // start ball (ghost) and jack
     const st = toXY({ theta: 0 }, end.startRank);
@@ -352,14 +362,86 @@
     svg.append(s("ellipse", { cx: JX + 2, cy: JY + 7, rx: 8, ry: 3, style: "fill:#000;opacity:.18" }));
     svg.append(s("circle", { cx: JX, cy: JY, r: 8.5, style: "fill:var(--jack);stroke:rgba(0,0,0,.35);stroke-width:1" }));
     svg.append(s("circle", { cx: JX, cy: JY, r: 8.5, fill: "url(#shine)" }));
-    svg.append(s("text", { class: "jack-label", x: JX, y: JY - 18, "text-anchor": "middle" }, end.target));
+    svg.append(s("text", { class: "jack-label", x: JX, y: JY - 18 * labelBoost, "text-anchor": "middle" }, end.target));
     svg.append(labels);
 
-    courtEls = { svg, measure, ghosts, balls, labels, end };
-    for (const b of end.balls) if (!b.pending) drawBall(b, 1);
+    // Everything drawn claims a box, so later words can avoid it (see placeText).
+    const boxes = [textBox(JX, JY - 18 * labelBoost, end.target, 24 * labelBoost, "middle", 0.66), circleBox(JX, JY, 10),
+      textBox(st.x + 18, st.y + 5, end.start, 14 * labelBoost, "start"), circleBox(st.x, st.y, 13)];
+    for (const el of rings.querySelectorAll(".ring-label")) boxes.push(textBox(+el.getAttribute("x"), +el.getAttribute("y"), el.textContent, 9.5, "start", 0.62));
+    courtEls = { svg, measure, ghosts, balls, labels, end, boxes, labelled: [] };
+    const shown = end.balls.filter((b) => !b.pending);
+    for (const b of shown) drawBall(b);
+    // Label the newest balls first; the very newest always gets its word.
+    [...shown].reverse().forEach((b, i) => drawLabel(b, i === 0));
     drawMeasure(end);
     if (end.done && end.par) drawGhost(end);
+    if (end.whatIf) drawWhatIf(end);
+    if (mapShown(end)) drawMap(end, mapLayer);
     return svg;
+  }
+
+  // ---------- court label layout ----------
+  function textBox(x, y, text, size, anchor = "middle", k = 0.58) {
+    const w = String(text).length * size * k;
+    const x1 = anchor === "middle" ? x - w / 2 : x;
+    return { x1, x2: x1 + w, y1: y - size * 0.82, y2: y + size * 0.28 };
+  }
+  const circleBox = (x, y, r) => ({ x1: x - r, x2: x + r, y1: y - r, y2: y + r });
+  const overlaps = (a, b) => a.x1 < b.x2 && b.x1 < a.x2 && a.y1 < b.y2 && b.y1 < a.y2;
+  const onCourt = (b) => b.x1 > 12 && b.x2 < W - 12 && b.y1 > 12 && b.y2 < H - 12;
+  /**
+   * Put a word next to a point: try below, above, right, left; take the first spot that is on the
+   * court and covers nothing already drawn. Returns the text node, or null if there was no room
+   * (unless `force`, which takes the first spot anyway).
+   */
+  function placeText(layer, x, y, word, size, cls, force, gap = 13) {
+    const w = word.length * size * 0.58;
+    const spots = [[x, y + gap + size * 0.9, "middle"], [x, y - gap - size * 0.3, "middle"],
+      [x + gap + 3, y + size * 0.32, "start"], [x - gap - 3 - w, y + size * 0.32, "start"]];
+    let pick = null;
+    for (const [sx, sy, anchor] of spots) {
+      const box = textBox(sx, sy, word, size, anchor);
+      if (onCourt(box) && !courtEls.boxes.some((b) => overlaps(b, box))) { pick = { sx, sy, anchor, box }; break; }
+    }
+    if (!pick && force) { const [sx, sy, anchor] = spots[0]; pick = { sx, sy, anchor, box: textBox(sx, sy, word, size, anchor) }; }
+    if (!pick) return null;
+    courtEls.boxes.push(pick.box);
+    const el = s("text", { class: cls, x: pick.sx.toFixed(1), y: pick.sy.toFixed(1), "text-anchor": pick.anchor }, word);
+    layer.append(el);
+    return el;
+  }
+
+  // ---------- mapping the space: a few real words placed on the court ----------
+  // The jack's nearest neighbours, plus "bridge" words that sit between the start and the jack,
+  // each drawn where a ball would stop if it landed exactly on that word. Few and faint, so the
+  // court stays readable. Shown after a round (and on request in Practice and the tutorial).
+  function mapWords(end) {
+    if (end.map) return end.map;
+    const sp = G.space, T = sp.row(end.target), S = sp.row(end.start);
+    const fresh = (w, taken) => !taken.includes(w) && ![end.start, end.target, ...taken].some((x) => B.related(w, x));
+    const pick = (vec, k, taken) => sp.survey(vec, end.target, [end.start, end.target], k + 10).near
+      .filter((w) => fresh(w, taken)).slice(0, k);
+    const near = pick(T, 5, []);
+    const mid = Float32Array.from(S, (v, i) => v + T[i]);
+    const bridge = pick(mid, 3, near);
+    end.map = [...near.map((w) => ({ word: w, kind: "near" })), ...bridge.map((w) => ({ word: w, kind: "bridge" }))]
+      .map((m) => ({ ...m, place: end.basis.place(sp.row(m.word)), rank: sp.survey(sp.row(m.word), end.target, [m.word], 1).rank }));
+    return end.map;
+  }
+  const mapAllowed = (end) => end.done || end.kind === "practice" || end.kind === "tutorial";
+  const mapShown = (end) => mapAllowed(end) && (end.showMap !== undefined ? end.showMap : end.done);
+  function drawMap(end, layer) {
+    const shownWords = new Set(courtEls.labelled.map((l) => l.word));
+    for (const m of mapWords(end)) {
+      if (shownWords.has(m.word)) continue; // already on the court as where a ball landed
+      const { x, y } = toXY(m.place, m.rank);
+      const dot = circleBox(x, y, 3);
+      if (courtEls.boxes.some((b) => overlaps(b, dot))) continue;
+      if (!placeText(layer, x, y, m.word, 12.5 * labelBoost, `map-word ${m.kind}`, false, 5)) continue;
+      courtEls.boxes.push(dot);
+      layer.append(s("circle", { class: `map-dot ${m.kind}`, cx: x.toFixed(1), cy: y.toFixed(1), r: 2.6 }));
+    }
   }
 
   function ballNode(b) {
@@ -370,22 +452,20 @@
     g.append(s("text", { class: "ball-num", "text-anchor": "middle", y: 4 }, String(b.n)));
     return g;
   }
-  function drawBall(b, t) {
+  function drawBall(b) {
     const { x, y } = toXY(b.place, b.rank);
     const g = ballNode(b);
     g.setAttribute("transform", `translate(${x.toFixed(1)} ${y.toFixed(1)})`);
     courtEls.balls.append(g);
-    if (t === 1) drawLabel(b);
+    courtEls.boxes.push(circleBox(x, y, 13));
     return g;
   }
-  function drawLabel(b) {
+  /** The word where a ball stopped. One label per word per area; `force` for the ball just thrown. */
+  function drawLabel(b, force) {
     const { x, y } = toXY(b.place, b.rank);
-    const taken = [...courtEls.labels.querySelectorAll("text")].map((el) => ({
-      x: +el.getAttribute("x"), y: +el.getAttribute("y") }));
-    let ly = y + 27;
-    if (taken.some((p) => Math.abs(p.x - x) < 60 && Math.abs(p.y - ly) < 13) || ly > H - 16) ly = y - 18;
-    if (Math.abs(x - JX) < 50 && Math.abs(ly - (JY - 18)) < 16) ly = y + 27;
-    courtEls.labels.append(s("text", { class: "ball-label", x: x.toFixed(1), y: ly.toFixed(1), "text-anchor": "middle" }, b.near[0]));
+    const word = b.near[0];
+    if (courtEls.labelled.some((l) => l.word === word && Math.hypot(l.x - x, l.y - y) < 90)) return;
+    if (placeText(courtEls.labels, x, y, word, 15.5 * labelBoost, "ball-label", force)) courtEls.labelled.push({ word, x, y });
   }
   function drawMeasure(end) {
     const m = courtEls.measure;
@@ -394,15 +474,20 @@
     if (!best) return;
     const { x, y } = toXY(best.place, best.rank);
     m.append(s("line", { class: "measure", x1: JX, y1: JY, x2: x, y2: y }));
-    const mx = (JX + x) / 2, my = (JY + y) / 2;
-    m.append(s("text", { class: "ring-label", x: mx + 6, y: my, style: "fill:var(--ink)" }, "similarity " + fmt(best.sim)));
   }
   function drawGhost(end) {
     const sc = G.space.score(end.start, end.target, end.par.tiles);
     const { x, y } = toXY(end.basis.place(sc.vec), sc.rank);
-    courtEls.ghosts.replaceChildren(
-      s("circle", { cx: x, cy: y, r: 12.5, style: "fill:none;stroke:var(--chalk);stroke-width:2;stroke-dasharray:4 3" }),
-      s("text", { class: "ring-label", x: x + 16, y: y + 4, style: "fill:var(--ink)" }, "par"));
+    courtEls.ghosts.replaceChildren(s("circle", { cx: x, cy: y, r: 12.5, style: "fill:none;stroke:var(--chalk);stroke-width:2;stroke-dasharray:4 3" }));
+    placeText(courtEls.ghosts, x, y, "par", 11 * labelBoost, "ghost-label", true);
+  }
+  /** The "try your own words" ball: dashed, with where it stopped. */
+  function drawWhatIf(end) {
+    const w = end.whatIf;
+    const { x, y } = toXY(end.basis.place(w.vec), w.rank);
+    courtEls.ghosts.append(s("circle", { class: "whatif", cx: x, cy: y, r: 12.5 }));
+    courtEls.boxes.push(circleBox(x, y, 13));
+    placeText(courtEls.ghosts, x, y, "your idea: " + w.near[0], 13 * labelBoost, "whatif-label", true);
   }
 
   function animateBall(b) {
@@ -416,10 +501,11 @@
       // bocce contact: the ball comes to rest touching another ball
       const touches = courtEls.end.balls.some((o) => o !== b && !o.pending &&
         Math.hypot(toXY(o.place, o.rank).x - to.x, toXY(o.place, o.rank).y - to.y) < 27);
+      courtEls.boxes.push(circleBox(to.x, to.y, 13));
       if (reduceMotion) {
         sfx.roll(0, 0.1);
         g.setAttribute("transform", `translate(${to.x} ${to.y})`);
-        drawLabel(b);
+        drawLabel(b, true);
         return resolve();
       }
       const dur = 950, t0 = performance.now();
@@ -441,7 +527,7 @@
           puff.animate([{ transform: "scale(1)", opacity: 0.9 }, { transform: "scale(2.3)", opacity: 0 }],
             { duration: 450, easing: "ease-out" }).onfinish = () => puff.remove();
           if (touches) sfx.clack();
-          drawLabel(b);
+          drawLabel(b, true);
           resolve();
         }
       };
@@ -454,17 +540,24 @@
 
   function render() {
     hideTip();
-    for (const b of document.querySelectorAll(".modes button")) b.setAttribute("aria-selected", String(b.dataset.mode === mode));
+    for (const b of document.querySelectorAll(".modes button")) {
+      b.setAttribute("aria-selected", String(b.dataset.mode === mode || (mode === "party" && b.dataset.mode === "versus")));
+    }
     const focusKey = document.activeElement && document.activeElement.dataset ? document.activeElement.dataset.key : null;
     const m = main();
     if (mode === "puzzles" && !ends.puzzle) m.replaceChildren(renderPuzzleList());
     else if (mode === "versus" && !vs) m.replaceChildren(renderVersusSetup());
+    else if (mode === "party" && !partyInRound()) m.replaceChildren(renderPartyLobby());
     else {
       const end = current();
       m.replaceChildren(h("div", { class: "table" },
         renderMatchup(end),
         h("div", { class: "court-col" }, renderScorebar(end), buildCourt(end),
-          h("p", { class: "legend" }, "Dotted rings: the jack is in the ball's top 10, 100, 1,000 or 10,000 closest words. ", tip("rings", "the rings"))),
+          h("p", { class: "legend" },
+            h("span", { class: "legend-text" }, "Dotted rings: the jack is in the ball's top 10, 100, 1,000 or 10,000 nearest words. ", tip("rings", "the rings"), " "),
+            mapAllowed(end) && h("button", { class: "linkish", type: "button", "data-key": "map",
+              onclick: () => { end.showMap = !mapShown(end); render(); } },
+              mapShown(end) ? "Hide nearby words" : "Show nearby words on the court"))),
         renderBench(end)));
     }
     if (focusKey) { const el = m.querySelector(`[data-key="${CSS.escape(focusKey)}"]`); if (el) el.focus(); }
@@ -479,15 +572,38 @@
     const svg = main().querySelector("svg.court");
     if (!svg) return;
     svg.style.width = "";
-    if (!pinned) return;
-    const top = svg.getBoundingClientRect().top + scrollY;
-    const room = Math.max(250, innerHeight - p.offsetHeight - top - 10);
-    svg.style.width = Math.min(svg.parentElement.clientWidth, (room * 400) / 560) + "px";
+    if (pinned) {
+      const top = svg.getBoundingClientRect().top + scrollY;
+      const room = Math.max(250, innerHeight - p.offsetHeight - top - 10);
+      svg.style.width = Math.min(svg.parentElement.clientWidth, (room * 400) / 560) + "px";
+    }
+    const boost = Math.round(Math.max(1, Math.min(2, 340 / (svg.getBoundingClientRect().width || 400))) * 20) / 20;
+    svg.style.setProperty("--lb", boost);
+    if (boost !== labelBoost) {
+      labelBoost = boost;
+      if (!busy) requestAnimationFrame(render); // re-space the labels for the new size
+    }
   }
   window.addEventListener("resize", () => { if (G) fitDrawer(); });
   function current() { return ends[mode === "puzzles" ? "puzzle" : mode]; }
 
   function renderScorebar(end) {
+    if (end.kind === "party") {
+      const st = party.state;
+      const chips = st.players.filter((p) => !p.left || end.balls.some((b) => b.pid === p.id)).map((p) => {
+        const theirs = end.balls.filter((b) => b.pid === p.id);
+        const best = theirs.filter((b) => !b.pending).reduce((m, b) => (m && !closer(b, m) ? m : b), null);
+        const left = end.perSide - theirs.length;
+        return h("span", { class: `pchip ${p.left ? "gone" : ""}` },
+          h("span", { class: `pip ${p.color} full`, "aria-hidden": "true" }),
+          h("b", {}, p.id === party.me ? "You" : p.name), h("span", { class: "pts" }, String(st.scores[p.id] || 0)),
+          best ? h("small", {}, ordinal(best.rank)) : null,
+          h("span", { class: "pips", "aria-label": `${left} balls left` },
+            Array.from({ length: end.perSide }, (_, i) => h("span", { class: `pip ${p.color} ${i < left ? "full" : ""}` }))));
+      });
+      return h("div", { class: "scorebar party" }, h("div", { class: "pchips" }, chips),
+        h("span", {}, `Room ${party.code} · round ${st.round} · points in bold `, tip("party", "how room scoring works")));
+    }
     if (end.kind === "versus") {
       const side = (sd) => h("span", { class: `side ${sd}` }, h("b", {}, String(vs.score[sd])), vs.names[sd],
         h("span", { class: "pips", "aria-label": `${end.perSide - ballsOf(end, sd).length} balls left` },
@@ -530,6 +646,14 @@
           (end.balls.length ? ", because they're farther from the jack." : ".")));
     }
 
+    if (end.kind === "party" && !end.done) {
+      const mineLeft = end.perSide - end.balls.filter((b) => b.pid === party.me).length;
+      const waiting = partyActive().filter((p) => p.id !== party.me && end.balls.filter((b) => b.pid === p.id).length < end.perSide).map((p) => p.name);
+      bench.append(h("div", { class: "turn-banner" }, h("span", { class: `pip ${myColor()} full` }),
+        mineLeft ? `Everyone throws at once. You have ${mineLeft} of ${end.perSide} balls left. Other players' words stay hidden until the round ends.`
+          : `All your balls are thrown. Waiting for ${listNames(waiting)}…`));
+    }
+
     if (end.kind === "tutorial" && end.intro) {
       bench.append(h("div", { class: "play" }, h("div", { class: "coach intro" },
         h("p", {}, h("b", {}, "Word Bocce is bocce played with meanings.")),
@@ -541,7 +665,7 @@
       return bench;
     }
 
-    if (!end.done) {
+    if (!end.done && !(end.kind === "party" && !side && !busy)) {
       const tut = end.kind === "tutorial" && !busy ? tutorialStep(end) : null;
       const play = h("div", { class: "play" });
       if (tut) play.append(h("p", { class: "coach", role: "status" }, tut.text));
@@ -556,7 +680,7 @@
       }
       play.append(rack);
 
-      const throwBtn = h("button", { class: `throw ${side === "blue" ? "blue" : ""} ${tut && tut.throw ? "pulse" : ""}`, type: "button", "data-key": "throw",
+      const throwBtn = h("button", { class: `throw ${side && side !== "red" ? side : ""} ${tut && tut.throw ? "pulse" : ""}`, type: "button", "data-key": "throw",
         disabled: busy || botTurn || !end.rack.length || (end.kind === "tutorial" && !(tut && tut.throw)),
         onclick: () => playerThrow(end, side) }, "Throw");
       play.append(h("div", { class: "actions" }, throwBtn,
@@ -597,7 +721,11 @@
       bench.append(play);
     }
 
-    if (end.done) bench.append(end.kind === "versus" ? renderVersusEnd(end) : end.kind === "tutorial" ? renderTutorialEnd(end) : renderSoloEnd(end));
+    if (end.done) {
+      bench.append(end.kind === "versus" ? renderVersusEnd(end) : end.kind === "tutorial" ? renderTutorialEnd(end)
+        : end.kind === "party" ? renderPartyResults(end) : renderSoloEnd(end));
+      if (end.kind !== "tutorial") bench.append(renderWhatIf(end));
+    }
     bench.append(renderLog(end));
     return bench;
   }
@@ -626,15 +754,18 @@
     const ol = h("ol", { class: "log", "aria-label": "Throws this round" });
     if (end.balls.some((b) => !b.pending)) {
       ol.append(h("li", { class: "head", "aria-hidden": "true" }, h("span", {}),
-        h("span", {}, "Your throw → where it landed ", tip("near", "where it landed")),
+        h("span", {}, end.kind === "party" ? "Throw → where it landed " : "Your throw → where it landed ", tip("near", "where it landed")),
         h("span", { class: "score" }, "Jack's rank ", tip("rank", "rank"))));
     }
     for (const b of [...end.balls].reverse()) {
       if (b.pending) continue;
       const t = B.tier(b.rank);
+      const who = end.kind === "party" ? (b.pid === party.me ? "You: " : partyName(b.pid) + ": ") : "";
+      const hidden = end.kind === "party" && !end.done && b.pid !== party.me;
       ol.append(h("li", { class: `${b === best ? "best" : ""} tier-${t.key}` },
         h("span", { class: `ballmark ${b.side}`, "aria-hidden": "true" }, String(b.n)),
-        h("span", { class: "eq" }, eqText(end.start, b.tiles), " ",
+        h("span", { class: "eq" }, who && h("b", { class: "who" }, who),
+          hidden ? h("span", { class: "near" }, "words hidden until the round ends ") : eqText(end.start, b.tiles) + " ",
           h("span", { class: "near" }, "→ by ", h("b", {}, b.near[0]))),
         h("span", { class: "score" }, h("b", {}, `#${b.rank.toLocaleString()}`),
           h("small", { class: "tierlabel", "data-tip": TIPS.tiers, tabindex: "0" }, t.label),
@@ -723,6 +854,72 @@
     render();
   }
 
+  // ---------- "try your own words": explore after a round, and suggest better tiles ----------
+  // Any in-vocabulary words, not just the hand. Suggestions are saved with the court they belong
+  // to, so the deal logic and the puzzles can be tuned from what players wished they'd had.
+  const SUGGEST_KEY = "suggestions";
+  function parseThrow(text) {
+    const tiles = [];
+    const re = /([+\-−–])?\s*([a-z][a-z'-]*)/gi;
+    let m;
+    while ((m = re.exec(text)) && tiles.length < 4) {
+      const word = m[2].toLowerCase();
+      if (!tiles.some((t) => t.word === word)) tiles.push({ word, sign: m[1] && m[1] !== "+" ? -1 : 1 });
+    }
+    return tiles;
+  }
+  function renderWhatIf(end) {
+    const w = end.whatIf;
+    const best = end.kind === "party" ? end.balls.filter((b) => b.pid === party.me).reduce((m, b) => (m && !closer(b, m) ? m : b), null) : bestBall(end);
+    const box = h("section", { class: "whatif-box", "aria-label": "Try your own words" },
+      h("h3", {}, "Try your own words"),
+      h("p", { class: "hint" }, `Wish you'd had other words? Type any throw, like “+ ears − hear”, to see where it would have landed.`));
+    const form = h("form", { class: "joker-form", onsubmit: (ev) => {
+      ev.preventDefault();
+      const text = form.querySelector("input").value;
+      const tiles = parseThrow(text);
+      const missing = tiles.filter((t) => !G.space.has(t.word)).map((t) => t.word);
+      if (!tiles.length) { end.whatIfError = "Type one to four words, each with + or − in front."; return render(); }
+      if (missing.length) { end.whatIfError = `Not in the 40,000-word vocabulary: ${missing.join(", ")}. Try a more common word.`; return render(); }
+      if (tiles.some((t) => t.word === end.start || t.word === end.target)) { end.whatIfError = "Leave out the start word and the jack."; return render(); }
+      const sc = G.space.score(end.start, end.target, tiles);
+      end.whatIf = { text, tiles, rank: sc.rank, sim: sc.sim, near: sc.near, vec: sc.vec };
+      end.whatIfError = "";
+      end.whatIfSaved = false;
+      render();
+    } },
+    h("label", { class: "sr", for: "whatIfInput" }, "Your throw"),
+    h("input", { id: "whatIfInput", "data-key": "whatif-input", autocomplete: "off", autocapitalize: "none", spellcheck: "false",
+      placeholder: "+ ears − hear", value: w ? w.text : "" }),
+    h("button", { class: "ghost", type: "submit", "data-key": "whatif-go" }, "Try it"));
+    box.append(form);
+    if (end.whatIfError) box.append(h("p", { class: "status warn" }, end.whatIfError));
+    if (w) {
+      const vsBest = best ? (w.rank < best.rank ? " Better than your best ball" : w.rank === best.rank ? " Level with your best ball" : " Not as close as your best ball") + ` (${ordinal(best.rank)}).` : "";
+      box.append(h("p", { class: "whatif-result" }, h("b", {}, eqText(end.start, w.tiles)), ` lands near ${q(w.near[0])}. `,
+        `${q(end.target)} would be the ${ordinal(w.rank)} nearest word.${vsBest} It's the dashed purple ball on the court.`));
+      const outside = w.tiles.filter((t) => !end.hand.includes(t.word)).map((t) => t.word);
+      if (outside.length && !end.whatIfSaved) {
+        box.append(h("p", {}, `Would having ${outside.map(q).join(" and ")} among the words have made this court more fun?`),
+          h("div", { class: "row" },
+            h("button", { class: "ghost", type: "button", "data-key": "fun-yes", onclick: () => saveSuggestion(end, outside, "more fun") }, "Yes, more fun"),
+            h("button", { class: "ghost", type: "button", "data-key": "fun-same", onclick: () => saveSuggestion(end, outside, "about the same") }, "About the same"),
+            h("button", { class: "ghost", type: "button", "data-key": "fun-no", onclick: () => saveSuggestion(end, outside, "too easy or odd") }, "No: too easy, or odd")));
+      }
+      if (end.whatIfSaved) box.append(h("p", { class: "hint" }, `Thanks, noted. You've suggested ${store.get(SUGGEST_KEY, []).length} word change${store.get(SUGGEST_KEY, []).length === 1 ? "" : "s"} so far. They're kept on this device for now.`));
+    }
+    return box;
+  }
+  function saveSuggestion(end, words, verdict) {
+    const w = end.whatIf;
+    const list = store.get(SUGGEST_KEY, []);
+    list.push({ at: new Date().toISOString(), kind: end.kind, seed: end.seed, start: end.start, target: end.target, hand: end.hand,
+      throw: w.tiles, rank: w.rank, bestRank: (bestBall(end) || {}).rank || null, words, verdict });
+    store.set(SUGGEST_KEY, list.slice(-200));
+    end.whatIfSaved = true;
+    render();
+  }
+
   // ---------- actions ----------
   function setStatus(text, warn) { statusMsg = { text, warn: !!warn }; if (text) render(); }
 
@@ -752,7 +949,9 @@
 
   async function throwBall(end, side, tiles) {
     const key = tileKey(tiles);
-    if (end.balls.some((b) => tileKey(b.tiles) === key)) {
+    // In an online room players can't see each other's words, so only your own throws must differ.
+    const taken = end.kind === "party" ? end.balls.filter((b) => b.pid === party.me) : end.balls;
+    if (taken.some((b) => tileKey(b.tiles) === key)) {
       sfx.nope();
       return setStatus("That exact throw is already on the court. Change a tile or a sign.", true);
     }
@@ -762,6 +961,12 @@
     const before = mine.length ? Math.min(...mine.map((b) => b.rank)) : end.startRank;
     const ball = placeBall(end, side, tiles);
     ball.pending = true;
+    if (end.kind === "party") {
+      // Show it rolling straight away; the host's echo of this throw is matched by key, not re-added.
+      ball.pid = party.me;
+      ball.key = party.me + ":" + mine.length;
+      partySendThrow(tiles);
+    }
     end.rack = [];
     render();
     await animateBall(ball);
@@ -775,6 +980,11 @@
       : `${verdict} Ball ${ball.n} stopped near ${q(ball.near[0])}. ${q(end.target)} is the ${ordinal(ball.rank)} nearest word to it` +
         (mine.length ? ` (${end.kind === "versus" ? vs.names[side] + "'s" : "your"} best so far was ${ordinal(before)}).` : ` (it was ${ordinal(end.startRank)} at the start).`), warn: false };
     if (end.kind === "tutorial") statusMsg = { text: "", warn: false };
+    if (end.kind === "party") {
+      // Other players' throws that arrived while this ball was rolling.
+      if (party && party.queued) return applyPartyState(party.state);
+      return render();
+    }
     if (!nextSide(end)) finishEnd(end);
     render();
     // On a phone the result card sits below the court, out of sight: bring it up.
@@ -784,6 +994,7 @@
 
   function finishEnd(end) {
     end.done = true;
+    end.showMap = undefined; // nearby words come up at the end, whatever was chosen during play
     if (end.kind === "versus") {
       const r = bestOf(end, "red"), b = bestOf(end, "blue");
       const winner = closer(b, r) ? "blue" : "red";
@@ -814,7 +1025,12 @@
       h("div", { class: "row" },
         h("button", { class: "primary", type: "button", onclick: () => start("bot", "club") }, "Play the bot"),
         h("button", { type: "button", onclick: () => start("bot", "pro") }, "Play the bot (pro)"),
-        h("button", { type: "button", onclick: () => start("friend") }, "Two players, one device")));
+        h("button", { type: "button", onclick: () => start("friend") }, "Two players, one device")),
+      h("h2", {}, "Online"),
+      h("p", {}, "Play friends on their own phones or computers: everyone throws at the same court at once."),
+      h("div", { class: "row" },
+        h("button", { class: "primary", type: "button", "data-key": "go-party", onclick: () => switchMode("party") },
+          party ? `Back to room ${party.code || ""}` : "Play online with friends")));
   }
 
   function renderVersusEnd(end) {
@@ -852,6 +1068,279 @@
     if (ends.versus === end) await throwBall(end, "blue", pick.tiles);
   }
 
+  // ---------- party: an online room where everyone plays the same court at once ----------
+  // The host's browser keeps the room state and rebroadcasts it (see net.js). Deals and scores are
+  // deterministic, so only the round's seed and each player's tile choices travel over the wire;
+  // every browser scores the throws itself.
+  const PARTY_BALLS = 3;
+  const PARTY_COLORS = ["red", "blue", "green", "purple", "orange", "teal"];
+  let party = null;          // { role: "host"|"guest", code, me, net, state, error, joining, closed, queued }
+  let partyJoinCode = "";    // from a #room=CODE link, before joining
+
+  const partyPlayer = (pid) => (party ? party.state.players.find((p) => p.id === pid) : null);
+  const partyName = (pid) => (partyPlayer(pid) || { name: "Someone" }).name;
+  const partyActive = () => (party ? party.state.players.filter((p) => !p.left) : []);
+  const myColor = () => (partyPlayer(party && party.me) || { color: "red" }).color;
+  const partyInRound = () => !!(party && party.state.round && ends.party && ends.party.round === party.state.round);
+  const partyLink = (code) => location.href.split("#")[0] + "#room=" + code;
+  const cleanName = (s) => String(s || "").replace(/\s+/g, " ").trim().slice(0, 18) || "Player";
+  const listNames = (names) => (names.length <= 1 ? names.join("") : names.slice(0, -1).join(", ") + " and " + names[names.length - 1]);
+  function setHash(hash) { try { history.replaceState(null, "", "#" + hash); } catch (e) { /* sandboxed */ } }
+
+  // Scores are memoised per court and throw: the host and the results card both need them.
+  const scoreMemo = new Map();
+  function scoreOf(end, tiles) {
+    const k = end.seed + "|" + tileKey(tiles);
+    if (!scoreMemo.has(k)) { const sc = G.space.score(end.start, end.target, tiles); scoreMemo.set(k, { rank: sc.rank, sim: sc.sim }); }
+    return scoreMemo.get(k);
+  }
+  /** Players ordered by their best ball; the winner scores a point per ball beating everyone else's best. */
+  function partyStandings(st, end) {
+    const byPid = new Map();
+    for (const t of st.throws) {
+      const sc = { ...scoreOf(end, t.tiles), tiles: t.tiles };
+      const cur = byPid.get(t.pid);
+      if (!cur || closer(sc, cur)) byPid.set(t.pid, sc);
+    }
+    const rows = [...byPid].map(([pid, best]) => ({ pid, best })).sort((a, b) => (closer(a.best, b.best) ? -1 : closer(b.best, a.best) ? 1 : 0));
+    if (!rows.length) return { rows, winner: null, pts: 0 };
+    const winner = rows[0].pid;
+    const pts = rows.length > 1 ? st.throws.filter((t) => t.pid === winner && closer(scoreOf(end, t.tiles), rows[1].best)).length : 0;
+    return { rows, winner, pts };
+  }
+
+  // host
+  async function hostRoom(name) {
+    store.set("name", name);
+    party = { role: "host", me: "host", code: null, net: null, error: "",
+      state: { players: [{ id: "host", name, color: PARTY_COLORS[0] }], round: 0, seed: null, throws: [], scores: { host: 0 }, over: false, result: null } };
+    render();
+    try {
+      party.net = await BocceNet.host({
+        onOpen: (code) => { party.code = code; if (mode === "party") setHash("room=" + code); render(); },
+        onJoin: () => {},
+        onMessage: (pid, msg) => hostHandle(pid, msg),
+        onLeave: (pid) => { const p = partyPlayer(pid); if (p) { p.left = true; hostCheckOver(); hostBroadcast(); } },
+        onError: (m) => { if (party) { party.error = m; render(); } },
+      });
+    } catch (e) { party.error = e.message; render(); }
+  }
+  function hostHandle(pid, msg) {
+    if (!party || !msg || typeof msg !== "object") return;
+    const st = party.state;
+    if (msg.t === "hello") {
+      const name = cleanName(msg.name);
+      let p = partyPlayer(pid);
+      if (!p) {
+        const used = new Set(partyActive().map((x) => x.color));
+        const color = PARTY_COLORS.find((c) => !used.has(c));
+        if (!color) return party.net.send(pid, { t: "full" });
+        p = { id: pid, name, color };
+        st.players.push(p);
+        st.scores[pid] = st.scores[pid] || 0;
+      } else { p.name = name; p.left = false; }
+      hostBroadcast();
+    } else if (msg.t === "throw") hostThrow(pid, msg);
+  }
+  function hostThrow(pid, msg) {
+    const st = party.state;
+    if (st.round !== msg.round || st.over || !partyPlayer(pid)) return;
+    if (st.throws.filter((t) => t.pid === pid).length >= PARTY_BALLS) return;
+    const tiles = (Array.isArray(msg.tiles) ? msg.tiles : []).slice(0, B.MAX_TILES)
+      .filter((t) => t && G.space.has(String(t.word))).map((t) => ({ word: String(t.word), sign: t.sign < 0 ? -1 : 1 }));
+    if (!tiles.length) return;
+    st.throws.push({ pid, tiles });
+    hostCheckOver();
+    hostBroadcast();
+  }
+  function hostCheckOver() {
+    const st = party.state;
+    if (!st.round || st.over || !ends.party) return;
+    const active = partyActive();
+    if (!active.length || active.some((p) => st.throws.filter((t) => t.pid === p.id).length < PARTY_BALLS)) return;
+    st.over = true;
+    const { winner, pts } = partyStandings(st, ends.party);
+    st.result = { winner, pts };
+    if (winner) st.scores[winner] = (st.scores[winner] || 0) + pts;
+  }
+  function hostStartRound() {
+    const st = party.state;
+    st.round += 1;
+    st.seed = `party-${party.code}-${st.round}-${Math.random().toString(36).slice(2, 7)}`;
+    st.throws = [];
+    st.over = false;
+    st.result = null;
+    hostBroadcast();
+  }
+  function hostBroadcast() {
+    if (!party) return;
+    if (party.net) party.net.broadcast({ t: "state", state: party.state });
+    applyPartyState(party.state);
+  }
+
+  // guest
+  async function joinRoom(code, name) {
+    store.set("name", name);
+    party = { role: "guest", code: BocceNet.cleanCode(code), me: null, net: null, error: "", joining: true,
+      state: { players: [], round: 0, seed: null, throws: [], scores: {}, over: false, result: null } };
+    setHash("room=" + party.code);
+    render();
+    try {
+      party.net = await BocceNet.join(party.code, {
+        onOpen: (id) => { party.me = id; party.joining = false; party.net.send({ t: "hello", name }); render(); },
+        onMessage: (msg) => {
+          if (msg && msg.t === "state") applyPartyState(msg.state);
+          else if (msg && msg.t === "full") { party.error = "That room is full (six players)."; render(); }
+        },
+        onClose: () => { if (party) { party.error = "The host closed the room."; party.closed = true; render(); } },
+        onError: (m) => { if (party) { party.error = m; party.joining = false; render(); } },
+      });
+    } catch (e) { party.error = e.message; party.joining = false; render(); }
+  }
+
+  function partySendThrow(tiles) {
+    const msg = { t: "throw", round: party.state.round, tiles };
+    if (party.role === "host") hostThrow("host", msg);
+    else party.net.send(msg);
+  }
+
+  /** Bring the court up to date with the room state: new round, new balls, round over. */
+  function applyPartyState(st) {
+    if (!party) return;
+    party.state = st;
+    if (busy) { party.queued = true; return; } // our own ball is rolling; catch up when it stops
+    party.queued = false;
+    let end = ends.party;
+    if (st.round && (!end || end.round !== st.round)) {
+      const d = B.deal(G.space, G.pools, st.seed);
+      end = ends.party = makeEnd("party", st.seed, d.start, d.target, d.hand, { sides: [], perSide: PARTY_BALLS, round: st.round });
+      statusMsg = { text: "", warn: false };
+    }
+    let finished = false;
+    if (end && end.round === st.round) {
+      const count = {};
+      let landed = 0;
+      for (const t of st.throws) {
+        const i = (count[t.pid] = (count[t.pid] || 0) + 1) - 1;
+        const key = t.pid + ":" + i;
+        if (end.balls.some((b) => b.key === key)) continue;
+        const b = placeBall(end, (partyPlayer(t.pid) || { color: "red" }).color, t.tiles);
+        b.key = key;
+        b.pid = t.pid;
+        landed++;
+      }
+      if (landed) sfx.roll(0, 0.15);
+      finished = st.over && !end.done;
+      end.done = !!st.over;
+      if (finished) end.showMap = undefined;
+      if (finished) setTimeout(st.result && st.result.winner === party.me ? sfx.win : sfx.lose, 500);
+    }
+    if (mode === "party") {
+      render();
+      if (finished) { const card = main().querySelector(".endcard"); if (card) card.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "nearest" }); }
+    }
+  }
+
+  function leaveParty() {
+    if (party && party.net) party.net.close();
+    party = null;
+    ends.party = null;
+    partyJoinCode = "";
+    setHash("party");
+    render();
+  }
+
+  function renderPartyLobby() {
+    const wrap = h("div", { class: "setup party-setup" }, h("h2", {}, "Play online with friends"));
+    const nameInput = () => h("input", { id: "partyName", class: "text", "data-key": "party-name", autocomplete: "nickname", maxlength: 18,
+      placeholder: "your name", value: store.get("name", "") });
+    const nameVal = () => cleanName(($("#partyName") || {}).value);
+    const players = () => h("ul", { class: "players" }, party.state.players.filter((p) => !p.left).map((p) =>
+      h("li", {}, h("span", { class: `pip ${p.color} full`, "aria-hidden": "true" }), p.id === party.me ? `${p.name} (you)` : p.name,
+        p.id === "host" ? h("small", {}, " host") : null)));
+
+    if (!party) {
+      wrap.append(
+        h("p", {}, "Everyone plays the same court at the same time, each on their own phone or computer. Three balls each. You see each other's balls land; the words stay hidden until the round ends. The ball nearest the jack wins the round."),
+        h("label", { for: "partyName" }, "Your name"), nameInput());
+      if (partyJoinCode) {
+        wrap.append(h("div", { class: "row" },
+          h("button", { class: "primary", type: "button", "data-key": "party-join", onclick: () => joinRoom(partyJoinCode, nameVal()) }, `Join room ${partyJoinCode}`)),
+          h("p", { class: "hint" }, "New to Word Bocce? ", h("button", { class: "linkish", type: "button", onclick: () => switchMode("tutorial") }, "Play the 30-second tutorial first"), ", then come back to this link."));
+      } else {
+        const codeIn = h("input", { id: "partyCode", class: "text code", "data-key": "party-code", autocomplete: "off", autocapitalize: "characters",
+          maxlength: 8, placeholder: "ROOM CODE" });
+        wrap.append(
+          h("div", { class: "row" }, h("button", { class: "primary", type: "button", "data-key": "party-host", onclick: () => hostRoom(nameVal()) }, "Open a room")),
+          h("p", { class: "or" }, "or join one:"),
+          h("div", { class: "row" }, codeIn, h("button", { type: "button", "data-key": "party-join-code",
+            onclick: () => { const c = BocceNet.cleanCode(codeIn.value); if (c) joinRoom(c, nameVal()); } }, "Join")));
+      }
+      wrap.append(h("p", { class: "hint" }, "Rooms connect browsers directly, introduced by the free PeerJS service. Nothing is stored, and the room ends when the host closes their tab."));
+      return wrap;
+    }
+
+    if (party.error) {
+      wrap.append(h("p", { class: "status warn" }, party.error),
+        h("div", { class: "row" }, h("button", { type: "button", onclick: leaveParty }, "Back")));
+      return wrap;
+    }
+    if (party.role === "host") {
+      if (!party.code) { wrap.append(h("p", {}, "Opening a room…")); return wrap; }
+      const link = partyLink(party.code);
+      const linkIn = h("input", { class: "text", readonly: true, value: link, "aria-label": "Room link", onclick: (e) => e.target.select() });
+      wrap.append(
+        h("p", { class: "roomcode" }, "Room ", h("b", {}, party.code)),
+        h("p", {}, "Send your friends this link. When everyone's in, start the round."),
+        linkIn,
+        h("div", { class: "row" },
+          h("button", { type: "button", "data-key": "party-copy", onclick: async () => {
+            try { await navigator.clipboard.writeText(link); party.copied = true; } catch (e) { linkIn.select(); }
+            render();
+          } }, party.copied ? "Link copied" : "Copy link"),
+          navigator.share && h("button", { type: "button", onclick: () => navigator.share({ title: "Word Bocce", text: "Play Word Bocce with me:", url: link }).catch(() => {}) }, "Share…")),
+        h("h3", {}, "Players"), players(),
+        h("div", { class: "row" },
+          h("button", { class: "primary", type: "button", "data-key": "party-start", onclick: hostStartRound },
+            partyActive().length > 1 ? "Start the round" : "Start (just me for now)"),
+          h("button", { type: "button", onclick: leaveParty }, "Close the room")));
+    } else {
+      wrap.append(party.joining ? h("p", {}, `Joining room ${party.code}…`)
+        : h("p", {}, "You're in room ", h("b", {}, party.code), ". Waiting for the host to start the round."),
+        h("h3", {}, "Players"), players(),
+        h("div", { class: "row" }, h("button", { type: "button", onclick: leaveParty }, "Leave the room")));
+    }
+    return wrap;
+  }
+
+  function renderPartyResults(end) {
+    const st = party.state;
+    const { rows, winner, pts } = partyStandings(st, end);
+    const winName = winner === party.me ? "You win" : `${partyName(winner)} wins`;
+    const card = h("div", { class: "endcard", role: "region", "aria-label": "Round result" },
+      h("h2", {}, rows.length ? `${winName} round ${st.round}` : "Round over"),
+      rows.length > 1 && h("p", {}, `${pts} point${pts === 1 ? "" : "s"}: one for each ball closer than everyone else's best. `, tip("party", "room scoring")),
+      rows.length > 1 && rows[0].best.rank === rows[1].best.rank && h("p", { class: "hint tie" },
+        `Tied at ${ordinal(rows[0].best.rank)}, so the tie goes to the ball nearer in meaning: similarity ${fmt(rows[0].best.sim)} against ${fmt(rows[1].best.sim)}.`),
+      h("ol", { class: "standings" }, rows.map((r) => h("li", {},
+        h("span", { class: `pip ${(partyPlayer(r.pid) || { color: "red" }).color} full`, "aria-hidden": "true" }),
+        h("b", {}, r.pid === party.me ? "You" : partyName(r.pid)), ` ${ordinal(r.best.rank)} · `,
+        h("span", { class: "eqs" }, eqText(end.start, r.best.tiles)),
+        h("small", {}, ` · ${st.scores[r.pid] || 0} pts`)))),
+      end.par && h("p", { class: "par" }, `Par (the best throw these words allowed): ${eqText(end.start, end.par.tiles)} → ${ordinal(end.par.rank)} `, tip("par", "par")));
+    const row = h("div", { class: "row" });
+    if (party.role === "host") row.append(h("button", { type: "button", "data-key": "party-next", onclick: hostStartRound }, "Next round"));
+    else row.append(h("span", { class: "hint" }, party.closed ? "The host has left." : "Waiting for the host to start the next round."));
+    row.append(h("button", { class: "alt", type: "button", onclick: leaveParty }, party.role === "host" ? "Close the room" : "Leave"));
+    card.append(row);
+    return card;
+  }
+
+  window.addEventListener("beforeunload", (e) => {
+    // Closing the host's tab ends the room for everyone: ask first.
+    if (party && party.role === "host" && partyActive().length > 1) { e.preventDefault(); e.returnValue = ""; }
+  });
+
   // ---------- puzzles ----------
   function renderPuzzleList() {
     const wrap = h("div", { class: "puzzles" });
@@ -880,7 +1369,7 @@
     if (m === "daily" && !ends.daily) ends.daily = dealDaily();
     if (m === "practice" && !ends.practice) ends.practice = dealPractice();
     if (m === "tutorial") ends.tutorial = dealTutorial();
-    try { history.replaceState(null, "", "#" + m); } catch (e) { /* sandboxed */ }
+    setHash(m === "party" && (party && party.code || partyJoinCode) ? "room=" + (party && party.code || partyJoinCode) : m);
     render();
     maybeBot();
   }
@@ -908,12 +1397,18 @@
     }
     $("#tagline").textContent = `played on a court of ${G.space.n.toLocaleString()} words`;
     const want = (location.hash || "").slice(1);
+    // A room link (#room=CODE) goes straight to the join screen.
+    const room = want.match(/^room=([A-Za-z0-9]+)/);
+    if (room) {
+      partyJoinCode = BocceNet.cleanCode(room[1]);
+      return switchMode("party");
+    }
     // First visit from a plain link: a guided game teaches faster than a page of rules.
     if (!want && !store.get("tutorialOffered", false)) {
       store.set("tutorialOffered", true);
       return switchMode("tutorial");
     }
-    switchMode(["daily", "practice", "puzzles", "versus", "tutorial"].includes(want) ? want : "daily");
+    switchMode(["daily", "practice", "puzzles", "versus", "tutorial", "party"].includes(want) ? want : "daily");
   }
   boot();
 })();

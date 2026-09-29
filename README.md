@@ -19,9 +19,17 @@ Distance is measured as **rank**: `#12` means the jack is the 12th-nearest word
 - **Versus**: against a bot or a friend on one device, with real bocce rules
   (the side farther from the jack throws next; the closer side scores a point
   per ball that beats the other's best; first to 5).
+- **Online with friends** (under Versus): open a room, send the link, and
+  everyone plays the same court at once on their own device, three balls each.
+  You see each other's balls land; the words are revealed when the round ends.
+  Up to six players. Browsers connect directly (WebRTC via the free PeerJS
+  broker, `web/net.js`); the host's tab is the room, and nothing is stored.
 
-After every end you see the best throw the hand allowed, and the words nearest
-the jack.
+After every round you see par (the best throw the hand allowed), a few nearby
+words placed on the court, and a "try your own words" box: type any throw to
+see where it would have landed and say whether those words would have made the
+court more fun. Suggestions are kept in the browser for now (`localStorage`
+key `wordbocce:suggestions`). More mode ideas: `docs/game-modes.md`.
 
 ## Run it
 
