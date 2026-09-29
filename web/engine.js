@@ -109,11 +109,16 @@
       return { sim: tsim, rank, near: top.map((t) => t[1]) };
     }
 
-    /** Full scoring of one throw. */
+    /**
+     * Full scoring of one throw. `near` names where the ball stopped; it skips near-copies of the
+     * words thrown ("boats" after throwing "boat"), which say nothing new. The rank still counts them.
+     */
     score(start, target, tiles) {
       const v = this.ball(start, tiles);
-      const s = this.survey(v, target, [start, ...tiles.map((t) => t.word)]);
-      return { ...s, vec: v };
+      const inputs = [start, ...tiles.map((t) => t.word)];
+      const s = this.survey(v, target, inputs, 8);
+      const fresh = s.near.filter((w) => w === target || !inputs.some((x) => related(w, x)));
+      return { ...s, near: (fresh.length ? fresh : s.near).slice(0, 3), vec: v };
     }
 
     /** Every legal throw from a hand (1..maxTiles distinct tiles, each ±), best first. */

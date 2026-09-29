@@ -123,7 +123,7 @@
   const TIPS = {
     rank: "Rank is how the game measures closeness. Take the spot where your ball is, and list all 40,000 words from closest in meaning to farthest. The jack's place in that list is its rank. #1 means the jack is the closest word of all: a perfect throw.",
     similarity: "Similarity (cosine similarity) compares two word vectors: 1 means pointing the same way, 0 means unrelated, below 0 means opposite. It moves in small steps, so it shows progress even when the rank barely changes.",
-    par: "Par is the best throw this hand allows. The game tries every combination of up to three tiles, each added or subtracted (834 throws for a nine-tile hand), and keeps the one that brings the ball closest to the jack.",
+    par: "Par is the best throw this hand allows. The game tries every combination of up to three tiles, each added or subtracted (834 throws for a nine-tile hand), then ranks the 50 most promising and keeps the one that puts the jack nearest the top of the list.",
     rings: "Each ring is a rank boundary. Inside the ‘top 10’ ring, the jack is among the 10 words closest to your ball; inside ‘top 100’, among the closest 100; and so on. Each ring inward is ten times harder to reach.",
     near: "The word closest in meaning to where your ball stopped (not counting the words you threw). It shows what your throw ‘means’.",
     versus: "Whoever is farther from the jack throws next. When both sides are out of balls, the side with the closest ball wins the round and scores one point for every ball closer than the other side's best.",
@@ -184,7 +184,16 @@
       startRank: space.survey(space.row(start), target, [start], 1).rank,
       basis: B.courtBasis(space, start, target, seed),
       throws,
-      par: throws[0] || null,
+      // Par is judged by rank, like the balls, and only shown once the round is over, so it is worked
+      // out lazily. Ranking all 800+ throws is too slow on a phone; the rank-best throw sits among the
+      // 50 most similar in nearly every deal (the most similar alone is rank-best only ~1 time in 4).
+      get par() {
+        if (this._par === undefined) {
+          this._par = this.throws.slice(0, 50).map((t) => ({ ...t, rank: space.score(start, target, t.tiles).rank }))
+            .reduce((m, t) => (m && !closer(t, m) ? m : t), null);
+        }
+        return this._par;
+      },
       balls: [],
       rack: [],
       done: false,
@@ -202,6 +211,34 @@
     if (end.balls.length >= SOLO_BALLS) end.done = true;
     return end;
   }
+  // ---------- tutorial: a guided first game, one instruction at a time ----------
+  // boat → plane: the jack starts 30th-nearest; "+ sky" brings it to 7th; "+ sky − water" makes it 1st.
+  const TUT = { start: "boat", target: "plane", hand: ["road", "sky", "fish", "water", "island", "engine"] };
+  function dealTutorial() {
+    return makeEnd("tutorial", "tutorial", TUT.start, TUT.target, TUT.hand.filter((w) => G.space.has(w)),
+      { sides: ["red"], perSide: 2, intro: true });
+  }
+  /** What the tutorial asks for next: { text, tile } (tap this word) or { text, throw: true }. */
+  function tutorialStep(end) {
+    const inRack = (w) => end.rack.find((t) => t.word === w);
+    const fixSign = (w) => `That subtracted “${w}” (the − sign). Tap it once more to take it off, then again to add it.`;
+    const landed = end.balls.filter((b) => !b.pending);
+    if (landed.length === 0) {
+      if (!inRack("sky")) return { text: `A plane is a bit like a boat that travels through the sky. Tap “sky” to add it to your throw.`, tile: "sky" };
+      if (inRack("sky").sign < 0) return { text: fixSign("sky"), tile: "sky" };
+      return { text: `Your throw is “boat + sky”. Tap Throw to roll the ball.`, throw: true };
+    }
+    const b = landed[0];
+    const lead = b.rank < end.startRank
+      ? `Closer! Your ball stopped near “${b.near[0]}”. “plane” went from the ${ordinal(end.startRank)} nearest word to the ${ordinal(b.rank)}. A perfect throw makes it 1st. `
+      : `Your ball stopped near “${b.near[0]}”. `;
+    if (!inRack("sky")) return { text: lead + `Planes don't float on water, so let's take water away. First tap “sky” again.`, tile: "sky" };
+    if (inRack("sky").sign < 0) return { text: fixSign("sky"), tile: "sky" };
+    if (!inRack("water")) return { text: `Now tap “water” twice. One tap adds a word (+); a second tap subtracts it (−).`, tile: "water" };
+    if (inRack("water").sign > 0) return { text: `Right, that added it. Tap “water” once more to subtract it.`, tile: "water" };
+    return { text: `Your throw is “boat + sky − water”. Throw!`, throw: true };
+  }
+
   function dealPractice() {
     const seed = "practice-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7);
     const d = B.deal(G.space, G.pools, seed);
@@ -230,8 +267,11 @@
   }
 
   const ballsOf = (end, side) => end.balls.filter((b) => b.side === side);
-  const bestOf = (end, side) => ballsOf(end, side).reduce((m, b) => (b && m && m.sim >= b.sim ? m : b), null);
-  const bestBall = (end) => end.balls.reduce((m, b) => (m && m.sim >= b.sim ? m : b), null);
+  // Closeness is judged the way players see it: by the jack's rank, with similarity only breaking ties.
+  // (A ball can make the jack 1st while having slightly lower similarity than one that left it 7th.)
+  const closer = (a, b) => a.rank < b.rank || (a.rank === b.rank && a.sim > b.sim);
+  const bestOf = (end, side) => ballsOf(end, side).reduce((m, b) => (m && !closer(b, m) ? m : b), null);
+  const bestBall = (end) => end.balls.reduce((m, b) => (m && !closer(b, m) ? m : b), null);
 
   /** Bocce order: the side farther from the jack throws next, while it has balls. */
   function nextSide(end) {
@@ -244,7 +284,7 @@
     const r = bestOf(end, "red"), b = bestOf(end, "blue");
     if (!r) return "red";
     if (!b) return "blue";
-    return r.sim < b.sim ? "red" : "blue";
+    return closer(b, r) ? "red" : "blue";
   }
 
   // ---------- court geometry ----------
@@ -428,7 +468,23 @@
         renderBench(end)));
     }
     if (focusKey) { const el = m.querySelector(`[data-key="${CSS.escape(focusKey)}"]`); if (el) el.focus(); }
+    fitDrawer();
   }
+  // On phones the play panel is pinned to the bottom of the screen: leave room for it below the page,
+  // and shrink the court to fit the space above it so the whole game is visible without scrolling.
+  function fitDrawer() {
+    const p = main().querySelector(".play");
+    const pinned = !!p && getComputedStyle(p).position === "fixed";
+    document.body.style.paddingBottom = pinned ? p.offsetHeight + 12 + "px" : "";
+    const svg = main().querySelector("svg.court");
+    if (!svg) return;
+    svg.style.width = "";
+    if (!pinned) return;
+    const top = svg.getBoundingClientRect().top + scrollY;
+    const room = Math.max(250, innerHeight - p.offsetHeight - top - 10);
+    svg.style.width = Math.min(svg.parentElement.clientWidth, (room * 400) / 560) + "px";
+  }
+  window.addEventListener("resize", () => { if (G) fitDrawer(); });
   function current() { return ends[mode === "puzzles" ? "puzzle" : mode]; }
 
   function renderScorebar(end) {
@@ -443,6 +499,7 @@
     const left = end.perSide - end.balls.length;
     const label = end.kind === "daily" ? h("span", {}, h("strong", {}, `Daily No. ${end.no}`), ` · ${end.iso}`)
       : end.kind === "puzzle" ? h("span", {}, h("strong", {}, `Puzzle ${end.puzzle.id}`), ` · ${end.puzzle.difficulty}`)
+      : end.kind === "tutorial" ? h("span", {}, h("strong", {}, "Tutorial"), " · about 30 seconds")
       : h("span", {}, h("strong", {}, "Practice"), " · endless deals");
     return h("div", { class: "scorebar" }, label,
       h("span", {}, `${left} of ${end.perSide} balls left `,
@@ -454,9 +511,9 @@
       h("span", { class: "from" }, end.start), h("span", { class: "arrow", "aria-hidden": "true" }, "→"),
       h("span", { class: "to", title: "the jack (target word)" }, end.target),
       h("span", { class: "caption" },
-        `Your ball starts as ${q(end.start)}. Right now ${q(end.target)} is only the ${ordinal(end.startRank)} closest word to it (rank #${end.startRank.toLocaleString()}) `,
-        tip("rank", "rank"),
-        `. Add and subtract word tiles to move the ball until ${q(end.target)} is the closest word of all: rank #1.`));
+        `Roll your ball from ${q(end.start)} to the yellow jack, ${q(end.target)}. Tap words to add (+) or subtract (−) their meaning, then Throw.`),
+      h("span", { class: "caption small" },
+        `Right now ${q(end.target)} is the ${ordinal(end.startRank)} nearest word to your ball. Get it to 1st. `, tip("rank", "rank")));
   }
 
   function renderBench(end) {
@@ -473,21 +530,37 @@
           (end.balls.length ? ", because they're farther from the jack." : ".")));
     }
 
+    if (end.kind === "tutorial" && end.intro) {
+      bench.append(h("div", { class: "play" }, h("div", { class: "coach intro" },
+        h("p", {}, h("b", {}, "Word Bocce is bocce played with meanings.")),
+        h("p", {}, "Every word has a spot on the court. Words with similar meanings sit close together."),
+        h("p", {}, `Your ball starts on ${q(end.start)} (the dashed circle). The yellow ball, the jack, is ${q(end.target)}. You move your ball by adding and subtracting words. Get it as close to the jack as you can.`),
+        h("div", { class: "row" },
+          h("button", { class: "primary", type: "button", "data-key": "tut-go", onclick: () => { end.intro = false; render(); } }, "Show me"),
+          h("button", { class: "ghost", type: "button", onclick: () => switchMode("daily") }, "Skip")))));
+      return bench;
+    }
+
     if (!end.done) {
+      const tut = end.kind === "tutorial" && !busy ? tutorialStep(end) : null;
+      const play = h("div", { class: "play" });
+      if (tut) play.append(h("p", { class: "coach", role: "status" }, tut.text));
+
       // rack
       const rack = h("div", { class: "rack", "aria-live": "polite" }, h("span", { class: "base" }, end.start));
-      if (!end.rack.length) rack.append(h("span", { class: "hint" }, "tap tiles below to add or subtract them"));
+      if (!end.rack.length) rack.append(h("span", { class: "hint" }, "your throw: tap words below"));
       for (const t of end.rack) {
         rack.append(h("button", { class: `chip ${t.sign > 0 ? "plus" : "minus"}`, type: "button", "data-key": "chip-" + t.word,
-          title: "Tap to switch between adding and subtracting", disabled: busy || botTurn,
+          title: "Tap to switch between adding and subtracting", disabled: busy || botTurn || end.kind === "tutorial",
           onclick: () => { t.sign = -t.sign; sfx.tile(t.sign); render(); } }, `${signChar(t.sign)} ${t.word}`));
       }
-      bench.append(rack);
+      play.append(rack);
 
-      const throwBtn = h("button", { class: `throw ${side === "blue" ? "blue" : ""}`, type: "button", "data-key": "throw",
-        disabled: busy || botTurn || !end.rack.length, onclick: () => playerThrow(end, side) }, "Throw");
-      bench.append(h("div", { class: "actions" }, throwBtn,
-        h("button", { class: "ghost", type: "button", "data-key": "clear", disabled: busy || !end.rack.length,
+      const throwBtn = h("button", { class: `throw ${side === "blue" ? "blue" : ""} ${tut && tut.throw ? "pulse" : ""}`, type: "button", "data-key": "throw",
+        disabled: busy || botTurn || !end.rack.length || (end.kind === "tutorial" && !(tut && tut.throw)),
+        onclick: () => playerThrow(end, side) }, "Throw");
+      play.append(h("div", { class: "actions" }, throwBtn,
+        end.kind !== "tutorial" && h("button", { class: "ghost", type: "button", "data-key": "clear", disabled: busy || !end.rack.length,
           onclick: () => { end.rack = []; setStatus(""); render(); } }, "Clear"),
         end.kind === "practice" && h("button", { class: "ghost", type: "button", "data-key": "redeal",
           disabled: busy, onclick: () => { ends.practice = dealPractice(); setStatus(""); render(); } }, "Deal a new court"),
@@ -495,8 +568,10 @@
           onclick: () => { end.showHint = true; render(); } }, "Hint"),
         end.kind === "puzzle" && h("button", { class: "ghost", type: "button", "data-key": "back",
           onclick: () => { ends.puzzle = null; render(); } }, "All puzzles")));
-      bench.append(h("div", { class: `status ${statusMsg.warn ? "warn" : ""}`, role: "status" },
-        end.kind === "puzzle" && end.showHint && !statusMsg.text ? "Hint: " + end.puzzle.hint : statusMsg.text));
+      if (!tut) {
+        play.append(h("div", { class: `status ${statusMsg.warn ? "warn" : ""}`, role: "status" },
+          end.kind === "puzzle" && end.showHint && !statusMsg.text ? "Hint: " + end.puzzle.hint : statusMsg.text));
+      }
 
       // hand
       const hand = h("div", { class: "hand", role: "group", "aria-label": "Your tiles" });
@@ -504,8 +579,9 @@
       for (const w of words) {
         const inRack = end.rack.find((t) => t.word === w);
         const cls = inRack ? (inRack.sign > 0 ? "plus" : "minus") : "";
-        hand.append(h("button", { class: `tile ${cls} ${w === end.wildWord ? "joker" : ""}`, type: "button", "data-key": "tile-" + w,
-          "aria-pressed": inRack ? "true" : "false", disabled: busy || botTurn,
+        const wanted = tut && tut.tile === w;
+        hand.append(h("button", { class: `tile ${cls} ${w === end.wildWord ? "joker" : ""} ${wanted ? "pulse" : ""}`, type: "button", "data-key": "tile-" + w,
+          "aria-pressed": inRack ? "true" : "false", disabled: busy || botTurn || (end.kind === "tutorial" && !wanted),
           "aria-label": inRack ? `${w}, ${inRack.sign > 0 ? "added" : "subtracted"}` : w,
           onclick: () => cycleTile(end, w) },
           w, h("span", { class: "sign", "aria-hidden": "true" }, inRack ? signChar(inRack.sign) : "")));
@@ -515,12 +591,13 @@
           onclick: () => { end.wildOpen = true; render(); setTimeout(() => { const i = $("#wildInput"); if (i) i.focus(); }); } },
           end.wildWord ? "change wild word" : "any word…", h("span", { class: "sign" }, "✱")));
       }
-      bench.append(hand);
-      bench.append(h("p", { class: "hand-help" }, "Tap: add. Tap again: subtract. Third tap: remove. Up to three tiles."));
-      if (end.wild && end.wildOpen) bench.append(renderWildForm(end));
+      play.append(hand);
+      if (end.kind !== "tutorial") play.append(h("p", { class: "hand-help" }, "Tap a word once to add it (+), twice to subtract it (−), three times to take it back. Up to three words per throw."));
+      if (end.wild && end.wildOpen) play.append(renderWildForm(end));
+      bench.append(play);
     }
 
-    if (end.done) bench.append(end.kind === "versus" ? renderVersusEnd(end) : renderSoloEnd(end));
+    if (end.done) bench.append(end.kind === "versus" ? renderVersusEnd(end) : end.kind === "tutorial" ? renderTutorialEnd(end) : renderSoloEnd(end));
     bench.append(renderLog(end));
     return bench;
   }
@@ -566,6 +643,24 @@
     return ol;
   }
 
+  function renderTutorialEnd(end) {
+    const best = bestBall(end);
+    store.set("tutorialDone", true);
+    return h("div", { class: "endcard", role: "region", "aria-label": "Tutorial done" },
+      h("h2", {}, best.rank === 1 ? "Bacio! A perfect throw." : "Nice throw."),
+      h("p", {}, `${eqText(end.start, best.tiles)} landed ${best.rank === 1 ? "right by" : "near"} ${q(end.target)}. `,
+        best.rank === 1 ? `It's now the nearest word to your ball. (Bacio is Italian for "kiss": a ball touching the jack.)` : ""),
+      h("p", {}, "That's the whole game. Each round you get a start word, a jack and nine words to throw with:"),
+      h("ul", {},
+        h("li", {}, "Add words that point toward the jack."),
+        h("li", {}, "Subtract words that drag you back toward the start."),
+        h("li", {}, "You get four balls. Your best one counts.")),
+      h("p", {}, "Some words are traps: they look related but pull the wrong way. At the end you'll see par, the best throw your words allowed."),
+      h("div", { class: "row" },
+        h("button", { type: "button", "data-key": "tut-daily", onclick: () => switchMode("daily") }, "Play today's court"),
+        h("button", { class: "alt", type: "button", onclick: () => switchMode("practice") }, "Practice")));
+  }
+
   function renderSoloEnd(end) {
     const best = bestBall(end);
     const par = end.par;
@@ -581,22 +676,22 @@
       if (stars > store.get(k, 0)) store.set(k, stars);
     }
     const parScore = par ? G.space.score(end.start, end.target, par.tiles) : null;
-    const beatPar = parScore && (best.sim > par.sim + 1e-6);
+    const beatPar = parScore && closer(best, par);
     const around = G.space.survey(G.space.row(end.target), end.target, [end.target], 8).near;
     const card = h("div", { class: "endcard", role: "region", "aria-label": "Round summary" },
       h("h2", {}, head),
       h("div", { class: "stars-row", "aria-label": `${stars} of 3 stars` },
         [0, 1, 2].map((i) => h("span", { class: i < stars ? "" : "off" }, "●"))),
       h("p", {}, best.rank === 1
-        ? `Your best ball made ${q(end.target)} the closest word: rank #1. `
-        : `With your best ball, ${q(end.target)} was the ${ordinal(best.rank)} closest word (rank #${best.rank.toLocaleString()}). `,
-        `You started at #${end.startRank.toLocaleString()}. `, tip("rank", "rank")),
+        ? `Your best ball made ${q(end.target)} the nearest word of all: 1st. `
+        : `With your best ball, ${q(end.target)} was the ${ordinal(best.rank)} nearest word. `,
+        `It started ${ordinal(end.startRank)}. `, tip("rank", "rank")),
       parScore && h("p", {}, beatPar
         ? "Your wild word beat par, the best throw from the fixed tiles."
         : `You closed ${Math.round(pct * 100)}% of the gap between your start and par. `, tip("par", "par")),
       h("div", { class: "meter", "aria-hidden": "true" }, h("i", { style: `width:${Math.round(pct * 100)}%` })),
       h("div", { class: "meter-ends", "aria-hidden": "true" }, h("span", {}, "start"), h("span", {}, "par")),
-      parScore && h("p", { class: "par" }, `Par: ${eqText(end.start, par.tiles)} → rank #${parScore.rank.toLocaleString()}`),
+      parScore && h("p", { class: "par" }, `Par: ${eqText(end.start, par.tiles)} → ${ordinal(parScore.rank)}`),
       h("p", { class: "neighbours" }, `The words closest in meaning to ${q(end.target)}: ${around.join(", ")}.`));
     const row = h("div", { class: "row" });
     if (end.kind === "daily") {
@@ -663,6 +758,8 @@
     }
     busy = true;
     statusMsg = { text: "", warn: false };
+    const mine = ballsOf(end, side);
+    const before = mine.length ? Math.min(...mine.map((b) => b.rank)) : end.startRank;
     const ball = placeBall(end, side, tiles);
     ball.pending = true;
     end.rack = [];
@@ -672,12 +769,16 @@
     busy = false;
     if (end.kind === "daily") store.set("daily:" + end.iso, end.balls.map((b) => b.tiles));
     if (ball.rank === 1) sfx.bacio();
-    const t = B.tier(ball.rank);
+    const verdict = ball.rank < before ? "Closer!" : ball.rank === before ? "About the same." : "Further away.";
     statusMsg = { text: ball.rank === 1
-      ? `Ball ${ball.n} landed right by ${q(end.target)}: it's the closest word to the ball. Bacio!`
-      : `Ball ${ball.n} landed by ${q(ball.near[0])}. From there, ${q(end.target)} is the ${ordinal(ball.rank)} closest word (${t.label.toLowerCase()}). Rank #1 is the goal.`, warn: false };
+      ? `Bacio! Ball ${ball.n} stopped right by ${q(end.target)}: it's the nearest word to the ball.`
+      : `${verdict} Ball ${ball.n} stopped near ${q(ball.near[0])}. ${q(end.target)} is the ${ordinal(ball.rank)} nearest word to it` +
+        (mine.length ? ` (${end.kind === "versus" ? vs.names[side] + "'s" : "your"} best so far was ${ordinal(before)}).` : ` (it was ${ordinal(end.startRank)} at the start).`), warn: false };
+    if (end.kind === "tutorial") statusMsg = { text: "", warn: false };
     if (!nextSide(end)) finishEnd(end);
     render();
+    // On a phone the result card sits below the court, out of sight: bring it up.
+    if (end.done) { const card = main().querySelector(".endcard"); if (card) card.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "nearest" }); }
     maybeBot();
   }
 
@@ -685,9 +786,9 @@
     end.done = true;
     if (end.kind === "versus") {
       const r = bestOf(end, "red"), b = bestOf(end, "blue");
-      const winner = r.sim >= b.sim ? "red" : "blue";
-      const loserBest = winner === "red" ? b.sim : r.sim;
-      const pts = ballsOf(end, winner).filter((x) => x.sim > loserBest).length;
+      const winner = closer(b, r) ? "blue" : "red";
+      const loserBest = winner === "red" ? b : r;
+      const pts = ballsOf(end, winner).filter((x) => closer(x, loserBest)).length;
       vs.score[winner] += pts;
       vs.first = winner;
       end.result = { winner, pts };
@@ -778,6 +879,7 @@
     statusMsg = { text: "", warn: false };
     if (m === "daily" && !ends.daily) ends.daily = dealDaily();
     if (m === "practice" && !ends.practice) ends.practice = dealPractice();
+    if (m === "tutorial") ends.tutorial = dealTutorial();
     try { history.replaceState(null, "", "#" + m); } catch (e) { /* sandboxed */ }
     render();
     maybeBot();
@@ -796,6 +898,7 @@
     const dlg = $("#help");
     $("#helpBtn").addEventListener("click", () => dlg.showModal());
     $("#helpClose").addEventListener("click", () => dlg.close());
+    $("#helpTutorial").addEventListener("click", () => { dlg.close(); switchMode("tutorial"); });
     try {
       G = await B.load(DATA, window.WORD_BOCCE_VECTORS);
     } catch (e) {
@@ -805,8 +908,12 @@
     }
     $("#tagline").textContent = `played on a court of ${G.space.n.toLocaleString()} words`;
     const want = (location.hash || "").slice(1);
-    if (!store.get("seenHelp", false)) { store.set("seenHelp", true); try { dlg.showModal(); } catch (e) { /* no dialog */ } }
-    switchMode(["daily", "practice", "puzzles", "versus"].includes(want) ? want : "daily");
+    // First visit from a plain link: a guided game teaches faster than a page of rules.
+    if (!want && !store.get("tutorialOffered", false)) {
+      store.set("tutorialOffered", true);
+      return switchMode("tutorial");
+    }
+    switchMode(["daily", "practice", "puzzles", "versus", "tutorial"].includes(want) ? want : "daily");
   }
   boot();
 })();

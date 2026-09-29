@@ -38,6 +38,15 @@ for (let i = 0; i < 25; i++) {
 // All throws: 9 tiles, up to 3 → 9·2 + 36·4 + 84·8 = 834.
 assert.strictEqual(space.allThrows(a.start, a.target, a.hand).length, 834);
 
+// The tutorial (web/app.js TUT) promises: boat → plane starts well back, "+ sky" gets closer,
+// and "+ sky − water" makes plane the nearest word. Rebuilding the vectors must keep this true.
+const tutStart = space.survey(space.row("boat"), "plane", ["boat"], 1).rank;
+const tut1 = space.score("boat", "plane", [{ word: "sky", sign: 1 }]);
+const tut2 = space.score("boat", "plane", [{ word: "sky", sign: 1 }, { word: "water", sign: -1 }]);
+assert(tutStart > 10 && tut1.rank < tutStart && tut2.rank === 1, `tutorial ranks ${tutStart} → ${tut1.rank} → ${tut2.rank}`);
+// Where a ball "stopped" never names a near-copy of a thrown word (boat + sky should not land "near boats").
+assert(!tut1.near.some((w) => w.startsWith("boat")), `near words ${tut1.near}`);
+
 // Every puzzle is playable with the bundled vocabulary.
 const unplayable = puzzles.filter((p) => !space.has(p.start_word) || !space.has(p.target_word));
 assert.deepStrictEqual(unplayable.map((p) => p.id), []);
