@@ -1359,6 +1359,89 @@ def test_classic_analogies():
 
 
 # -------------------------------
+# Player suggestions ("try your own words" → "would these words be more fun?")
+# Stored in their own SQLite file, outside web/ so it is never served.
+# Read them on the server with:  sqlite3 $FEEDBACK_DB 'select * from suggestions order by id desc limit 20'
+# -------------------------------
+import sqlite3
+from collections import defaultdict, deque
+
+FEEDBACK_DB = os.environ.get("FEEDBACK_DB") or os.path.join(HERE, "feedback.db")
+_feedback_lock = threading.Lock()
+_feedback_hits: Dict[str, deque] = defaultdict(deque)  # client key -> recent timestamps
+FEEDBACK_MAX_PER_HOUR = 60
+
+
+def _feedback_conn() -> sqlite3.Connection:
+    os.makedirs(os.path.dirname(os.path.abspath(FEEDBACK_DB)), exist_ok=True)
+    conn = sqlite3.connect(FEEDBACK_DB)
+    conn.execute(
+        """create table if not exists suggestions (
+            id integer primary key,
+            received_at text not null,
+            client_at text,
+            client_id text,
+            kind text,
+            seed text,
+            start_word text,
+            target_word text,
+            hand text,          -- JSON list of the hand's words
+            throw text,         -- JSON list of {word, sign}
+            rank integer,       -- jack's rank for the suggested throw
+            best_rank integer,  -- the player's best ball that round
+            words text,         -- JSON list of words the player wished they had
+            verdict text,       -- "more fun" / "about the same" / "too easy or odd"
+            note text
+        )"""
+    )
+    return conn
+
+
+class Suggestion(BaseModel):
+    at: Optional[str] = Field(None, max_length=40)
+    client: Optional[str] = Field(None, max_length=40)
+    kind: Optional[str] = Field(None, max_length=20)
+    seed: Optional[str] = Field(None, max_length=120)
+    start: str = Field(..., max_length=40)
+    target: str = Field(..., max_length=40)
+    hand: List[str] = Field(default_factory=list, max_length=20)
+    throw: List[Dict[str, object]] = Field(default_factory=list, max_length=6)
+    rank: Optional[int] = None
+    bestRank: Optional[int] = None
+    words: List[str] = Field(default_factory=list, max_length=6)
+    verdict: Optional[str] = Field(None, max_length=40)
+    note: Optional[str] = Field(None, max_length=500)
+
+
+@app.post("/api/suggestions")
+def save_suggestion(s: Suggestion):
+    key = s.client or "anon"
+    now = time.time()
+    with _feedback_lock:
+        hits = _feedback_hits[key]
+        while hits and now - hits[0] > 3600:
+            hits.popleft()
+        if len(hits) >= FEEDBACK_MAX_PER_HOUR:
+            raise HTTPException(429, "Too many suggestions for now; try again later.")
+        hits.append(now)
+        conn = _feedback_conn()
+        try:
+            conn.execute(
+                "insert into suggestions (received_at, client_at, client_id, kind, seed, start_word, target_word,"
+                " hand, throw, rank, best_rank, words, verdict, note) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                (
+                    time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(now)), s.at, s.client, s.kind, s.seed,
+                    s.start, s.target, json.dumps(s.hand), json.dumps(s.throw), s.rank, s.bestRank,
+                    json.dumps(s.words), s.verdict, s.note,
+                ),
+            )
+            conn.commit()
+        finally:
+            conn.close()
+    return {"ok": True}
+
+
+# -------------------------------
 # The browser game (web/). Mounted last so the API routes above win.
 # -------------------------------
 app.mount("/", StaticFiles(directory=WEB_DIR, html=True), name="web")

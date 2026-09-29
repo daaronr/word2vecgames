@@ -35,6 +35,23 @@ How production is actually set up (checked 2026-09-28):
 - The box has ~4 GB RAM shared with other services; the legacy API loads GloVe
   from `MODEL_PATH` at startup.
 
+### Player suggestions
+
+"Try your own words" suggestions are POSTed to `/api/suggestions` on this server
+and stored in a SQLite file (`FEEDBACK_DB`, default `/opt/word2vecgames/feedback.db`,
+git-ignored, outside `web/` so it is never served). Browse them on the server:
+
+```bash
+sqlite3 /opt/word2vecgames/feedback.db \
+  "select received_at, start_word, target_word, words, verdict, note from suggestions order by id desc limit 20"
+```
+
+Pages served by this server post to the same origin. The GitHub Pages copy is
+HTTPS, and browsers won't let it post to plain `http://…:8000`, so it posts to
+`FEEDBACK_ORIGINS` in `web/app.js` (an HTTPS name for this server). Until that
+name answers, suggestions wait in each player's browser and are retried on
+later visits.
+
 The generic first-time setup guide follows; its names (`wordbocce`, nginx) are
 for a fresh install, not a description of the current server.
 
