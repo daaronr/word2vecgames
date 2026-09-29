@@ -11,6 +11,7 @@
   "use strict";
 
   const MAX_TILES = 3;
+  const HAND_SIZE = 9;
 
   // ---------- seeded randomness ----------
   function hashSeed(str) {
@@ -108,11 +109,16 @@
       return { sim: tsim, rank, near: top.map((t) => t[1]) };
     }
 
-    /** Full scoring of one throw. */
+    /**
+     * Full scoring of one throw. `near` names where the ball stopped; it skips near-copies of the
+     * words thrown ("boats" after throwing "boat"), which say nothing new. The rank still counts them.
+     */
     score(start, target, tiles) {
       const v = this.ball(start, tiles);
-      const s = this.survey(v, target, [start, ...tiles.map((t) => t.word)]);
-      return { ...s, vec: v };
+      const inputs = [start, ...tiles.map((t) => t.word)];
+      const s = this.survey(v, target, inputs, 8);
+      const fresh = s.near.filter((w) => w === target || !inputs.some((x) => related(w, x)));
+      return { ...s, near: (fresh.length ? fresh : s.near).slice(0, 3), vec: v };
     }
 
     /** Every legal throw from a hand (1..maxTiles distinct tiles, each ±), best first. */
@@ -141,9 +147,12 @@
   const related = (a, b) => a.slice(0, 4) === b.slice(0, 4) || a.includes(b) || b.includes(a);
 
   /**
-   * Deal a start word, a jack (target) and a hand of 7 tiles:
-   * two tiles that pull toward the jack, one worth subtracting (it carries the
-   * start word's flavour), two tempting near-misses, and two wildcards.
+   * Deal a start word, a jack (target) and a hand of HAND_SIZE tiles, every one
+   * linked to the jack or the start word (no random filler):
+   *   2 pulls      — point at the jack and not at the start
+   *   2 sheds      — carry the start word's flavour; worth subtracting
+   *   2 lures      — linked to both, so adding them drags the start along
+   *   3 near-misses — look like they point at the jack, but more weakly than the pulls
    */
   function deal(space, pools, seed) {
     const R = rng(seed);
@@ -168,9 +177,11 @@
       scored.push({ w, cs, ct });
     }
     const topBy = (f, k) => [...scored].sort((a, b) => f(b) - f(a)).slice(0, k).map((x) => x.w);
-    const pull = topBy((x) => x.ct - 0.6 * Math.max(0, x.cs), 10);
-    const shed = topBy((x) => x.cs - x.ct, 8);
+    const pull = topBy((x) => x.ct - 0.6 * Math.max(0, x.cs), 12);
+    const shed = topBy((x) => x.cs - x.ct, 10);
     const lure = topBy((x) => x.cs + x.ct, 40);
+    const miss = scored.filter((x) => x.ct >= 0.28 && x.ct < 0.45 && x.cs < 0.3)
+      .sort((a, b) => b.ct - a.ct).slice(0, 60).map((x) => x.w);
 
     const hand = [];
     const take = (list, k) => {
@@ -178,12 +189,11 @@
       hand.push(...pool.slice(0, k));
     };
     take(pull, 2);
-    take(shed, 1);
+    take(shed, 2);
     take(lure, 2);
-    while (hand.length < 7) {
-      const w = R.pick(scored).w;
-      if (!hand.includes(w)) hand.push(w);
-    }
+    take(miss, 3);
+    // Rare thin decks: top up from the linked lists, never from random words.
+    for (const list of [lure, pull, shed]) take(list, HAND_SIZE - hand.length);
     R.shuffle(hand);
     return { start, target: jack, hand };
   }
@@ -244,7 +254,7 @@
     return { space, pools, puzzles };
   }
 
-  const api = { MAX_TILES, rng, hashSeed, Space, deal, courtBasis, tier, load };
+  const api = { MAX_TILES, HAND_SIZE, rng, hashSeed, Space, deal, courtBasis, tier, load };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.Bocce = api;
 })(typeof self !== "undefined" ? self : this);
