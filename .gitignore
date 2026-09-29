@@ -50,3 +50,6 @@ embeddings/
 
 # Local build output
 dist/
+
+# Player suggestions collected by the server (private)
+feedback.db

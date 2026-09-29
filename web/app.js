@@ -858,6 +858,43 @@
   // Any in-vocabulary words, not just the hand. Suggestions are saved with the court they belong
   // to, so the deal logic and the puzzles can be tuned from what players wished they'd had.
   const SUGGEST_KEY = "suggestions";
+  // Where suggestions are sent: the game server's /api/suggestions. When the page is served by that
+  // server (the Linode, port 8000) it's the same origin; from GitHub Pages it must be an HTTPS address.
+  // Until one answers, suggestions wait in this browser and are retried on later visits.
+  const FEEDBACK_ORIGINS = { "daaronr.github.io": "https://45-79-160-157.sslip.io" };
+  const feedbackURL = () => {
+    if (window.WORD_BOCCE_API !== undefined) return window.WORD_BOCCE_API && window.WORD_BOCCE_API + "/api/suggestions";
+    if (location.port === "8000" || location.hostname.endsWith("sslip.io")) return "/api/suggestions";
+    return FEEDBACK_ORIGINS[location.hostname] ? FEEDBACK_ORIGINS[location.hostname] + "/api/suggestions" : null;
+  };
+  function clientId() {
+    let id = store.get("clientId", "");
+    if (!id) { id = Math.random().toString(36).slice(2, 12); store.set("clientId", id); }
+    return id;
+  }
+  let flushing = false;
+  /** Send any suggestions not yet delivered. Returns true if all are delivered. */
+  async function flushSuggestions() {
+    const url = feedbackURL();
+    if (!url || flushing) return false;
+    flushing = true;
+    try {
+      const list = store.get(SUGGEST_KEY, []);
+      for (const sg of list) {
+        if (sg.sent) continue;
+        const ctl = new AbortController();
+        const timer = setTimeout(() => ctl.abort(), 8000);
+        try {
+          const r = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...sg, client: clientId() }), signal: ctl.signal });
+          if (r.ok || r.status === 422) sg.sent = true; // 422: malformed, never going to succeed
+          else break;
+        } catch (e) { break; } finally { clearTimeout(timer); }
+      }
+      store.set(SUGGEST_KEY, list);
+      return list.every((sg) => sg.sent);
+    } finally { flushing = false; }
+  }
   function parseThrow(text) {
     const tiles = [];
     const re = /([+\-−–])?\s*([a-z][a-z'-]*)/gi;
@@ -901,23 +938,35 @@
       const outside = w.tiles.filter((t) => !end.hand.includes(t.word)).map((t) => t.word);
       if (outside.length && !end.whatIfSaved) {
         box.append(h("p", {}, `Would having ${outside.map(q).join(" and ")} among the words have made this court more fun?`),
+          h("label", { class: "sr", for: "whatIfNote" }, "Note (optional)"),
+          h("input", { id: "whatIfNote", class: "note", "data-key": "whatif-note", maxlength: 300, autocomplete: "off",
+            placeholder: "Anything else? (optional)" }),
           h("div", { class: "row" },
             h("button", { class: "ghost", type: "button", "data-key": "fun-yes", onclick: () => saveSuggestion(end, outside, "more fun") }, "Yes, more fun"),
             h("button", { class: "ghost", type: "button", "data-key": "fun-same", onclick: () => saveSuggestion(end, outside, "about the same") }, "About the same"),
             h("button", { class: "ghost", type: "button", "data-key": "fun-no", onclick: () => saveSuggestion(end, outside, "too easy or odd") }, "No: too easy, or odd")));
       }
-      if (end.whatIfSaved) box.append(h("p", { class: "hint" }, `Thanks, noted. You've suggested ${store.get(SUGGEST_KEY, []).length} word change${store.get(SUGGEST_KEY, []).length === 1 ? "" : "s"} so far. They're kept on this device for now.`));
+      if (end.whatIfSaved) {
+        box.append(h("p", { class: "hint" }, end.whatIfSaved === "sent"
+          ? "Thanks, sent. Suggestions like this are used to improve the word lists."
+          : end.whatIfSaved === "sending" ? "Thanks, sending…"
+          : "Thanks, noted. It's saved on this device and will be sent next time the game can reach its server."));
+      }
     }
     return box;
   }
-  function saveSuggestion(end, words, verdict) {
+  async function saveSuggestion(end, words, verdict) {
     const w = end.whatIf;
+    const note = (($("#whatIfNote") || {}).value || "").trim().slice(0, 300);
     const list = store.get(SUGGEST_KEY, []);
     list.push({ at: new Date().toISOString(), kind: end.kind, seed: end.seed, start: end.start, target: end.target, hand: end.hand,
-      throw: w.tiles, rank: w.rank, bestRank: (bestBall(end) || {}).rank || null, words, verdict });
-    store.set(SUGGEST_KEY, list.slice(-200));
-    end.whatIfSaved = true;
+      throw: w.tiles, rank: w.rank, bestRank: (bestBall(end) || {}).rank || null, words, verdict, note, sent: false });
+    // Keep at most 200, dropping delivered ones first.
+    while (list.length > 200) list.splice(Math.max(0, list.findIndex((sg) => sg.sent)), 1);
+    store.set(SUGGEST_KEY, list);
+    end.whatIfSaved = feedbackURL() ? "sending" : "kept";
     render();
+    if (end.whatIfSaved === "sending") { end.whatIfSaved = (await flushSuggestions()) ? "sent" : "kept"; render(); }
   }
 
   // ---------- actions ----------
@@ -1396,6 +1445,7 @@
       return;
     }
     $("#tagline").textContent = `played on a court of ${G.space.n.toLocaleString()} words`;
+    flushSuggestions(); // deliver any suggestions left over from earlier visits
     const want = (location.hash || "").slice(1);
     // A room link (#room=CODE) goes straight to the join screen.
     const room = want.match(/^room=([A-Za-z0-9]+)/);
