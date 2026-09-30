@@ -1442,9 +1442,21 @@ def save_suggestion(s: Suggestion):
 
 
 # -------------------------------
-# The browser game (web/). Mounted last so the API routes above win.
+# The browser game (web/). Last, so the API routes above win.
+# With GAME_URL set (production, see DEPLOY.md) the game isn't served here at all: every other
+# page redirects to the one published copy (GitHub Pages), so there's a single version around.
+# This server then only provides the API, /classic and /api/suggestions.
 # -------------------------------
-app.mount("/", StaticFiles(directory=WEB_DIR, html=True), name="web")
+from fastapi import Request  # noqa: E402
+
+GAME_URL = os.environ.get("GAME_URL", "").rstrip("/")
+if GAME_URL:
+    @app.get("/{path:path}", include_in_schema=False)
+    def to_published_game(path: str, request: Request):
+        query = f"?{request.url.query}" if request.url.query else ""
+        return RedirectResponse(f"{GAME_URL}/{path}{query}", status_code=302)  # 302: easy to undo later
+else:
+    app.mount("/", StaticFiles(directory=WEB_DIR, html=True), name="web")
 
 
 # -------------------------------

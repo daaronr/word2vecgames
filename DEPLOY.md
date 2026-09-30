@@ -1,18 +1,27 @@
 # Deploying Word Bocce
 
-## Option A: static hosting (simplest)
+## The game: GitHub Pages (the one published copy)
 
-The game in `web/` is plain HTML/JS/CSS plus a 4 MB vector bundle. Any static
-host works: GitHub Pages, Netlify, Cloudflare Pages, S3, or
-`python -m http.server` inside `web/`. No Python server, no embeddings download.
+The game in `web/` is plain HTML/JS/CSS plus the word bundles (a few MB). It is
+published at **https://daaronr.github.io/word2vecgames/**, redeployed from `web/`
+on every push to main (`.github/workflows/pages.yml`). Any static host would do;
+locally, `python -m http.server` inside `web/`.
 
-GitHub Pages is set up: https://daaronr.github.io/word2vecgames/ redeploys from
-`web/` on every push to main (`.github/workflows/pages.yml`).
+## The Linode server: API only (http://45.79.160.157:8000, https://45-79-160-157.sslip.io)
 
-## Option B: the Linode server (current production, http://45.79.160.157:8000)
+Since 2026-09-30 the Linode does **not** serve its own copy of the game: with
+`GAME_URL` set, every game page redirects (302) to GitHub Pages, so there is one
+version around. It still provides `/api/suggestions`, the older server-side API,
+and the legacy multiplayer lobby at `/classic`. `GAME_URL` is set in a systemd
+drop-in, `/etc/systemd/system/word-bocce.service.d/game-url.conf`:
 
-The FastAPI server serves `web/` at `/` and keeps the older server-side API
-(online multiplayer lobby at `/classic`). To update an existing install:
+```ini
+[Service]
+Environment=GAME_URL=https://daaronr.github.io/word2vecgames
+```
+
+Without `GAME_URL` (e.g. running `uvicorn` on your laptop) the server serves
+`web/` itself. To update the server:
 
 ```bash
 ssh root@45.79.160.157
@@ -33,7 +42,7 @@ How production is actually set up (checked 2026-09-28):
   2026-09-29: **https://45-79-160-157.sslip.io** (`/etc/nginx/sites-available/wordbocce-sslip`)
   proxies to :8000. sslip.io turns the IP into a hostname so it can have a
   Let's Encrypt certificate (certbot renews it with the others). It exists so
-  the HTTPS GitHub Pages copy can post suggestions; it also serves the game.
+  the HTTPS GitHub Pages copy can post suggestions.
 - System Python (`/usr/local/bin/uvicorn`), no venv. pip refuses to install into
   it (PEP 668), so new dependencies have to be added by hand.
 - The box has ~4 GB RAM shared with other services; the legacy API loads GloVe
