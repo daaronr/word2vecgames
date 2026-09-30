@@ -355,3 +355,21 @@ dialog::backdrop { background: rgba(10, 20, 16, .55); }
 .wordset button { align-self: flex-start; border: 0; border-radius: 9px; padding: 8px 14px; font-weight: 700; background: var(--board); color: var(--chalk); }
 .wordset button:disabled { background: transparent; color: var(--ink-soft); border: 1px solid var(--line); cursor: default; }
 #words .row { display: flex; justify-content: space-between; }
+
+/* ---------- "why did that happen?" and the interpretability note ---------- */
+.linkish.why { font-size: 13px; font-weight: 700; }
+#why .row, #interp .row { display: flex; justify-content: space-between; }
+#why h3 { margin: 6px 0 0; font-size: 15px; }
+#why p, #interp p { margin: 0; }
+.why-eq b { font-family: var(--mono); font-weight: 500; }
+.why-parts, .why-notes, #interp ul { margin: 0; padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 14.5px; }
+.why-notes, #interp ul { padding-left: 1.1em; list-style: disc; }
+.why-parts li { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 10px; align-items: start; }
+.why-bar { display: block; height: 10px; margin-top: 5px; border-radius: 99px; background: var(--wall-2); overflow: hidden; }
+.why-bar i { display: block; height: 100%; border-radius: inherit; }
+.why-bar i.pos { background: var(--plus); }
+.why-bar i.neg { background: var(--minus); }
+.why-caveat { border-left: 3px solid var(--jack); padding: 8px 12px; background: color-mix(in srgb, var(--jack) 12%, var(--panel));
+  border-radius: 0 8px 8px 0; display: flex; flex-direction: column; gap: 6px; font-size: 14px; }
+#interp li { line-height: 1.45; }
+#interp a, #why a { color: var(--blue); }
