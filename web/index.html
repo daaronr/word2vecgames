@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@400;500&display=swap">
 <!-- bump ?v= when these files change, so browsers don't pair new HTML with cached old scripts -->
-<link rel="stylesheet" href="style.css?v=7">
+<link rel="stylesheet" href="style.css?v=9">
 </head>
 <body>
 <div class="app">
@@ -57,6 +57,11 @@
       <p>You can choose which map the game uses: <button class="linkish" id="helpWords" type="button">common sense, or raw text</button>.</p>
     </details>
     <details>
+      <summary>Why don't throws always make sense?</summary>
+      <p>After any throw, tap <b>Why?</b> for a reading of what each word did. It's a best guess:
+        <button class="linkish" type="button" data-open-interp>why the game can't fully explain itself</button>.</p>
+    </details>
+    <details>
       <summary>Versus rules</summary>
       <p>Real bocce rules: whoever is <i>farther</i> from the jack throws next. When both sides are out of balls, the closer side scores a point for each of its balls that beats the other side's best.</p>
     </details>
@@ -78,7 +83,7 @@
     </section>
     <section class="wordset" data-wordset="text">
       <h3>Raw text</h3>
-      <p>Learned only from which words appear together in billions of words of Wikipedia and news. This is the classic "word embedding" (GloVe) behind the famous king − man + woman ≈ queen. Nobody told it any facts, so it can surprise you: "ham" sits among football clubs (West Ham), and "eggs" sits nearer "meat" than "bacon", because that's how the news writes about them. Try it if you're curious how a machine that only reads text arranges words.</p>
+      <p>Learned only from which words appear together in billions of words of Wikipedia and news. This is the classic "word embedding" (GloVe) behind the famous king − man + woman ≈ queen. Nobody told it any facts, so it can surprise you: "ham" sits among football clubs (West Ham), and "eggs" sits nearer "meat" than "bacon", because that's how the news writes about them. Try it if you're curious how a machine that only reads text arranges words. (<button class="linkish" type="button" data-open-interp>Why is that so hard to explain?</button>)</p>
       <button type="button">Use raw-text words</button>
     </section>
     <p class="hint" id="wordsNote" role="status"></p>
@@ -87,9 +92,34 @@
   </div>
 </dialog>
 
-<script src="engine.js?v=7"></script>
-<script src="net.js?v=7"></script>
-<script src="app.js?v=7"></script>
+<dialog id="why" aria-labelledby="whyTitle">
+  <div class="help">
+    <h2 id="whyTitle">Why did that happen?</h2>
+    <div id="whyBody"></div>
+    <div class="row"><span></span><button class="ghost" id="whyClose" type="button">Close</button></div>
+  </div>
+</dialog>
+
+<dialog id="interp" aria-labelledby="interpTitle">
+  <div class="help">
+    <h2 id="interpTitle">Why the game can't fully explain itself</h2>
+    <p>The "Why?" notes are our best reading of the numbers, not the real reasons. A few things make this hard:</p>
+    <ul>
+      <li><b>Meaning is spread across hundreds of numbers.</b> Each word's position is a list of 100–300 numbers learned from data. No single number means "food" or "meat"; every number carries a bit of everything.</li>
+      <li><b>We can measure closeness exactly, but not why.</b> Two words end up close because of patterns in what the model learned from. Some patterns are ones people wouldn't expect: surnames (Bacon), sports clubs (West Ham), or which things news stories happen to mention together.</li>
+      <li><b>One position holds every meaning of a word.</b> "Bacon" is a food and a surname; "ham" is a meat and a football club. Subtracting one sense can leave a stranger one behind.</li>
+      <li><b>Language isn't tidy either.</b> Bacon and eggs go together at breakfast, but eggs also belong with nests, hens and farm produce. People disagree about what's "close" too.</li>
+      <li><b>Famous examples are the tidy ones.</b> "king − man + woman ≈ queen" works, but many analogies like it don't, and some published ones were helped along by quietly ruling out the obvious answer (<a href="https://aclanthology.org/2020.cl-2.7/" target="_blank" rel="noopener">Nissim, van Noord &amp; van der Goot, 2020</a>).</li>
+    </ul>
+    <p>Modern AI systems, including chatbots, are built from learned numbers like these at a vastly larger scale. Working out what they represent and why they behave as they do is called <b>interpretability</b>. It's an open research problem: researchers can now find some meaningful features inside models, but nobody can fully explain a large one.</p>
+    <p class="hint">Further reading: <a href="https://www.anthropic.com/research/mapping-mind-language-model" target="_blank" rel="noopener">Mapping the mind of a large language model</a> (Anthropic, 2024) · <a href="https://distill.pub/2020/circuits/zoom-in/" target="_blank" rel="noopener">Zoom In: an introduction to circuits</a> (Olah et al., Distill, 2020).</p>
+    <div class="row"><span></span><button class="ghost" id="interpClose" type="button">Close</button></div>
+  </div>
+</dialog>
+
+<script src="engine.js?v=9"></script>
+<script src="net.js?v=9"></script>
+<script src="app.js?v=9"></script>
 <script src="https://hypothes.is/embed.js" async></script>
 </body>
 </html>

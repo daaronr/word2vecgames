@@ -53,6 +53,14 @@ set.
   Up to six players. Browsers connect directly (WebRTC via the free PeerJS
   broker, `web/net.js`); the host's tab is the room, and nothing is stored.
 
+After every throw, **Why?** opens a reading of what each word did: each word's
+exact share of the ball's similarity to the jack (`Space.explainThrow`), the
+words crowding the jack before and after, and plain notes on the things that
+tend to confuse people (subtracting a word that is itself close to the jack,
+similarity rising while rank falls, landing somewhere none of the words point
+to). It always says this is a reading of the numbers, not the model's reasons,
+and links to a short explainer on why interpretability is hard.
+
 After every round you see par (the best throw the hand allowed), a few nearby
 words placed on the court, and a "try your own words" box: type any throw to
 see where it would have landed and say whether those words would have made the

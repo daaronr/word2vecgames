@@ -15,6 +15,11 @@ const r = space.score("king", "queen", [{ word: "man", sign: -1 }, { word: "woma
 assert.strictEqual(r.rank, 1, `king-man+woman: queen rank ${r.rank}`);
 assert.strictEqual(r.near[0], "queen");
 
+// explainThrow: the per-word shares add up exactly to the ball's similarity to the jack.
+const ex = space.explainThrow("king", "queen", [{ word: "man", sign: -1 }, { word: "woman", sign: 1 }]);
+assert(Math.abs(ex.sim - r.sim) < 1e-4, `explainThrow sum ${ex.sim} vs ${r.sim}`);
+assert.strictEqual(ex.parts.length, 3);
+
 // Ball vectors are unit length.
 const n = Math.hypot(...r.vec);
 assert(Math.abs(n - 1) < 1e-5, "ball not normalised");

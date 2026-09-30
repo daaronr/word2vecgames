@@ -121,6 +121,29 @@
       return { ...s, near: (fresh.length ? fresh : s.near).slice(0, 3), vec: v };
     }
 
+    /**
+     * Break a throw's similarity to the jack into one share per word. Because
+     *   cos(ball, jack) = Σ sign·cos(word, jack) / |Σ sign·v(word)|
+     * the shares ("push") add up exactly to the ball's similarity. The start word counts as a +1 word.
+     * This is exact arithmetic; *why* two words sit close is not something the numbers tell us.
+     */
+    explainThrow(start, target, tiles) {
+      const words = [{ word: start, sign: 1, isStart: true }, ...tiles];
+      const v = new Float32Array(this.dim);
+      for (const w of words) {
+        const r = this.row(w.word);
+        for (let k = 0; k < this.dim; k++) v[k] += w.sign * r[k];
+      }
+      let ss = 0;
+      for (let k = 0; k < this.dim; k++) ss += v[k] * v[k];
+      const norm = Math.sqrt(ss) || 1;
+      const parts = words.map((w) => {
+        const toJack = this.sim(w.word, target), toStart = w.isStart ? 1 : this.sim(w.word, start);
+        return { ...w, toJack, toStart, push: (w.sign * toJack) / norm };
+      });
+      return { parts, norm, sim: parts.reduce((a, p) => a + p.push, 0) };
+    }
+
     /** Every legal throw from a hand (1..maxTiles distinct tiles, each ±), best first. */
     allThrows(start, target, hand, maxTiles = MAX_TILES) {
       const words = hand.filter((w) => this.has(w));

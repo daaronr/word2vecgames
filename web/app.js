@@ -744,8 +744,10 @@
         end.kind === "puzzle" && h("button", { class: "ghost", type: "button", "data-key": "back",
           onclick: () => { ends.puzzle = null; render(); } }, "All puzzles")));
       if (!tut) {
+        const why = statusMsg.why && end.balls.includes(statusMsg.why) ? statusMsg.why : null;
         play.append(h("div", { class: `status ${statusMsg.warn ? "warn" : ""}`, role: "status" },
-          end.kind === "puzzle" && end.showHint && !statusMsg.text ? "Hint: " + end.puzzle.hint : statusMsg.text));
+          end.kind === "puzzle" && end.showHint && !statusMsg.text ? "Hint: " + end.puzzle.hint : statusMsg.text,
+          why && " ", why && whyButton(end, why, readThrow(end, why).surprising ? "That one's surprising. Why?" : "Why?")));
       }
 
       // hand
@@ -817,12 +819,83 @@
         h("span", { class: `ballmark ${b.side}`, "aria-hidden": "true" }, String(b.n)),
         h("span", { class: "eq" }, who && h("b", { class: "who" }, who),
           hidden ? h("span", { class: "near" }, "words hidden until the round ends ") : eqText(end.start, b.tiles) + " ",
-          h("span", { class: "near" }, "→ by ", h("b", {}, b.near[0]))),
+          h("span", { class: "near" }, "→ by ", h("b", {}, b.near[0])),
+          !hidden && " ", !hidden && whyButton(end, b, "why?")),
         h("span", { class: "score" }, h("b", {}, `#${b.rank.toLocaleString()}`),
           h("small", { class: "tierlabel", "data-tip": TIPS.tiers, tabindex: "0" }, t.label),
           h("small", { class: "sim", "data-tip": TIPS.similarity, tabindex: "0" }, `similarity ${fmt(b.sim)}`))));
     }
     return ol;
+  }
+
+  // ---------- "why did that happen?" ----------
+  // A reading of one throw. The per-word shares are exact arithmetic (Space.explainThrow); the
+  // plain-language reasons are guesses from those numbers, and the dialog says so. Notes flag the
+  // things that tend to confuse people; "strong" ones make the throw count as surprising.
+  function readThrow(end, ball) {
+    if (ball._read) return ball._read;
+    const sp = G.space, S = end.start, J = end.target;
+    const ex = sp.explainThrow(S, J, ball.tiles);
+    const notes = [];
+    const lines = ex.parts.map((p) => {
+      const nm = p.isStart ? q(p.word) : `${signChar(p.sign)} ${p.word}`, tj = fmt(p.toJack);
+      if (p.isStart) {
+        return `Your start word ${q(S)} already shares ${p.toJack >= 0.5 ? "a lot" : p.toJack >= 0.25 ? "something" : "little"} with ${q(J)} (similarity ${tj}).`;
+      }
+      if (p.sign > 0) {
+        if (p.toJack >= 0.35) return `${nm} pulled toward ${q(J)}: the two are close on this map (${tj}).`;
+        if (p.toJack >= 0.15) return `${nm} pulled only a little toward ${q(J)}: they're loosely linked (${tj}).`;
+        notes.push({ text: `${q(p.word)} has almost nothing to do with ${q(J)} on this map (${tj}), so adding it mostly dragged the ball toward ${q(p.word)}'s own neighbourhood.` });
+        return `${nm} hardly points at ${q(J)} (${tj}); it mostly pulled the ball toward its own neighbourhood.`;
+      }
+      // Subtracting a word takes away everything it shares with the jack too, so what matters is its
+      // link to the jack, not whether it "feels" like a feature of the start word.
+      if (p.toJack >= 0.3 || (p.toJack >= p.toStart && p.toJack > 0.15)) {
+        notes.push({ strong: true, text: `Taking away ${q(p.word)} also took away a lot of ${q(J)}: on this map ${q(p.word)} is close to ${q(J)} (${tj}) as well as to ${q(S)} (${fmt(p.toStart)}). It's natural to picture subtraction as removing one feature, but it removes everything the two words have in common, including the link you wanted to keep.` });
+        return `${nm} pushed you away from ${q(J)}: ${p.word} is itself close to ${J} (${tj}), so subtracting it removed much of what ${S} and ${J} share.`;
+      }
+      if (p.toJack <= 0.1) return `${nm} cost almost nothing (${p.word} and ${J} are barely linked, ${tj}) and moved the ball away from ${p.word}-related words.`;
+      return `${nm} moved the ball away from the ${p.word}-related side of ${q(S)} (${fmt(p.toStart)}), at a small cost: ${p.word} is somewhat linked to ${J} (${tj}).`;
+    });
+    if (ball.rank > end.startRank && ball.sim > end.startSim + 0.01) {
+      notes.push({ strong: true, text: `Similarity to ${q(J)} went up (${fmt(end.startSim)} → ${fmt(ball.sim)}), yet its rank got worse: other words (${ball.near.slice(0, 2).map(q).join(", ")}) got even closer. Rank counts how many words beat the jack, not just how close it is.` });
+    }
+    const landing = ball.near[0];
+    const links = [S, J, ...ball.tiles.map((t) => t.word)].filter((w) => sp.has(w)).map((w) => sp.sim(landing, w));
+    if (landing !== J && Math.max(...links) < 0.2) {
+      notes.push({ strong: true, text: `The ball landed near ${q(landing)}, which isn't close to any of your words or to the jack. When words partly cancel each other out, what's left can be a weaker, stranger meaning. (On the raw-text map, "bacon" minus "meat" leaves Bacon the surname.)` });
+    }
+    if (!end._startNear) end._startNear = sp.survey(sp.row(S), J, [S], 4).near.filter((w) => w !== J).slice(0, 3);
+    ball._read = { ex, lines, notes, surprising: notes.some((n) => n.strong) || ball.rank > end.startRank, startNear: end._startNear };
+    return ball._read;
+  }
+  function whyButton(end, ball, label) {
+    return h("button", { class: "linkish why", type: "button", onclick: (e) => { e.stopPropagation(); openWhy(end, ball); } }, label);
+  }
+  function openWhy(end, ball) {
+    const r = readThrow(end, ball), J = end.target;
+    const maxPush = Math.max(...r.ex.parts.map((p) => Math.abs(p.push)), 0.01);
+    const body = $("#whyBody");
+    body.replaceChildren(...[
+      h("p", { class: "why-eq" }, h("b", {}, eqText(end.start, ball.tiles)), ` → stopped near ${q(ball.near[0])}`),
+      h("p", {}, ball.rank === 1 ? `${q(J)} is the nearest word to where the ball stopped: a bacio.`
+        : `${q(J)} is the ${ordinal(ball.rank)} nearest word to where it stopped. It was ${ordinal(end.startRank)} at the start.`),
+      h("h3", {}, "What each word did"),
+      h("ul", { class: "why-parts" }, r.ex.parts.map((p, i) => h("li", {},
+        h("span", { class: "why-bar", "aria-hidden": "true" },
+          h("i", { class: p.push >= 0 ? "pos" : "neg", style: `width:${Math.round((Math.abs(p.push) / maxPush) * 100)}%` })),
+        h("span", {}, r.lines[i])))),
+      h("p", { class: "hint" }, `The bars are each word's share of the ball's similarity to ${q(J)} (${fmt(r.ex.sim)}); they add up exactly. That part is plain arithmetic.`),
+      h("h3", {}, "Who's crowding the jack"),
+      h("p", {}, `Nearest words to your start word: ${r.startNear.map(q).join(", ")}. Nearest to where the ball stopped: ${ball.near.map(q).join(", ")}.`),
+      r.notes.length ? h("h3", {}, "What might be surprising") : null,
+      r.notes.length ? h("ul", { class: "why-notes" }, r.notes.map((n) => h("li", {}, n.text))) : null,
+      h("div", { class: "why-caveat" },
+        h("p", {}, h("b", {}, "This is our reading of the numbers, not the model's actual reasons. "),
+          "The game can measure exactly how close two words are. Why they ended up close is a guess: nobody can fully explain what a model like this has learned."),
+        h("button", { class: "linkish", type: "button", onclick: () => { $("#why").close(); $("#interp").showModal(); } },
+          "Why can't it explain itself?"))].filter(Boolean));
+    $("#why").showModal();
   }
 
   function renderTutorialEnd(end) {
@@ -1078,7 +1151,7 @@
     statusMsg = { text: ball.rank === 1
       ? `Bacio! Ball ${ball.n} stopped right by ${q(end.target)}: it's the nearest word to the ball.`
       : `${verdict} Ball ${ball.n} stopped near ${q(ball.near[0])}. ${q(end.target)} is the ${ordinal(ball.rank)} nearest word to it` +
-        (mine.length ? ` (${end.kind === "versus" ? vs.names[side] + "'s" : "your"} best so far was ${ordinal(before)}).` : ` (it was ${ordinal(end.startRank)} at the start).`), warn: false };
+        (mine.length ? ` (${end.kind === "versus" ? vs.names[side] + "'s" : "your"} best so far was ${ordinal(before)}).` : ` (it was ${ordinal(end.startRank)} at the start).`), warn: false, why: ball };
     if (end.kind === "tutorial") statusMsg = { text: "", warn: false };
     if (end.kind === "party") {
       // Other players' throws that arrived while this ball was rolling.
@@ -1537,6 +1610,11 @@
     $("#wordsBtn").addEventListener("click", openWords);
     $("#helpWords").addEventListener("click", () => { dlg.close(); openWords(); });
     $("#wordsClose").addEventListener("click", () => wordsDlg.close());
+    $("#whyClose").addEventListener("click", () => $("#why").close());
+    $("#interpClose").addEventListener("click", () => $("#interp").close());
+    for (const el of document.querySelectorAll("[data-open-interp]")) {
+      el.addEventListener("click", () => { for (const d of document.querySelectorAll("dialog[open]")) d.close(); $("#interp").showModal(); });
+    }
     for (const el of document.querySelectorAll("[data-wordset] button")) {
       el.addEventListener("click", () => switchWordSet(el.closest("[data-wordset]").dataset.wordset));
     }
