@@ -1563,7 +1563,7 @@
     for (const el of document.querySelectorAll("[data-wordset]")) {
       const on = el.dataset.wordset === wordSet;
       el.classList.toggle("current", on);
-      const btn = el.querySelector("button");
+      const btn = el.querySelector(":scope > button"); // not the "why?" link inside its paragraph
       btn.disabled = on;
       btn.textContent = on ? "In use" : `Use ${WORD_SETS[el.dataset.wordset].name.toLowerCase()} words`;
     }
@@ -1618,7 +1618,7 @@
     for (const el of document.querySelectorAll("[data-open-interp]")) {
       el.addEventListener("click", () => { for (const d of document.querySelectorAll("dialog[open]")) d.close(); $("#interp").showModal(); });
     }
-    for (const el of document.querySelectorAll("[data-wordset] button")) {
+    for (const el of document.querySelectorAll("[data-wordset] > button")) {
       el.addEventListener("click", () => switchWordSet(el.closest("[data-wordset]").dataset.wordset));
     }
     const wanted = store.get("wordSet", "sense");
