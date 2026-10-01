@@ -48,51 +48,44 @@ static-hostable with no new runtime services.
 - **AI terms in the tips**: rank, similarity and "where it landed" now say
   what each is called in AI and where a chatbot does the same thing.
 
-## Next: an "AI tokens" map (the token court)
+## Built: the "AI tokens" map (the token court)
 
-The fullest version of "Word Bocce with tokens" is a third map, next to
-common sense and raw text, built from a language model's own token table:
-GPT-2's input embeddings (50,257 tokens × 768 numbers, MIT licence).
+A third map in the Words dialog, next to common sense and raw text, built
+from a language model's own token table: GPT-2's input embeddings (50,257
+tokens × 768 numbers). `tools/build_token_data.py` fetches just that tensor
+from Hugging Face (`openai-community/gpt2`, about 150 MB by HTTP range
+request), drops tokens that make bad labels (pieces of characters, control
+characters, blocklisted words), mean-centres the rest (GPT-2's rows share one
+large common direction that swamps cosine similarity), keeps 128 dimensions
+(PCA) and quantises to int8: 49,745 tokens, 6.4 MB, the size of the
+common-sense bundle. At 128 dimensions a token's 10 nearest neighbours are
+about 71% the same as with all 768 (75% at 160, 83% at 256).
 
-Why it's worth it:
+What it shows:
 
-- The court's neighbours would be tokens: ␣shoe, ␣Shoe, Shoe, ␣shoes,
-  fragments like "ville", and glitch tokens near the middle. That shows
-  directly that a model starts out with separate numbers for "shoe" and
-  "Shoe" and has to learn they're related.
-- GPT-2 uses the *same* table to score its next token (tied embeddings), so
-  the court's rank would be, quite literally, the model's last step without
-  the layers in between. The Tokens tab's step 4 would stop being a toy.
-- The Tokens tab's IDs would match the court's tokens exactly.
+- Neighbours are tokens: ␣shoe sits with ␣shoes, ␣Shoes, ␣sneakers, ␣Nike and
+  fragments like ␣sho; ␣bank with ␣Bank, bank, ␣banking. A model starts out
+  with separate numbers for "shoe" and "Shoe" and has to learn they belong
+  together. ␣SolidGoldMagikarp's neighbours are other glitch tokens.
+- It's a better map than expected: king − man + woman lands on ␣queen (1st),
+  and test deals reach rank 1 from a start around 2,000th.
+- GPT-2 scores its next token against this same table (tied embeddings), so
+  the court's rank is a simplified version of the model's last step: same
+  table, cosine on cut-down rows, no layers in between.
 
-Plan:
+Details: `WORD_SETS.tokens` in `app.js` (Daily seed `daily-tokens-`, tutorial
+farmer + fish − farm → fisherman, `explain` 0.3, typed words map to their
+mid-sentence token through `keyOf`), pools are the two word sets' familiar
+words that are a single GPT-2 token after a space, and 25 of the 60 puzzles
+carry `retired_tokens` (five use words GPT-2 splits, such as "rhinestone").
+`engine.js`'s `related()` ignores the ␣ and case, so a ball doesn't "land
+near" a copy of a thrown token. `tests/engine.test.js` checks the tutorial,
+deals and puzzles as for the other maps. The "Show as AI tokens" switch is
+hidden on this map, since its tiles are already tokens.
 
-1. `tools/build_token_data.py`: read `wte` from GPT-2 small
-   (`openai-community/gpt2`, `model.safetensors`, on Hugging Face), mean-centre
-   it (GPT-2's embeddings share one large common direction that swamps
-   cosine similarity), reduce to about 128 dimensions with PCA, and quantise
-   to int8: about 6.4 MB for all 50,257 rows, the size of the common-sense
-   bundle. Keep rows in token-ID order; write labels with `Tokenizer.label`.
-   Check how much the reduction changes each token's nearest neighbours
-   before settling the dimension count.
-2. Pools: the jacks and cards from `web/data/pools.json` that are a single
-   GPT-2 token with a space in front (about 95% of jacks are; `tests/tokens.test.js`
-   checks it stays above 80%).
-3. A `WORD_SETS.tokens` entry in `app.js`: its own Daily seed, tutorial
-   example (search for one the way the others were found), `explain`
-   threshold tuned on the data, and a `retired_tokens` field in
-   `puzzles.json` after auditing the puzzles (or hide Puzzles for this map).
-4. Extend `tests/engine.test.js` to the third set, as for the other two.
-
-Not done here because this session's network policy blocks Hugging Face.
-Running step 1 on a machine with normal internet access (or allowing
-`huggingface.co` for the cloud environment) unblocks the rest.
-
-Expect a rougher map than the two word maps: a model's first layer isn't
-trained to be a good map on its own, analogies work less often, and
-neighbours are crowded with case and spacing variants. That roughness is part
-of the lesson, but the deal thresholds will need tuning so courts stay
-playable.
+Rough edges: many court labels are case or spacing variants, some jacks are
+abstract (the pools come from the word maps), and the game's wording still
+says "word" in places where this map means "token".
 
 ## Further ideas, roughly in order of value for effort
 

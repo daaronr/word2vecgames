@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@400;500&display=swap">
 <!-- bump ?v= when these files change, so browsers don't pair new HTML with cached old scripts -->
-<link rel="stylesheet" href="style.css?v=10">
+<link rel="stylesheet" href="style.css?v=11">
 <!-- discoverability tags added by seo_kit.py -->
 <meta name="twitter:card" content="summary">
 </head>
@@ -63,7 +63,7 @@
     <details>
       <summary>Why does adding words work?</summary>
       <p>The game stores each word as a long list of numbers: its position on a map of meaning. Words with similar meanings get similar lists. A throw adds and subtracts those lists, so the ball moves through meaning.</p>
-      <p>You can choose which map the game uses: <button class="linkish" id="helpWords" type="button">common sense, or raw text</button>.</p>
+      <p>You can choose which map the game uses: <button class="linkish" id="helpWords" type="button">common sense, raw text, or a real AI's tokens</button>.</p>
     </details>
     <details>
       <summary>What does this have to do with chatbots?</summary>
@@ -87,7 +87,7 @@
 
 <dialog id="words" aria-labelledby="wordsTitle">
   <div class="help">
-    <h2 id="wordsTitle">Two maps of meaning</h2>
+    <h2 id="wordsTitle">Three maps of meaning</h2>
     <p>Every word in the game has a position on a map of meaning: a long list of numbers. Words with nearby positions count as close. You can choose where those positions come from.</p>
     <section class="wordset" data-wordset="sense">
       <h3>Common sense</h3>
@@ -99,9 +99,14 @@
       <p>Learned only from which words appear together in billions of words of Wikipedia and news. This is the classic "word embedding" (GloVe) behind the famous king − man + woman ≈ queen. Nobody told it any facts, so it can surprise you: "ham" sits among football clubs (West Ham), and "eggs" sits nearer "meat" than "bacon", because that's how the news writes about them. Try it if you're curious how a machine that only reads text arranges words. (<button class="linkish" type="button" data-open-interp>Why is that so hard to explain?</button>)</p>
       <button type="button">Use raw-text words</button>
     </section>
+    <section class="wordset" data-wordset="tokens">
+      <h3>AI tokens</h3>
+      <p>The table of numbers inside a real language model: GPT-2 (OpenAI, 2019), an early ancestor of today's chatbots. Its entries are about 50,000 <b>tokens</b>, not words. “␣shoe” (with the space in front, as in the middle of a sentence), “Shoe” and “␣shoes” are separate entries, and so are pieces of words, so a ball often lands next to a near-copy of a word. Chatbots look up numbers like these for every token you type, before anything else happens. (<button class="linkish" type="button" data-go-tokens>What's a token?</button>)</p>
+      <button type="button">Use AI tokens</button>
+    </section>
     <p class="hint" id="wordsNote" role="status"></p>
     <p class="hint">Each has its own Daily. In an online room, the host's choice applies to everyone.</p>
-    <p class="hint">Chatbots read neither: they read tokens, pieces of words with a vector each. <button class="linkish" type="button" data-go-tokens>See the Tokens tab</button>.</p>
+    <p class="hint">The Tokens tab shows how a chatbot gets from tokens to an answer. <button class="linkish" type="button" data-go-tokens>See the Tokens tab</button>.</p>
     <div class="row"><span></span><button class="ghost" id="wordsClose" type="button">Close</button></div>
   </div>
 </dialog>
@@ -131,10 +136,10 @@
   </div>
 </dialog>
 
-<script src="engine.js?v=10"></script>
-<script src="net.js?v=10"></script>
-<script src="tokens.js?v=10"></script>
-<script src="app.js?v=10"></script>
+<script src="engine.js?v=11"></script>
+<script src="net.js?v=11"></script>
+<script src="tokens.js?v=11"></script>
+<script src="app.js?v=11"></script>
 <script src="https://hypothes.is/embed.js" async></script>
 </body>
 </html>

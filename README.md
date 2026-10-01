@@ -10,7 +10,7 @@ king − man + woman  →  queen
 Distance is measured as **rank**: `#12` means the jack is the 12th-nearest word
 to where your ball stopped. `#1` is a *bacio*, a kiss on the jack.
 
-## Two word sets ("maps of meaning")
+## Three word sets ("maps of meaning")
 
 Players choose where word positions come from (the **Words** button, or Help):
 
@@ -24,6 +24,12 @@ Players choose where word positions come from (the **Words** button, or Help):
 - **Raw text** (`web/data/`): GloVe 6B 100d, learned only from which words
   appear together in Wikipedia and news. The classic word embedding: it can
   surprise ("ham" sits with football clubs, "eggs" nearer "meat" than "bacon").
+- **AI tokens** (`web/data-tokens/`): GPT-2's own token table, the numbers a
+  language model looks up for each token before anything else. 49,745 tokens
+  (labelled as `web/tokens.js` shows them: "␣shoe" is " shoe"), 128 of 768
+  dimensions, 6.4 MB. Neighbours include case and spacing variants ("␣Shoe",
+  "Shoe") and word pieces. Typed words map to their mid-sentence token. Built
+  by `tools/build_token_data.py`; details in `docs/learning-ai.md`.
 
 Why both exist: with raw-text words, the hand-made puzzles and dealt courts
 often had best throws nobody could explain (bacon → eggs couldn't get better
@@ -31,8 +37,8 @@ than 20th; a typical dealt par read "doll − dragon + flour + puppy → peanut"
 With common-sense words, 44 of the 60 puzzles pass the quality bar (32 with raw
 text), and dealt pars read like "canal + disaster + avalanche + flow → flood".
 Each set has its own Daily, tutorial example and puzzle retirement field
-(`retired_sense` / `retired` in `puzzles.json`). An online room uses the host's
-set.
+(`retired_sense` / `retired` / `retired_tokens` in `puzzles.json`; 35 puzzles
+are active on the token map). An online room uses the host's set.
 
 ## Modes
 
@@ -154,6 +160,10 @@ curl -L -o embeddings/numberbatch-en.txt.gz \
 python3 tools/build_web_data.py embeddings/numberbatch-en.txt.gz --vocab-from web/data/vocab.txt \
   --everyday 0.9 --lists embeddings --out web/data-sense
 node tests/engine.test.js
+
+# AI tokens set: GPT-2's token table from Hugging Face (fetches ~150 MB once into embeddings/)
+python3 tools/build_token_data.py
+node tests/engine.test.js
 ```
 
 `tools/blocklist.txt` keeps slurs, profanity and a few grim words out of the
@@ -165,5 +175,7 @@ Raw-text vectors: GloVe 6B (Pennington, Socher & Manning, 2014), Public Domain
 Dedication and License. Common-sense vectors: ConceptNet Numberbatch 19.08
 (Speer, Chin & Havasi, 2017), CC BY-SA 4.0; the derived bundle in
 `web/data-sense/` is shared under the same licence (see its `README.txt`).
+Token map: GPT-2's token embeddings (OpenAI, 2019, modified MIT licence), see
+`web/data-tokens/README.txt`.
 Word familiarity: Brysbaert, Warriner & Kuperman (2014). Tokenizer: OpenAI's
 GPT-2 merge list (2019, modified MIT licence), see `web/tokens/README.txt`.

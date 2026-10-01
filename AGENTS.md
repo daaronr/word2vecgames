@@ -26,8 +26,11 @@ jack's **rank** among the ball's nearest words (rank 1 = "bacio").
     `gpt2-merges.txt`; browser and Node) and the "Guess the split" quiz
     (`quiz.json`, whose splits `tests/tokens.test.js` checks). Used by the Tokens
     tab and by "Show as AI tokens" under the hand; fetched only when needed. The
-    court never uses tokens: plans for a GPT-2 token map are in
-    `docs/learning-ai.md`.
+    word maps' courts use whole words; the token map's court is made of tokens.
+  - `data-tokens/`: the "AI tokens" set, GPT-2's own token table (built by
+    `tools/build_token_data.py`, 128 dims). Vocab entries are token labels ("␣shoe"
+    = " shoe"); typed words go through `keyOf()` in `app.js`; puzzles are mapped to
+    "␣word" on load and retired per map with `retired_tokens`.
   - `net.js`: online rooms over PeerJS (loaded from jsDelivr only when a room is
     opened). The host's browser holds the state; only seeds and tile choices
     are sent, and every browser scores throws itself.
@@ -64,9 +67,9 @@ uvicorn word_bocce_mvp_fastapi:app --reload
 - Keep the game static-hostable: no runtime dependency on the Python server.
 - Card/jack words must stay familiar; change pools in `build_web_data.py`
   rather than hand-editing `pools.json`.
-- Keep both word sets working: the tutorial example, Daily seed and puzzle retirement
-  field are per set (`retired` = raw text, `retired_sense` = common sense), and the
-  tests check both.
+- Keep all three word sets working: the tutorial example, Daily seed and puzzle
+  retirement field are per set (`retired` = raw text, `retired_sense` = common sense,
+  `retired_tokens` = AI tokens), and the tests check all three.
 - Deals must stay deterministic for a given seed (Daily depends on it). If you
   change `deal()` or the data bundle, today's Daily changes for everyone.
 - Visual identity: sage "clubhouse" ground, raked-gravel court, bottle-green

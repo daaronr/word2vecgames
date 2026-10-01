@@ -2,14 +2,16 @@
 (function () {
   "use strict";
   const B = window.Bocce;
-  // Two ways of placing words on the court; players can switch (footer and help dialog).
+  // Three ways of placing words on the court; players can switch (header and help dialog).
   //   sense: ConceptNet Numberbatch, text statistics blended with a knowledge base of everyday facts.
   //          Courts are only dealt if their best throw can be explained word by word (explain = cosine bar).
   //   text:  GloVe, learned purely from which words appear together in Wikipedia and news text.
+  //   tokens: GPT-2's own token table (tools/build_token_data.py). Entries are tokens, labelled as
+  //          tokens.js labels them ("␣shoe" = " shoe"); typed words map to their mid-sentence token.
   // Each set has its own Daily seed and puzzle retirement field (both audited against that set).
   const WORD_SETS = {
     sense: {
-      dir: "data-sense/", name: "Common sense", short: "common-sense", explain: 0.3,
+      dir: "data-sense/", name: "Common sense", label: "common-sense", short: "common-sense", explain: 0.3,
       dailySeed: "daily-sense-", dailyKey: "daily-sense:", retired: "retired_sense",
       credit: "Words: ConceptNet Numberbatch 19.08 (CC BY-SA 4.0), everyday words only.",
       // hat → shoe: 249th → "+ foot" 5th → "+ foot − head" 1st
@@ -18,13 +20,22 @@
         second: "You don't wear shoes on your head, so let's take head away." },
     },
     text: {
-      dir: window.WORD_BOCCE_DATA || "data/", name: "Raw text", short: "raw-text", explain: 0,
+      dir: window.WORD_BOCCE_DATA || "data/", name: "Raw text", label: "raw-text", short: "raw-text", explain: 0,
       dailySeed: "daily-", dailyKey: "daily:", retired: "retired", vectorsFile: window.WORD_BOCCE_VECTORS,
       credit: "Words: GloVe 6B, 100 dimensions (public domain).",
       // boat → plane: 30th → "+ sky" 7th → "+ sky − water" 1st
       tut: { start: "boat", target: "plane", add: "sky", sub: "water", hand: ["road", "sky", "fish", "water", "island", "engine"],
         first: "A plane is a bit like a boat that travels through the sky. Tap “sky” to add it to your throw.",
         second: "Planes don't float on water, so let's take water away." },
+    },
+    tokens: {
+      dir: "data-tokens/", name: "AI tokens", label: "AI tokens", short: "GPT-2", unit: "tokens", explain: 0.3, tokens: true,
+      dailySeed: "daily-tokens-", dailyKey: "daily-tokens:", retired: "retired_tokens",
+      credit: "Tokens: GPT-2's own token table (OpenAI, 2019, modified MIT licence), 128 of its 768 numbers per token.",
+      // farmer → fisherman: 33rd → "+ fish" 3rd → "+ fish − farm" 1st
+      tut: { start: "␣farmer", target: "␣fisherman", add: "␣fish", sub: "␣farm", hand: ["␣boat", "␣fish", "␣tractor", "␣farm", "␣net", "␣field"],
+        first: "On this map every piece is a GPT-2 token: “␣” is the space in front of a word. A fisherman is a bit like a farmer who harvests fish. Tap “␣fish” to add it to your throw.",
+        second: "Fishermen don't work on farms, so let's take ␣farm away." },
     },
   };
   const PUZZLES_URL = (window.WORD_BOCCE_DATA || "data/") + "puzzles.json";
@@ -211,6 +222,9 @@
       const b = await B.load(ws.dir, ws.vectorsFile, PUZZLES_URL);
       // Puzzles that failed the audit against this word set are marked in puzzles.json; skip them.
       b.puzzles = b.puzzles.filter((p) => !p[ws.retired]);
+      // On the token map a puzzle's words are their mid-sentence tokens ("bacon" → "␣bacon").
+      if (ws.tokens) b.puzzles = b.puzzles.map((p) => ({ ...p, start_word: "␣" + p.start_word, target_word: "␣" + p.target_word,
+        allowed_cards: p.allowed_cards.map((c) => (c === "WILDCARD" ? c : "␣" + c)) }));
       bundles[key] = b;
     }
     wordSet = key;
@@ -218,6 +232,12 @@
     return G;
   }
   const dealFor = (seed) => B.deal(G.space, G.pools, seed, { explain: SET().explain });
+  /** A typed word as this map's key: on the token map "shoe" means the mid-sentence token "␣shoe". */
+  function keyOf(w) {
+    if (!SET().tokens) return w.toLowerCase();
+    for (const k of ["␣" + w, w, "␣" + w.toLowerCase(), w.toLowerCase()]) if (G.space.has(k)) return k;
+    return w;
+  }
 
   function makeEnd(kind, seed, start, target, hand, extra) {
     const space = G.space;
@@ -772,7 +792,11 @@
           end.wildWord ? "change wild word" : "any word…", h("span", { class: "sign" }, "✱")));
       }
       play.append(hand);
-      if (end.kind !== "tutorial") {
+      if (end.kind !== "tutorial" && SET().tokens) {
+        play.append(h("p", { class: "hand-help on" }, h("span", { class: "help-text" },
+          "These tiles are GPT-2 tokens: “␣” is the space in front of a word. ",
+          h("button", { class: "linkish", type: "button", onclick: () => switchMode("tokens") }, "What's a token?"))));
+      } else if (end.kind !== "tutorial") {
         play.append(h("p", { class: `hand-help ${tokenView ? "on" : ""}` },
           h("span", { class: "help-text" }, tokenView
             ? "AI tokens: how GPT-2 reads each word (␣ is a space; numbers are token IDs). The court still uses whole words. "
@@ -797,8 +821,8 @@
   function renderWildForm(end) {
     const form = h("form", { class: "joker-form", onsubmit: (ev) => {
       ev.preventDefault();
-      const w = $("#wildInput").value.trim().toLowerCase();
-      if (!G.space.has(w)) return setStatus(`"${w}" isn't in the 40,000-word vocabulary. Try a more common word.`, true);
+      const w = keyOf($("#wildInput").value.trim());
+      if (!G.space.has(w)) return setStatus(`"${w}" isn't on the ${SET().label} map. Try a more common word.`, true);
       if (w === end.start || w === end.target) return setStatus("The wild tile can't be the start word or the jack.", true);
       if (end.hand.includes(w)) return setStatus(`"${w}" is already in your hand.`, true);
       end.rack = end.rack.filter((t) => t.word !== end.wildWord);
@@ -1047,10 +1071,10 @@
   }
   function parseThrow(text) {
     const tiles = [];
-    const re = /([+\-−–])?\s*([a-z][a-z'-]*)/gi;
+    const re = /([+\-−–])?\s*(␣?[a-z][a-z'-]*)/gi;
     let m;
     while ((m = re.exec(text)) && tiles.length < 4) {
-      const word = m[2].toLowerCase();
+      const word = keyOf(m[2]);
       if (!tiles.some((t) => t.word === word)) tiles.push({ word, sign: m[1] && m[1] !== "+" ? -1 : 1 });
     }
     return tiles;
@@ -1067,7 +1091,7 @@
       const tiles = parseThrow(text);
       const missing = tiles.filter((t) => !G.space.has(t.word)).map((t) => t.word);
       if (!tiles.length) { end.whatIfError = "Type one to four words, each with + or − in front."; return render(); }
-      if (missing.length) { end.whatIfError = `Not in the 40,000-word vocabulary: ${missing.join(", ")}. Try a more common word.`; return render(); }
+      if (missing.length) { end.whatIfError = `Not on the ${SET().label} map: ${missing.join(", ")}. Try a more common word.`; return render(); }
       if (tiles.some((t) => t.word === end.start || t.word === end.target)) { end.whatIfError = "Leave out the start word and the jack."; return render(); }
       const sc = G.space.score(end.start, end.target, tiles);
       end.whatIf = { text, tiles, rank: sc.rank, sim: sc.sim, near: sc.near, vec: sc.vec };
@@ -1590,7 +1614,7 @@
     }
     return tokensLoading;
   }
-  const asTokens = (end) => tokenView && tokenizer && end.kind !== "tutorial";
+  const asTokens = (end) => tokenView && tokenizer && end.kind !== "tutorial" && !SET().tokens;
   function setTokenView(on) {
     tokenView = on;
     store.set("tokenView", on);
@@ -1733,6 +1757,7 @@
     const sp = G.space, ws = SET(), word = ws.tut.target;
     const li = (title, ...kids) => h("li", {}, h("h4", {}, title), ...kids);
     const ext = (href, text) => h("a", { href, target: "_blank", rel: "noopener" }, text);
+    const playTokens = (label) => h("button", { class: "linkish", type: "button", onclick: () => switchWordSet("tokens") }, label);
     return h("section", { class: "tok-sec", "aria-label": "From tokens to an answer" },
       h("h3", {}, "From tokens to an answer"),
       h("p", {}, "What a chatbot does with the tokens, and which parts Word Bocce shows you:"),
@@ -1743,7 +1768,10 @@
         li("Each token becomes a list of numbers",
           h("p", {}, "The model looks each token up in a table it learned in training. In the smallest GPT-2, every one of the 50,257 tokens has its own row of 768 numbers, called its ",
             h("b", {}, "embedding"), ". Tokens used in similar ways end up with similar rows."),
-          h("p", {}, `Word Bocce's court is a table like this, with a row per word. Here are the ${sp.dim} numbers for ${q(word)} on the ${ws.name.toLowerCase()} map:`),
+          ws.tokens
+            ? h("p", {}, `On the AI tokens map, the court is this very table: GPT-2's own rows, cut down to ${sp.dim} numbers each so they load quickly. Here is the row for ${q(word)}:`)
+            : h("p", {}, `Word Bocce's court is a table like this, with a row per word. Here are the ${sp.dim} numbers for ${q(word)} on the ${ws.label} map. `,
+              "To play on GPT-2's own table, ", playTokens("switch to the AI tokens map"), "."),
           vecStrip(sp.row(word)),
           h("p", { class: "hint" }, "Green is above zero, purple below; the stronger the colour, the bigger the number. Every throw adds and subtracts rows like this one. (After a throw, “Why?” shows them lined up.)")),
         li("Context reshapes the numbers",
@@ -1752,6 +1780,7 @@
           h("p", {}, "Word Bocce skips this step. Each word has one fixed spot, whatever surrounds it, which is why on the raw-text map “ham” can't be both a meat and a football club.")),
         li("The last vector is scored against every token",
           h("p", {}, "To choose what comes next, the model scores its final vector against a vector for each token in its vocabulary and ranks them, much as Word Bocce ranks every word against your ball. The scores become chances, and one token is picked."),
+          h("p", {}, "GPT-2 scores against the same table it started from in step 2. So on the AI tokens map, the court's ranking is a simplified version of this step: the same table, compared by similarity on cut-down rows, where GPT-2 uses the full rows."),
           renderNextToy()),
         li("Repeat",
           h("p", {}, "The picked token is added to the text and everything runs again. A long answer is thousands of these steps, one token at a time."))),
@@ -1763,7 +1792,7 @@
           h("li", {}, "Adding and subtracting meanings"),
           h("li", {}, "Ranking a whole vocabulary against one vector"))),
         h("div", {}, h("h4", {}, "Leaves out"), h("ul", {},
-          h("li", {}, "Tokens: it uses whole words"),
+          h("li", {}, ws.tokens ? "Tokens: only on the AI tokens map; the other two maps use whole words" : "Tokens: the word maps use whole words (the AI tokens map doesn't)"),
           h("li", {}, "Context: each word has one fixed spot"),
           h("li", {}, "The layers: the smallest GPT-2 has 124 million learned numbers; today's chatbots have many billions"),
           h("li", {}, "Training: the maps were learned beforehand, from text")))),
@@ -1789,7 +1818,7 @@
       const tiles = parseThrow(T.text);
       const missing = tiles.filter((t) => !sp.has(t.word)).map((t) => t.word);
       if (!tiles.length) return (T.error = "Type a few words joined by + and −, like “king − man + woman”.");
-      if (missing.length) return (T.error = `Not on the ${SET().name.toLowerCase()} map: ${missing.join(", ")}.`);
+      if (missing.length) return (T.error = `Not on the ${SET().label} map: ${missing.join(", ")}.`);
       T.error = "";
       const v = new Float32Array(sp.dim);
       for (const t of tiles) { const r = sp.row(t.word); for (let k = 0; k < sp.dim; k++) v[k] += t.sign * r[k]; }
@@ -1843,7 +1872,7 @@
     const input = h("input", { class: "text", "data-key": "toy-input", autocomplete: "off", autocapitalize: "none", spellcheck: "false",
       "aria-label": "A throw to score", value: T.text });
     return h("div", { class: "toy" },
-      h("p", {}, h("b", {}, "Try the last step"), ` on this court. Treat a throw as the model's final vector: every word on the ${SET().name.toLowerCase()} map gets a score, the scores become chances, and the game picks one.`),
+      h("p", {}, h("b", {}, "Try the last step"), ` on this court. Treat a throw as the model's final vector: every ${SET().tokens ? "token" : "word"} on the ${SET().label} map gets a score, the scores become chances, and the game picks one.`),
       h("form", { class: "joker-form", onsubmit: (e) => { e.preventDefault(); T.text = input.value; score(); draw(); } },
         input, h("button", { class: "ghost", type: "submit" }, "Score it")),
       bars,
@@ -1855,7 +1884,7 @@
         h("button", { class: "ghost", type: "button", onclick: () => pick(10) }, "Pick 10")),
       picks,
       h("p", { class: "hint" }, "Low temperature: almost always the top word. Higher: more surprises, then nonsense. Chatbots usually run somewhere in between, which is one reason the same question can get different answers."),
-      h("p", { class: "hint" }, "A toy: the score is the court's similarity (scaled), over words instead of tokens, leaving out the words you typed. A real model's scores come from its final layer."));
+      h("p", { class: "hint" }, `A toy: the score is the court's similarity (scaled)${SET().tokens ? "" : ", over words instead of tokens"}, leaving out the ${SET().tokens ? "tokens" : "words"} you typed. A real model's scores come from its final layer.`));
   }
 
   // ---------- word sets: which map of meaning the court uses ----------
@@ -1869,13 +1898,14 @@
     $("#wordsName").textContent = ws.name;
     $("#helpExample").textContent = `${ws.tut.start} + ${ws.tut.add} − ${ws.tut.sub} → ${ws.tut.target}`;
     $("#wordsCredit").textContent = ws.credit;
-    if (G) $("#tagline").textContent = `played on a court of ${G.space.n.toLocaleString()} ${ws.short} words`;
+    if (G) $("#tagline").textContent = `played on a court of ${G.space.n.toLocaleString()} ${ws.short} ${ws.unit || "words"}`;
     for (const el of document.querySelectorAll("[data-wordset]")) {
       const on = el.dataset.wordset === wordSet;
       el.classList.toggle("current", on);
       const btn = el.querySelector(":scope > button"); // not the "why?" link inside its paragraph
       btn.disabled = on;
-      btn.textContent = on ? "In use" : `Use ${WORD_SETS[el.dataset.wordset].name.toLowerCase()} words`;
+      const other = WORD_SETS[el.dataset.wordset];
+      btn.textContent = on ? "In use" : other.tokens ? `Use ${other.label}` : `Use ${other.label} words`;
     }
     $("#wordsNote").textContent = note || "";
   }
