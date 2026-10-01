@@ -1,0 +1,42 @@
+[
+  {
+    "text": " shoe",
+    "pieces": ["␣shoe"],
+    "lesson": "Everyday words are usually one token, including the space in front. GPT-2 has 50,257 tokens, so the commonest words each get their own."
+  },
+  {
+    "text": "SHOE",
+    "pieces": ["SH", "OE"],
+    "lesson": "Capitals change the split: “SHOE” is SH + OE, and “ Shoe” is ␣Sh + oe. Each is a different number, so the model has to learn from examples that they all mean the same thing."
+  },
+  {
+    "text": " strawberry",
+    "pieces": ["␣strawberry"],
+    "lesson": "One token: the model gets a single number for the whole word, with no letters inside it. That's one reason chatbots have struggled to count the r's in “strawberry”."
+  },
+  {
+    "text": "unbelievable",
+    "pieces": ["un", "bel", "iev", "able"],
+    "lesson": "With no space in front (say, at the start of a message), the same word falls into four pieces. Mid-sentence it's one token, ␣unbelievable. Where a word sits changes how it's split."
+  },
+  {
+    "text": " 1234567",
+    "pieces": ["␣123", "45", "67"],
+    "lesson": "Numbers are cut into chunks that ignore place value (␣123 + 45 + 67), so a model doesn't see digits lined up the way you do. That's part of why long arithmetic was hard for early models. Newer tokenizers cut numbers more regularly."
+  },
+  {
+    "text": " ChatGPT",
+    "pieces": ["␣Chat", "G", "PT"],
+    "lesson": "GPT-2's vocabulary was fixed in 2019, before ChatGPT existed. A tokenizer can't learn new words after it's built, so new names get spelled out in smaller pieces."
+  },
+  {
+    "text": "こんにちは",
+    "pieces": ["こ", "ん", "に", "‹E3 81›", "‹A1›", "は"],
+    "lesson": "“Hello” in Japanese: 5 characters, 6 tokens, two of them only fragments of a character. Tokenizers built mostly from English text spend more tokens on other languages, which makes those languages slower and costlier for the model."
+  },
+  {
+    "text": " SolidGoldMagikarp",
+    "pieces": ["␣SolidGoldMagikarp"],
+    "lesson": "One token! It's a Reddit username that was common in the text used to build the tokenizer but nearly absent from the text the models learned from. Its numbers were barely trained, and early GPT models gave bizarre answers when asked to repeat it: a famous “glitch token”."
+  }
+]

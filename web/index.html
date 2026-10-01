@@ -10,12 +10,12 @@
 <meta property="og:description" content="A word game played in meaning-space: add and subtract words to roll your ball toward a target word. Daily puzzles, practice and two-player Versus.">
 <meta property="og:url" content="https://wordbocce.davidreinstein.org/">
 <meta property="og:type" content="website">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": ["WebApplication", "Game"], "name": "Word Bocce", "url": "https://wordbocce.davidreinstein.org/", "description": "A free browser word game played in word-vector space: add and subtract words to move your ball toward a target word, scored by rank (#1 means the target is the nearest word to where your ball stopped). Daily court, practice, hand-made puzzles, and Versus against a bot, a friend, or online.", "applicationCategory": "GameApplication", "operatingSystem": "Any (web browser)", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Person", "name": "David Reinstein", "url": "https://www.davidreinstein.org/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": ["WebApplication", "Game"], "name": "Word Bocce", "url": "https://wordbocce.davidreinstein.org/", "description": "A free browser word game played in word-vector space: add and subtract words to move your ball toward a target word, scored by rank (#1 means the target is the nearest word to where your ball stopped). Daily court, practice, hand-made puzzles, Versus against a bot, a friend, or online, and a Tokens tab showing how chatbots read text.", "applicationCategory": "GameApplication", "operatingSystem": "Any (web browser)", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Person", "name": "David Reinstein", "url": "https://www.davidreinstein.org/"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@400;500&display=swap">
 <!-- bump ?v= when these files change, so browsers don't pair new HTML with cached old scripts -->
-<link rel="stylesheet" href="style.css?v=9">
+<link rel="stylesheet" href="style.css?v=10">
 <!-- discoverability tags added by seo_kit.py -->
 <meta name="twitter:card" content="summary">
 </head>
@@ -31,6 +31,7 @@
       <button role="tab" id="tab-practice" data-mode="practice" aria-selected="false">Practice</button>
       <button role="tab" id="tab-puzzles" data-mode="puzzles" aria-selected="false">Puzzles</button>
       <button role="tab" id="tab-versus" data-mode="versus" aria-selected="false">Versus</button>
+      <button role="tab" id="tab-tokens" data-mode="tokens" aria-selected="false">Tokens</button>
     </nav>
     <button class="iconbtn words-btn" id="wordsBtn" type="button" aria-haspopup="dialog">Words: <b id="wordsName">Common sense</b></button>
     <button class="iconbtn" id="soundBtn" type="button" aria-pressed="true">Sound on</button>
@@ -65,6 +66,10 @@
       <p>You can choose which map the game uses: <button class="linkish" id="helpWords" type="button">common sense, or raw text</button>.</p>
     </details>
     <details>
+      <summary>What does this have to do with chatbots?</summary>
+      <p>Chatbots also store meanings as lists of numbers, but they read <b>tokens</b> (often pieces of words) rather than whole words, and they reshape the numbers using the words around them. The <button class="linkish" type="button" data-go-tokens>Tokens tab</button> shows how, step by step, with a real tokenizer.</p>
+    </details>
+    <details>
       <summary>Why don't throws always make sense?</summary>
       <p>After any throw, tap <b>Why?</b> for a reading of what each word did. It's a best guess:
         <button class="linkish" type="button" data-open-interp>why the game can't fully explain itself</button>.</p>
@@ -96,6 +101,7 @@
     </section>
     <p class="hint" id="wordsNote" role="status"></p>
     <p class="hint">Each has its own Daily. In an online room, the host's choice applies to everyone.</p>
+    <p class="hint">Chatbots read neither: they read tokens, pieces of words with a vector each. <button class="linkish" type="button" data-go-tokens>See the Tokens tab</button>.</p>
     <div class="row"><span></span><button class="ghost" id="wordsClose" type="button">Close</button></div>
   </div>
 </dialog>
@@ -125,9 +131,10 @@
   </div>
 </dialog>
 
-<script src="engine.js?v=9"></script>
-<script src="net.js?v=9"></script>
-<script src="app.js?v=9"></script>
+<script src="engine.js?v=10"></script>
+<script src="net.js?v=10"></script>
+<script src="tokens.js?v=10"></script>
+<script src="app.js?v=10"></script>
 <script src="https://hypothes.is/embed.js" async></script>
 </body>
 </html>

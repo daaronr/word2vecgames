@@ -6,7 +6,9 @@ OUT=${1:-dist/artifact}
 mkdir -p "$OUT/data"
 sed -e '/^<!doctype html>$/d' -e '/^<html/d' -e '/^<\/html>$/d' -e '/^<head>$/d' -e '/^<\/head>$/d' \
     -e '/^<body>$/d' -e '/^<\/body>$/d' -e '/<meta charset/d' -e '/<meta name="viewport"/d' web/index.html > "$OUT/index.html"
-cp web/engine.js web/app.js web/style.css web/presentation.html "$OUT/"
+cp web/engine.js web/app.js web/tokens.js web/style.css web/presentation.html "$OUT/"
+mkdir -p "$OUT/tokens"
+cp web/tokens/gpt2-merges.txt web/tokens/quiz.json "$OUT/tokens/"
 cp web/data/vocab.txt web/data/pools.json web/data/puzzles.json "$OUT/data/"
 # Artifacts only serve known web types; ship the raw int8 bytes under .wasm
 # (fetched as an ArrayBuffer, never instantiated).

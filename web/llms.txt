@@ -23,6 +23,7 @@ Free, in the browser, no sign-up. Source: https://github.com/daaronr/word2vecgam
 - Practice: endless freshly dealt courts.
 - Puzzles: hand-made courts with star ratings.
 - Versus: against a bot or a friend on one device, with bocce scoring (first to 5), or online with up to six friends in a shared room (browser to browser; nothing is stored).
+- Tokens: how a chatbot reads text, with GPT-2's real tokenizer. Split your own text into tokens and IDs, play an eight-round "guess the split" quiz, and follow the steps from tokens to a chosen next word (with a temperature slider). In any game, "Show as AI tokens" shows the tiles as GPT-2 tokens.
 
 ## Pages
 

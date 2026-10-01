@@ -52,6 +52,13 @@ set.
   You see each other's balls land; the words are revealed when the round ends.
   Up to six players. Browsers connect directly (WebRTC via the free PeerJS
   broker, `web/net.js`); the host's tab is the room, and nothing is stored.
+- **Tokens**: how a chatbot reads text, with GPT-2's real tokenizer
+  (`web/tokens.js`). Split your own text into tokens and see their IDs, play
+  "Guess the split" (eight rounds, each explaining a quirk that matters for
+  chatbots), and follow the steps from tokens to a chosen next word, with a
+  temperature slider that samples from the court's own vectors. In any game,
+  "Show as AI tokens" under the hand relabels the tiles as GPT-2 tokens. Ideas
+  and next steps for teaching how AI works: `docs/learning-ai.md`.
 
 After every throw, **Why?** opens a reading of what each word did: each word's
 exact share of the ball's similarity to the jack (`Space.explainThrow`), the
@@ -59,7 +66,9 @@ words crowding the jack before and after, and plain notes on the things that
 tend to confuse people (subtracting a word that is itself close to the jack,
 similarity rising while rank falls, landing somewhere none of the words point
 to). It always says this is a reading of the numbers, not the model's reasons,
-and links to a short explainer on why interpretability is hard.
+and links to a short explainer on why interpretability is hard. "See the
+numbers" draws each word's vector as a strip, so you can watch the ball's
+numbers come out of the words' numbers.
 
 After every round you see par (the best throw the hand allowed), a few nearby
 words placed on the court, and a "try your own words" box: type any throw to
@@ -97,12 +106,15 @@ need full embeddings: `python setup_embeddings.py --model glove-100` and
 | --- | --- |
 | `web/` | The game: `index.html`, `app.js` (UI), `engine.js` (vector math, dealing, scoring), `style.css`, `presentation.html` (the maths, as slides) |
 | `web/data/` | `vectors.bin` (40k × 100 int8), `vocab.txt`, `pools.json` (card and jack word pools), `puzzles.json` |
+| `web/tokens.js`, `web/tokens/` | GPT-2's tokenizer for the Tokens tab: `gpt2-merges.txt` (OpenAI's merge list) and `quiz.json` |
 | `tools/build_web_data.py` | Rebuilds `web/data/` from a GloVe file and word norms |
 | `tools/make_artifact.sh` | Stages `web/` for publishing as a claude.ai Artifact |
 | `tests/engine.test.js` | `node tests/engine.test.js` checks the engine against the real vectors |
+| `tests/tokens.test.js` | `node tests/tokens.test.js` checks the tokenizer against known GPT-2 IDs and the quiz's splits |
 | `word_bocce_mvp_fastapi.py` | Server: static game plus the older multiplayer/puzzle API |
 | `DEPLOY.md` | Static hosting, and the Linode server |
 | `docs/original-design.md` | The original design document |
+| `docs/learning-ai.md` | Making the game teach how AI works: what's built, the planned GPT-2 token map, more ideas |
 | `archive/` | Superseded UI, docs and deploy configs |
 
 ## How dealing works
@@ -153,4 +165,5 @@ Raw-text vectors: GloVe 6B (Pennington, Socher & Manning, 2014), Public Domain
 Dedication and License. Common-sense vectors: ConceptNet Numberbatch 19.08
 (Speer, Chin & Havasi, 2017), CC BY-SA 4.0; the derived bundle in
 `web/data-sense/` is shared under the same licence (see its `README.txt`).
-Word familiarity: Brysbaert, Warriner & Kuperman (2014).
+Word familiarity: Brysbaert, Warriner & Kuperman (2014). Tokenizer: OpenAI's
+GPT-2 merge list (2019, modified MIT licence), see `web/tokens/README.txt`.

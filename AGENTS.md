@@ -22,6 +22,12 @@ jack's **rank** among the ball's nearest words (rank 1 = "bacio").
     drawn on a log-rank scale; court words go through `placeText` so they don't
     overlap. Balls, par and scoring compare by **rank** (`closer()`), never raw
     similarity alone.
+  - `tokens.js` + `tokens/`: GPT-2's byte-level BPE tokenizer (IDs rebuilt from
+    `gpt2-merges.txt`; browser and Node) and the "Guess the split" quiz
+    (`quiz.json`, whose splits `tests/tokens.test.js` checks). Used by the Tokens
+    tab and by "Show as AI tokens" under the hand; fetched only when needed. The
+    court never uses tokens: plans for a GPT-2 token map are in
+    `docs/learning-ai.md`.
   - `net.js`: online rooms over PeerJS (loaded from jsDelivr only when a room is
     opened). The host's browser holds the state; only seeds and tile choices
     are sent, and every browser scores throws itself.
@@ -48,6 +54,7 @@ jack's **rank** among the ball's nearest words (rank 1 = "bacio").
 
 ```bash
 node tests/engine.test.js                 # engine checks against the real vectors
+node tests/tokens.test.js                 # tokenizer and quiz checks
 cd web && python3 -m http.server 8000     # play locally
 uvicorn word_bocce_mvp_fastapi:app --reload
 ```
