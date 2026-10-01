@@ -30,7 +30,9 @@ jack's **rank** among the ball's nearest words (rank 1 = "bacio").
   - `data-tokens/`: the "AI tokens" set, GPT-2's own token table (built by
     `tools/build_token_data.py`, 128 dims). Vocab entries are token labels ("␣shoe"
     = " shoe"); typed words go through `keyOf()` in `app.js`; puzzles are mapped to
-    "␣word" on load and retired per map with `retired_tokens`.
+    "␣word" on load and retired per map with `retired_tokens`. `pools.pieces` (word
+    fragments) gives each token-map hand two piece tiles in `deal()`; word-map
+    deals don't have the field and are unchanged.
   - `net.js`: online rooms over PeerJS (loaded from jsDelivr only when a room is
     opened). The host's browser holds the state; only seeds and tile choices
     are sent, and every browser scores throws itself.

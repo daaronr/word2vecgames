@@ -83,9 +83,29 @@ near" a copy of a thrown token. `tests/engine.test.js` checks the tutorial,
 deals and puzzles as for the other maps. The "Show as AI tokens" switch is
 hidden on this map, since its tiles are already tokens.
 
+Making it read as tokens, not words with a "␣" in front (added after
+feedback that the first version looked like the word game):
+
+- **Word pieces in every hand.** Two of the nine tiles are pieces with no
+  space in front, linked to the jack: "resso" and "innamon" for ␣coffee,
+  "upuncture" for ␣medicine, "ighthouse" for ␣island. `pools.pieces` lists
+  GPT-2's lower-case fragments that aren't words themselves; `deal()` picks
+  pieces close to this jack but not to every jack (similarity to the jack
+  minus average similarity to a sample of jacks), so generic endings like
+  "ers" rarely appear. They're marked PIECE on the tile.
+- **What a token means.** Tapping a tile shows its token ID and its nearest
+  tokens: "abis" sits with ␣Cannabis, arijuana, ␣cannabis. A token's ID is a
+  label; its meaning, before context, is where it sits.
+- **Tokens tab, "What does a token mean?"**: neighbourhoods of a whole word
+  (␣shoe), a topic piece (ffee: ␣Coffee, resso, ocolate), a place-name ending
+  (ville: burg, town, bury), a grammar piece (ness: ity, iness, ment) and the
+  glitch token, plus a box to look up any word or piece. It says plainly that
+  this is the starting meaning only; attention changes it in context.
+- Messages say "token" instead of "word" on this map.
+
 Rough edges: many court labels are case or spacing variants, some jacks are
-abstract (the pools come from the word maps), and the game's wording still
-says "word" in places where this map means "token".
+abstract (the pools come from the word maps), and a few pieces are still
+generic endings ("ges").
 
 ## Further ideas, roughly in order of value for effort
 

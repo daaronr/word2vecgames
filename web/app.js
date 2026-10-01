@@ -218,6 +218,13 @@
 
   /** Load a word set (once) and make it current. */
   async function loadWordSet(key) {
+    await fetchWordSet(key);
+    wordSet = key;
+    G = bundles[key];
+    return G;
+  }
+  /** Load a word set without making it current (the Tokens tab peeks at GPT-2's table). */
+  async function fetchWordSet(key) {
     if (!bundles[key]) {
       const ws = WORD_SETS[key];
       const b = await B.load(ws.dir, ws.vectorsFile, PUZZLES_URL);
@@ -228,10 +235,9 @@
         allowed_cards: p.allowed_cards.map((c) => (c === "WILDCARD" ? c : "␣" + c)) }));
       bundles[key] = b;
     }
-    wordSet = key;
-    G = bundles[key];
-    return G;
+    return bundles[key];
   }
+  const noun = () => (SET().tokens ? "token" : "word"); // what the court is made of
   const dealFor = (seed) => B.deal(G.space, G.pools, seed, { explain: SET().explain });
   /** A typed word as this map's key: on the token map "shoe" means the mid-sentence token "␣shoe". */
   function keyOf(w) {
@@ -303,7 +309,7 @@
     }
     const b = landed[0];
     const lead = b.rank < end.startRank
-      ? `Closer! Your ball stopped near “${b.near[0]}”. “${T.target}” went from the ${ordinal(end.startRank)} nearest word to the ${ordinal(b.rank)}. A perfect throw makes it 1st. `
+      ? `Closer! Your ball stopped near “${b.near[0]}”. “${T.target}” went from the ${ordinal(end.startRank)} nearest ${noun()} to the ${ordinal(b.rank)}. A perfect throw makes it 1st. `
       : `Your ball stopped near “${b.near[0]}”. `;
     if (!inRack(A)) return { text: lead + `${T.second} First tap “${A}” again.`, tile: A };
     if (inRack(A).sign < 0) return { text: fixSign(A), tile: A };
@@ -627,7 +633,7 @@
         renderMatchup(end),
         h("div", { class: "court-col" }, renderScorebar(end), buildCourt(end),
           h("p", { class: "legend" },
-            h("span", { class: "legend-text" }, "Dotted rings: the jack is in the ball's top 10, 100, 1,000 or 10,000 nearest words. ", tip("rings", "the rings"), " "),
+            h("span", { class: "legend-text" }, `Dotted rings: the jack is in the ball's top 10, 100, 1,000 or 10,000 nearest ${noun()}s. `, tip("rings", "the rings"), " "),
             mapAllowed(end) && h("button", { class: "linkish", type: "button", "data-key": "map",
               onclick: () => { end.showMap = !mapShown(end); render(); } },
               mapShown(end) ? "Hide nearby words" : "Show nearby words on the court"))),
@@ -702,7 +708,7 @@
       h("span", { class: "caption" },
         `Roll your ball from ${q(end.start)} to the yellow jack, ${q(end.target)}. Tap words to add (+) or subtract (−) their meaning, then Throw.`),
       h("span", { class: "caption small" },
-        `Right now ${q(end.target)} is the ${ordinal(end.startRank)} nearest word to your ball. Get it to 1st. `, tip("rank", "rank")),
+        `Right now ${q(end.target)} is the ${ordinal(end.startRank)} nearest ${noun()} to your ball. Get it to 1st. `, tip("rank", "rank")),
       asTokens(end) && h("span", { class: "caption small toks-line" }, "As GPT-2 tokens: ",
         tokenChips(" " + end.start, true), " → ", tokenChips(" " + end.target, true)));
   }
@@ -781,11 +787,12 @@
         const inRack = end.rack.find((t) => t.word === w);
         const cls = inRack ? (inRack.sign > 0 ? "plus" : "minus") : "";
         const wanted = tut && tut.tile === w;
-        hand.append(h("button", { class: `tile ${cls} ${w === end.wildWord ? "joker" : ""} ${wanted ? "pulse" : ""}`, type: "button", "data-key": "tile-" + w,
+        hand.append(h("button", { class: `tile ${cls} ${w === end.wildWord ? "joker" : ""} ${wanted ? "pulse" : ""} ${SET().tokens && isPiece(w) ? "piece" : ""}`, type: "button", "data-key": "tile-" + w,
           "aria-pressed": inRack ? "true" : "false", disabled: busy || botTurn || (end.kind === "tutorial" && !wanted),
           "aria-label": inRack ? `${w}, ${inRack.sign > 0 ? "added" : "subtracted"}` : w,
           onclick: () => cycleTile(end, w) },
-          wordFace(end, w), h("span", { class: "sign", "aria-hidden": "true" }, inRack ? signChar(inRack.sign) : "")));
+          wordFace(end, w), SET().tokens && tokenId(w) != null ? h("small", { class: "tid" }, "#" + tokenId(w)) : null,
+          h("span", { class: "sign", "aria-hidden": "true" }, inRack ? signChar(inRack.sign) : "")));
       }
       if (end.wild) {
         hand.append(h("button", { class: "tile joker", type: "button", "data-key": "wild", disabled: busy,
@@ -794,9 +801,8 @@
       }
       play.append(hand);
       if (end.kind !== "tutorial" && SET().tokens) {
-        play.append(h("p", { class: "hand-help on" }, h("span", { class: "help-text" },
-          "These tiles are GPT-2 tokens: “␣” is the space in front of a word. ",
-          h("button", { class: "linkish", type: "button", onclick: () => switchMode("tokens") }, "What's a token?"))));
+        if (!tokenizer && !tokensError) loadTokens(); // for the token IDs
+        play.append(renderTokenCard(end));
       } else if (end.kind !== "tutorial") {
         play.append(h("p", { class: `hand-help ${tokenView ? "on" : ""}` },
           h("span", { class: "help-text" }, tokenView
@@ -925,8 +931,8 @@
     const body = $("#whyBody");
     body.replaceChildren(...[
       h("p", { class: "why-eq" }, h("b", {}, eqText(end.start, ball.tiles)), ` → stopped near ${q(ball.near[0])}`),
-      h("p", {}, ball.rank === 1 ? `${q(J)} is the nearest word to where the ball stopped: a bacio.`
-        : `${q(J)} is the ${ordinal(ball.rank)} nearest word to where it stopped. It was ${ordinal(end.startRank)} at the start.`),
+      h("p", {}, ball.rank === 1 ? `${q(J)} is the nearest ${noun()} to where the ball stopped: a bacio.`
+        : `${q(J)} is the ${ordinal(ball.rank)} nearest ${noun()} to where it stopped. It was ${ordinal(end.startRank)} at the start.`),
       h("h3", {}, "What each word did"),
       h("ul", { class: "why-parts" }, r.ex.parts.map((p, i) => h("li", {},
         h("span", { class: "why-bar", "aria-hidden": "true" },
@@ -952,7 +958,7 @@
     return h("div", { class: "endcard", role: "region", "aria-label": "Tutorial done" },
       h("h2", {}, best.rank === 1 ? "Bacio! A perfect throw." : "Nice throw."),
       h("p", {}, `${eqText(end.start, best.tiles)} landed ${best.rank === 1 ? "right by" : "near"} ${q(end.target)}. `,
-        best.rank === 1 ? `It's now the nearest word to your ball. (Bacio is Italian for "kiss": a ball touching the jack.)` : ""),
+        best.rank === 1 ? `It's now the nearest ${noun()} to your ball. (Bacio is Italian for "kiss": a ball touching the jack.)` : ""),
       h("p", {}, "That's the whole game. Each round you get a start word, a jack and nine words to throw with:"),
       h("ul", {},
         h("li", {}, "Add words that point toward the jack."),
@@ -986,8 +992,8 @@
       h("div", { class: "stars-row", "aria-label": `${stars} of 3 stars` },
         [0, 1, 2].map((i) => h("span", { class: i < stars ? "" : "off" }, "●"))),
       h("p", {}, best.rank === 1
-        ? `Your best ball made ${q(end.target)} the nearest word of all: 1st. `
-        : `With your best ball, ${q(end.target)} was the ${ordinal(best.rank)} nearest word. `,
+        ? `Your best ball made ${q(end.target)} the nearest ${noun()} of all: 1st. `
+        : `With your best ball, ${q(end.target)} was the ${ordinal(best.rank)} nearest ${noun()}. `,
         `It started ${ordinal(end.startRank)}. `, tip("rank", "rank")),
       parScore && h("p", {}, beatPar
         ? "Your wild word beat par, the best throw from the fixed tiles."
@@ -1110,7 +1116,7 @@
     if (w) {
       const vsBest = best ? (w.rank < best.rank ? " Better than your best ball" : w.rank === best.rank ? " Level with your best ball" : " Not as close as your best ball") + ` (${ordinal(best.rank)}).` : "";
       box.append(h("p", { class: "whatif-result" }, h("b", {}, eqText(end.start, w.tiles)), ` lands near ${q(w.near[0])}. `,
-        `${q(end.target)} would be the ${ordinal(w.rank)} nearest word.${vsBest} It's the dashed purple ball on the court.`));
+        `${q(end.target)} would be the ${ordinal(w.rank)} nearest ${noun()}.${vsBest} It's the dashed purple ball on the court.`));
       const outside = w.tiles.filter((t) => !end.hand.includes(t.word)).map((t) => t.word);
       if (outside.length && !end.whatIfSaved) {
         box.append(h("p", {}, `Would having ${outside.map(q).join(" and ")} among the words have made this court more fun?`),
@@ -1150,6 +1156,7 @@
 
   function cycleTile(end, w) {
     if (busy || end.done) return;
+    end.focus = w; // the token map shows this tile's neighbourhood
     const i = end.rack.findIndex((t) => t.word === w);
     if (i < 0) {
       if (end.rack.length >= B.MAX_TILES) {
@@ -1201,8 +1208,8 @@
     if (ball.rank === 1) sfx.bacio();
     const verdict = ball.rank < before ? "Closer!" : ball.rank === before ? "About the same." : "Further away.";
     statusMsg = { text: ball.rank === 1
-      ? `Bacio! Ball ${ball.n} stopped right by ${q(end.target)}: it's the nearest word to the ball.`
-      : `${verdict} Ball ${ball.n} stopped near ${q(ball.near[0])}. ${q(end.target)} is the ${ordinal(ball.rank)} nearest word to it` +
+      ? `Bacio! Ball ${ball.n} stopped right by ${q(end.target)}: it's the nearest ${noun()} to the ball.`
+      : `${verdict} Ball ${ball.n} stopped near ${q(ball.near[0])}. ${q(end.target)} is the ${ordinal(ball.rank)} nearest ${noun()} to it` +
         (mine.length ? ` (${end.kind === "versus" ? vs.names[side] + "'s" : "your"} best so far was ${ordinal(before)}).` : ` (it was ${ordinal(end.startRank)} at the start).`), warn: false, why: ball };
     if (end.kind === "tutorial") statusMsg = { text: "", warn: false };
     if (end.kind === "party") {
@@ -1616,6 +1623,42 @@
     }
     return tokensLoading;
   }
+  // ---------- the token map: what one token "means" ----------
+  // On GPT-2's table a token's meaning, as far as the court can show it, is where it sits: its
+  // nearest tokens. Tapping a tile shows them, with the token's ID (the number GPT-2 actually gets).
+  const isPiece = (w) => /^[a-z]/.test(w); // no space in front: the middle or end of a word
+  const neighbourMemo = new Map();
+  function neighbours(w, k = 6) {
+    const key = wordSet + "|" + w;
+    if (!neighbourMemo.has(key)) neighbourMemo.set(key, G.space.survey(G.space.row(w), w, [w], k).near);
+    return neighbourMemo.get(key);
+  }
+  let labelIds = null;
+  function tokenId(label) {
+    if (!tokenizer) return null;
+    if (!labelIds) {
+      labelIds = new Map();
+      for (let i = 0; i < tokenizer.size; i++) labelIds.set(tokenizer.label(i).text, i);
+    }
+    return labelIds.get(label);
+  }
+  function renderTokenCard(end) {
+    const w = end.focus;
+    const what = h("button", { class: "linkish", type: "button", onclick: () => switchMode("tokens") }, "What's a token?");
+    if (!w) {
+      return h("p", { class: "hand-help on" }, h("span", { class: "help-text" },
+        "These tiles are GPT-2 tokens. “␣” marks the space in front of a whole word; tiles without one, like ",
+        h("i", {}, "ffee"), " or ", h("i", {}, "rimp"), ", are pieces of longer words. Tap a tile to see what it means to GPT-2. "), what);
+    }
+    const id = tokenId(w);
+    const kind = isPiece(w)
+      ? `${q(w)} is a piece of a word, with no space in front. GPT-2 meets it inside longer words, so it sits among the words it helps spell.`
+      : w.startsWith("␣") ? `${q(w)} is a whole word as it appears after a space.` : `${q(w)} is a token.`;
+    return h("div", { class: "tokcard", "aria-live": "polite" },
+      h("span", { class: "toks" }, h("span", { class: "tok c0" }, h("span", {}, w), id != null ? h("small", {}, String(id)) : null)),
+      h("p", {}, h("span", { class: "long" }, kind, " "), "Its nearest tokens: ", h("b", {}, neighbours(w).join(", ")), ". ",
+        h("span", { class: "long" }, "That neighbourhood is all the meaning a token has before the model reads its context. "), what));
+  }
   const asTokens = (end) => tokenView && tokenizer && end.kind !== "tutorial" && !SET().tokens;
   function setTokenView(on) {
     tokenView = on;
@@ -1672,7 +1715,7 @@
         : h("div", { class: "loading" }, h("b", {}, "Fetching the tokenizer…"), "Half a megabyte at most, once."));
       return wrap;
     }
-    wrap.append(renderTokPlay(), renderTokQuiz(), renderTokSteps());
+    wrap.append(renderTokPlay(), renderTokQuiz(), renderTokMeaning(), renderTokSteps());
     return wrap;
   }
 
@@ -1752,6 +1795,55 @@
         h("div", { class: "row" }, h("button", { class: "primary", type: "button", "data-key": "quiz-next", onclick: () => { Q.i++; render(); } },
           Q.i + 1 < items.length ? "Next" : "See your score")));
     }
+    return box;
+  }
+
+  // What a token "means" before context: where it sits on GPT-2's own table, shown as its nearest
+  // tokens. Uses the AI tokens map, fetched (not switched to) on request.
+  const MEANING_EXAMPLES = [
+    ["␣shoe", "a whole word"],
+    ["ffee", "the end of “coffee”"],
+    ["ville", "a place-name ending"],
+    ["ness", "grammar: it turns “kind” into “kindness”"],
+    ["␣SolidGoldMagikarp", "a glitch token, almost never seen in training"],
+  ];
+  let meaningLoading = false, meaningError = "";
+  function renderTokMeaning() {
+    const box = h("section", { class: "tok-sec", "aria-label": "What does a token mean?" }, h("h3", {}, "What does a token mean?"),
+      h("p", {}, "A token's ID is only a label: 17292 says nothing about shoes. What GPT-2 has for each token, before it reads any context, is its row of numbers, and the clearest way to read a row is to look at which tokens sit nearest."));
+    const T = bundles.tokens;
+    if (!T) {
+      box.append(h("div", { class: "row" }, h("button", { class: "primary", type: "button", "data-key": "meaning-load", disabled: meaningLoading,
+        onclick: async () => {
+          meaningLoading = true; render();
+          meaningError = "";
+          try { await fetchWordSet("tokens"); } catch (e) { meaningError = "GPT-2's token table didn't load. Check your connection and try again."; }
+          meaningLoading = false; render();
+        } }, meaningLoading ? "Loading GPT-2's table…" : "Show me, from GPT-2's own table (6 MB)")),
+        meaningError ? h("p", { class: "status warn" }, meaningError) : null);
+      return box;
+    }
+    const sp = T.space;
+    const near = (w) => sp.survey(sp.row(w), w, [w], 7).near;
+    box.append(h("ul", { class: "meaning" }, MEANING_EXAMPLES.filter(([w]) => sp.has(w)).map(([w, what]) =>
+      h("li", {}, h("span", { class: "tok c0" }, h("span", {}, w)), h("span", {}, h("i", {}, what), " → ", h("b", {}, near(w).join(", ")))))));
+    const out = h("p", { class: "meaning-out", "aria-live": "polite" });
+    const look = (raw) => {
+      const w = raw.trim();
+      const key = [w, "␣" + w, "␣" + w.toLowerCase(), w.toLowerCase()].find((k) => w && sp.has(k));
+      out.replaceChildren(!w ? "" : key ? h("span", {}, h("span", { class: "tok c1" }, h("span", {}, key)), " → ", h("b", {}, near(key).join(", ")))
+        : `“${w}” isn't a single GPT-2 token (or is filtered out). ${tokenizer ? "It splits into " + tokenizer.tokens(" " + w).map((t) => t.text).join(" + ") + "." : ""}`);
+    };
+    const input = h("input", { class: "text", "data-key": "meaning-input", autocomplete: "off", autocapitalize: "none", spellcheck: "false",
+      placeholder: "bank, ologist, Paris…", "aria-label": "A word or piece to look up" });
+    box.append(
+      h("p", {}, "Pieces carry meaning too. Some carry a topic (", h("i", {}, "ffee"), " sits with drinks), some carry grammar (", h("i", {}, "ness"),
+        " sits with other noun endings). Look one up; a word is tried with a space in front first, as GPT-2 sees it mid-sentence:"),
+      h("form", { class: "joker-form", onsubmit: (e) => { e.preventDefault(); look(input.value); } }, input, h("button", { class: "ghost", type: "submit" }, "Look up")),
+      out,
+      h("p", { class: "hint" }, "This is only the starting meaning. Inside the model, attention mixes in the tokens around each one (step 3 below), so ",
+        h("i", {}, "␣bank"), " after ", h("i", {}, "␣river"), " ends up somewhere else entirely. The court can't show that part."),
+      SET().tokens ? null : h("div", { class: "row" }, h("button", { class: "ghost", type: "button", onclick: async () => { await switchWordSet("tokens"); switchMode("practice"); } }, "Play on GPT-2's token table")));
     return box;
   }
 

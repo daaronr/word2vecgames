@@ -28,7 +28,9 @@ Players choose where word positions come from (the **Words** button, or Help):
   language model looks up for each token before anything else. 49,745 tokens
   (labelled as `web/tokens.js` shows them: "␣shoe" is " shoe"), 128 of 768
   dimensions, 6.4 MB. Neighbours include case and spacing variants ("␣Shoe",
-  "Shoe") and word pieces. Typed words map to their mid-sentence token. Built
+  "Shoe") and word pieces. Every hand has two word pieces ("resso" for coffee),
+  and tapping a tile shows its token ID and nearest tokens. Typed words map to
+  their mid-sentence token. Built
   by `tools/build_token_data.py`; details in `docs/learning-ai.md`.
 
 Why both exist: with raw-text words, the hand-made puzzles and dealt courts

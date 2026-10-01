@@ -144,6 +144,10 @@ for (let i = 0; i < 15; i++) {
   const d = B.deal(tok, tokPools, "k" + i, { explain: EXPLAIN });
   assert.strictEqual(new Set(d.hand).size, B.HAND_SIZE);
   if (tok.allThrows(d.start, d.target, d.hand).slice(0, 12).some((t) => B.explainable(tok, d.start, d.target, t.tiles, EXPLAIN))) tokExplained++;
+  // Two tiles are pieces of words (no space in front), linked to the jack.
+  const pieces = d.hand.filter((w) => !w.startsWith(T("")));
+  assert.strictEqual(pieces.length, 2, `token hand ${d.hand}`);
+  for (const w of pieces) assert(tokPools.pieces.includes(w) && tok.sim(w, d.target) > 0.1, `piece ${w} for ${d.target}`);
 }
 assert(tokExplained >= 14, `explainable token deals ${tokExplained}/15`);
 
