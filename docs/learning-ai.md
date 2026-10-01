@@ -102,6 +102,17 @@ feedback that the first version looked like the word game):
   glitch token, plus a box to look up any word or piece. It says plainly that
   this is the starting meaning only; attention changes it in context.
 - Messages say "token" instead of "word" on this map.
+- **Token puzzles** (`web/data-tokens/puzzles.json`, 14 courts, listed first
+  under Puzzles on this map) about tokens themselves: capital/lower-case twins
+  with different embeddings (␣pie → ␣Apple, ␣snake → ␣Python, ␣wonder →
+  ␣Curiosity the rover, ␣thankful → ␣Grateful the band, ␣tree → ␣Bush,
+  ␣map → ␣Globe the newspaper, ␣dinner → ␣Turkey, ␣rain → ␣Amazon the shop,
+  ␣kitten → ␣Jaguar the car), pieces as jacks (ologist, ness, ville, resso),
+  and ␣SolidGoldMagikarp, which only other barely-trained usernames get close
+  to. Each has a "trap" tile (usually the lower-case twin) and a lesson shown
+  after the round; `tests/engine.test.js` checks each lesson's claim about
+  its trap. One court in three on this map (Daily, Practice, Versus, rooms)
+  is one of these, picked by the seed.
 
 Rough edges: many court labels are case or spacing variants, some jacks are
 abstract (the pools come from the word maps), and a few pieces are still

@@ -32,7 +32,9 @@ jack's **rank** among the ball's nearest words (rank 1 = "bacio").
     = " shoe"); typed words go through `keyOf()` in `app.js`; puzzles are mapped to
     "␣word" on load and retired per map with `retired_tokens`. `pools.pieces` (word
     fragments) gives each token-map hand two piece tiles in `deal()`; word-map
-    deals don't have the field and are unchanged.
+    deals don't have the field and are unchanged. `data-tokens/puzzles.json` holds
+    the token puzzles (twins like ␣apple/␣Apple, pieces, a glitch token); `dealFor()`
+    in `app.js` swaps one token-map court in three for one of them, by seed.
   - `net.js`: online rooms over PeerJS (loaded from jsDelivr only when a room is
     opened). The host's browser holds the state; only seeds and tile choices
     are sent, and every browser scores throws itself.

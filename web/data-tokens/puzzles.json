@@ -1,0 +1,128 @@
+[
+  {
+    "id": "t1", "difficulty": "tokens", "name": "Apple, the company",
+    "description": "Capital A. Get from a pie to the company.",
+    "start_word": "␣pie", "target_word": "␣Apple",
+    "allowed_cards": ["␣iPhone", "␣Microsoft", "␣software", "␣apple", "␣fruit", "␣tree", "␣Google", "␣dessert", "␣laptop"],
+    "hint": "Think phones and rival companies.",
+    "check": { "trap": "␣apple", "trap_rank_max": 20 },
+    "lesson": "GPT-2 keeps “␣apple” and “␣Apple” as two tokens with two rows of numbers. ␣Apple sits with ␣iPhone and ␣iOS. Even lower-case ␣apple is pulled most of the way there: the web pages GPT-2 learned from talk about the company far more than the fruit."
+  },
+  {
+    "id": "t2", "difficulty": "tokens", "name": "Python, the language",
+    "description": "From a snake to the programming language.",
+    "start_word": "␣snake", "target_word": "␣Python",
+    "allowed_cards": ["␣programming", "␣code", "␣Java", "␣python", "␣lizard", "␣Ruby", "␣venom", "␣script", "␣bite"],
+    "hint": "Other languages named after things.",
+    "check": { "trap": "␣python", "trap_rank_max": 10 },
+    "lesson": "Even lower-case ␣python sits with programming, next to ␣Py and ␣Django. Programmers write the name in lower case, and GPT-2's training text had far more code talk than zoology."
+  },
+  {
+    "id": "t3", "difficulty": "tokens", "name": "Curiosity, the rover",
+    "description": "From wonder to the robot on Mars.",
+    "start_word": "␣wonder", "target_word": "␣Curiosity",
+    "allowed_cards": ["␣rover", "␣NASA", "␣Mars", "␣curiosity", "␣awe", "␣surprise", "␣spacecraft", "␣interest", "␣planet"],
+    "hint": "The capital C is a machine.",
+    "check": { "trap": "␣curiosity", "trap_rank_min": 50 },
+    "lesson": "Lower-case ␣curiosity is the feeling; capital ␣Curiosity is NASA's Mars rover, sitting with ␣rover and ␣Martian. Same letters, different token, different neighbourhood. Adding ␣curiosity alone leaves the rover far off."
+  },
+  {
+    "id": "t4", "difficulty": "tokens", "name": "The Grateful Dead",
+    "description": "From thankful to the band.",
+    "start_word": "␣thankful", "target_word": "␣Grateful",
+    "allowed_cards": ["␣Beatles", "␣band", "␣Dead", "␣grateful", "␣glad", "␣rock", "␣happy", "␣concert", "␣thanks"],
+    "hint": "Capitalised, it's mostly half of a band's name.",
+    "check": { "trap": "␣grateful", "trap_rank_min": 20 },
+    "lesson": "Capital ␣Grateful sits with ␣Beatles and Jerry (Garcia): GPT-2 mostly met it in “Grateful Dead”. Lower-case ␣grateful still just means thankful."
+  },
+  {
+    "id": "t5", "difficulty": "tokens", "name": "Bush, the president",
+    "description": "From a tree to the politician.",
+    "start_word": "␣tree", "target_word": "␣Bush",
+    "allowed_cards": ["␣president", "␣Obama", "␣bush", "␣Cheney", "␣hedge", "␣Clinton", "␣garden", "␣administration", "␣leaves"],
+    "hint": "His vice president helps.",
+    "check": { "trap": "␣bush", "trap_rank_min": 10 },
+    "lesson": "␣bush is a plant; ␣Bush sits with ␣Obama, ␣Gore and ␣Cheney. News text made the capital-B token a politician."
+  },
+  {
+    "id": "t6", "difficulty": "tokens", "name": "The Globe",
+    "description": "From a map to the newspaper.",
+    "start_word": "␣map", "target_word": "␣Globe",
+    "allowed_cards": ["␣newspaper", "␣Boston", "␣Herald", "␣globe", "␣sphere", "␣Tribune", "␣earth", "␣reporter", "␣world"],
+    "hint": "Other papers' names.",
+    "check": { "trap": "␣globe", "trap_rank_min": 30 },
+    "lesson": "␣globe is a sphere; ␣Globe sits with ␣Herald, ␣Tribune and ␣Times. To GPT-2 it's mostly a newspaper name, as in the Boston Globe."
+  },
+  {
+    "id": "t7", "difficulty": "tokens", "name": "Turkey, the country",
+    "description": "From dinner to the country.",
+    "start_word": "␣dinner", "target_word": "␣Turkey",
+    "allowed_cards": ["␣Greece", "␣Istanbul", "␣turkey", "␣country", "␣roast", "␣Syria", "␣gravy", "␣Europe", "␣meal"],
+    "hint": "Its biggest city, and a neighbour.",
+    "check": { "trap": "␣turkey", "trap_rank_min": 20 },
+    "lesson": "␣Turkey sits with ␣Ankara and ␣Istanbul; lower-case ␣turkey is the bird. The bird gets you only partway, but with ␣Istanbul and ␣Syria it helps: the two rows still share something."
+  },
+  {
+    "id": "t8", "difficulty": "tokens", "name": "Amazon, the shop",
+    "description": "From rain to the company, not the forest.",
+    "start_word": "␣rain", "target_word": "␣Amazon",
+    "allowed_cards": ["␣online", "␣Walmart", "␣river", "␣shopping", "␣forest", "␣retailer", "␣tropical", "␣Google", "␣delivery"],
+    "hint": "Ignore the jungle.",
+    "check": { "trap": "␣river", "trap_rank_min": 500 },
+    "lesson": "The rainforest and the river are in GPT-2's text too, but ␣Amazon sits with ␣AWS, ␣Alexa and ␣Kindle. Adding ␣river makes things worse."
+  },
+  {
+    "id": "t9", "difficulty": "tokens", "name": "Jaguar, the car",
+    "description": "From a kitten to the car maker.",
+    "start_word": "␣kitten", "target_word": "␣Jaguar",
+    "allowed_cards": ["␣car", "␣Mercedes", "␣Porsche", "␣tiger", "␣BMW", "␣cat", "␣luxury", "␣engine", "␣jungle"],
+    "hint": "Other badges on expensive cars.",
+    "check": { "trap": "␣cat", "trap_rank_min": 200 },
+    "lesson": "␣Jaguar's neighbours are ␣Rover, ␣Corvette and ␣Toyota: the car brand, not the cat. Adding ␣cat barely moves you."
+  },
+  {
+    "id": "t10", "difficulty": "tokens", "name": "-ologist",
+    "description": "The jack is a piece of a word.",
+    "start_word": "␣doctor", "target_word": "ologist",
+    "allowed_cards": ["␣science", "␣expert", "␣nurse", "␣researcher", "␣scientist", "␣patient", "␣specialist", "␣hospital", "␣study"],
+    "hint": "What does an -ologist do all day?",
+    "check": { "trap": "␣science", "trap_rank_min": 50 },
+    "lesson": "“ologist” never stands alone (␣biologist and ␣psychologist are single tokens; it turns up inside rarer words), yet it sits with ␣scientist and ology. A piece carries a meaning: here, “expert in”."
+  },
+  {
+    "id": "t11", "difficulty": "tokens", "name": "-ness",
+    "description": "A piece that carries grammar, not a topic.",
+    "start_word": "␣kind", "target_word": "ness",
+    "allowed_cards": ["␣kindness", "␣happy", "␣sad", "ity", "␣quality", "␣feeling", "ment", "␣nice", "␣state"],
+    "hint": "Other pieces that turn words into nouns.",
+    "check": { "trap": "␣kindness", "trap_rank_min": 100 },
+    "lesson": "“kindness” at the start of a line is kind + ness. The piece ness sits with other noun endings (ity, iness, ment): it carries grammar, not a subject. Those pieces get you there; the whole word ␣kindness doesn't."
+  },
+  {
+    "id": "t12", "difficulty": "tokens", "name": "-ville",
+    "description": "From a village to a place-name ending.",
+    "start_word": "␣village", "target_word": "ville",
+    "allowed_cards": ["␣town", "␣Nashville", "burg", "␣Kentucky", "␣Louisville", "bury", "␣suburb", "␣county", "␣river"],
+    "hint": "Other endings of town names.",
+    "check": { "trap": "␣town", "trap_rank_min": 100 },
+    "lesson": "“ville” ends place names GPT-2 doesn't store whole: “ Smallville” is ␣Small + ville. It sits with burg and bury, so other endings get you there faster than the word ␣town."
+  },
+  {
+    "id": "t13", "difficulty": "tokens", "name": "Espresso, in pieces",
+    "description": "From tea to the end of “espresso”.",
+    "start_word": "␣tea", "target_word": "resso",
+    "allowed_cards": ["␣coffee", "␣Italian", "␣milk", "␣shot", "␣cup", "␣green", "␣Starbucks", "␣herbal", "␣caffeine"],
+    "hint": "Take the tea out of tea.",
+    "check": { "trap": "␣coffee", "trap_rank_min": 100 },
+    "lesson": "Mid-sentence, “ espresso” is one token, but at the start of a line it's esp + resso. The piece resso still sits with ␣espresso, ␣Coffee and ␣Starbucks: a piece inherits the meaning of the words it finishes."
+  },
+  {
+    "id": "t14", "difficulty": "tokens", "name": "SolidGoldMagikarp",
+    "description": "The famous glitch token. What does it mean to GPT-2?",
+    "start_word": "␣gold", "target_word": "␣SolidGoldMagikarp",
+    "allowed_cards": ["␣Reddit", "␣username", "␣Pokemon", "␣solid", "␣fish", "␣user", "␣glitch", "␣TheNitromeFan", "␣davidjl"],
+    "hint": "Its real meaning won't help. What else was barely trained?",
+    "check": { "trap": "␣Reddit", "trap_rank_min": 5000 },
+    "lesson": "It's a Reddit username that was common in the text used to build the tokenizer but almost absent from the text GPT-2 trained on, so its row barely moved from where it started. Its real meaning doesn't help: ␣Reddit leaves it far away. Only other barely-trained usernames (␣TheNitromeFan, ␣davidjl) get close, because untrained tokens cluster together."
+  }
+]

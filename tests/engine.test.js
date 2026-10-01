@@ -166,4 +166,22 @@ for (const p of puzzles.filter((q) => !q.retired_tokens)) {
 }
 assert.deepStrictEqual(weakTok, [], "weak puzzles on the token map: mark them retired_tokens");
 
+// Token puzzles (web/data-tokens/puzzles.json): every word is a token on the map, the jack starts well
+// back, the best throw reaches the top 10, and each lesson's claim about its "trap" tile holds.
+const tokPuzzles = JSON.parse(fs.readFileSync(path.join(DT, "puzzles.json"), "utf8"));
+assert(tokPuzzles.length >= 10);
+for (const p of tokPuzzles) {
+  const s0 = p.start_word, j = p.target_word;
+  for (const w of [s0, j, ...p.allowed_cards]) assert(tok.has(w), `token puzzle ${p.id}: ${w} isn't on the token map`);
+  const hand = p.allowed_cards.filter((w) => w !== s0 && w !== j && tok.sim(w, j) <= 0.85);
+  assert.strictEqual(hand.length, p.allowed_cards.length, `token puzzle ${p.id}: a tile is too close to the jack`);
+  const r0 = tok.survey(tok.row(s0), j, [s0], 1).rank;
+  const par = tok.allThrows(s0, j, hand).slice(0, 50).map((t) => ({ ...t, rank: tok.score(s0, j, t.tiles).rank }))
+    .reduce((m, t) => (m && !closer(t, m) ? m : t), null);
+  assert(r0 > 8 && par.rank <= 10, `token puzzle ${p.id} ${s0}→${j}: start ${r0}, par ${par.rank}`);
+  const trap = tok.score(s0, j, [{ word: p.check.trap, sign: 1 }]).rank;
+  if (p.check.trap_rank_max) assert(trap <= p.check.trap_rank_max, `token puzzle ${p.id}: + ${p.check.trap} reaches ${trap}`);
+  if (p.check.trap_rank_min) assert(trap >= p.check.trap_rank_min, `token puzzle ${p.id}: + ${p.check.trap} reaches ${trap}`);
+}
+
 console.log("engine ok");

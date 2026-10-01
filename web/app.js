@@ -233,12 +233,29 @@
       // On the token map a puzzle's words are their mid-sentence tokens ("bacon" → "␣bacon").
       if (ws.tokens) b.puzzles = b.puzzles.map((p) => ({ ...p, start_word: "␣" + p.start_word, target_word: "␣" + p.target_word,
         allowed_cards: p.allowed_cards.map((c) => (c === "WILDCARD" ? c : "␣" + c)) }));
+      // ...plus its own puzzles about tokens: twins like ␣apple/␣Apple, pieces of words, a glitch token.
+      if (ws.tokens) {
+        const r = await fetch(ws.dir + "puzzles.json");
+        if (r.ok) b.tokenPuzzles = (await r.json()).filter((p) => b.space.has(p.start_word) && b.space.has(p.target_word));
+        b.puzzles = [...(b.tokenPuzzles || []), ...b.puzzles];
+      }
       bundles[key] = b;
     }
     return bundles[key];
   }
   const noun = () => (SET().tokens ? "token" : "word"); // what the court is made of
-  const dealFor = (seed) => B.deal(G.space, G.pools, seed, { explain: SET().explain });
+  /**
+   * A dealt court. On the token map one court in three (fixed by the seed, so a Daily is the same for
+   * everyone) is one of its token puzzles instead, so twins and pieces turn up in ordinary play.
+   */
+  function dealFor(seed) {
+    const special = G.tokenPuzzles && G.tokenPuzzles.length && B.hashSeed(seed + "|special") % 3 === 0
+      ? G.tokenPuzzles[B.hashSeed(seed + "|which") % G.tokenPuzzles.length] : null;
+    if (special) return { start: special.start_word, target: special.target_word, hand: puzzleHand(special), special };
+    return B.deal(G.space, G.pools, seed, { explain: SET().explain });
+  }
+  const puzzleHand = (p) => p.allowed_cards.filter((w) => w !== "WILDCARD" && G.space.has(w) && w !== p.start_word && w !== p.target_word
+    && G.space.sim(w, p.target_word) <= 0.85);
   /** A typed word as this map's key: on the token map "shoe" means the mid-sentence token "␣shoe". */
   function keyOf(w) {
     if (!SET().tokens) return w.toLowerCase();
@@ -284,7 +301,7 @@
     const iso = todayISO();
     const seed = SET().dailySeed + iso;
     const d = dealFor(seed);
-    const end = makeEnd("daily", seed, d.start, d.target, d.hand, { iso, no: dailyNo(iso), sides: ["red"], perSide: SOLO_BALLS });
+    const end = makeEnd("daily", seed, d.start, d.target, d.hand, { iso, no: dailyNo(iso), sides: ["red"], perSide: SOLO_BALLS, special: d.special });
     for (const tiles of store.get(SET().dailyKey + iso, [])) placeBall(end, "red", tiles);
     if (end.balls.length >= SOLO_BALLS) end.done = true;
     return end;
@@ -321,20 +338,19 @@
   function dealPractice() {
     const seed = "practice-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7);
     const d = dealFor(seed);
-    return makeEnd("practice", seed, d.start, d.target, d.hand, { sides: ["red"], perSide: SOLO_BALLS });
+    return makeEnd("practice", seed, d.start, d.target, d.hand, { sides: ["red"], perSide: SOLO_BALLS, special: d.special });
   }
   function dealPuzzle(p) {
     const space = G.space;
     const wild = p.allowed_cards.includes("WILDCARD");
-    const hand = p.allowed_cards.filter((w) => w !== "WILDCARD" && space.has(w) && w !== p.start_word && w !== p.target_word
-      && space.sim(w, p.target_word) <= 0.85);
+    const hand = puzzleHand(p);
     return makeEnd("puzzle", "puzzle-" + p.id, p.start_word, p.target_word, hand,
       { puzzle: p, wild, wildWord: null, sides: ["red"], perSide: SOLO_BALLS, showHint: false });
   }
   function dealVersus() {
     const seed = "vs-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7);
     const d = dealFor(seed);
-    return makeEnd("versus", seed, d.start, d.target, d.hand, { sides: ["red", "blue"], perSide: VS_BALLS });
+    return makeEnd("versus", seed, d.start, d.target, d.hand, { sides: ["red", "blue"], perSide: VS_BALLS, special: d.special });
   }
 
   /** Score a throw and put the ball in the end (no animation). */
@@ -693,7 +709,8 @@
     }
     const left = end.perSide - end.balls.length;
     const label = end.kind === "daily" ? h("span", {}, h("strong", {}, `Daily No. ${end.no}`), ` · ${end.iso}`)
-      : end.kind === "puzzle" ? h("span", {}, h("strong", {}, `Puzzle ${end.puzzle.id}`), ` · ${end.puzzle.difficulty}`)
+      : end.kind === "puzzle" ? h("span", {}, h("strong", {}, end.puzzle.difficulty === "tokens" ? "Token puzzle" : `Puzzle ${end.puzzle.id}`),
+        end.puzzle.difficulty === "tokens" ? "" : ` · ${end.puzzle.difficulty}`)
       : end.kind === "tutorial" ? h("span", {}, h("strong", {}, "Tutorial"), " · about 30 seconds")
       : h("span", {}, h("strong", {}, "Practice"), " · endless deals");
     return h("div", { class: "scorebar" }, label,
@@ -719,6 +736,7 @@
     const bench = h("section", { class: "bench", "aria-label": "Your throw" });
 
     if (end.kind === "puzzle") bench.append(h("p", { class: "caption" }, `${end.puzzle.name}: ${end.puzzle.description}`));
+    if (end.special) bench.append(h("p", { class: "caption special" }, h("b", {}, "A token court: "), `${end.special.name}. ${end.special.description}`));
 
     if (end.kind === "versus" && !end.done && side) {
       bench.append(h("div", { class: "turn-banner" }, h("span", { class: `pip ${side} full` }),
@@ -1001,7 +1019,8 @@
       h("div", { class: "meter", "aria-hidden": "true" }, h("i", { style: `width:${Math.round(pct * 100)}%` })),
       h("div", { class: "meter-ends", "aria-hidden": "true" }, h("span", {}, "start"), h("span", {}, "par")),
       parScore && h("p", { class: "par" }, `Par: ${eqText(end.start, par.tiles)} → ${ordinal(parScore.rank)}`),
-      h("p", { class: "neighbours" }, `The words closest in meaning to ${q(end.target)}: ${around.join(", ")}.`));
+      h("p", { class: "neighbours" }, `The ${noun()}s closest in meaning to ${q(end.target)}: ${around.join(", ")}.`),
+      (end.puzzle || end.special || {}).lesson ? h("p", { class: "lesson" }, h("b", {}, "What this shows: "), (end.puzzle || end.special).lesson) : null);
     const row = h("div", { class: "row" });
     if (end.kind === "daily") {
       row.append(h("button", { type: "button", "data-key": "share", onclick: () => share(end, best, pct) }, "Copy result"),
@@ -1589,9 +1608,11 @@
     const wrap = h("div", { class: "puzzles" });
     const done = G.puzzles.reduce((a, p) => a + store.get("puzzle:" + p.id, 0), 0);
     wrap.append(h("p", { class: "status" }, `${G.puzzles.length} hand-made courts. ${done} of ${G.puzzles.length * 3} stars earned.`));
-    for (const diff of ["easy", "medium", "hard"]) {
+    for (const diff of ["tokens", "easy", "medium", "hard"]) {
       const list = G.puzzles.filter((p) => p.difficulty === diff);
-      wrap.append(h("section", {}, h("h2", {}, diff[0].toUpperCase() + diff.slice(1)),
+      if (!list.length) continue;
+      wrap.append(h("section", {}, h("h2", {}, diff === "tokens" ? "Token puzzles" : diff[0].toUpperCase() + diff.slice(1)),
+        diff === "tokens" && h("p", { class: "hint" }, "Courts about tokens themselves: the same word with and without a capital (two tokens, two meanings), pieces of words as jacks, and a famous glitch token. Each ends with what it shows."),
         h("div", { class: "grid" }, list.map((p) => {
           const st = store.get("puzzle:" + p.id, 0);
           return h("button", { class: "pz", type: "button", "data-key": "pz-" + p.id,
