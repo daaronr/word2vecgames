@@ -24,8 +24,8 @@ The example used everywhere is the common-sense tutorial throw, hat + foot − h
 - [ ] **Visit counting.** Decide on privacy-friendly counting before the first post, so you can see which channel worked. GitHub Pages has none built in. GoatCounter (free for non-commercial use) and Cloudflare Web Analytics are cookie-free; Plausible is paid. If you add one, use a tag per channel in the links you post, for example `?ref=lw`, `?ref=hn`, `?ref=reddit-ml`, `?ref=bsky`, `?ref=osmi`. The game reads only the part after `#`, so a `?ref=` tag doesn't affect play.
 - [ ] **Venue rules.** Check each venue's self-promotion rules before posting: subreddit sidebars and pinned posts, HN's Show HN guidelines, and Slack or Discord pinned messages (or ask a moderator).
 - [ ] **Known rough edges.** Fix these or decide to live with them, since technical readers will notice:
-  - The rank tooltip says "list all 40,000 words", and the "not in the vocabulary" messages say "40,000-word", even with the 21,114-word common-sense set.
-  - Rank leaves out the words you threw (as classic analogy tests do). The drafts say so, but the game's rank tooltip doesn't.
+  - ~~Hard-coded "40,000 words" in the rank tooltip and vocabulary messages~~ Fixed 2026-10-01: they now say "every word on the map" and name the map in play.
+  - ~~Rank tooltip didn't say that thrown words are left out~~ Fixed 2026-10-01: it now says so, as the drafts do.
   - The slides describe an earlier version of the game and still point to the old server address (it redirects).
 - [ ] **A short clip.** Record 10–15 seconds of the tutorial (foot, throw, head, throw, bacio) for social posts.
 - [ ] **Time to reply.** Post HN and Reddit only when you can answer comments for a few hours.
