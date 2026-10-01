@@ -48,6 +48,7 @@ embeddings/
 # ...except the compact int8 bundles the browser game ships with
 !web/data/vectors.bin
 !web/data-sense/vectors.bin
+!web/data-tokens/vectors.bin
 
 # Local build output
 dist/

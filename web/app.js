@@ -2,14 +2,16 @@
 (function () {
   "use strict";
   const B = window.Bocce;
-  // Two ways of placing words on the court; players can switch (footer and help dialog).
+  // Three ways of placing words on the court; players can switch (header and help dialog).
   //   sense: ConceptNet Numberbatch, text statistics blended with a knowledge base of everyday facts.
   //          Courts are only dealt if their best throw can be explained word by word (explain = cosine bar).
   //   text:  GloVe, learned purely from which words appear together in Wikipedia and news text.
+  //   tokens: GPT-2's own token table (tools/build_token_data.py). Entries are tokens, labelled as
+  //          tokens.js labels them ("␣shoe" = " shoe"); typed words map to their mid-sentence token.
   // Each set has its own Daily seed and puzzle retirement field (both audited against that set).
   const WORD_SETS = {
     sense: {
-      dir: "data-sense/", name: "Common sense", short: "common-sense", explain: 0.3,
+      dir: "data-sense/", name: "Common sense", label: "common-sense", short: "common-sense", explain: 0.3,
       dailySeed: "daily-sense-", dailyKey: "daily-sense:", retired: "retired_sense",
       credit: "Words: ConceptNet Numberbatch 19.08 (CC BY-SA 4.0), everyday words only.",
       // hat → shoe: 249th → "+ foot" 5th → "+ foot − head" 1st
@@ -18,13 +20,22 @@
         second: "You don't wear shoes on your head, so let's take head away." },
     },
     text: {
-      dir: window.WORD_BOCCE_DATA || "data/", name: "Raw text", short: "raw-text", explain: 0,
+      dir: window.WORD_BOCCE_DATA || "data/", name: "Raw text", label: "raw-text", short: "raw-text", explain: 0,
       dailySeed: "daily-", dailyKey: "daily:", retired: "retired", vectorsFile: window.WORD_BOCCE_VECTORS,
       credit: "Words: GloVe 6B, 100 dimensions (public domain).",
       // boat → plane: 30th → "+ sky" 7th → "+ sky − water" 1st
       tut: { start: "boat", target: "plane", add: "sky", sub: "water", hand: ["road", "sky", "fish", "water", "island", "engine"],
         first: "A plane is a bit like a boat that travels through the sky. Tap “sky” to add it to your throw.",
         second: "Planes don't float on water, so let's take water away." },
+    },
+    tokens: {
+      dir: "data-tokens/", name: "AI tokens", label: "AI tokens", short: "GPT-2", unit: "tokens", explain: 0.3, tokens: true,
+      dailySeed: "daily-tokens-", dailyKey: "daily-tokens:", retired: "retired_tokens",
+      credit: "Tokens: GPT-2's own token table (OpenAI, 2019, modified MIT licence), 128 of its 768 numbers per token.",
+      // farmer → fisherman: 33rd → "+ fish" 3rd → "+ fish − farm" 1st
+      tut: { start: "␣farmer", target: "␣fisherman", add: "␣fish", sub: "␣farm", hand: ["␣boat", "␣fish", "␣tractor", "␣farm", "␣net", "␣field"],
+        first: "On this map every piece is a GPT-2 token: “␣” is the space in front of a word. A fisherman is a bit like a farmer who harvests fish. Tap “␣fish” to add it to your throw.",
+        second: "Fishermen don't work on farms, so let's take ␣farm away." },
     },
   };
   const PUZZLES_URL = (window.WORD_BOCCE_DATA || "data/") + "puzzles.json";
@@ -147,11 +158,11 @@
 
   // ---------- explanations: tap (touch) or hover/focus (desktop) ----------
   const TIPS = {
-    rank: "Rank is how the game measures closeness. Take the spot where your ball is, and list all 40,000 words from closest in meaning to farthest. The jack's place in that list is its rank. #1 means the jack is the closest word of all: a perfect throw.",
-    similarity: "Similarity (cosine similarity) compares two word vectors: 1 means pointing the same way, 0 means unrelated, below 0 means opposite. It moves in small steps, so it shows progress even when the rank barely changes.",
+    rank: "Rank is how the game measures closeness. Take the spot where your ball is, and list every word on the map from closest in meaning to farthest. The jack's place in that list is its rank. #1 means the jack is the closest word of all: a perfect throw. A chatbot does a ranking like this each time it picks its next token: it scores every token it knows against one list of numbers.",
+    similarity: "Similarity (cosine similarity) compares two word vectors: 1 means pointing the same way, 0 means unrelated, below 0 means opposite. It moves in small steps, so it shows progress even when the rank barely changes. It's the usual way AI systems compare embeddings (the lists of numbers that stand for meanings).",
     par: "Par is the best throw this hand allows. The game tries every combination of up to three tiles, each added or subtracted (834 throws for a nine-tile hand), then ranks the 50 most promising and keeps the one that puts the jack nearest the top of the list.",
     rings: "Each ring is a rank boundary. Inside the ‘top 10’ ring, the jack is among the 10 words closest to your ball; inside ‘top 100’, among the closest 100; and so on. Each ring inward is ten times harder to reach.",
-    near: "The word closest in meaning to where your ball stopped (not counting the words you threw). It shows what your throw ‘means’.",
+    near: "The word closest in meaning to where your ball stopped (not counting the words you threw). It shows what your throw ‘means’. In AI terms, it's the ball's nearest neighbour.",
     party: "Everyone plays the same court at once, three balls each. When every ball is thrown, the player with the ball nearest the jack wins the round and scores a point for each of their balls that beats everyone else's best.",
     versus: "Whoever is farther from the jack throws next. When both sides are out of balls, the side with the closest ball wins the round and scores one point for every ball closer than the other side's best.",
     tiers: "Bacio (Italian for ‘kiss’, a ball touching the jack): rank #1. Close: top 10. In the hunt: top 100. Wide: top 1,000. Long way off: further than that.",
@@ -212,6 +223,9 @@
       const b = await B.load(ws.dir, ws.vectorsFile, PUZZLES_URL);
       // Puzzles that failed the audit against this word set are marked in puzzles.json; skip them.
       b.puzzles = b.puzzles.filter((p) => !p[ws.retired]);
+      // On the token map a puzzle's words are their mid-sentence tokens ("bacon" → "␣bacon").
+      if (ws.tokens) b.puzzles = b.puzzles.map((p) => ({ ...p, start_word: "␣" + p.start_word, target_word: "␣" + p.target_word,
+        allowed_cards: p.allowed_cards.map((c) => (c === "WILDCARD" ? c : "␣" + c)) }));
       bundles[key] = b;
     }
     wordSet = key;
@@ -219,6 +233,12 @@
     return G;
   }
   const dealFor = (seed) => B.deal(G.space, G.pools, seed, { explain: SET().explain });
+  /** A typed word as this map's key: on the token map "shoe" means the mid-sentence token "␣shoe". */
+  function keyOf(w) {
+    if (!SET().tokens) return w.toLowerCase();
+    for (const k of ["␣" + w, w, "␣" + w.toLowerCase(), w.toLowerCase()]) if (G.space.has(k)) return k;
+    return w;
+  }
 
   function makeEnd(kind, seed, start, target, hand, extra) {
     const space = G.space;
@@ -597,7 +617,8 @@
     }
     const focusKey = document.activeElement && document.activeElement.dataset ? document.activeElement.dataset.key : null;
     const m = main();
-    if (mode === "puzzles" && !ends.puzzle) m.replaceChildren(renderPuzzleList());
+    if (mode === "tokens") m.replaceChildren(renderTokensPage());
+    else if (mode === "puzzles" && !ends.puzzle) m.replaceChildren(renderPuzzleList());
     else if (mode === "versus" && !vs) m.replaceChildren(renderVersusSetup());
     else if (mode === "party" && !partyInRound()) m.replaceChildren(renderPartyLobby());
     else {
@@ -681,7 +702,9 @@
       h("span", { class: "caption" },
         `Roll your ball from ${q(end.start)} to the yellow jack, ${q(end.target)}. Tap words to add (+) or subtract (−) their meaning, then Throw.`),
       h("span", { class: "caption small" },
-        `Right now ${q(end.target)} is the ${ordinal(end.startRank)} nearest word to your ball. Get it to 1st. `, tip("rank", "rank")));
+        `Right now ${q(end.target)} is the ${ordinal(end.startRank)} nearest word to your ball. Get it to 1st. `, tip("rank", "rank")),
+      asTokens(end) && h("span", { class: "caption small toks-line" }, "As GPT-2 tokens: ",
+        tokenChips(" " + end.start, true), " → ", tokenChips(" " + end.target, true)));
   }
 
   function renderBench(end) {
@@ -723,12 +746,12 @@
       if (tut) play.append(h("p", { class: "coach", role: "status" }, tut.text));
 
       // rack
-      const rack = h("div", { class: "rack", "aria-live": "polite" }, h("span", { class: "base" }, end.start));
+      const rack = h("div", { class: "rack", "aria-live": "polite" }, h("span", { class: "base" }, wordFace(end, end.start)));
       if (!end.rack.length) rack.append(h("span", { class: "hint" }, "your throw: tap words below"));
       for (const t of end.rack) {
         rack.append(h("button", { class: `chip ${t.sign > 0 ? "plus" : "minus"}`, type: "button", "data-key": "chip-" + t.word,
           title: "Tap to switch between adding and subtracting", disabled: busy || botTurn || end.kind === "tutorial",
-          onclick: () => { t.sign = -t.sign; sfx.tile(t.sign); render(); } }, `${signChar(t.sign)} ${t.word}`));
+          onclick: () => { t.sign = -t.sign; sfx.tile(t.sign); render(); } }, `${signChar(t.sign)} `, wordFace(end, t.word)));
       }
       play.append(rack);
 
@@ -762,7 +785,7 @@
           "aria-pressed": inRack ? "true" : "false", disabled: busy || botTurn || (end.kind === "tutorial" && !wanted),
           "aria-label": inRack ? `${w}, ${inRack.sign > 0 ? "added" : "subtracted"}` : w,
           onclick: () => cycleTile(end, w) },
-          w, h("span", { class: "sign", "aria-hidden": "true" }, inRack ? signChar(inRack.sign) : "")));
+          wordFace(end, w), h("span", { class: "sign", "aria-hidden": "true" }, inRack ? signChar(inRack.sign) : "")));
       }
       if (end.wild) {
         hand.append(h("button", { class: "tile joker", type: "button", "data-key": "wild", disabled: busy,
@@ -770,7 +793,19 @@
           end.wildWord ? "change wild word" : "any word…", h("span", { class: "sign" }, "✱")));
       }
       play.append(hand);
-      if (end.kind !== "tutorial") play.append(h("p", { class: "hand-help" }, "Tap a word once to add it (+), twice to subtract it (−), three times to take it back. Up to three words per throw."));
+      if (end.kind !== "tutorial" && SET().tokens) {
+        play.append(h("p", { class: "hand-help on" }, h("span", { class: "help-text" },
+          "These tiles are GPT-2 tokens: “␣” is the space in front of a word. ",
+          h("button", { class: "linkish", type: "button", onclick: () => switchMode("tokens") }, "What's a token?"))));
+      } else if (end.kind !== "tutorial") {
+        play.append(h("p", { class: `hand-help ${tokenView ? "on" : ""}` },
+          h("span", { class: "help-text" }, tokenView
+            ? "AI tokens: how GPT-2 reads each word (␣ is a space; numbers are token IDs). The court still uses whole words. "
+            : "Tap a word once to add it (+), twice to subtract it (−), three times to take it back. Up to three words per throw. "),
+          h("button", { class: "linkish", type: "button", "data-key": "tokview", "aria-pressed": String(tokenView), onclick: () => setTokenView(!tokenView) },
+            tokenView ? (tokenizer ? "Show words" : tokensError ? "Tokens didn't load: show words" : "Loading tokens…") : "Show as AI tokens"),
+          tokenView && tokenizer ? h("span", {}, " · ", h("button", { class: "linkish", type: "button", onclick: () => switchMode("tokens") }, "What's a token?")) : null));
+      }
       if (end.wild && end.wildOpen) play.append(renderWildForm(end));
       bench.append(play);
     }
@@ -787,8 +822,8 @@
   function renderWildForm(end) {
     const form = h("form", { class: "joker-form", onsubmit: (ev) => {
       ev.preventDefault();
-      const w = $("#wildInput").value.trim().toLowerCase();
-      if (!G.space.has(w)) return setStatus(`"${w}" isn't in the 40,000-word vocabulary. Try a more common word.`, true);
+      const w = keyOf($("#wildInput").value.trim());
+      if (!G.space.has(w)) return setStatus(`"${w}" isn't on the ${SET().label} map. Try a more common word.`, true);
       if (w === end.start || w === end.target) return setStatus("The wild tile can't be the start word or the jack.", true);
       if (end.hand.includes(w)) return setStatus(`"${w}" is already in your hand.`, true);
       end.rack = end.rack.filter((t) => t.word !== end.wildWord);
@@ -870,6 +905,17 @@
     ball._read = { ex, lines, notes, surprising: notes.some((n) => n.strong) || ball.rank > end.startRank, startNear: end._startNear };
     return ball._read;
   }
+  /** The throw as the numbers themselves: each word's vector as a strip, the ball, and the jack. */
+  function numbersOf(end, ball) {
+    const sp = G.space;
+    const rows = [[end.start, sp.row(end.start), ""], ...ball.tiles.map((t) => [`${signChar(t.sign)} ${t.word}`, sp.row(t.word), ""]),
+      ["= ball", sp.ball(end.start, ball.tiles), "ball"], [`jack: ${end.target}`, sp.row(end.target), "jack"]];
+    const top = Math.max(...rows.map(([, v]) => Math.max(...Array.from(v, Math.abs))));
+    return h("details", { class: "why-numbers" }, h("summary", {}, "See the numbers"),
+      h("p", { class: "hint" }, `To the game, each word is a list of ${sp.dim} numbers, drawn here left to right: green above zero, purple below, stronger colour for bigger numbers. `,
+        `The ball is the start word plus the added words minus the subtracted ones, scaled back to a standard length. The more its pattern matches the jack's, the higher the similarity.`),
+      h("div", { class: "vrows" }, rows.map(([label, v, cls]) => h("div", { class: `vrow ${cls}` }, h("span", {}, label), vecStrip(v, top)))));
+  }
   function whyButton(end, ball, label) {
     return h("button", { class: "linkish why", type: "button", onclick: (e) => { e.stopPropagation(); openWhy(end, ball); } }, label);
   }
@@ -887,6 +933,7 @@
           h("i", { class: p.push >= 0 ? "pos" : "neg", style: `width:${Math.round((Math.abs(p.push) / maxPush) * 100)}%` })),
         h("span", {}, r.lines[i])))),
       h("p", { class: "hint" }, `The bars are each word's share of the ball's similarity to ${q(J)} (${fmt(r.ex.sim)}); they add up exactly. That part is plain arithmetic.`),
+      numbersOf(end, ball),
       h("h3", {}, "Who's crowding the jack"),
       h("p", {}, `Nearest words to your start word: ${r.startNear.map(q).join(", ")}. Nearest to where the ball stopped: ${ball.near.map(q).join(", ")}.`),
       r.notes.length ? h("h3", {}, "What might be surprising") : null,
@@ -1026,10 +1073,10 @@
   }
   function parseThrow(text) {
     const tiles = [];
-    const re = /([+\-−–])?\s*([a-z][a-z'-]*)/gi;
+    const re = /([+\-−–])?\s*(␣?[a-z][a-z'-]*)/gi;
     let m;
     while ((m = re.exec(text)) && tiles.length < 4) {
-      const word = m[2].toLowerCase();
+      const word = keyOf(m[2]);
       if (!tiles.some((t) => t.word === word)) tiles.push({ word, sign: m[1] && m[1] !== "+" ? -1 : 1 });
     }
     return tiles;
@@ -1046,7 +1093,7 @@
       const tiles = parseThrow(text);
       const missing = tiles.filter((t) => !G.space.has(t.word)).map((t) => t.word);
       if (!tiles.length) { end.whatIfError = "Type one to four words, each with + or − in front."; return render(); }
-      if (missing.length) { end.whatIfError = `Not in the 40,000-word vocabulary: ${missing.join(", ")}. Try a more common word.`; return render(); }
+      if (missing.length) { end.whatIfError = `Not on the ${SET().label} map: ${missing.join(", ")}. Try a more common word.`; return render(); }
       if (tiles.some((t) => t.word === end.start || t.word === end.target)) { end.whatIfError = "Leave out the start word and the jack."; return render(); }
       const sc = G.space.score(end.start, end.target, tiles);
       end.whatIf = { text, tiles, rank: sc.rank, sim: sc.sim, near: sc.near, vec: sc.vec };
@@ -1550,6 +1597,298 @@
     return wrap;
   }
 
+  // ---------- tokens: how a language model reads text (the Tokens tab, and the token view of the hand) ----------
+  // The court uses whole words; chatbots read tokens. GPT-2's tokenizer (tokens.js) is fetched the
+  // first time it's needed. The tab splits the player's own text, quizzes how words split
+  // (tokens/quiz.json, checked by tests/tokens.test.js), and walks from tokens to a chosen next
+  // word, using this court's vectors wherever the game can show a step for real.
+  let tokenizer = null, tokenQuiz = null, tokensLoading = null, tokensError = "";
+  let tokenView = store.get("tokenView", false); // show the hand as GPT-2 tokens
+  const tokPage = { text: "Word Bocce is unbelievably fun!", ids: false, quiz: null, toy: null };
+  function loadTokens() {
+    if (!tokensLoading) {
+      tokensError = "";
+      tokensLoading = Promise.all([BocceTokens.load("tokens/gpt2-merges.txt"),
+        fetch("tokens/quiz.json").then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })])
+        .then(([t, quiz]) => { tokenizer = t; tokenQuiz = quiz; })
+        .catch(() => { tokensError = "The tokenizer didn't load. Check your connection and try again."; tokensLoading = null; })
+        .then(() => { if (!busy) render(); });
+    }
+    return tokensLoading;
+  }
+  const asTokens = (end) => tokenView && tokenizer && end.kind !== "tutorial" && !SET().tokens;
+  function setTokenView(on) {
+    tokenView = on;
+    store.set("tokenView", on);
+    if (on && !tokenizer) loadTokens();
+    render();
+  }
+  /** Coloured token chips for `text` (or already-split tokens), each with its ID if `ids`. */
+  function tokenChips(text, ids) {
+    const toks = typeof text === "string" ? tokenizer.tokens(text) : text;
+    return h("span", { class: "toks" }, toks.map((t, i) =>
+      h("span", { class: `tok c${i % 5}${t.partial ? " partial" : ""}`, title: `token ${t.id}` },
+        h("span", {}, t.text), ids ? h("small", {}, String(t.id)) : null)));
+  }
+  /** A word in the hand: as itself, or (token view) as GPT-2 reads it mid-sentence, space in front. */
+  const wordFace = (end, w) => (asTokens(end) ? tokenChips(" " + w, true) : w);
+
+  /** One vector as a strip of colour: green above zero, purple below, stronger for bigger numbers. */
+  function cssRGB(name) {
+    const m = getComputedStyle(document.documentElement).getPropertyValue(name).trim().match(/^#([0-9a-f]{6})$/i);
+    return m ? [0, 2, 4].map((i) => parseInt(m[1].slice(i, i + 2), 16)) : [128, 128, 128];
+  }
+  function vecStrip(vec, scale) {
+    const c = document.createElement("canvas");
+    c.className = "vstrip";
+    c.width = vec.length;
+    c.height = 1;
+    c.setAttribute("aria-hidden", "true");
+    const ctx = c.getContext("2d");
+    if (!ctx) return c;
+    const pos = cssRGB("--plus"), neg = cssRGB("--minus");
+    const top = scale || Math.max(...Array.from(vec, Math.abs)) || 1;
+    for (let k = 0; k < vec.length; k++) {
+      const [r, g, b] = vec[k] >= 0 ? pos : neg;
+      ctx.fillStyle = `rgba(${r},${g},${b},${Math.min(1, Math.abs(vec[k]) / top).toFixed(3)})`;
+      ctx.fillRect(k, 0, 1, 1);
+    }
+    return c;
+  }
+
+  function renderTokensPage() {
+    const wrap = h("div", { class: "tokens-page" },
+      h("header", { class: "tok-head" },
+        h("h2", {}, "How an AI reads"),
+        h("p", {}, "Word Bocce moves whole words around. Chatbots never see whole words. Before a language model reads your message, a ",
+          h("b", {}, "tokenizer"), " cuts it into ", h("b", {}, "tokens"),
+          ": common words, pieces of words, single characters, even pieces of characters. Each token is just a number."),
+        h("p", { class: "hint" }, "This page uses the tokenizer of GPT-2 (OpenAI, 2019), an early ancestor of today's chatbots, with 50,257 tokens. Newer models have bigger vocabularies, roughly 100,000 to 200,000 tokens, but work the same way.")));
+    if (!tokenizer) {
+      if (!tokensError) loadTokens();
+      wrap.append(tokensError
+        ? h("div", { class: "tok-sec" }, h("p", { class: "status warn" }, tokensError),
+          h("div", { class: "row" }, h("button", { class: "primary", type: "button", onclick: () => { tokensError = ""; render(); } }, "Try again")))
+        : h("div", { class: "loading" }, h("b", {}, "Fetching the tokenizer…"), "Half a megabyte at most, once."));
+      return wrap;
+    }
+    wrap.append(renderTokPlay(), renderTokQuiz(), renderTokSteps());
+    return wrap;
+  }
+
+  const TOK_EXAMPLES = [
+    ["A sentence", "Word Bocce is unbelievably fun!"],
+    ["Spelling", "How many r's are in strawberry?"],
+    ["Numbers", "1234567 + 89 = 1234656"],
+    ["Japanese", "こんにちは、元気ですか？"],
+    ["Emoji", "🙂 I love tokens 🙂"],
+    ["Code", "for (let i = 0; i < 10; i++) {\n    total += i;\n}"],
+  ];
+  function renderTokPlay() {
+    const out = h("div", { class: "tok-out" });
+    const fill = () => {
+      const text = tokPage.text, toks = tokenizer.tokens(text), words = (text.match(/\S+/g) || []).length;
+      const plural = (n, w) => `${n.toLocaleString()} ${w}${n === 1 ? "" : "s"}`;
+      out.replaceChildren(
+        h("p", { class: "tok-stats", "aria-live": "polite" }, h("b", {}, toks.length.toLocaleString()), ` token${toks.length === 1 ? "" : "s"} · `,
+          `${plural(Array.from(text).length, "character")} · ${plural(words, "word")}`),
+        toks.length ? tokenChips(toks, tokPage.ids) : h("p", { class: "hint" }, "Type something above."),
+        tokPage.ids && toks.length ? h("p", { class: "tok-ids" }, h("span", { class: "hint" }, "All the model receives: "),
+          `[${toks.map((t) => t.id).join(", ")}]`) : "");
+    };
+    const ta = h("textarea", { class: "tok-input", "data-key": "tok-text", rows: 3, maxlength: 2000, spellcheck: "false", autocapitalize: "off",
+      "aria-label": "Text to split into tokens", oninput: (e) => { tokPage.text = e.target.value; fill(); } });
+    ta.value = tokPage.text;
+    fill();
+    return h("section", { class: "tok-sec", "aria-label": "Split your own text" },
+      h("h3", {}, "Split your own text"), ta,
+      h("div", { class: "tok-examples" }, h("span", { class: "hint" }, "Try:"), TOK_EXAMPLES.map(([label, text]) =>
+        h("button", { class: "ghost small", type: "button", onclick: () => { tokPage.text = ta.value = text; fill(); } }, label))),
+      h("label", { class: "tok-check" }, h("input", { type: "checkbox", checked: tokPage.ids,
+        onchange: (e) => { tokPage.ids = e.target.checked; fill(); } }), "Show each token's number (its ID)"),
+      out,
+      h("p", { class: "hint" }, "␣ is a space: GPT-2 keeps the space before a word as part of its token. ↵ is a new line. A token like ‹F0 9F› holds only part of a character, so it's shown as raw bytes."));
+  }
+
+  function renderTokQuiz() {
+    const box = h("section", { class: "tok-sec quiz", "aria-label": "Guess the split" }, h("h3", {}, "Guess the split"));
+    const items = tokenQuiz, Q = tokPage.quiz;
+    const restart = (label, key) => h("button", { class: "primary", type: "button", "data-key": key,
+      onclick: () => { tokPage.quiz = { i: 0, answers: [], score: 0 }; render(); } }, label);
+    if (!Q) {
+      box.append(h("p", {}, `${items.length} quick rounds: see some text, guess how many tokens GPT-2 cuts it into. Each answer shows something about how chatbots work.`),
+        h("div", { class: "row" }, restart("Start", "quiz-start")));
+      return box;
+    }
+    if (Q.i >= items.length) {
+      const max = items.length * 2;
+      box.append(h("p", { class: "quiz-score" }, h("b", {}, `${Q.score} of ${max}`), " points"),
+        h("p", {}, Q.score >= max * 0.75 ? "You think like a tokenizer." : "Tokenizers are odd: they cut text by how often pieces showed up in the text they were built from, not by meaning or spelling."),
+        h("p", { class: "hint" }, "What to remember: everyday words are one token each. Capitals, a missing space, rare or new words, numbers and other languages break into pieces. And the model only ever sees the numbers."),
+        h("div", { class: "row" }, restart("Play again", "quiz-again")));
+      return box;
+    }
+    const item = items[Q.i], toks = tokenizer.tokens(item.text), n = toks.length, ans = Q.answers[Q.i];
+    const said = (k) => (k === 7 ? "7+" : String(k));
+    box.append(h("p", { class: "hint" }, `Round ${Q.i + 1} of ${items.length} · ${Q.score} point${Q.score === 1 ? "" : "s"} (2 for exactly right, 1 for one off)`),
+      h("p", { class: "quiz-text", "aria-label": `The text: ${JSON.stringify(item.text)}` }, item.text.replace(/ /g, "␣")),
+      h("p", {}, "How many tokens?"));
+    if (ans === undefined) {
+      box.append(h("div", { class: "quiz-choices", role: "group", "aria-label": "Number of tokens" }, [1, 2, 3, 4, 5, 6, 7].map((k) =>
+        h("button", { type: "button", "data-key": "quiz-" + k, onclick: () => {
+          const off = Math.abs((k === 7 ? Math.max(7, n) : k) - n);
+          Q.answers[Q.i] = k;
+          Q.score += off === 0 ? 2 : off === 1 ? 1 : 0;
+          if (off === 0) sfx.bacio(); else if (off === 1) sfx.tile(1); else sfx.nope();
+          render();
+          const next = main().querySelector('[data-key="quiz-next"]');
+          if (next) next.focus({ preventScroll: true });
+        } }, said(k)))));
+    } else {
+      const right = (ans === 7 ? Math.max(7, n) : ans) === n;
+      box.append(h("p", { class: `quiz-verdict ${right ? "right" : ""}` },
+        h("b", {}, right ? `Yes: ${n} token${n === 1 ? "" : "s"}.` : `It's ${n} token${n === 1 ? "" : "s"}. You said ${said(ans)}.`)),
+        tokenChips(toks, true), h("p", {}, item.lesson),
+        h("div", { class: "row" }, h("button", { class: "primary", type: "button", "data-key": "quiz-next", onclick: () => { Q.i++; render(); } },
+          Q.i + 1 < items.length ? "Next" : "See your score")));
+    }
+    return box;
+  }
+
+  function renderTokSteps() {
+    const sp = G.space, ws = SET(), word = ws.tut.target;
+    const li = (title, ...kids) => h("li", {}, h("h4", {}, title), ...kids);
+    const ext = (href, text) => h("a", { href, target: "_blank", rel: "noopener" }, text);
+    const playTokens = (label) => h("button", { class: "linkish", type: "button", onclick: () => switchWordSet("tokens") }, label);
+    return h("section", { class: "tok-sec", "aria-label": "From tokens to an answer" },
+      h("h3", {}, "From tokens to an answer"),
+      h("p", {}, "What a chatbot does with the tokens, and which parts Word Bocce shows you:"),
+      h("ol", { class: "tok-steps" },
+        li("Text becomes tokens",
+          h("p", {}, "As above. The model gets a list of token numbers and nothing else."),
+          h("p", {}, tokenChips("The river bank flooded.", true))),
+        li("Each token becomes a list of numbers",
+          h("p", {}, "The model looks each token up in a table it learned in training. In the smallest GPT-2, every one of the 50,257 tokens has its own row of 768 numbers, called its ",
+            h("b", {}, "embedding"), ". Tokens used in similar ways end up with similar rows."),
+          ws.tokens
+            ? h("p", {}, `On the AI tokens map, the court is this very table: GPT-2's own rows, cut down to ${sp.dim} numbers each so they load quickly. Here is the row for ${q(word)}:`)
+            : h("p", {}, `Word Bocce's court is a table like this, with a row per word. Here are the ${sp.dim} numbers for ${q(word)} on the ${ws.label} map. `,
+              "To play on GPT-2's own table, ", playTokens("switch to the AI tokens map"), "."),
+          vecStrip(sp.row(word)),
+          h("p", { class: "hint" }, "Green is above zero, purple below; the stronger the colour, the bigger the number. Every throw adds and subtracts rows like this one. (After a throw, “Why?” shows them lined up.)")),
+        li("Context reshapes the numbers",
+          h("p", {}, "Then the numbers pass through layers: 12 in the smallest GPT-2, many more in today's chatbots. In each one, ",
+            h("b", {}, "attention"), " lets every token take in information from the tokens before it. After “river”, the numbers for “bank” move toward water; after “money”, toward finance."),
+          h("p", {}, "Word Bocce skips this step. Each word has one fixed spot, whatever surrounds it, which is why on the raw-text map “ham” can't be both a meat and a football club.")),
+        li("The last vector is scored against every token",
+          h("p", {}, "To choose what comes next, the model scores its final vector against a vector for each token in its vocabulary and ranks them, much as Word Bocce ranks every word against your ball. The scores become chances, and one token is picked."),
+          h("p", {}, "GPT-2 scores against the same table it started from in step 2. So on the AI tokens map, the court's ranking is a simplified version of this step: the same table, compared by similarity on cut-down rows, where GPT-2 uses the full rows."),
+          renderNextToy()),
+        li("Repeat",
+          h("p", {}, "The picked token is added to the text and everything runs again. A long answer is thousands of these steps, one token at a time."))),
+      h("h3", {}, "What Word Bocce shows, and what it leaves out"),
+      h("div", { class: "tok-cols" },
+        h("div", {}, h("h4", {}, "Shows"), h("ul", {},
+          h("li", {}, "Meanings stored as lists of numbers"),
+          h("li", {}, "Similar meanings sitting close together"),
+          h("li", {}, "Adding and subtracting meanings"),
+          h("li", {}, "Ranking a whole vocabulary against one vector"))),
+        h("div", {}, h("h4", {}, "Leaves out"), h("ul", {},
+          h("li", {}, ws.tokens ? "Tokens: only on the AI tokens map; the other two maps use whole words" : "Tokens: the word maps use whole words (the AI tokens map doesn't)"),
+          h("li", {}, "Context: each word has one fixed spot"),
+          h("li", {}, "The layers: the smallest GPT-2 has 124 million learned numbers; today's chatbots have many billions"),
+          h("li", {}, "Training: the maps were learned beforehand, from text")))),
+      h("p", {}, "Even with every number in hand, nobody can fully say why a model does what it does: ",
+        h("button", { class: "linkish", type: "button", onclick: () => $("#interp").showModal() }, "why the game can't fully explain itself"), "."),
+      h("p", { class: "hint" }, "Tokenizer: OpenAI's GPT-2 vocabulary (2019, modified MIT licence). Further reading: ",
+        ext("https://jalammar.github.io/illustrated-gpt2/", "The Illustrated GPT-2"), " (Jay Alammar) · ",
+        ext("https://www.youtube.com/watch?v=wjZofJX0v4M", "But what is a GPT?"), " (3Blue1Brown, video)."));
+  }
+
+  // The last step, for real on this court: score every word against a ball, turn the scores into
+  // chances (softmax at a temperature) and pick one. A toy: the score is the court's similarity,
+  // over words rather than tokens; a real model's scores come from its final layer.
+  const TOY_SCALE = 0.05; // similarity ÷ (0.05 × temperature) = the score fed to softmax
+  function renderNextToy() {
+    if (!tokPage.toy || tokPage.toy.set !== wordSet) tokPage.toy = { set: wordSet, text: "king − man + woman", temp: 0.7, picks: [], error: "" };
+    const T = tokPage.toy, sp = G.space;
+    const bars = h("div", { class: "toy-bars" }), picks = h("p", { class: "toy-picks", "aria-live": "polite" });
+    const tempOut = h("b", {}, T.temp.toFixed(1));
+    const score = () => {
+      T.scores = null;
+      T.scoredFor = T.text;
+      const tiles = parseThrow(T.text);
+      const missing = tiles.filter((t) => !sp.has(t.word)).map((t) => t.word);
+      if (!tiles.length) return (T.error = "Type a few words joined by + and −, like “king − man + woman”.");
+      if (missing.length) return (T.error = `Not on the ${SET().label} map: ${missing.join(", ")}.`);
+      T.error = "";
+      const v = new Float32Array(sp.dim);
+      for (const t of tiles) { const r = sp.row(t.word); for (let k = 0; k < sp.dim; k++) v[k] += t.sign * r[k]; }
+      const skip = new Set(tiles.map((t) => t.word));
+      const sims = new Float32Array(sp.n);
+      for (let r = 0; r < sp.n; r++) {
+        if (skip.has(sp.vocab[r])) { sims[r] = -Infinity; continue; }
+        let s = 0;
+        for (let k = 0, o = r * sp.dim; k < sp.dim; k++) s += v[k] * sp.M[o + k];
+        sims[r] = s;
+      }
+      let norm = 0;
+      for (let k = 0; k < sp.dim; k++) norm += v[k] * v[k];
+      norm = Math.sqrt(norm) || 1;
+      for (let r = 0; r < sp.n; r++) sims[r] /= norm; // cosine, as on the court
+      const top = Array.from(sims.keys()).sort((a, b) => sims[b] - sims[a]).slice(0, 6);
+      T.scores = { sims, top, max: sims[top[0]], others: sp.n - skip.size - top.length };
+      T.picks = [];
+    };
+    const chances = () => {
+      const { sims, max } = T.scores, k = TOY_SCALE * T.temp, p = new Float64Array(sims.length);
+      let z = 0;
+      for (let i = 0; i < sims.length; i++) { p[i] = sims[i] === -Infinity ? 0 : Math.exp((sims[i] - max) / k); z += p[i]; }
+      for (let i = 0; i < p.length; i++) p[i] /= z;
+      return p;
+    };
+    const pct = (x) => (x >= 0.995 ? "100%" : x >= 0.001 ? (x * 100).toFixed(x < 0.1 ? 1 : 0) + "%" : "<0.1%");
+    const draw = () => {
+      tempOut.textContent = T.temp.toFixed(1);
+      if (!T.scores) { bars.replaceChildren(h("p", { class: "status warn" }, T.error)); picks.replaceChildren(); return; }
+      const p = chances(), top = T.scores.top, rest = 1 - top.reduce((a, i) => a + p[i], 0);
+      bars.replaceChildren(...top.flatMap((i) => [h("span", {}, sp.vocab[i]),
+        h("span", { class: "bar" }, h("i", { style: `width:${(p[i] * 100).toFixed(1)}%` })), h("span", { class: "pct" }, pct(p[i]))]),
+        h("span", { class: "others" }, `the other ${T.scores.others.toLocaleString()}`),
+        h("span", { class: "bar" }, h("i", { style: `width:${(rest * 100).toFixed(1)}%` })), h("span", { class: "pct" }, pct(rest)));
+      picks.replaceChildren(...(T.picks.length ? [h("span", { class: "hint" }, "Picked: "), T.picks.join(", ")] : []));
+    };
+    const pick = (times) => {
+      if (!T.scores) return;
+      const p = chances();
+      for (let t = 0; t < times; t++) {
+        let r = Math.random(), i = 0;
+        while (i < p.length - 1 && (r -= p[i]) > 0) i++;
+        T.picks.push(sp.vocab[p[i] ? i : T.scores.top[0]]); // (rounding can leave r a hair above 0)
+      }
+      T.picks = T.picks.slice(-15);
+      draw();
+    };
+    if (T.scoredFor !== T.text) score(); // re-rendering the page keeps the scores and the picks
+    draw();
+    const input = h("input", { class: "text", "data-key": "toy-input", autocomplete: "off", autocapitalize: "none", spellcheck: "false",
+      "aria-label": "A throw to score", value: T.text });
+    return h("div", { class: "toy" },
+      h("p", {}, h("b", {}, "Try the last step"), ` on this court. Treat a throw as the model's final vector: every ${SET().tokens ? "token" : "word"} on the ${SET().label} map gets a score, the scores become chances, and the game picks one.`),
+      h("form", { class: "joker-form", onsubmit: (e) => { e.preventDefault(); T.text = input.value; score(); draw(); } },
+        input, h("button", { class: "ghost", type: "submit" }, "Score it")),
+      bars,
+      h("label", { class: "toy-temp" }, "Temperature ", tempOut,
+        h("input", { type: "range", min: "0.1", max: "2", step: "0.1", value: String(T.temp), "data-key": "toy-temp",
+          oninput: (e) => { T.temp = +e.target.value; draw(); } })),
+      h("div", { class: "row" },
+        h("button", { class: "ghost", type: "button", onclick: () => pick(1) }, "Pick a word"),
+        h("button", { class: "ghost", type: "button", onclick: () => pick(10) }, "Pick 10")),
+      picks,
+      h("p", { class: "hint" }, "Low temperature: almost always the top word. Higher: more surprises, then nonsense. Chatbots usually run somewhere in between, which is one reason the same question can get different answers."),
+      h("p", { class: "hint" }, `A toy: the score is the court's similarity (scaled)${SET().tokens ? "" : ", over words instead of tokens"}, leaving out the ${SET().tokens ? "tokens" : "words"} you typed. A real model's scores come from its final layer.`));
+  }
+
   // ---------- word sets: which map of meaning the court uses ----------
   function resetEnds() {
     for (const k of Object.keys(ends)) delete ends[k];
@@ -1561,13 +1900,14 @@
     $("#wordsName").textContent = ws.name;
     $("#helpExample").textContent = `${ws.tut.start} + ${ws.tut.add} − ${ws.tut.sub} → ${ws.tut.target}`;
     $("#wordsCredit").textContent = ws.credit;
-    if (G) $("#tagline").textContent = `played on a court of ${G.space.n.toLocaleString()} ${ws.short} words`;
+    if (G) $("#tagline").textContent = `played on a court of ${G.space.n.toLocaleString()} ${ws.short} ${ws.unit || "words"}`;
     for (const el of document.querySelectorAll("[data-wordset]")) {
       const on = el.dataset.wordset === wordSet;
       el.classList.toggle("current", on);
-      const btn = el.querySelector("button");
+      const btn = el.querySelector(":scope > button"); // not the "why?" link inside its paragraph
       btn.disabled = on;
-      btn.textContent = on ? "In use" : `Use ${WORD_SETS[el.dataset.wordset].name.toLowerCase()} words`;
+      const other = WORD_SETS[el.dataset.wordset];
+      btn.textContent = on ? "In use" : other.tokens ? `Use ${other.label}` : `Use ${other.label} words`;
     }
     $("#wordsNote").textContent = note || "";
   }
@@ -1617,10 +1957,13 @@
     $("#wordsClose").addEventListener("click", () => wordsDlg.close());
     $("#whyClose").addEventListener("click", () => $("#why").close());
     $("#interpClose").addEventListener("click", () => $("#interp").close());
+    for (const el of document.querySelectorAll("[data-go-tokens]")) {
+      el.addEventListener("click", () => { for (const d of document.querySelectorAll("dialog[open]")) d.close(); switchMode("tokens"); });
+    }
     for (const el of document.querySelectorAll("[data-open-interp]")) {
       el.addEventListener("click", () => { for (const d of document.querySelectorAll("dialog[open]")) d.close(); $("#interp").showModal(); });
     }
-    for (const el of document.querySelectorAll("[data-wordset] button")) {
+    for (const el of document.querySelectorAll("[data-wordset] > button")) {
       el.addEventListener("click", () => switchWordSet(el.closest("[data-wordset]").dataset.wordset));
     }
     const wanted = store.get("wordSet", "sense");
@@ -1632,6 +1975,7 @@
       return;
     }
     showWordSet();
+    if (tokenView) loadTokens(); // the hand was last shown as AI tokens
     flushSuggestions(); // deliver any suggestions left over from earlier visits
     const want = (location.hash || "").slice(1);
     // A room link (#room=CODE) goes straight to the join screen.
@@ -1645,7 +1989,7 @@
       store.set("tutorialOffered", true);
       return switchMode("tutorial");
     }
-    switchMode(["daily", "practice", "puzzles", "versus", "tutorial", "party"].includes(want) ? want : "daily");
+    switchMode(["daily", "practice", "puzzles", "versus", "tutorial", "party", "tokens"].includes(want) ? want : "daily");
   }
   boot();
 })();

@@ -120,4 +120,46 @@ for (const p of puzzles.filter((q) => !q.retired_sense)) {
 }
 assert.deepStrictEqual(weakSense, [], "weak puzzles with common-sense words: mark them retired_sense");
 
+// ---------- the AI tokens map (web/data-tokens, GPT-2's token table; tools/build_token_data.py) ----------
+const DT = path.join(__dirname, "..", "web", "data-tokens");
+const tokPools = JSON.parse(fs.readFileSync(path.join(DT, "pools.json"), "utf8"));
+const tok = new B.Space(fs.readFileSync(path.join(DT, "vocab.txt"), "utf8").split("\n"),
+  new Int8Array(fs.readFileSync(path.join(DT, "vectors.bin"))), tokPools.dim);
+const T = (w) => "␣" + w; // "␣": GPT-2's token for a word in mid-sentence
+
+// The classic analogy still works on a language model's first layer.
+assert.strictEqual(tok.score(T("king"), T("queen"), [{ word: T("man"), sign: -1 }, { word: T("woman"), sign: 1 }]).rank, 1);
+// Its tutorial (WORD_SETS.tokens.tut): farmer → fisherman; "+ fish" closer; "+ fish − farm" 1st.
+const f0 = tok.survey(tok.row(T("farmer")), T("fisherman"), [T("farmer")], 1).rank;
+const f1 = tok.score(T("farmer"), T("fisherman"), [{ word: T("fish"), sign: 1 }]).rank;
+const f2 = tok.score(T("farmer"), T("fisherman"), [{ word: T("fish"), sign: 1 }, { word: T("farm"), sign: -1 }]).rank;
+assert(f0 > 20 && f1 < f0 && f2 === 1, `token tutorial ranks ${f0} → ${f1} → ${f2}`);
+for (const w of ["boat", "fish", "tractor", "farm", "net", "field"]) assert(tok.has(T(w)), `token tutorial word ${w}`);
+// Where a ball lands never names a case or spacing copy of a thrown token ("Fish" after "␣fish").
+assert(!tok.score(T("farmer"), T("fisherman"), [{ word: T("fish"), sign: 1 }]).near.some((w) => w !== T("fisherman") && B.related(w, T("fish"))));
+
+assert.deepStrictEqual(B.deal(tok, tokPools, "x", { explain: EXPLAIN }), B.deal(tok, tokPools, "x", { explain: EXPLAIN }));
+let tokExplained = 0;
+for (let i = 0; i < 15; i++) {
+  const d = B.deal(tok, tokPools, "k" + i, { explain: EXPLAIN });
+  assert.strictEqual(new Set(d.hand).size, B.HAND_SIZE);
+  if (tok.allThrows(d.start, d.target, d.hand).slice(0, 12).some((t) => B.explainable(tok, d.start, d.target, t.tiles, EXPLAIN))) tokExplained++;
+}
+assert(tokExplained >= 14, `explainable token deals ${tokExplained}/15`);
+
+// Puzzles on the token map use each word's mid-sentence token; weak ones carry "retired_tokens".
+const weakTok = [];
+for (const p of puzzles.filter((q) => !q.retired_tokens)) {
+  const s0 = T(p.start_word), j = T(p.target_word);
+  assert(tok.has(s0) && tok.has(j), `puzzle #${p.id} words missing from the token map`);
+  const hand = p.allowed_cards.filter((w) => w !== "WILDCARD").map(T).filter((w) => tok.has(w) && w !== s0 && w !== j);
+  const r0 = tok.survey(tok.row(s0), j, [s0], 1).rank;
+  const cands = tok.allThrows(s0, j, hand).slice(0, 50);
+  const ok = cands.filter((t) => B.explainable(tok, s0, j, t.tiles, EXPLAIN));
+  const par = (ok.length ? ok : cands).map((t) => ({ ...t, rank: tok.score(s0, j, t.tiles).rank }))
+    .reduce((m, t) => (m && !closer(t, m) ? m : t), null);
+  if (r0 <= 8 || par.rank > 30 || !ok.length) weakTok.push(`#${p.id} ${p.start_word}→${p.target_word} (start ${r0}, par ${par.rank})`);
+}
+assert.deepStrictEqual(weakTok, [], "weak puzzles on the token map: mark them retired_tokens");
+
 console.log("engine ok");

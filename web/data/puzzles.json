@@ -1,6 +1,7 @@
 [
   {
     "id": 1,
+    "retired_tokens": "already solved: the jack starts among the start word's 8 nearest tokens (AI tokens map, 2026-10-01)",
     "retired_sense": "already solved: the jack starts among the start word's 8 nearest words (common-sense words, 2026-09-29)",
     "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "easy",
@@ -116,6 +117,7 @@
   },
   {
     "id": 6,
+    "retired_tokens": "already solved: the jack starts among the start word's 8 nearest tokens (AI tokens map, 2026-10-01)",
     "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
     "name": "Weather Shift",
@@ -181,6 +183,7 @@
   },
   {
     "id": 10,
+    "retired_tokens": "already solved: the jack starts among the start word's 8 nearest tokens (AI tokens map, 2026-10-01)",
     "retired_sense": "already solved: the jack starts among the start word's 8 nearest words (common-sense words, 2026-09-29)",
     "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "easy",
@@ -199,6 +202,7 @@
   },
   {
     "id": 13,
+    "retired_tokens": "already solved: the jack starts among the start word's 8 nearest tokens (AI tokens map, 2026-10-01)",
     "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
     "name": "Musical Chairs",
@@ -314,6 +318,7 @@
   },
   {
     "id": 20,
+    "retired_tokens": "already solved: the jack starts among the start word's 8 nearest tokens (AI tokens map, 2026-10-01)",
     "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
     "name": "The Shapeshifter",
@@ -364,6 +369,7 @@
   },
   {
     "id": 23,
+    "retired_tokens": "no sensible best throw: none of the strongest throws can be explained word by word (AI tokens map, 2026-10-01)",
     "retired_sense": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (common-sense words, 2026-09-29)",
     "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
@@ -382,6 +388,7 @@
   },
   {
     "id": 24,
+    "retired_tokens": "not playable: rhinestone isn't a single GPT-2 token (AI tokens map, 2026-10-01)",
     "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
     "name": "Rhinestone Cowboy",
@@ -399,6 +406,7 @@
   },
   {
     "id": 25,
+    "retired_tokens": "couldn't be done well: the best throw only reaches #32 (AI tokens map, 2026-10-01)",
     "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "easy",
     "name": "Bacon to Eggs",
@@ -416,6 +424,7 @@
   },
   {
     "id": 26,
+    "retired_tokens": "already solved: the jack starts among the start word's 8 nearest tokens (AI tokens map, 2026-10-01)",
     "retired_sense": "already solved: the jack starts among the start word's 8 nearest words (common-sense words, 2026-09-29)",
     "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
@@ -450,6 +459,7 @@
   },
   {
     "id": 28,
+    "retired_tokens": "already solved: the jack starts among the start word's 8 nearest tokens (AI tokens map, 2026-10-01)",
     "retired_sense": "already solved: the jack starts among the start word's 8 nearest words (common-sense words, 2026-09-29)",
     "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
@@ -550,6 +560,7 @@
   },
   {
     "id": 34,
+    "retired_tokens": "not playable: jedi isn't a single GPT-2 token (AI tokens map, 2026-10-01)",
     "difficulty": "medium",
     "name": "May the Force",
     "description": "Star Wars transformation",
@@ -566,6 +577,7 @@
   },
   {
     "id": 35,
+    "retired_tokens": "couldn't be done well: the best throw only reaches #261 (AI tokens map, 2026-10-01)",
     "retired_sense": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (common-sense words, 2026-09-29)",
     "difficulty": "hard",
     "name": "Fight Club Rule #1",
@@ -633,6 +645,7 @@
   },
   {
     "id": 39,
+    "retired_tokens": "already solved: the jack starts among the start word's 8 nearest tokens (AI tokens map, 2026-10-01)",
     "retired_sense": "already solved: the jack starts among the start word's 8 nearest words (common-sense words, 2026-09-29)",
     "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "easy",
@@ -683,6 +696,7 @@
   },
   {
     "id": 42,
+    "retired_tokens": "couldn't be done well: the best throw only reaches #35 (AI tokens map, 2026-10-01)",
     "difficulty": "easy",
     "name": "Milk and Cookies",
     "description": "Perfect snack combo",
@@ -699,6 +713,7 @@
   },
   {
     "id": 43,
+    "retired_tokens": "not playable: violets isn't a single GPT-2 token (AI tokens map, 2026-10-01)",
     "difficulty": "medium",
     "name": "Roses Are Red",
     "description": "Classic poem",
@@ -732,6 +747,7 @@
   },
   {
     "id": 45,
+    "retired_tokens": "not playable: donuts isn't a single GPT-2 token (AI tokens map, 2026-10-01)",
     "retired": "the best throw doesn't make sense to a person (audited against the game vectors, 2026-09-29)",
     "difficulty": "easy",
     "name": "Coffee and Donuts",
@@ -749,6 +765,7 @@
   },
   {
     "id": 46,
+    "retired_tokens": "couldn't be done well: the best throw only reaches #39 (AI tokens map, 2026-10-01)",
     "retired_sense": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (common-sense words, 2026-09-29)",
     "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
@@ -767,6 +784,7 @@
   },
   {
     "id": 47,
+    "retired_tokens": "couldn't be done well: the best throw only reaches #47 (AI tokens map, 2026-10-01)",
     "retired_sense": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (common-sense words, 2026-09-29)",
     "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "hard",
@@ -785,6 +803,7 @@
   },
   {
     "id": 48,
+    "retired_tokens": "no sensible best throw: none of the strongest throws can be explained word by word (AI tokens map, 2026-10-01)",
     "retired_sense": "no best throw a person could explain word by word (common-sense words, 2026-09-29)",
     "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "easy",
@@ -803,6 +822,7 @@
   },
   {
     "id": 49,
+    "retired_tokens": "couldn't be done well: the best throw only reaches #39 (AI tokens map, 2026-10-01)",
     "retired": "the best throw doesn't make sense to a person (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
     "name": "Curiosity Killed the...",
@@ -820,6 +840,7 @@
   },
   {
     "id": 50,
+    "retired_tokens": "not playable: kansas isn't a single GPT-2 token (AI tokens map, 2026-10-01)",
     "retired_sense": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (common-sense words, 2026-09-29)",
     "difficulty": "hard",
     "name": "Wizard of Oz",
@@ -837,6 +858,7 @@
   },
   {
     "id": 51,
+    "retired_tokens": "couldn't be done well: the best throw only reaches #227 (AI tokens map, 2026-10-01)",
     "retired_sense": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (common-sense words, 2026-09-29)",
     "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
@@ -871,6 +893,7 @@
   },
   {
     "id": 53,
+    "retired_tokens": "couldn't be done well: the best throw only reaches #68 (AI tokens map, 2026-10-01)",
     "retired": "already solved: the jack starts among the start word's 8 nearest words (audited against the game vectors, 2026-09-29)",
     "difficulty": "hard",
     "name": "Space Race Returns",
@@ -937,6 +960,7 @@
   },
   {
     "id": 57,
+    "retired_tokens": "couldn't be done well: the best throw only reaches #47 (AI tokens map, 2026-10-01)",
     "retired_sense": "no best throw a person could explain word by word (common-sense words, 2026-09-29)",
     "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "medium",
@@ -955,6 +979,7 @@
   },
   {
     "id": 58,
+    "retired_tokens": "couldn't be done well: the best throw only reaches #48 (AI tokens map, 2026-10-01)",
     "retired_sense": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (common-sense words, 2026-09-29)",
     "retired": "can't be done well: even the best throw leaves the jack far off (worse than 30th) (audited against the game vectors, 2026-09-29)",
     "difficulty": "easy",

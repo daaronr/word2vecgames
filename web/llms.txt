@@ -12,10 +12,11 @@ Free, in the browser, no sign-up. Source: https://github.com/daaronr/word2vecgam
 - Distance is shown as rank: #12 means the target is the 12th-nearest word to where your ball stopped. #1 is a "bacio", a kiss on the jack.
 - After every throw, "Why?" explains what each word contributed: its share of the ball's similarity to the target, and which words crowd the target before and after.
 
-## Two word sets ("maps of meaning")
+## Three word sets ("maps of meaning")
 
 - Common sense (default): ConceptNet Numberbatch 19.08, which blends text statistics with a knowledge base of everyday facts. About 21,000 everyday words. Courts are only dealt if the best throw can be explained word by word.
 - Raw text: GloVe 6B, 100 dimensions, learned only from which words appear together in Wikipedia and news text (about 40,000 words). The classic word embedding, which can surprise.
+- AI tokens: GPT-2's own token table (OpenAI, 2019): about 50,000 tokens rather than words, including case and spacing variants and word pieces. The numbers a language model looks up for each token before anything else.
 
 ## Modes
 
@@ -23,6 +24,7 @@ Free, in the browser, no sign-up. Source: https://github.com/daaronr/word2vecgam
 - Practice: endless freshly dealt courts.
 - Puzzles: hand-made courts with star ratings.
 - Versus: against a bot or a friend on one device, with bocce scoring (first to 5), or online with up to six friends in a shared room (browser to browser; nothing is stored).
+- Tokens: how a chatbot reads text, with GPT-2's real tokenizer. Split your own text into tokens and IDs, play an eight-round "guess the split" quiz, and follow the steps from tokens to a chosen next word (with a temperature slider). In any game, "Show as AI tokens" shows the tiles as GPT-2 tokens.
 
 ## Pages
 

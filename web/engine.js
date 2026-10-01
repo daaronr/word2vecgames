@@ -167,7 +167,12 @@
   }
 
   // ---------- dealing an end ----------
-  const related = (a, b) => a.slice(0, 4) === b.slice(0, 4) || a.includes(b) || b.includes(a);
+  // Near-copies: "boats" for "boat". On the token map also "Boat" and "␣boat" ("␣" marks a leading space).
+  const bare = (w) => (w.charCodeAt(0) === 0x2423 ? w.slice(1) : w).toLowerCase();
+  const related = (x, y) => {
+    const a = bare(x), b = bare(y);
+    return a.slice(0, 4) === b.slice(0, 4) || a.includes(b) || b.includes(a);
+  };
 
   /**
    * Deal a start word, a jack (target) and a hand of HAND_SIZE tiles, every one

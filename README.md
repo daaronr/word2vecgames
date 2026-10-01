@@ -10,7 +10,7 @@ king − man + woman  →  queen
 Distance is measured as **rank**: `#12` means the jack is the 12th-nearest word
 to where your ball stopped. `#1` is a *bacio*, a kiss on the jack.
 
-## Two word sets ("maps of meaning")
+## Three word sets ("maps of meaning")
 
 Players choose where word positions come from (the **Words** button, or Help):
 
@@ -24,6 +24,12 @@ Players choose where word positions come from (the **Words** button, or Help):
 - **Raw text** (`web/data/`): GloVe 6B 100d, learned only from which words
   appear together in Wikipedia and news. The classic word embedding: it can
   surprise ("ham" sits with football clubs, "eggs" nearer "meat" than "bacon").
+- **AI tokens** (`web/data-tokens/`): GPT-2's own token table, the numbers a
+  language model looks up for each token before anything else. 49,745 tokens
+  (labelled as `web/tokens.js` shows them: "␣shoe" is " shoe"), 128 of 768
+  dimensions, 6.4 MB. Neighbours include case and spacing variants ("␣Shoe",
+  "Shoe") and word pieces. Typed words map to their mid-sentence token. Built
+  by `tools/build_token_data.py`; details in `docs/learning-ai.md`.
 
 Why both exist: with raw-text words, the hand-made puzzles and dealt courts
 often had best throws nobody could explain (bacon → eggs couldn't get better
@@ -31,8 +37,8 @@ than 20th; a typical dealt par read "doll − dragon + flour + puppy → peanut"
 With common-sense words, 44 of the 60 puzzles pass the quality bar (32 with raw
 text), and dealt pars read like "canal + disaster + avalanche + flow → flood".
 Each set has its own Daily, tutorial example and puzzle retirement field
-(`retired_sense` / `retired` in `puzzles.json`). An online room uses the host's
-set.
+(`retired_sense` / `retired` / `retired_tokens` in `puzzles.json`; 35 puzzles
+are active on the token map). An online room uses the host's set.
 
 ## Modes
 
@@ -52,6 +58,13 @@ set.
   You see each other's balls land; the words are revealed when the round ends.
   Up to six players. Browsers connect directly (WebRTC via the free PeerJS
   broker, `web/net.js`); the host's tab is the room, and nothing is stored.
+- **Tokens**: how a chatbot reads text, with GPT-2's real tokenizer
+  (`web/tokens.js`). Split your own text into tokens and see their IDs, play
+  "Guess the split" (eight rounds, each explaining a quirk that matters for
+  chatbots), and follow the steps from tokens to a chosen next word, with a
+  temperature slider that samples from the court's own vectors. In any game,
+  "Show as AI tokens" under the hand relabels the tiles as GPT-2 tokens. Ideas
+  and next steps for teaching how AI works: `docs/learning-ai.md`.
 
 After every throw, **Why?** opens a reading of what each word did: each word's
 exact share of the ball's similarity to the jack (`Space.explainThrow`), the
@@ -59,7 +72,9 @@ words crowding the jack before and after, and plain notes on the things that
 tend to confuse people (subtracting a word that is itself close to the jack,
 similarity rising while rank falls, landing somewhere none of the words point
 to). It always says this is a reading of the numbers, not the model's reasons,
-and links to a short explainer on why interpretability is hard.
+and links to a short explainer on why interpretability is hard. "See the
+numbers" draws each word's vector as a strip, so you can watch the ball's
+numbers come out of the words' numbers.
 
 After every round you see par (the best throw the hand allowed), a few nearby
 words placed on the court, and a "try your own words" box: type any throw to
@@ -108,12 +123,15 @@ need full embeddings: `python setup_embeddings.py --model glove-100` and
 | `web/` | The game: `index.html`, `app.js` (UI), `engine.js` (vector math, dealing, scoring), `style.css`, `presentation.html` (the maths, as slides), `teach.html` (lesson plan), `og-image.png` (link preview) |
 | `promo/` | Promotion drafts, checklist and tracker (`promo/README.md`); `og-card.html` renders `web/og-image.png` |
 | `web/data/` | `vectors.bin` (40k × 100 int8), `vocab.txt`, `pools.json` (card and jack word pools), `puzzles.json` |
+| `web/tokens.js`, `web/tokens/` | GPT-2's tokenizer for the Tokens tab: `gpt2-merges.txt` (OpenAI's merge list) and `quiz.json` |
 | `tools/build_web_data.py` | Rebuilds `web/data/` from a GloVe file and word norms |
 | `tools/make_artifact.sh` | Stages `web/` for publishing as a claude.ai Artifact |
 | `tests/engine.test.js` | `node tests/engine.test.js` checks the engine against the real vectors |
+| `tests/tokens.test.js` | `node tests/tokens.test.js` checks the tokenizer against known GPT-2 IDs and the quiz's splits |
 | `word_bocce_mvp_fastapi.py` | Server: static game plus the older multiplayer/puzzle API |
 | `DEPLOY.md` | Static hosting, and the Linode server |
 | `docs/original-design.md` | The original design document |
+| `docs/learning-ai.md` | Making the game teach how AI works: what's built, the planned GPT-2 token map, more ideas |
 | `archive/` | Superseded UI, docs and deploy configs |
 
 ## How dealing works
@@ -153,6 +171,10 @@ curl -L -o embeddings/numberbatch-en.txt.gz \
 python3 tools/build_web_data.py embeddings/numberbatch-en.txt.gz --vocab-from web/data/vocab.txt \
   --everyday 0.9 --lists embeddings --out web/data-sense
 node tests/engine.test.js
+
+# AI tokens set: GPT-2's token table from Hugging Face (fetches ~150 MB once into embeddings/)
+python3 tools/build_token_data.py
+node tests/engine.test.js
 ```
 
 `tools/blocklist.txt` keeps slurs, profanity and a few grim words out of the
@@ -164,4 +186,7 @@ Raw-text vectors: GloVe 6B (Pennington, Socher & Manning, 2014), Public Domain
 Dedication and License. Common-sense vectors: ConceptNet Numberbatch 19.08
 (Speer, Chin & Havasi, 2017), CC BY-SA 4.0; the derived bundle in
 `web/data-sense/` is shared under the same licence (see its `README.txt`).
-Word familiarity: Brysbaert, Warriner & Kuperman (2014).
+Token map: GPT-2's token embeddings (OpenAI, 2019, modified MIT licence), see
+`web/data-tokens/README.txt`.
+Word familiarity: Brysbaert, Warriner & Kuperman (2014). Tokenizer: OpenAI's
+GPT-2 merge list (2019, modified MIT licence), see `web/tokens/README.txt`.
