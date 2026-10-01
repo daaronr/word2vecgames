@@ -6,7 +6,7 @@ Everything for telling people about [Word Bocce](https://wordbocce.davidreinstei
 
 | File | What it is |
 | --- | --- |
-| [lesswrong.md](lesswrong.md) | LessWrong post (~1,000 words): the game as a hands-on lesson in why interpretability is hard, two maps of meaning, where linear structure breaks |
+| [lesswrong.md](lesswrong.md) | LessWrong post (~1,000 words): the game as a hands-on lesson in why interpretability is hard, three maps of meaning (including GPT-2's token table), where linear structure breaks |
 | [show_hn.md](show_hn.md) | Show HN title and first comment |
 | [reddit.md](reddit.md) | Posts for r/MachineLearning ([P]), r/LanguageTechnology, and a word-game subreddit |
 | [short_posts.md](short_posts.md) | Interp Slack and Discord messages, ARENA and BlueDot, an email to NLP instructors, Semantle and Contexto framing, three Bluesky/Mastodon posts |
@@ -14,6 +14,8 @@ Everything for telling people about [Word Bocce](https://wordbocce.davidreinstei
 | [`web/teach.html`](../web/teach.html) | The teacher page, live at [wordbocce.davidreinstein.org/teach.html](https://wordbocce.davidreinstein.org/teach.html): a 30–45 minute lesson plan, linked from the game's footer and the slides |
 
 Already live with this package: the preview image on the game, slides, and teacher pages, and a link on the last line of the Daily "Copy result" text.
+
+The drafts were updated on 2026-10-01 for the AI tokens map (GPT-2's token table) and the Tokens tab, which landed after they were first written. If more features land before posting, re-check the "what it is" paragraphs.
 
 The example used everywhere is the common-sense tutorial throw, hat + foot − head → shoe (shoe goes from 249th to 5th to 1st). It's checked in `tests/engine.test.js`. Other numbers in the drafts (ham's neighbors, eggs/meat/bacon ranks, cold being 16th-nearest to hot) were computed from the game's own vectors on 2026-10-01; they'll change only if the word bundles are rebuilt.
 

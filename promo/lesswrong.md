@@ -15,7 +15,7 @@ I made a small browser game, [Word Bocce](https://wordbocce.davidreinstein.org/)
 
 I'm posting it here because it turned into a hands-on lesson in why interpretability is hard, and I'd like feedback from people who think about that more than I do.
 
-One caveat up front. These are static word embeddings, GloVe (2014) and ConceptNet Numberbatch (2019): one fixed vector per word. Nothing here is a transformer's internals. Treat it as a warm-up, or an intuition pump.
+One caveat up front. These are static embeddings: one fixed vector per word or token. Two of the maps are classic word embeddings, GloVe (2014) and ConceptNet Numberbatch (2019). The third is GPT-2's own token table, the vectors the model looks up for each token before any attention layer runs. So at most this is the doorway into a transformer, not its internals. Treat it as a warm-up, or an intuition pump.
 
 ## The "Why?" panel
 
@@ -33,12 +33,15 @@ None of this is deep, but it helps to have it in a form you can poke at. If an e
 
 The game's rank leaves out the words you threw. Without that, the ball from hat + foot − head is nearest to foot, then hat, then shoe, and king − man + woman is nearest to king. It's the convention [Nissim, van Noord & van der Goot (2020)](https://aclanthology.org/2020.cl-2.7/) criticize in the analogy literature. For a game I think it's the right rule (otherwise you'd keep "landing" on your own tile), but it flatters the famous analogy: in the raw-text set, queen is already the 2nd-nearest word to king before you throw anything, and in the common-sense set it's already 1st.
 
-## Two maps of meaning
+## Three maps of meaning
 
-You can switch between two word sets:
+You can switch between three word sets:
 
 - **Raw text**: GloVe 6B, 100 dimensions, about 40,000 words, learned only from which words appear together in Wikipedia and news.
 - **Common sense** (the default): ConceptNet Numberbatch 19.08, 300 dimensions, 21,114 everyday words, which blends text statistics with a knowledge graph of everyday facts ("a hen lays eggs").
+- **AI tokens**: GPT-2 small's token embedding table, 49,745 tokens, reduced from 768 to 128 dimensions with PCA. The neighbours are a quick lesson in what a language model's vocabulary is: case and spacing variants ("␣Shoe", "Shoe") and word pieces, not just words.
+
+There's also a Tokens tab, using GPT-2's real tokenizer: split your own text, play an eight-round "guess the split" quiz, and step from tokens to a chosen next word with a temperature slider.
 
 Same game, different training data, different "meaning". In the raw-text set, the nearest words to *ham* are Sunderland, Fulham, Middlesbrough, and Wigan (as in West Ham). *Orange* is a color, *apple* is Microsoft and IBM, and the nearest word to *cold* is *warm*. From *eggs*, "meat" is 7th-nearest and "bacon" 163rd. In the common-sense set, ham sits with bacon, pork, and sausage.
 
@@ -58,7 +61,7 @@ The linear structure is real enough to build a game on: every dealt hand has til
 
 1. Is the "Why?" framing right? Is there a better decomposition to show, or a clearer way to say what it doesn't tell you?
 2. Is this useful as a warm-up before interpretability material, for example in ARENA or BlueDot-style courses? I wrote a [lesson plan for teachers](https://wordbocce.davidreinstein.org/teach.html); I'd welcome suggestions on it.
-3. Would a version built on contextual embeddings from a small transformer be worth making, or would it lose the clarity that makes this work?
+3. The token map uses GPT-2's input embeddings. Would a version built on contextual vectors (say, the residual stream partway through a small model) be worth making, or would it lose the clarity that makes this work?
 4. Bugs, confusing wording, and puzzles that feel wrong.
 
 Most of the code was written with Claude Code, an AI coding agent, with me directing and playtesting. The source is on [GitHub](https://github.com/daaronr/word2vecgames); the engine is about 300 lines of plain JavaScript, with tests that run it against the real vectors.

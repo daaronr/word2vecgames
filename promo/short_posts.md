@@ -12,7 +12,7 @@ Check each channel's norms first. In Slack and Discord communities, look for a #
 >
 > You add and subtract word vectors to roll a ball toward a target word. After each throw, a "Why?" panel splits the ball's cosine to the target into exact per-word shares, then says this is arithmetic, not the model's reasons. Example: in hat + foot − head → shoe, subtracting head *lowers* the similarity but moves shoe from 5th to 1st, because it pushes competitors back.
 >
-> To be clear, these are static embeddings (GloVe and ConceptNet Numberbatch), not transformer internals. I'd value a critical eye on how the panel frames attribution versus explanation, and on whether there's a better decomposition to show.
+> To be clear, these are static embeddings: GloVe, ConceptNet Numberbatch, and GPT-2's input token table (one fixed vector per token, before any attention layer). Not transformer internals. I'd value a critical eye on how the panel frames attribution versus explanation, and on whether there's a better decomposition to show.
 
 ---
 
@@ -22,9 +22,9 @@ Best sent to course organizers, or posted where participants share resources, id
 
 > A possible pre-reading activity for people new to interpretability: Word Bocce, a free browser game on word embeddings. https://wordbocce.davidreinstein.org/
 >
-> It takes about 10 minutes to get the idea. You do vector arithmetic on words (hat + foot − head → shoe), and a "Why?" panel breaks each result into exact per-word contributions, then says why that still isn't an explanation. You can also switch between an embedding learned only from text and one that adds a knowledge graph, and watch "ham" go from football clubs to bacon.
+> It takes about 10 minutes to get the idea. You do vector arithmetic on words (hat + foot − head → shoe), and a "Why?" panel breaks each result into exact per-word contributions, then says why that still isn't an explanation. You can also switch between an embedding learned only from text and one that adds a knowledge graph, and watch "ham" go from football clubs to bacon. A third map is GPT-2's own token table, and a Tokens tab shows how GPT-2 splits text into tokens.
 >
-> It's static word vectors, not a transformer, so it's a warm-up rather than mech interp proper. There's a short lesson plan here if a facilitator wants to use it in a session: https://wordbocce.davidreinstein.org/teach.html
+> It's static vectors (at most GPT-2's input embeddings), not a transformer's internals, so it's a warm-up rather than mech interp proper. There's a short lesson plan here if a facilitator wants to use it in a session: https://wordbocce.davidreinstein.org/teach.html
 
 ---
 

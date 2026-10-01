@@ -213,6 +213,8 @@
       <li>Where did the raw-text map learn that orange is mainly a color, and that key mostly means "important"?</li>
       <li>What would a map trained on recipes, sports pages, or your group chat look like?</li>
     </ul>
+    <h3>Extension: a chatbot's own map</h3>
+    <p>The game also has a third word set, <b>AI tokens</b>: GPT-2's token table, the list of numbers the model looks up for each token before anything else happens (49,745 tokens, reduced to 128 numbers each). Switch to it and look at the neighbours: a word's nearest "words" are often its own capitalised or spaced variants (" Shoe", "Shoe") and word pieces, because a language model reads tokens, not words. The <b>Tokens</b> tab shows GPT-2's tokenizer splitting any text you type, with a short "guess the split" quiz.</p>
 
     <h2>Discussion questions</h2>
     <h3>What embeddings capture, and what they miss</h3>
@@ -240,7 +242,7 @@
     <h2>Honest caveats</h2>
     <p>These are worth saying out loud in class.</p>
     <div class="caveat">
-      <p><b>These are fixed ("static") word embeddings, not a transformer's internals.</b> Each word gets one list of numbers, from models published in 2014 (GloVe) and 2019 (Numberbatch 19.08). A modern language model builds context-dependent representations across many layers. The game is a warm-up for those ideas, not a look inside a chatbot.</p>
+      <p><b>These are fixed ("static") embeddings, not a transformer's internals.</b> Each word or token gets one list of numbers, from GloVe (2014), Numberbatch 19.08 (2019), or GPT-2's token table (2019). The GPT-2 map is the model's first step only: everything after it, across many layers, builds representations that change with the sentence. The game is a warm-up for those ideas, not a look inside a chatbot.</p>
     </div>
     <ul>
       <li><b>The "Why?" panel is a reading of the numbers, not the model's reasons.</b> The shares are exact arithmetic; the plain-language notes are guesses from those numbers, and the panel says so.</li>

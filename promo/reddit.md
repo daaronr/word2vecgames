@@ -20,7 +20,7 @@ Your ball starts on a word, the jack (target) is another, and you add and subtra
 
 A few things that might be of interest:
 
-- **Two embeddings, same game.** ConceptNet Numberbatch 19.08 (300d, 21,114 everyday words) is the default; GloVe 6B (100d, about 40k words) is a switch away. The differences are large and easy to see. In GloVe, "ham" sits with Sunderland, Fulham, and Middlesbrough, "orange" with other colors, and "apple" with Microsoft and IBM.
+- **Three embeddings, same game.** ConceptNet Numberbatch 19.08 (300d, 21,114 everyday words) is the default; GloVe 6B (100d, about 40k words) and GPT-2 small's token embedding table (49,745 tokens, PCA to 128d) are a switch away. The differences are large and easy to see. In GloVe, "ham" sits with Sunderland, Fulham, and Middlesbrough, "orange" with other colors, and "apple" with Microsoft and IBM. In GPT-2's table, a word's nearest neighbours are often its own case and spacing variants.
 - **Attribution vs. explanation.** A "Why?" panel decomposes cos(ball, jack) = Σ sign·cos(word, jack) / |Σ sign·v(word)| into exact per-word shares, then says this is a reading of the numbers, not the model's reasons. In the tutorial (hat + foot − head → shoe), subtracting head *lowers* the similarity to shoe but moves it from 5th to 1st, by pushing competitors (toe, toes, beanie) back.
 - **Selection effects.** With the default word set, courts are only dealt if one of the strongest throws passes a legibility test (every added word has cosine ≥ 0.3 with the jack, every subtracted word ≥ 0.3 with the start). That makes the default look more interpretable than the raw embedding is.
 - **Rank skips the input words**, like classic analogy evaluation (Nissim et al., 2020, criticize this). Without it, king − man + woman lands nearest to king.
@@ -39,10 +39,11 @@ Feedback I'd find useful: better ways to present the decomposition, whether a co
 
 I built a small game on word embeddings, Word Bocce: https://wordbocce.davidreinstein.org/
 
-You start on one word and add or subtract word tiles to land near a target word, scored by the target's rank among the nearest words. You can switch between two embeddings, and comparing them turned out to be the most interesting part:
+You start on one word and add or subtract word tiles to land near a target word, scored by the target's rank among the nearest words. You can switch between three embeddings, and comparing them turned out to be the most interesting part:
 
 - **GloVe 6B** (100d, Wikipedia and news): "ham" is a football club (its nearest words are Sunderland, Fulham, Middlesbrough), "key" mostly means "important", and the nearest word to "cold" is "warm". From "eggs", "meat" is 7th-nearest and "bacon" 163rd.
 - **ConceptNet Numberbatch 19.08** (300d, text plus a knowledge graph): ham sits with bacon, pork, and sausage, and eggs with hens and yolks. Antonyms still sit close, though: cold is the 16th-nearest word to hot.
+- **GPT-2's token table** (49,745 subword tokens, PCA to 128d): neighbours include case and leading-space variants ("␣Shoe", "Shoe") and word pieces. A Tokens tab shows GPT-2's tokenizer splitting your own text.
 
 Two honest notes. Rank excludes the words you threw, as standard analogy evaluation does. In the raw-text set, queen is already the 2nd-nearest word to king, and with king − man + woman the ball is nearest to king itself, so the famous example is flattered. And the "Why?" panel gives an exact per-word breakdown of each throw's similarity, which is arithmetic, not an explanation of what the model learned.
 
