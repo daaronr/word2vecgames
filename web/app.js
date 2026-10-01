@@ -985,7 +985,10 @@
   // Where suggestions are sent: the game server's /api/suggestions. When the page is served by that
   // server (the Linode, port 8000) it's the same origin; from GitHub Pages it must be an HTTPS address.
   // Until one answers, suggestions wait in this browser and are retried on later visits.
-  const FEEDBACK_ORIGINS = { "daaronr.github.io": "https://45-79-160-157.sslip.io" };
+  const FEEDBACK_ORIGINS = {
+    "wordbocce.davidreinstein.org": "https://45-79-160-157.sslip.io",
+    "daaronr.github.io": "https://45-79-160-157.sslip.io",
+  };
   const feedbackURL = () => {
     if (window.WORD_BOCCE_API !== undefined) return window.WORD_BOCCE_API && window.WORD_BOCCE_API + "/api/suggestions";
     if (location.port === "8000" || location.hostname.endsWith("sslip.io")) return "/api/suggestions";

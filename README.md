@@ -70,8 +70,9 @@ court more fun. Suggestions are sent to the game server's `/api/suggestions`
 
 ## Run it
 
-Play online: https://daaronr.github.io/word2vecgames/ (GitHub Pages, redeployed
-from `web/` on every push to main).
+Play online: https://wordbocce.davidreinstein.org/ (GitHub Pages with a custom
+domain, redeployed from `web/` on every push to main; the old
+daaronr.github.io/word2vecgames address redirects there).
 
 The game runs entirely in the browser. Nothing to install:
 

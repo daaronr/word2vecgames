@@ -3,9 +3,17 @@
 ## The game: GitHub Pages (the one published copy)
 
 The game in `web/` is plain HTML/JS/CSS plus the word bundles (a few MB). It is
-published at **https://daaronr.github.io/word2vecgames/**, redeployed from `web/`
+published at **https://wordbocce.davidreinstein.org/**, redeployed from `web/`
 on every push to main (`.github/workflows/pages.yml`). Any static host would do;
 locally, `python -m http.server` inside `web/`.
+
+Custom domain (since 2026-10-01): a CNAME `wordbocce.davidreinstein.org ->
+daaronr.github.io` in the davidreinstein.org Netlify DNS zone, plus the Pages
+custom-domain setting (`gh api -X PUT repos/daaronr/word2vecgames/pages -f
+cname=wordbocce.davidreinstein.org`), HTTPS enforced. Because Pages builds from
+the workflow, no CNAME file is needed in `web/`. daaronr.github.io/word2vecgames
+301s to the custom domain. If the game is ever served from another hostname, add
+it to `FEEDBACK_ORIGINS` in `web/app.js`, or the suggestion box won't send.
 
 ## The Linode server: API only (http://45.79.160.157:8000, https://45-79-160-157.sslip.io)
 
@@ -17,7 +25,7 @@ drop-in, `/etc/systemd/system/word-bocce.service.d/game-url.conf`:
 
 ```ini
 [Service]
-Environment=GAME_URL=https://daaronr.github.io/word2vecgames
+Environment=GAME_URL=https://wordbocce.davidreinstein.org
 ```
 
 Without `GAME_URL` (e.g. running `uvicorn` on your laptop) the server serves
