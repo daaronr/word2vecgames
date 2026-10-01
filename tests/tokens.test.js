@@ -43,4 +43,12 @@ for (const dir of ["data", "data-sense"]) {
   assert(single / pools.targets.length > 0.8, `${dir}: only ${single}/${pools.targets.length} jacks are one token`);
 }
 
+// Splits quoted in the token puzzles' lessons (web/data-tokens/puzzles.json).
+const split = (t) => T.tokens(t).map((x) => x.text).join(" + ");
+assert.strictEqual(split(" Smallville"), "␣Small + ville");
+assert.strictEqual(split("espresso"), "esp + resso");
+assert.strictEqual(split(" espresso"), "␣espresso");
+assert.strictEqual(split("kindness"), "kind + ness");
+assert.strictEqual(split(" biologist"), "␣biologist");
+
 console.log("tokens: all checks passed");

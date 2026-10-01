@@ -181,6 +181,8 @@
    *   2 sheds      — carry the start word's flavour; worth subtracting
    *   2 lures      — linked to both, so adding them drags the start along
    *   3 near-misses — look like they point at the jack, but more weakly than the pulls
+   * On the token map (pools.pieces), two of the near-misses become pieces of words linked to the
+   * jack ("rimp" for fisherman, "resso" for coffee), so the hand looks like what GPT-2 reads.
    */
   function deal(space, pools, seed, opts = {}) {
     if (!opts.explain) return dealOnce(space, pools, seed);
@@ -239,10 +241,22 @@
       const pool = R.shuffle(list.filter((w) => !hand.includes(w)));
       hand.push(...pool.slice(0, k));
     };
+    const nPieces = pools.pieces ? 2 : 0;
     take(pull, 2);
     take(shed, 2);
     take(lure, 2);
-    take(miss, 3);
+    take(miss, 3 - nPieces);
+    if (nPieces) {
+      // Prefer pieces that point at this jack rather than at everything ("ner", "ists"): score each by
+      // its similarity to the jack minus its average similarity to a fixed sample of jacks.
+      const sample = targets.filter((_, i) => i % 25 === 0);
+      const generic = (w) => sample.reduce((a, t) => a + space.sim(w, t), 0) / sample.length;
+      const pieces = pools.pieces.filter((w) => space.has(w) && !related(w, jack) && !related(w, start))
+        .map((w) => ({ w, ct: space.sim(w, jack) })).filter((x) => x.ct < 0.6)
+        .sort((a, b) => b.ct - a.ct).slice(0, 60)
+        .map((x) => ({ ...x, s: x.ct - generic(x.w) })).sort((a, b) => b.s - a.s).slice(0, 12).map((x) => x.w);
+      take(pieces, nPieces);
+    }
     // Rare thin decks: top up from the linked lists, never from random words.
     for (const list of [lure, pull, shed]) take(list, HAND_SIZE - hand.length);
     R.shuffle(hand);

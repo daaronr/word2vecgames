@@ -14,8 +14,9 @@ and quantise to int8 as build_web_data.py does.
 Writes web/data-tokens/:
   vocab.txt    one token label per line, as web/tokens.js labels it (␣ = a leading space)
   vectors.bin  int8 rows in vocab.txt order
-  pools.json   {"dim", "count", "cards", "targets"}: the familiar words from web/data-sense
-               and web/data whose mid-sentence form (" word") is a single GPT-2 token
+  pools.json   {"dim", "count", "cards", "targets", "pieces"}: the familiar words from
+               web/data-sense and web/data whose mid-sentence form (" word") is a single GPT-2
+               token, and the lower-case tokens with no space in front (pieces of words)
 
 Usage:
   python3 tools/build_token_data.py              # downloads into embeddings/ once
@@ -24,6 +25,7 @@ Usage:
 import argparse
 import json
 import os
+import re
 import struct
 import subprocess
 import urllib.request
@@ -118,6 +120,12 @@ def main():
                     out.append(t)
         return out
     cards, targets = merged("cards"), merged("targets")
+    # Pieces: tokens with no space in front, as GPT-2 sees the middle or end of a word ("rimp" from
+    # "shrimp", "ologist"). The deal puts two in each hand.
+    # Only true fragments: not a word in the raw-text set's 40,000-word vocabulary or a stopword.
+    words = set(open(os.path.join(ROOT, "web", "data", "vocab.txt"), encoding="utf8").read().split())
+    words |= set(open(os.path.join(HERE, "stopwords.txt"), encoding="utf8").read().split())  # "the", "for"
+    pieces = [t for t in vocab if re.fullmatch(r"[a-z]{3,10}", t) and t not in words and t not in block]
 
     os.makedirs(args.out, exist_ok=True)
     with open(os.path.join(args.out, "vocab.txt"), "w", encoding="utf8") as f:
@@ -125,8 +133,8 @@ def main():
     Q.tofile(os.path.join(args.out, "vectors.bin"))
     with open(os.path.join(args.out, "pools.json"), "w", encoding="utf8") as f:
         json.dump({"dim": int(Q.shape[1]), "count": len(vocab), "source": "gpt2 wte",
-                   "cards": cards, "targets": targets}, f, ensure_ascii=False, separators=(",", ":"))
-    print(f"tokens {len(vocab)} of {W.shape[0]}, dims {args.dims}, cards {len(cards)}, targets {len(targets)}, "
+                   "cards": cards, "targets": targets, "pieces": pieces}, f, ensure_ascii=False, separators=(",", ":"))
+    print(f"tokens {len(vocab)} of {W.shape[0]}, dims {args.dims}, cards {len(cards)}, targets {len(targets)}, pieces {len(pieces)}, "
           f"vectors.bin {Q.nbytes / 1e6:.1f} MB")
 
 
