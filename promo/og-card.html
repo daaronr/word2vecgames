@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Word Bocce preview card</title>
+<!--
+  Source for web/og-image.png (1200 x 630), the link-preview image.
+  The throw shown is the common-sense tutorial, checked in tests/engine.test.js:
+  hat -> shoe starts 249th; "+ foot" makes it 5th (ball stops near "toe");
+  "+ foot - head" makes it 1st. Ball positions use the game's court geometry
+  (app.js toXY/rankR with courtBasis(space, "hat", "shoe", "tutorial")).
+
+  Regenerate (from the repo root):
+    ~/Library/Caches/ms-playwright/chromium_headless_shell-1200/chrome-headless-shell-mac-arm64/chrome-headless-shell \
+      --screenshot=web/og-image.png --window-size=1200,630 --hide-scrollbars \
+      --virtual-time-budget=6000 "file://$PWD/promo/og-card.html"
+-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Atkinson+Hyperlegible:wght@400;700&family=DM+Mono:wght@400;500&display=block">
+<style>
+  :root {
+    --wall: #dfe7da; --wall-2: #d0dccb; --panel: #eef3ea; --ink: #14231d; --ink-soft: #4b5d54;
+    --line: rgba(20, 35, 29, 0.16); --gravel: #d9cdb1; --gravel-shade: #c4b692; --board: #1d4a3a;
+    --chalk: #fbfaf4; --jack: #f2c12e; --jack-ink: #3b2c00; --red: #c8322b; --plus: #1d5e45; --minus: #6d2f5f;
+    --display: "Alfa Slab One", Georgia, serif;
+    --ui: "Atkinson Hyperlegible", system-ui, sans-serif;
+    --mono: "DM Mono", ui-monospace, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+  body { background: var(--wall); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; position: relative; }
+  .left { position: absolute; left: 64px; top: 52px; width: 640px; display: flex; flex-direction: column; gap: 22px; }
+  h1 { margin: 0; font: 400 98px/1 var(--display); letter-spacing: 0.01em; white-space: nowrap; }
+  h1 .dot { display: inline-block; width: 0.4em; height: 0.4em; border-radius: 50%; background: var(--jack);
+    box-shadow: inset -4px -6px 0 rgba(0,0,0,.18); margin-left: 0.06em; vertical-align: 0.02em; }
+  .tag { margin: -4px 0 0; font-size: 31px; line-height: 1.3; color: var(--ink-soft); }
+  .rack { display: flex; align-items: center; gap: 12px; padding: 16px 18px; border-radius: 14px; background: var(--panel);
+    border: 2px dashed var(--line); font: 500 35px/1 var(--mono); margin-top: 8px; white-space: nowrap; align-self: flex-start; }
+  .rack .base { padding: 0 4px; }
+  .chip { border-radius: 9px; padding: 9px 14px; color: #fff; white-space: nowrap; }
+  .chip.plus { background: var(--plus); } .chip.minus { background: var(--minus); }
+  .rack .arrow { color: var(--ink-soft); padding: 0 2px; }
+  .rack .jack { font: 400 44px/1 var(--display); background: var(--jack); color: var(--jack-ink); padding: 4px 12px 8px; border-radius: 9px; }
+  .result { display: flex; flex-direction: column; gap: 8px; }
+  .result .line { display: flex; align-items: baseline; gap: 18px; }
+  .result .label { font: 700 18px var(--ui); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+  .result .ranks { font: 500 38px var(--mono); white-space: nowrap; }
+  .result .ranks b { font-weight: 500; background: linear-gradient(90deg, rgba(242,193,46,.55), rgba(242,193,46,.0)); padding: 0 8px; border-radius: 6px; }
+  .result .bacio { font: 400 36px var(--display); color: var(--plus); }
+  .foot { position: absolute; left: 64px; bottom: 44px; width: 640px; display: flex; flex-direction: column; gap: 6px; }
+  .foot .url { font: 500 28px var(--mono); color: var(--ink); }
+  .foot .what { font-size: 23px; color: var(--ink-soft); }
+  .court { position: absolute; right: 44px; top: 35px; width: 400px; height: 560px; border-radius: 16px; background: var(--board); }
+  .court text { font-family: var(--ui); }
+  .court .ring { fill: none; stroke: var(--chalk); stroke-opacity: .6; stroke-width: 1.2; stroke-dasharray: 2 5; }
+  .court .ring-label { fill: var(--chalk); fill-opacity: .9; font: 500 11px var(--mono); }
+  .court .foul { stroke: var(--chalk); stroke-width: 2; stroke-dasharray: 10 6; opacity: .8; }
+  .court .foul-label { fill: var(--chalk); font: 700 10px var(--ui); letter-spacing: .14em; opacity: .85; }
+  .court .jack-label { font: 400 34px var(--display); fill: var(--ink); paint-order: stroke; stroke: var(--gravel); stroke-width: 6px; }
+  .court .start-label { font: 700 22px var(--ui); fill: var(--ink); paint-order: stroke; stroke: var(--gravel); stroke-width: 5px; }
+  .court .ball-label { font: 700 20px var(--ui); fill: var(--ink); paint-order: stroke; stroke: var(--gravel); stroke-width: 5px; }
+  .court .ball-num { font: 700 12px var(--mono); fill: #fff; }
+</style>
+</head>
+<body>
+  <div class="left">
+    <h1>Word Bocce<span class="dot"></span></h1>
+    <p class="tag">A lawn game played in meaning-space. Add and subtract words to roll your ball to the jack.</p>
+    <div class="rack">
+      <span class="base">hat</span><span class="chip plus">+ foot</span><span class="chip minus">&minus; head</span>
+      <span class="arrow">&rarr;</span><span class="jack">shoe</span>
+    </div>
+    <div class="result">
+      <span class="label">The jack's rank among the words nearest your ball</span>
+      <span class="line"><span class="ranks">249th &rarr; 5th &rarr; <b>1st</b></span><span class="bacio">Bacio!</span></span>
+    </div>
+  </div>
+  <div class="foot">
+    <span class="url">wordbocce.davidreinstein.org</span>
+    <span class="what">Free in the browser: a daily court, puzzles, and versus.</span>
+  </div>
+
+  <svg class="court" viewBox="0 0 400 560" role="img" aria-label="A Word Bocce court: the ball has rolled from hat to the jack, shoe">
+    <defs>
+      <clipPath id="courtClip"><rect x="10" y="10" width="380" height="540" rx="8"/></clipPath>
+      <filter id="rake" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.018 0.55" numOctaves="2" seed="4" result="noise"/>
+        <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1.3 -0.45" result="mask"/>
+        <feFlood flood-color="#c4b692" result="tint"/>
+        <feComposite in="tint" in2="mask" operator="in"/>
+      </filter>
+      <filter id="grit" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="1" seed="9"/>
+        <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 -0.45"/>
+      </filter>
+      <radialGradient id="shine" cx="35%" cy="30%" r="65%">
+        <stop offset="0" stop-color="#fff" stop-opacity=".7"/>
+        <stop offset=".45" stop-color="#fff" stop-opacity="0"/>
+        <stop offset="1" stop-color="#000" stop-opacity=".28"/>
+      </radialGradient>
+    </defs>
+    <rect x="10" y="10" width="380" height="540" rx="8" fill="#d9cdb1"/>
+    <rect x="10" y="10" width="380" height="540" rx="8" filter="url(#rake)" clip-path="url(#courtClip)"/>
+    <rect x="10" y="10" width="380" height="540" rx="8" filter="url(#grit)" opacity="0.18"/>
+    <g clip-path="url(#courtClip)">
+      <circle class="ring" cx="200" cy="150" r="95.2"/>
+      <circle class="ring" cx="200" cy="150" r="169.5"/>
+      <circle class="ring" cx="200" cy="150" r="243.7"/>
+      <circle class="ring" cx="200" cy="150" r="317.9"/>
+      <text class="ring-label" x="280" y="217">top 10</text>
+      <text class="ring-label" x="340" y="261">top 100</text>
+    </g>
+    <line class="foul" x1="18" x2="382" y1="518" y2="518"/>
+    <text class="foul-label" x="20" y="534">FOUL LINE</text>
+    <!-- start: hat, rank 249 -->
+    <circle cx="200" cy="348.9" r="13" fill="none" stroke="#14231d" stroke-width="1.6" stroke-dasharray="3 3"/>
+    <text class="start-label" x="222" y="356">hat</text>
+    <!-- ball 1: hat + foot, rank 5, stopped near "toe" -->
+    <g transform="translate(199.9 222.9)">
+      <ellipse cx="2" cy="10" rx="12" ry="4" fill="#000" opacity=".22"/>
+      <circle r="13" fill="#c8322b" stroke="rgba(0,0,0,.35)" stroke-width="1"/>
+      <circle r="13" fill="url(#shine)"/>
+      <text class="ball-num" text-anchor="middle" y="4">1</text>
+    </g>
+    <text class="ball-label" x="222" y="230">toe</text>
+    <!-- measure line from the jack to the best ball -->
+    <line x1="200" y1="150" x2="201" y2="171" stroke="#14231d" stroke-width="1.2" stroke-dasharray="3 3" opacity=".7"/>
+    <!-- jack: shoe -->
+    <ellipse cx="202" cy="157" rx="8" ry="3" fill="#000" opacity=".18"/>
+    <circle cx="200" cy="150" r="9" fill="#f2c12e" stroke="rgba(0,0,0,.35)" stroke-width="1"/>
+    <circle cx="200" cy="150" r="9" fill="url(#shine)"/>
+    <text class="jack-label" x="200" y="124" text-anchor="middle">shoe</text>
+    <!-- ball 2: hat + foot - head, rank 1 (bacio): touching the jack -->
+    <g transform="translate(201 171)">
+      <ellipse cx="2" cy="10" rx="12" ry="4" fill="#000" opacity=".22"/>
+      <circle r="13" fill="#c8322b" stroke="rgba(0,0,0,.35)" stroke-width="1"/>
+      <circle r="13" fill="url(#shine)"/>
+      <text class="ball-num" text-anchor="middle" y="4">2</text>
+    </g>
+  </svg>
+</body>
+</html>

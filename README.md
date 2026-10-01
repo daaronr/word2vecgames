@@ -83,6 +83,16 @@ court more fun. Suggestions are sent to the game server's `/api/suggestions`
 (see `DEPLOY.md`) and wait in the browser until it answers. More mode ideas:
 `docs/game-modes.md`.
 
+## Teaching and sharing
+
+- `web/teach.html` (live at https://wordbocce.davidreinstein.org/teach.html):
+  a 30–45 minute lesson plan for intro NLP / ML / data-science classes, linked
+  from the game's footer and the slides.
+- `promo/README.md`: the promotion package. Draft posts (LessWrong, Show HN,
+  Reddit, short messages), a pre-launch checklist and a tracker of where things
+  were posted. `promo/og-card.html` is the source of `web/og-image.png`, the
+  link-preview image.
+
 ## Run it
 
 Play online: https://wordbocce.davidreinstein.org/ (GitHub Pages with a custom
@@ -110,7 +120,8 @@ need full embeddings: `python setup_embeddings.py --model glove-100` and
 
 | Path | What |
 | --- | --- |
-| `web/` | The game: `index.html`, `app.js` (UI), `engine.js` (vector math, dealing, scoring), `style.css`, `presentation.html` (the maths, as slides) |
+| `web/` | The game: `index.html`, `app.js` (UI), `engine.js` (vector math, dealing, scoring), `style.css`, `presentation.html` (the maths, as slides), `teach.html` (lesson plan), `og-image.png` (link preview) |
+| `promo/` | Promotion drafts, checklist and tracker (`promo/README.md`); `og-card.html` renders `web/og-image.png` |
 | `web/data/` | `vectors.bin` (40k × 100 int8), `vocab.txt`, `pools.json` (card and jack word pools), `puzzles.json` |
 | `web/tokens.js`, `web/tokens/` | GPT-2's tokenizer for the Tokens tab: `gpt2-merges.txt` (OpenAI's merge list) and `quiz.json` |
 | `tools/build_web_data.py` | Rebuilds `web/data/` from a GloVe file and word norms |

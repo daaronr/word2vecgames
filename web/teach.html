@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Teaching with Word Bocce</title>
+<meta name="description" content="A 30–45 minute lesson plan on word embeddings using Word Bocce, a free browser game: word arithmetic, two maps of meaning, and why an exact breakdown of a score isn't an explanation.">
+<link rel="canonical" href="https://wordbocce.davidreinstein.org/teach.html">
+<meta property="og:title" content="Teaching with Word Bocce">
+<meta property="og:description" content="A 30–45 minute lesson plan on word embeddings for intro NLP, ML and data-science classes (and curious high-school classes), built around a free browser game.">
+<meta property="og:url" content="https://wordbocce.davidreinstein.org/teach.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://wordbocce.davidreinstein.org/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Word Bocce: the throw hat + foot − head lands on the jack, shoe, moving it from the 249th nearest word to 1st.">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "Teaching with Word Bocce: a lesson plan on word embeddings", "description": "A 30-45 minute lesson plan for intro NLP, machine learning and data-science classes, and curious high-school classes. Students play Word Bocce, a free browser game in word-vector space, to learn word arithmetic, cosine similarity, how training data shapes an embedding, and why an exact breakdown of a score is not an explanation of a model.", "url": "https://wordbocce.davidreinstein.org/teach.html", "learningResourceType": "Lesson plan", "educationalLevel": ["High school", "Undergraduate"], "timeRequired": "PT45M", "inLanguage": "en", "isAccessibleForFree": true, "teaches": ["Word embeddings", "Vector arithmetic on words", "Cosine similarity", "How training data shapes word meaning", "Limits of feature attribution in interpretability"], "author": {"@type": "Person", "name": "David Reinstein", "url": "https://www.davidreinstein.org/"}, "about": {"@type": ["WebApplication", "Game"], "name": "Word Bocce", "url": "https://wordbocce.davidreinstein.org/"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css?v=9">
+<style>
+  /* Lesson page: uses the game's colour tokens and fonts from style.css. */
+  .lesson { max-width: 780px; margin: 0 auto; padding: 12px 16px 48px; }
+  .lesson .top { padding-bottom: 6px; }
+  .lesson .brandname { font: 400 clamp(24px, 4vw, 30px)/1 var(--display); color: var(--ink); text-decoration: none; white-space: nowrap; letter-spacing: .01em; }
+  .lesson .brandname .dot { display: inline-block; width: .42em; height: .42em; border-radius: 50%; background: var(--jack);
+    box-shadow: inset -2px -3px 0 rgba(0,0,0,.18); margin-left: .08em; vertical-align: .02em; }
+  .lesson .brand p { display: block; }
+  .lesson nav.links { display: flex; flex-wrap: wrap; gap: 8px; }
+  .lesson nav.links a { border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; font-size: 14px; font-weight: 700; color: var(--ink); text-decoration: none; }
+  .lesson nav.links a.cta { background: var(--board); border-color: var(--board); color: var(--chalk); }
+  .lesson h1 { font: 400 clamp(28px, 6vw, 40px)/1.1 var(--display); margin: 18px 0 10px; }
+  .lesson h2 { font: 400 clamp(22px, 4.5vw, 27px)/1.15 var(--display); margin: 34px 0 8px; }
+  .lesson h3 { font-size: 17px; margin: 20px 0 6px; }
+  .lesson p, .lesson li { max-width: 68ch; }
+  .lesson p { margin: 8px 0; }
+  .lesson ul, .lesson ol { padding-left: 1.3em; margin: 8px 0; }
+  .lesson li { margin: 5px 0; }
+  .lesson a { color: var(--blue); }
+  .lesson code, .lesson .mono { font-family: var(--mono); font-size: .95em; }
+  .lesson .lede { font-size: 18px; }
+  .glance { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px 18px; margin: 16px 0;
+    padding: 14px 16px; border-radius: 12px; background: var(--board); color: var(--chalk); }
+  .glance div { font-size: 14.5px; }
+  .glance b { display: block; font: 400 16px var(--display); letter-spacing: .02em; margin-bottom: 2px; }
+  .glance a { color: var(--chalk); }
+  .box { padding: 12px 14px; border-radius: 12px; background: var(--panel); border: 1px solid var(--line); margin: 12px 0; }
+  .box > :first-child { margin-top: 0; } .box > :last-child { margin-bottom: 0; }
+  .caveat { border-left: 3px solid var(--jack); padding: 8px 12px; background: color-mix(in srgb, var(--jack) 12%, var(--panel)); border-radius: 0 8px 8px 0; margin: 12px 0; }
+  .eqn { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 5px; font: 500 15px var(--mono); vertical-align: middle; }
+  .eqn .chip { border-radius: 6px; padding: 2px 7px; color: #fff; }
+  .eqn .chip.plus { background: var(--plus); } .eqn .chip.minus { background: var(--minus); }
+  .eqn .jack { background: var(--jack); color: var(--jack-ink); padding: 1px 7px 2px; border-radius: 6px; font: 400 15px var(--display); }
+  .tablewrap { overflow-x: auto; margin: 10px 0; }
+  .lesson table { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+  .lesson th, .lesson td { text-align: left; vertical-align: top; padding: 7px 10px 7px 0; border-bottom: 1px solid var(--line); }
+  .lesson th { font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-soft); }
+  .lesson td.num { font-family: var(--mono); white-space: nowrap; }
+  .lesson td.time { font-family: var(--mono); white-space: nowrap; }
+  .lesson .formula { font-family: var(--mono); background: var(--wall-2); padding: 10px 12px; border-radius: 8px; font-size: 14.5px; overflow-x: auto; }
+  .lesson .foot { border-top: 1px solid var(--line); padding-top: 14px; }
+  @media (max-width: 560px) { .lesson .brand p { display: block; } .lesson .lede { font-size: 17px; } }
+  @media (max-width: 1300px) { body:has(> hypothesis-sidebar) .lesson { padding-right: 38px; } }
+  @media print { .lesson nav.links, .lesson .foot .comments { display: none; } .glance { background: none; color: var(--ink); border: 1px solid var(--line); } .glance a { color: var(--ink); } }
+</style>
+</head>
+<body>
+<div class="lesson">
+  <header class="top">
+    <div class="brand">
+      <a class="brandname" href="./">Word Bocce<span class="dot" aria-hidden="true"></span></a>
+      <p>for teachers</p>
+    </div>
+    <nav class="links" aria-label="Word Bocce links">
+      <a class="cta" href="./">Play the game</a>
+      <a href="presentation.html">Slides</a>
+      <a href="https://github.com/daaronr/word2vecgames">Source code</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>A lesson on word embeddings, played as a game</h1>
+    <p class="lede">Word Bocce is a free browser game played on a map of word meanings. Every word is a point; you add and subtract words to roll your ball toward a target word, the jack. It's a hands-on way into word embeddings, and into why it's hard to explain what a learned model is doing.</p>
+    <p>This page is a lesson plan for 30 to 45 minutes, written for intro NLP, machine learning, and data-science classes. It also works for curious high-school classes if you skip the formula in Activity 2.</p>
+
+    <div class="glance" role="list">
+      <div role="listitem"><b>Time</b>30–45 minutes. For 30, drop Activity 3 or show it as a quick demo.</div>
+      <div role="listitem"><b>Level</b>Intro undergraduate, or interested high-school students.</div>
+      <div role="listitem"><b>You need</b>A projector, and a phone or laptop per student or pair. No accounts or installs.</div>
+      <div role="listitem"><b>Links</b><a href="./">The game</a> · <a href="presentation.html">slides</a> · <a href="https://github.com/daaronr/word2vecgames">source</a></div>
+    </div>
+
+    <h2>Learning goals</h2>
+    <p>By the end, students should be able to:</p>
+    <ol>
+      <li>Explain that a word embedding stores each word as a list of numbers, and that "close in meaning" is measured by cosine similarity.</li>
+      <li>Do word arithmetic (a start word plus some words, minus others) and reason about where the result lands, including why rank and similarity can disagree.</li>
+      <li>Describe how training data shapes the map, by comparing an embedding learned only from text with one that also uses a knowledge base of everyday facts.</li>
+      <li>Tell the difference between an exact breakdown of a score and an explanation of why a model learned what it did.</li>
+      <li>Name some limits: one point per word (so different senses get mixed), associations inherited from the training text, and how fixed word vectors differ from what's inside a modern language model.</li>
+    </ol>
+
+    <h2>Before class</h2>
+    <ul>
+      <li>Open <a href="./">wordbocce.davidreinstein.org</a> on the projector. A first visit starts a 30-second tutorial, which doubles as the warm-up.</li>
+      <li>These links jump straight to a mode, handy on a slide or as a QR code: <a href="./#tutorial"><code>/#tutorial</code></a>, <a href="./#daily"><code>/#daily</code></a>, <a href="./#puzzles"><code>/#puzzles</code></a>, <a href="./#practice"><code>/#practice</code></a>.</li>
+      <li>Each device downloads the word data once: about 6.5 MB for the default word set, about 4.4 MB for the other. On a busy school network, have students open the page as they come in.</li>
+      <li>The game starts on the <b>common-sense</b> word set. To switch, use the <b>Words</b> button in the header; on a phone, tap <b>Help</b>, open "Why does adding words work?", and tap "common sense, or raw text". Each device remembers its choice.</li>
+      <li>The Daily court is the same for everyone using the same word set on the same date.</li>
+      <li>Privacy: there's no sign-up, and scores stay in the browser. One thing is optional and sent to the game's server: after a round, the "Try your own words" box asks whether other words would have made the court more fun. If a student answers, that suggestion (the court, their words, any note they type, and a random ID for the device) is sent so the word lists can be improved. Online rooms connect browsers directly, and nothing is stored.</li>
+    </ul>
+
+    <h2>Lesson outline</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Minutes</th><th>Activity</th><th>In the game</th></tr></thead>
+        <tbody>
+          <tr><td class="time">0–5</td><td>Warm-up: word arithmetic</td><td>Tutorial, on the projector</td></tr>
+          <tr><td class="time">5–15</td><td>Activity 1: today's court</td><td>Daily</td></tr>
+          <tr><td class="time">15–27</td><td>Activity 2: reading the "Why?" panel</td><td>Puzzles</td></tr>
+          <tr><td class="time">27–37</td><td>Activity 3: two maps of meaning</td><td>Words switch, Puzzles</td></tr>
+          <tr><td class="time">37–45</td><td>Discussion</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Warm-up: word arithmetic (5 minutes)</h2>
+    <p>On the board, give four words two made-up coordinates:</p>
+    <div class="tablewrap">
+      <table style="max-width:340px">
+        <thead><tr><th>Word</th><th>Royal</th><th>Female</th></tr></thead>
+        <tbody>
+          <tr><td>man</td><td class="num">0</td><td class="num">0</td></tr>
+          <tr><td>woman</td><td class="num">0</td><td class="num">1</td></tr>
+          <tr><td>king</td><td class="num">1</td><td class="num">0</td></tr>
+          <tr><td>queen</td><td class="num">1</td><td class="num">1</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Then king − man + woman = (1, 0) − (0, 0) + (0, 1) = (1, 1), which is queen.</p>
+    <p>Real word embeddings work the same way, with two differences. There are hundreds of coordinates (100 per word in the game's raw-text set, 300 in the common-sense set). And nobody chose what they mean: they're learned from data, and no single number means "royal".</p>
+    <p>Closeness is measured with <b>cosine similarity</b>: 1 means two vectors point the same way, 0 means unrelated. The game also shows <b>rank</b>, which is easier to read: #1 means the jack is the nearest word to where your ball stopped.</p>
+    <p>Now ask the class to predict <span class="eqn">hat <span class="chip plus">+ foot</span> <span class="chip minus">− head</span></span>, and play the tutorial on the projector:</p>
+    <ul>
+      <li>At the start, <span class="eqn"><span class="jack">shoe</span></span> is the 249th nearest word to hat.</li>
+      <li>After <span class="eqn"><span class="chip plus">+ foot</span></span>, it's 5th. The ball stops near "toe".</li>
+      <li>After <span class="eqn"><span class="chip plus">+ foot</span> <span class="chip minus">− head</span></span>, it's 1st: a <i>bacio</i>, the bocce word for a ball kissing the jack.</li>
+    </ul>
+    <p>Leave one question open for Activity 2: why did taking away "head" help?</p>
+
+    <h2>Activity 1: today's court (10 minutes)</h2>
+    <ol>
+      <li>Everyone opens <a href="./#daily">Daily</a>. They all get the same start word, jack, and nine tiles.</li>
+      <li>In pairs, before throwing, sort the nine tiles into three piles: words that pull toward the jack, words worth subtracting, and traps. (The deal is built this way: two tiles pull toward the jack, two carry the start word's flavor and are worth subtracting, two are linked to both, and three look related to the jack but pull only weakly.)</li>
+      <li>Each player gets four balls, up to three tiles per throw, and the best ball counts.</li>
+      <li>At the end, the game shows <b>par</b> (the best throw the hand allowed), a few nearby words on the court, and the jack's nearest words. "Copy result" gives a short summary students can paste into the class chat.</li>
+    </ol>
+    <p><b>Debrief:</b> Who matched par? Which tile was the best trap? Did anyone's "obvious" throw go the wrong way, and can they say why?</p>
+
+    <h2>Activity 2: reading the "Why?" panel (10–12 minutes)</h2>
+    <p>After every throw there's a <b>Why?</b> link. It splits the ball's similarity to the jack into one share per word. The shares add up exactly, because the ball is just the sum of the word vectors (each of length 1), rescaled:</p>
+    <p class="formula">cos(ball, jack) = Σ sign × cos(word, jack) ÷ |Σ sign × word|</p>
+    <p>The start word counts as a + word. Here is the tutorial throw, with numbers from the game:</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Word</th><th>Similarity to shoe</th><th>Share</th></tr></thead>
+        <tbody>
+          <tr><td>hat (start)</td><td class="num">0.23</td><td class="num">0.16</td></tr>
+          <tr><td>+ foot</td><td class="num">0.50</td><td class="num">0.34</td></tr>
+          <tr><td>− head</td><td class="num">0.03</td><td class="num">−0.02</td></tr>
+          <tr><td><b>Ball</b></td><td></td><td class="num"><b>0.48</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Now the open question from the warm-up. With <span class="eqn"><span class="chip plus">+ foot</span></span> alone, the similarity to shoe was 0.51 and shoe was 5th. Subtracting head <i>lowered</i> the similarity to 0.48, yet shoe went to 1st. Head and shoe are barely linked, so subtracting it cost almost nothing; what changed was the competition. Before, "toe", "toes", and "beanie" sat nearer the ball than shoe. Afterward, none did. Rank counts how many words beat the jack, not just how close the jack is.</p>
+    <p>Why did those words fall back? The panel can't say. It can give the arithmetic exactly, but not why the model put "toe" where it did.</p>
+
+    <h3>Student task (pairs, <a href="./#puzzles">Puzzles</a>, common-sense words)</h3>
+    <p>Pick one: <b>Weather Shift</b> (hot → cold, medium), <b>Day and Night</b> (day → night, easy), or <b>Frankenstein's Monster</b> (dead → alive, hard). After each throw, open "Why?" and write down:</p>
+    <ol>
+      <li>Which word had the biggest share?</li>
+      <li>Did a word you added barely point at the jack? Did subtracting a word cost you? (The panel flags this.)</li>
+      <li>One thing the panel can't tell you.</li>
+    </ol>
+    <p>All three puzzles are opposites, which is the twist. On this map, cold is the 16th-nearest word to hot, and alive is the 11th-nearest word to dead. In Weather Shift, adding <i>warm</i> moves the ball toward cold (warm and cold have a similarity of 0.62). Why might opposites sit close together? One answer: they turn up in the same kinds of sentences ("the water was ___").</p>
+
+    <h2>Activity 3: two maps of meaning (10 minutes)</h2>
+    <p>The game has two word sets. The idea is the same (each word is a list of numbers); the training data differs.</p>
+    <ul>
+      <li><b>Common sense</b> (the default): ConceptNet Numberbatch 19.08, which blends text statistics with ConceptNet, a large collection of everyday facts people have written down ("a hen lays eggs", "bacon is a kind of meat"). 21,114 everyday words, 300 numbers each.</li>
+      <li><b>Raw text</b>: GloVe (2014), learned only from which words appear near each other in about six billion words of Wikipedia and news. About 40,000 words, 100 numbers each.</li>
+    </ul>
+    <p>Here are the nearest words in each, taken from the game's own data:</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Word</th><th>Raw text</th><th>Common sense</th></tr></thead>
+        <tbody>
+          <tr><td><b>orange</b></td><td>yellow, red, blue, green, pink</td><td>oranges, citrus, tangerine, yellow, purple</td></tr>
+          <tr><td><b>apple</b></td><td>microsoft, ibm, software, intel, dell</td><td>apples, orchards, ipad, iphone, pears</td></tr>
+          <tr><td><b>ham</b></td><td>sunderland, fulham, middlesbrough, wigan, burnley</td><td>bacon, pork, sausage, meats, sausages</td></tr>
+          <tr><td><b>cold</b></td><td>warm, dry, hot, cool, chilly</td><td>chilly, frigid, colds, frosty, colder</td></tr>
+          <tr><td><b>eggs</b></td><td>egg, fertilized, nests, nest, cooked</td><td>egg, hens, yolks, chickens, yolk</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The ham row is English football: news text mentions West Ham alongside Fulham, Sunderland, and other clubs. And in the raw-text set, "meat" is the 7th-nearest word to eggs, while "bacon" is 163rd. One guess is that news stories mention eggs alongside meat, milk, and fish (in prices, farming, food safety) more often than at breakfast. That's a hypothesis, though, and the numbers alone can't confirm it.</p>
+    <h3>Student task</h3>
+    <p>Play <b>Fruit Transform</b> (apple → orange) or <b>Lock and Key</b> (lock → key) once with each word set. Compare how far away the jack starts, what par is, and the list of words "closest in meaning" to the jack at the end. Then discuss:</p>
+    <ul>
+      <li>Which map is right? (Neither: they were trained on different data.)</li>
+      <li>Where did the raw-text map learn that orange is mainly a color, and that key mostly means "important"?</li>
+      <li>What would a map trained on recipes, sports pages, or your group chat look like?</li>
+    </ul>
+
+    <h2>Discussion questions</h2>
+    <h3>What embeddings capture, and what they miss</h3>
+    <ul>
+      <li>The raw-text map puts "cold" next to "warm" and "hot". Is that a bug? What does it say about learning meaning only from which words appear together?</li>
+      <li>"Ham" gets one point on the map, whether it means meat or a football club. What goes wrong when a word has two meanings, and how might a model handle it?</li>
+      <li>What can't be captured by one point per word? Try word order ("dog bites man"), negation, or sarcasm.</li>
+    </ul>
+    <h3>Bias</h3>
+    <ul>
+      <li>Embeddings learned from text pick up the associations in that text, including stereotypes about gender, race, and jobs (<a href="https://arxiv.org/abs/1607.06520">Bolukbasi et al., 2016</a>; <a href="https://doi.org/10.1126/science.aal4230">Caliskan et al., 2017</a>). Where could that show up in a game like this?</li>
+      <li>The game keeps slurs and profanity out of its vocabulary with a blocklist. Does removing words remove the associations? (The remaining words were still placed using the same text.)</li>
+      <li><a href="https://aclanthology.org/2020.cl-2.7/">Nissim, van Noord &amp; van der Goot (2020)</a> argue that some well-known analogy results, including biased-looking ones, were partly produced by how analogies are scored. How would you test a claim like "man is to doctor as woman is to nurse" fairly?</li>
+    </ul>
+    <h3>Attribution isn't explanation</h3>
+    <ul>
+      <li>The "Why?" bars are exact: they add up to the similarity. So what don't they tell you?</li>
+      <li>If someone showed you an exact breakdown of an AI model's output, what more would you want before saying you know why the model did it?</li>
+    </ul>
+    <h3>Fixed versus contextual</h3>
+    <ul>
+      <li>In this game "bank" has one position. Inside a chatbot, the representation of "bank" changes with the sentence around it. What does that gain, and why does it make the model harder to inspect?</li>
+    </ul>
+
+    <h2>Honest caveats</h2>
+    <p>These are worth saying out loud in class.</p>
+    <div class="caveat">
+      <p><b>These are fixed ("static") word embeddings, not a transformer's internals.</b> Each word gets one list of numbers, from models published in 2014 (GloVe) and 2019 (Numberbatch 19.08). A modern language model builds context-dependent representations across many layers. The game is a warm-up for those ideas, not a look inside a chatbot.</p>
+    </div>
+    <ul>
+      <li><b>The "Why?" panel is a reading of the numbers, not the model's reasons.</b> The shares are exact arithmetic; the plain-language notes are guesses from those numbers, and the panel says so.</li>
+      <li><b>Rank leaves out the words you threw.</b> Otherwise the ball would often be nearest to its own start word or a tile: the ball from hat + foot − head is actually nearest to foot, then hat, then shoe. Classic analogy tests use the same rule (the ball from king − man + woman is nearest to king), and Nissim et al. show that it can flatter results.</li>
+      <li><b>The common-sense courts are chosen to be explainable.</b> A court is only dealt if one of its strongest throws can be explained word by word, and par is picked among such throws. So that set looks tidier than the raw embedding would on its own.</li>
+      <li><b>Ranks aren't comparable across word sets</b>: one has 21,114 words, the other about 40,000.</li>
+      <li><b>Precision.</b> To fit in a browser, the vectors are stored at 8-bit precision, so the numbers can differ slightly from the published files.</li>
+      <li><b>Online rooms are new.</b> Versus → "Play online with friends" takes up to six players per room, but it hasn't been tried with a whole class. Treat it as a bonus, with Daily as the fallback.</li>
+    </ul>
+
+    <h2>Going further</h2>
+    <ul>
+      <li><a href="presentation.html">The slides</a> explain word vectors and vector arithmetic, and compare plain vector arithmetic with the "3CosAdd" analogy method. They were written for an earlier, multiplayer version of the game, so some details of play are out of date.</li>
+      <li>In the game, "How to play" → "Why don't throws always make sense?" opens a short note on why the game can't fully explain itself, with further reading on interpretability.</li>
+      <li>For a programming class: the <a href="https://github.com/daaronr/word2vecgames">source code</a> is plain JavaScript. The engine (<code>web/engine.js</code>) is about 300 lines, and <code>tests/engine.test.js</code> checks it against the real vectors. One exercise: find where rank is computed, change it to count the thrown words, and see which puzzles survive.</li>
+      <li>Reading: <a href="https://aclanthology.org/N13-1090/">Mikolov, Yih &amp; Zweig (2013)</a>, the king − man + woman paper; <a href="https://nlp.stanford.edu/projects/glove/">GloVe</a> (Pennington, Socher &amp; Manning, 2014); <a href="https://arxiv.org/abs/1612.03975">ConceptNet 5.5</a> (Speer, Chin &amp; Havasi, 2017); <a href="https://www.anthropic.com/research/mapping-mind-language-model">Mapping the mind of a large language model</a> (Anthropic, 2024); <a href="https://distill.pub/2020/circuits/zoom-in/">Zoom In: an introduction to circuits</a> (Olah et al., 2020).</li>
+    </ul>
+  </main>
+
+  <footer class="foot">
+    <a href="./">Play Word Bocce</a>
+    <a href="presentation.html">The math, in slides</a>
+    <a href="https://github.com/daaronr/word2vecgames">Source code</a>
+    <a href="https://projects.davidreinstein.org/">More projects by David Reinstein</a>
+    <span class="comments">Used this in class, or have suggestions? Annotate with <a href="https://web.hypothes.is/" target="_blank" rel="noopener">Hypothes.is</a> (panel at the right edge) or email <a href="mailto:daaronr@gmail.com">daaronr@gmail.com</a>. Words: GloVe 6B (public domain) and ConceptNet Numberbatch 19.08 (CC BY-SA 4.0).</span>
+  </footer>
+</div>
+<script src="https://hypothes.is/embed.js" async></script>
+</body>
+</html>

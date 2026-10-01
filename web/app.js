@@ -43,6 +43,7 @@
   const VS_BALLS = 3;
   const VS_TARGET = 5;
   const LAUNCH = Date.UTC(2026, 8, 28); // Daily No. 1
+  const SHARE_URL = "https://wordbocce.davidreinstein.org/"; // last line of a copied Daily result
   const reduceMotion = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // ---------- tiny helpers ----------
@@ -1015,7 +1016,8 @@
   async function share(end, best, pct) {
     const dots = { bacio: "🟡", close: "🟢", hunt: "🟤", wide: "⚪", lost: "⚫" };
     const text = [`Word Bocce · Daily No. ${end.no}`, `${end.start} → ${end.target}`,
-      end.balls.map((b) => dots[B.tier(b.rank).key]).join("") + `  best #${best.rank} · ${Math.round(pct * 100)}% to par`].join("\n");
+      end.balls.map((b) => dots[B.tier(b.rank).key]).join("") + `  best #${best.rank} · ${Math.round(pct * 100)}% to par`,
+      SHARE_URL].join("\n");
     try {
       await navigator.clipboard.writeText(text);
       setStatus("Result copied. Paste it anywhere.");
