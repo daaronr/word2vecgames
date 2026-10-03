@@ -358,14 +358,18 @@
     }
     caught(cat, mouse) { return this.rank(cat, mouse) <= this.catchK; }
     trapped(cat, traps) { return traps.find((t) => this.rank(t, cat) <= this.trapK) || null; }
-    /** Every move from `from` with these cards: [{ tiles, to }]; with `pairs`, two-card pounces too. */
-    moves(from, cards, pairs = false) {
+    /**
+     * Every move from `from` with these cards: [{ tiles, to }]; with `pairs`, two-card pounces too.
+     * `addOnly` leaves out subtracting (the simple rules).
+     */
+    moves(from, cards, pairs = false, addOnly = false) {
       const out = [], ok = cards.filter((c) => c !== from); // "muppets − muppets" goes nowhere
+      const signs = addOnly ? [1] : [1, -1];
       const add = (tiles) => { const to = this.hopTiles(from, tiles); if (to) out.push({ tiles, to }); };
-      for (const word of ok) for (const sign of [1, -1]) add([{ word, sign }]);
+      for (const word of ok) for (const sign of signs) add([{ word, sign }]);
       if (pairs) {
         for (let i = 0; i < ok.length; i++) for (let j = i + 1; j < ok.length; j++)
-          for (const a of [1, -1]) for (const b of [1, -1]) add([{ word: ok[i], sign: a }, { word: ok[j], sign: b }]);
+          for (const a of signs) for (const b of signs) add([{ word: ok[i], sign: a }, { word: ok[j], sign: b }]);
       }
       return out;
     }
@@ -374,18 +378,18 @@
      * wants to land far from the cat. `reach` > 1 picks at random among the best few (an easier bot).
      * With `pairs` (the cat holds a pounce) it pounces only if that beats its best single-card move.
      */
-    botMove(role, me, other, cards, traps, R, reach = 1, pairs = false) {
+    botMove(role, me, other, cards, traps, R, reach = 1, pairs = false, addOnly = false) {
       const scoreOf = (m) => (role === "cat" ? -this.rank(m.to, other) - (this.trapped(m.to, traps) ? 1000 : 0) : this.rank(other, m.to));
       const pick = (list) => {
         const scored = list.map((m) => ({ ...m, score: scoreOf(m) })).sort((a, b) => b.score - a.score);
         return scored.length ? scored[Math.floor(R() * Math.min(reach, scored.length))] : null;
       };
-      const single = pick(this.moves(me, cards));
+      const single = pick(this.moves(me, cards, false, addOnly));
       if (!pairs) return single;
-      const pounce = pick(this.moves(me, cards, true).filter((m) => m.tiles.length === 2));
+      const pounce = pick(this.moves(me, cards, true, addOnly).filter((m) => m.tiles.length === 2));
       return pounce && (!single || pounce.score > single.score) ? pounce : single;
     }
-    /** A start word, two traps away from it, and the cards: a shared face-up row and two private hands. */
+    /** A start word, two traps away from it, and the cards: a shared face-up row, two private hands, a deck. */
     deal(seed, { shared = 16, hand = 3 } = {}) {
       const R = rng(seed);
       const pool = R.shuffle(this.words.slice());
@@ -394,7 +398,8 @@
       for (let i = 0; i < pool.length && traps.length < 2; i++) {
         if (this.rank(start, pool[i]) > this.catchK * 3) traps.push(pool.splice(i--, 1)[0]);
       }
-      return { start, traps, shared: pool.slice(0, shared), hands: [pool.slice(shared, shared + hand), pool.slice(shared + hand, shared + 2 * hand)] };
+      return { start, traps, shared: pool.slice(0, shared), hands: [pool.slice(shared, shared + hand), pool.slice(shared + hand, shared + 2 * hand)],
+        deck: pool.slice(shared + 2 * hand) }; // face down: refills the shared row as cards are used
     }
     /** Each word's place on a 2-D map: its two strongest directions across the terrain (PCA), scaled to 0..1. */
     map() {

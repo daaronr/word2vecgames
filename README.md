@@ -63,13 +63,15 @@ are active on the token map). An online room uses the host's set.
   You see each other's balls land; the words are revealed when the round ends.
   Up to six players. Browsers connect directly (WebRTC via the free PeerJS
   broker, `web/net.js`); the host's tab is the room, and nothing is stored.
-- **Cat and mouse** (under Versus): a chase on a themed terrain, starting
-  with "80s & 90s TV". Both start on one word; each move plays a card (+ or
-  −) and hops to the nearest terrain word. The cat catches the mouse by
-  landing within reach, and every 5th move can pounce (two cards in one
-  move); trap words blow up the cat; Double and Skip cards and the mouse's
-  wild words mix things up. Against the bot or a friend on one
-  device. Design and ideas still to build: `docs/game-modes.md`.
+- **Cat and mouse** (under Versus; direct link `#chase`): a chase on a themed
+  terrain, starting with "80s & 90s TV". Both start on one word; each move
+  plays a card and hops to the nearest terrain word (every card shows where it
+  leads). The mouse runs, with a 3-move head start; the cat catches it by
+  landing within its 5 nearest words, and can pounce with two cards every 5th
+  move; trap words blow up the cat. An illustrated intro, a coach line each
+  turn, drawn characters, and a pounce animation with sounds for a catch.
+  "Extras" adds private cards, subtracting, Double, Skip and wild words.
+  Against the bot or a friend on one device. Design: `docs/game-modes.md`.
 - **Tokens**: how a chatbot reads text, with GPT-2's real tokenizer
   (`web/tokens.js`). Split your own text into tokens and see their IDs, play
   "Guess the split" (eight rounds, each explaining a quirk that matters for
