@@ -36,9 +36,10 @@ jack's **rank** among the ball's nearest words (rank 1 = "bacio").
     the token puzzles (twins like ␣apple/␣Apple, pieces, a glitch token); `dealFor()`
     in `app.js` swaps one token-map court in three for one of them, by seed.
   - `chase/terrains.json` + `Terrain` (engine.js) + the chase section of `app.js`:
-    "Cat and mouse" (under Versus). Moves hop to the nearest word of a small themed
-    terrain; catch radius, traps, bots and the 2-D map live in `Terrain`. Terrains
-    use the raw-text map; `tests/engine.test.js` checks words and bot balance.
+    "Cat and mouse" (under Versus). Moves hop to the nearest unvisited word of a
+    terrain (now "Everyday things", 1,285 words on the common-sense map; each terrain
+    names its map, catch radius and trap radius); catch radius, traps, bots and the
+    2-D map live in `Terrain`. `tests/engine.test.js` checks words and bot balance.
   - `net.js`: online rooms over PeerJS (loaded from jsDelivr only when a room is
     opened). The host's browser holds the state; only seeds and tile choices
     are sent, and every browser scores throws itself.
