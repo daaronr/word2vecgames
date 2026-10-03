@@ -320,7 +320,115 @@
     return { space, pools, puzzles };
   }
 
-  const api = { MAX_TILES, HAND_SIZE, related, explainable, rng, hashSeed, Space, deal, courtBasis, tier, load };
+  // ---------- chase ("cat and mouse") on a terrain: a small, themed set of words ----------
+  /**
+   * Players stand on words of the terrain. A move hops: from word W, card C with sign s lands on the
+   * terrain word nearest to unit(v(W) + s·v(C)), other than W and C. The cat catches the mouse by
+   * landing on the mouse's word or close to it: the mouse's word is among the `catchK` terrain words
+   * nearest the cat. The cat explodes if it lands among the `trapK` words nearest a trap.
+   * Keeping everyone on a small themed terrain keeps the chase catchable: with cards from the whole
+   * vocabulary, one card throws the mouse anywhere and the cat almost never has a card to follow.
+   */
+  class Terrain {
+    constructor(space, words, opts = {}) {
+      this.space = space;
+      this.words = [...new Set(words)].filter((w) => space.has(w));
+      this.catchK = opts.catchK || 5;
+      this.trapK = opts.trapK || 2;
+    }
+    nearest(v, exclude = []) {
+      let best = null, bs = -Infinity;
+      for (const w of this.words) {
+        if (exclude.includes(w)) continue;
+        const c = this.space.cos(v, this.space.row(w));
+        if (c > bs) { bs = c; best = w; }
+      }
+      return best;
+    }
+    hop(from, card, sign) { return this.hopTiles(from, [{ word: card, sign }]); }
+    /** A hop with several cards at once (the cat's pounce): tiles = [{ word, sign }]. */
+    hopTiles(from, tiles) { return this.nearest(this.space.ball(from, tiles), [from, ...tiles.map((t) => t.word)]); }
+    /** 0 if the same word, else 1 + how many terrain words sit closer to `from` than `to` does. */
+    rank(from, to) {
+      if (from === to) return 0;
+      const v = this.space.row(from), t = this.space.cos(v, this.space.row(to));
+      let r = 1;
+      for (const w of this.words) if (w !== from && w !== to && this.space.cos(v, this.space.row(w)) > t) r++;
+      return r;
+    }
+    caught(cat, mouse) { return this.rank(cat, mouse) <= this.catchK; }
+    trapped(cat, traps) { return traps.find((t) => this.rank(t, cat) <= this.trapK) || null; }
+    /** Every move from `from` with these cards: [{ tiles, to }]; with `pairs`, two-card pounces too. */
+    moves(from, cards, pairs = false) {
+      const out = [], ok = cards.filter((c) => c !== from); // "muppets − muppets" goes nowhere
+      const add = (tiles) => { const to = this.hopTiles(from, tiles); if (to) out.push({ tiles, to }); };
+      for (const word of ok) for (const sign of [1, -1]) add([{ word, sign }]);
+      if (pairs) {
+        for (let i = 0; i < ok.length; i++) for (let j = i + 1; j < ok.length; j++)
+          for (const a of [1, -1]) for (const b of [1, -1]) add([{ word: ok[i], sign: a }, { word: ok[j], sign: b }]);
+      }
+      return out;
+    }
+    /**
+     * A bot's move. The cat wants the mouse's word near its landing spot and avoids traps; the mouse
+     * wants to land far from the cat. `reach` > 1 picks at random among the best few (an easier bot).
+     * With `pairs` (the cat holds a pounce) it pounces only if that beats its best single-card move.
+     */
+    botMove(role, me, other, cards, traps, R, reach = 1, pairs = false) {
+      const scoreOf = (m) => (role === "cat" ? -this.rank(m.to, other) - (this.trapped(m.to, traps) ? 1000 : 0) : this.rank(other, m.to));
+      const pick = (list) => {
+        const scored = list.map((m) => ({ ...m, score: scoreOf(m) })).sort((a, b) => b.score - a.score);
+        return scored.length ? scored[Math.floor(R() * Math.min(reach, scored.length))] : null;
+      };
+      const single = pick(this.moves(me, cards));
+      if (!pairs) return single;
+      const pounce = pick(this.moves(me, cards, true).filter((m) => m.tiles.length === 2));
+      return pounce && (!single || pounce.score > single.score) ? pounce : single;
+    }
+    /** A start word, two traps away from it, and the cards: a shared face-up row and two private hands. */
+    deal(seed, { shared = 16, hand = 3 } = {}) {
+      const R = rng(seed);
+      const pool = R.shuffle(this.words.slice());
+      const start = pool.shift();
+      const traps = [];
+      for (let i = 0; i < pool.length && traps.length < 2; i++) {
+        if (this.rank(start, pool[i]) > this.catchK * 3) traps.push(pool.splice(i--, 1)[0]);
+      }
+      return { start, traps, shared: pool.slice(0, shared), hands: [pool.slice(shared, shared + hand), pool.slice(shared + hand, shared + 2 * hand)] };
+    }
+    /** Each word's place on a 2-D map: its two strongest directions across the terrain (PCA), scaled to 0..1. */
+    map() {
+      if (this._map) return this._map;
+      const { space } = this, n = this.words.length, d = space.dim;
+      const X = this.words.map((w) => Float64Array.from(space.row(w)));
+      const mean = new Float64Array(d);
+      for (const x of X) for (let k = 0; k < d; k++) mean[k] += x[k] / n;
+      for (const x of X) for (let k = 0; k < d; k++) x[k] -= mean[k];
+      const R = rng("terrain-map"), comps = [];
+      for (let c = 0; c < 2; c++) {
+        let v = Float64Array.from({ length: d }, () => R() - 0.5);
+        for (let it = 0; it < 60; it++) {
+          const next = new Float64Array(d);
+          for (const x of X) {
+            let p = 0;
+            for (let k = 0; k < d; k++) p += x[k] * v[k];
+            for (let k = 0; k < d; k++) next[k] += p * x[k];
+          }
+          for (const u of comps) { let p = 0; for (let k = 0; k < d; k++) p += next[k] * u[k]; for (let k = 0; k < d; k++) next[k] -= p * u[k]; }
+          let ss = 0;
+          for (let k = 0; k < d; k++) ss += next[k] * next[k];
+          v = next.map((z) => z / (Math.sqrt(ss) || 1));
+        }
+        comps.push(v);
+      }
+      const pts = X.map((x) => comps.map((u) => x.reduce((a, z, k) => a + z * u[k], 0)));
+      const lo = [0, 1].map((i) => Math.min(...pts.map((p) => p[i]))), hi = [0, 1].map((i) => Math.max(...pts.map((p) => p[i])));
+      this._map = new Map(this.words.map((w, j) => [w, pts[j].map((z, i) => (z - lo[i]) / ((hi[i] - lo[i]) || 1))]));
+      return this._map;
+    }
+  }
+
+  const api = { MAX_TILES, HAND_SIZE, related, explainable, rng, hashSeed, Space, Terrain, deal, courtBasis, tier, load };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.Bocce = api;
 })(typeof self !== "undefined" ? self : this);

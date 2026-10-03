@@ -184,4 +184,43 @@ for (const p of tokPuzzles) {
   if (p.check.trap_rank_min) assert(trap >= p.check.trap_rank_min, `token puzzle ${p.id}: + ${p.check.trap} reaches ${trap}`);
 }
 
+// ---------- cat and mouse (web/chase/terrains.json; Terrain in engine.js) ----------
+const terrainDefs = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "web", "chase", "terrains.json"), "utf8"));
+for (const def of terrainDefs) {
+  assert.strictEqual(def.map, "text", `terrain ${def.id} uses the raw-text map`);
+  const missing = def.words.filter((w) => !space.has(w));
+  assert.deepStrictEqual(missing, [], `terrain ${def.id}: words not on the raw-text map`);
+  const T = new B.Terrain(space, def.words);
+  assert(T.words.length >= 100, `terrain ${def.id} has ${T.words.length} words`);
+  // Deals are deterministic; traps start out of the cat's reach of the start word.
+  assert.deepStrictEqual(T.deal("x"), T.deal("x"));
+  const d = T.deal("y");
+  for (const t of d.traps) assert(T.rank(d.start, t) > T.catchK * 3, `trap ${t} too close to ${d.start}`);
+  assert(!T.moves(d.start, [d.start]).length, "playing the word you stand on goes nowhere");
+  // A hop lands on another terrain word.
+  const to = T.hop(d.start, d.shared[0], 1);
+  assert(T.words.includes(to) && to !== d.start && to !== d.shared[0]);
+  // Bot against bot: the chase is neither hopeless nor instant (balance check; see docs/game-modes.md).
+  let caught = 0;
+  for (let g = 0; g < 12; g++) {
+    const R = B.rng("chase" + g), dd = T.deal("chase" + g), used = new Set();
+    let mouse = dd.start, cat = dd.start;
+    const free = (cards) => cards.filter((c) => !used.has(c));
+    for (let turn = 0; turn < 15; turn++) {
+      const m = T.botMove("mouse", mouse, cat, free([...dd.shared, ...dd.hands[0]]), dd.traps, R, 2);
+      if (m) { m.tiles.forEach((t) => used.add(t.word)); mouse = m.to; }
+      if (turn < 3) continue; // head start (CHASE.head in app.js)
+      const catMove = turn - 2, pounce = catMove % 5 === 0; // a pounce every 5th cat move (CHASE.pounceEvery)
+      const c = T.botMove("cat", cat, mouse, free([...dd.shared, ...dd.hands[1]]), dd.traps, R, 3, pounce);
+      if (c) { c.tiles.forEach((t) => used.add(t.word)); cat = c.to; }
+      if (T.caught(cat, mouse)) { caught++; break; }
+    }
+  }
+  // A cat choosing among its 3 best moves should catch some mice but not all.
+  assert(caught >= 3 && caught <= 11, `terrain ${def.id}: bot cat caught ${caught}/12`);
+  // A pounce combines two cards in one hop.
+  const two = T.moves(d.start, d.shared.slice(0, 3), true).filter((x) => x.tiles.length === 2);
+  assert.strictEqual(two.length, 3 * 4, "three cards make three pairs, each with four sign choices");
+}
+
 console.log("engine ok");
