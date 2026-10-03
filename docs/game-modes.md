@@ -149,10 +149,61 @@ After a first look: "simplify it, more handholding, more fun".
 - **The big moments**: a pouncing-cat animation with a meow and a squeak for a
   catch, an explosion for a trap, a dancing mouse for an escape.
 
+### Version 3 (everyday words, no previews, a story)
+
+Feedback on version 2: the TV terrain didn't work (too narrow, and you have to
+know the shows); cards showing where they lead "ruins the fun"; very different
+cards led to the same word and an easy catch; the bot's moves were hard to
+see; the mouse's opening head start didn't make sense; the cat had it too
+easy. And a suggestion: end with a story of the journey.
+
+- **Terrain: "Everyday things"**: the 1,285 concrete nouns the common-sense
+  map uses as jacks (animals, food, places, jobs, objects), on that map
+  (ConceptNet Numberbatch), where relationships mostly read sensibly:
+  kitchen + car → garage, house − snow → mansion. Ten times as many words as
+  the TV terrain, so different cards land in different places. The TV terrain
+  stays in `terrains.json` with `hidden: true`.
+- **No previews in play.** The intro's worked example is the only place
+  where the game shows where a card leads; in the game, guessing that is the
+  skill. Every card can be added or subtracted (tap once for +, twice for −).
+- **No going back.** A player can't land on a word they've already visited
+  (`visited` in `Terrain.hopTiles`); without this, players bounce between
+  near-synonyms (highway, freeway, highway…). Near-copies of the start and of
+  the cards (`related()`) are skipped too.
+- **The getaway**: the mouse's first move plays up to three cards at once,
+  each + or −, in place of three separate head-start moves. The bot mouse
+  tries 150 random combinations (`Terrain.botGetaway`).
+- **Catch radius 40** (of 1,285 words, about 3%), traps hit within 3 words.
+  The map shades the cat's reach orange.
+- **What just happened**: a banner after every move, the bot's included,
+  shows the cards played and where they led ("The bot (cat) played hill +
+  boyfriend → girlfriend. The mouse is hot (102nd nearest to the cat)."),
+  and two "journey" columns list every move. Passed words stay labelled on
+  the map.
+- **The story of the chase**: at the end, a short story built from both
+  journeys ("…the cat padded after it, past the girlfriend, the stove, the
+  oven…"), "Tell it again" for another telling, and a button that copies a
+  prompt with both journeys for any chatbot to write a better one.
+
+Balance (bot against bot, 10 games each, 12 cat moves, pounce every 5th):
+
+| Catch radius | Bot cat picks among its best | Bot mouse | Caught |
+|---|---|---|---|
+| 10 | 3 | 2 | 2–4 |
+| 40 | 1 | 2 | 10 |
+| 40 | 3 | 2 | 7 |
+| 60 | 3 | 2 | 9 |
+| 40 | 5 | 4 | 4 |
+| 30 | 4 | 4 | 5 |
+| **40** | **5** | **3** | **4** (shipped; `tests/engine.test.js` keeps it in 2–8) |
+
+A person can't see where cards lead, so they play below the greedy bots; the
+bots here are deliberately loose.
+
 ### Still to try
 
-- **More terrains**: sci-fi, food, sports, the 2000s internet, a GPT-2 token
-  terrain (capitalised names live there).
+- **More terrains**: themed ones (food, sports) for variety, a GPT-2 token
+  terrain (capitalised names live there), a picker once there are several.
 - **Online rooms** (on `web/net.js`), and **several cats** racing to catch one
   mouse first.
 - **Private cards the others can see but not use**, as suggested: a visible

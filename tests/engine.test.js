@@ -186,44 +186,65 @@ for (const p of tokPuzzles) {
 
 // ---------- cat and mouse (web/chase/terrains.json; Terrain in engine.js) ----------
 const terrainDefs = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "web", "chase", "terrains.json"), "utf8"));
+const spaces = { text: space, sense };
+assert(terrainDefs.some((def) => !def.hidden), "at least one terrain is offered");
 for (const def of terrainDefs) {
-  assert.strictEqual(def.map, "text", `terrain ${def.id} uses the raw-text map`);
-  const missing = def.words.filter((w) => !space.has(w));
-  assert.deepStrictEqual(missing, [], `terrain ${def.id}: words not on the raw-text map`);
-  const T = new B.Terrain(space, def.words);
+  const sp = spaces[def.map];
+  assert(sp, `terrain ${def.id}: unknown map ${def.map}`);
+  const missing = def.words.filter((w) => !sp.has(w));
+  assert.deepStrictEqual(missing, [], `terrain ${def.id}: words not on the ${def.map} map`);
+  const T = new B.Terrain(sp, def.words, { catchK: def.catchK, trapK: def.trapK });
   assert(T.words.length >= 100, `terrain ${def.id} has ${T.words.length} words`);
+  // The intro's worked examples land somewhere (they're the only place the game shows where a card leads).
+  if (Array.isArray(def.examples)) for (const [i, [from, card]] of def.examples.entries()) assert(T.hop(from, card, i % 2 ? -1 : 1), `example ${from}, ${card}`);
   // Deals are deterministic; traps start out of the cat's reach of the start word.
   assert.deepStrictEqual(T.deal("x"), T.deal("x"));
-  const d = T.deal("y");
+  const d = T.deal("y", { shared: 14, hand: 0 });
   for (const t of d.traps) assert(T.rank(d.start, t) > T.catchK * 3, `trap ${t} too close to ${d.start}`);
   assert(!T.moves(d.start, [d.start]).length, "playing the word you stand on goes nowhere");
   // The deck holds the rest of the terrain, to refill the shared row as cards are used.
-  assert.strictEqual(1 + d.traps.length + d.shared.length + d.hands[0].length + d.hands[1].length + d.deck.length, T.words.length);
+  assert.strictEqual(1 + d.traps.length + d.shared.length + d.deck.length, T.words.length);
   assert(T.moves(d.start, d.shared, false, true).every((m) => m.tiles.every((t) => t.sign > 0)), "add-only moves");
-  // A hop lands on another terrain word.
+  // A hop lands on another terrain word, never one this player has visited.
   const to = T.hop(d.start, d.shared[0], 1);
   assert(T.words.includes(to) && to !== d.start && to !== d.shared[0]);
-  // Bot against bot: the chase is neither hopeless nor instant (balance check; see docs/game-modes.md).
-  let caught = 0;
-  for (let g = 0; g < 12; g++) {
-    const R = B.rng("chase" + g), dd = T.deal("chase" + g), used = new Set();
-    let mouse = dd.start, cat = dd.start;
-    const free = (cards) => cards.filter((c) => !used.has(c));
-    for (let turn = 0; turn < 15; turn++) {
-      const m = T.botMove("mouse", mouse, cat, free([...dd.shared, ...dd.hands[0]]), dd.traps, R, 2);
-      if (m) { m.tiles.forEach((t) => used.add(t.word)); mouse = m.to; }
-      if (turn < 3) continue; // head start (CHASE.head in app.js)
-      const catMove = turn - 2, pounce = catMove % 5 === 0; // a pounce every 5th cat move (CHASE.pounceEvery)
-      const c = T.botMove("cat", cat, mouse, free([...dd.shared, ...dd.hands[1]]), dd.traps, R, 3, pounce);
-      if (c) { c.tiles.forEach((t) => used.add(t.word)); cat = c.to; }
-      if (T.caught(cat, mouse)) { caught++; break; }
-    }
-  }
-  // A cat choosing among its 3 best moves should catch some mice but not all.
-  assert(caught >= 3 && caught <= 11, `terrain ${def.id}: bot cat caught ${caught}/12`);
+  assert.notStrictEqual(T.hop(d.start, d.shared[0], 1, [to]), to, "visited words are skipped");
   // A pounce combines two cards in one hop.
   const two = T.moves(d.start, d.shared.slice(0, 3), true).filter((x) => x.tiles.length === 2);
   assert.strictEqual(two.length, 3 * 4, "three cards make three pairs, each with four sign choices");
+  if (def.hidden) continue;
+  // Bot against bot, playing a round as app.js does (CHASE there): the chase is neither hopeless
+  // nor a walkover. The bot cat picks among its 5 best moves, the bot mouse among its 3 best.
+  let caught = 0;
+  const games = 10;
+  for (let g = 0; g < games; g++) {
+    const R = B.rng("chase" + g), dd = T.deal("chase" + g, { shared: 14, hand: 0 }), used = new Set();
+    let row = dd.shared.slice(), deck = dd.deck.slice(), catMoves = 0, pouncesUsed = 0;
+    const pos = { mouse: dd.start, cat: dd.start }, trail = { mouse: [dd.start], cat: [dd.start] };
+    const play = (role, m) => {
+      m.tiles.forEach((t) => used.add(t.word));
+      row = row.filter((c) => !used.has(c));
+      while (row.length < 14 && deck.length) { const c = deck.shift(); if (!used.has(c)) row.push(c); }
+      pos[role] = m.to; trail[role].push(m.to);
+    };
+    play("mouse", T.botGetaway(pos.mouse, pos.cat, row, R, trail.mouse));
+    let over = false;
+    while (!over && catMoves < 12) {
+      const pounce = Math.floor((catMoves + 1) / 5) - pouncesUsed > 0;
+      const c = T.botMove("cat", pos.cat, pos.mouse, row, dd.traps, R, 5, pounce, false, trail.cat);
+      if (!c) break;
+      if (c.tiles.length > 1) pouncesUsed++;
+      play("cat", c); catMoves++;
+      if (T.trapped(pos.cat, dd.traps)) break;
+      if (T.caught(pos.cat, pos.mouse)) { caught++; break; }
+      const m = T.botMove("mouse", pos.mouse, pos.cat, row, dd.traps, R, 3, false, false, trail.mouse);
+      if (!m) break;
+      play("mouse", m);
+      if (T.caught(pos.cat, pos.mouse)) { caught++; over = true; }
+    }
+  }
+  console.log(`chase ${def.id}: bot cat caught ${caught}/${games}`);
+  assert(caught >= 2 && caught <= 8, `terrain ${def.id}: bot cat caught ${caught}/${games}`);
 }
 
 console.log("engine ok");

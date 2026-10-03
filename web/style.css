@@ -527,14 +527,37 @@ dialog::backdrop { background: rgba(10, 20, 16, .55); }
 .chase-coach p { margin: 0; }
 .chase .hand .tile.card { display: flex; flex-direction: column; gap: 2px; padding-bottom: 7px; }
 .chase .tile .cw { font-weight: 700; }
-.chase .tile .to { font: 400 12px var(--mono); color: var(--ink-soft); }
-.chase .tile .risk { font: 700 10.5px var(--ui); text-transform: uppercase; letter-spacing: .05em; }
-.chase .tile.risk-cold { border-color: color-mix(in srgb, var(--green) 55%, var(--enamel-edge)); }
-.chase .tile.risk-cold .risk { color: var(--green); }
-.chase .tile.risk-warm .risk { color: var(--orange); }
-.chase .tile.risk-hot, .chase .tile.risk-caught { border-color: color-mix(in srgb, var(--red) 55%, var(--enamel-edge)); }
-.chase .tile.risk-hot .risk, .chase .tile.risk-caught .risk { color: var(--red); }
-.chase .tile.plus .to, .chase .tile.plus .risk, .chase .tile.minus .to, .chase .tile.minus .risk { color: rgba(255, 255, 255, .85); }
+.chase-map .tdot.reach { fill: var(--orange); stroke: none; opacity: .8; }
+.chase-map .passed { font: 500 10.5px var(--ui); fill: var(--ink-soft); opacity: .85; paint-order: stroke; stroke: var(--gravel); stroke-width: 3px; }
+.chase-map .char.moved .tlabel { font-size: 14px; }
+/* the last move, whoever made it: what was played and where it went */
+.lastmove { display: flex; gap: 10px; align-items: center; margin: 0; padding: 10px 12px; border-radius: 10px; font-size: 15.5px; line-height: 1.4;
+  border: 2px solid; }
+.lastmove.fresh { animation: lastmove-in .45s ease-out both; }
+.lastmove p { margin: 0; }
+.lastmove .art { flex: none; }
+.lastmove .eqs { font-family: var(--mono); font-size: 14.5px; }
+.lastmove .to { font-size: 17px; }
+.lastmove.mouse { border-color: var(--teal); background: color-mix(in srgb, var(--teal) 14%, var(--panel)); }
+.lastmove.cat { border-color: var(--orange); background: color-mix(in srgb, var(--orange) 14%, var(--panel)); }
+@keyframes lastmove-in { from { transform: translateY(-6px); opacity: 0; } to { transform: none; opacity: 1; } }
+.journey { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.jcol { min-width: 0; padding: 8px 10px; border-radius: 10px; background: var(--panel); border: 1px solid var(--line); border-top: 3px solid; }
+.jcol.mouse { border-top-color: var(--teal); } .jcol.cat { border-top-color: var(--orange); }
+.jcol h4 { margin: 0 0 4px; font-size: 14px; display: flex; align-items: center; gap: 4px; }
+.jcol ol { margin: 0; padding-left: 1.4em; font-size: 13.5px; line-height: 1.5; overflow-wrap: anywhere; }
+.jcol .eqs { font-family: var(--mono); font-size: 12.5px; color: var(--ink-soft); }
+.jcol small { color: var(--ink-soft); }
+.story { margin: 0; padding: 12px 14px; border-radius: 10px; background: var(--enamel); border: 1px solid var(--line); font-size: 15.5px; line-height: 1.55; }
+.story p { margin: 0 0 8px; } .story p:last-child { margin: 0; }
+.story .row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.chase-intro .example { padding: 10px 14px; border-radius: 10px; background: color-mix(in srgb, var(--jack) 16%, var(--panel));
+  border: 1px solid color-mix(in srgb, var(--jack) 50%, transparent); }
+.chase-intro .example p { margin: 0; }
+.chase-intro .example ul { margin: 6px 0; padding-left: 1.3em; font-size: 16px; }
+.chase-intro .example .eqs { font-family: var(--mono); }
+.chase-intro .example .hint { text-align: left; color: var(--ink-soft); font-size: 14px; }
+@media (prefers-reduced-motion: reduce) { .lastmove { animation: none; } }
 .chase-map .char { transition: none; }
 .chase-map .char .tlabel { font-size: 13px; }
 .chase-map .aim { stroke-width: 2.5; stroke-dasharray: 3 4; }
@@ -560,7 +583,7 @@ dialog::backdrop { background: rgba(10, 20, 16, .55); }
 .chase-intro { display: flex; flex-direction: column; gap: 12px; max-width: 680px; margin: 0 auto; padding: 18px 20px; border-radius: 14px;
   background: var(--panel); border: 1px solid var(--line); }
 .chase-intro .hero { display: flex; align-items: center; justify-content: center; gap: 12px; }
-.chase-intro .hero .dash { font: 700 28px var(--mono); color: var(--ink-soft); letter-spacing: .2em; }
+.chase-intro .hero .dash { white-space: nowrap; font: 700 28px var(--mono); color: var(--ink-soft); letter-spacing: .2em; }
 .chase-intro .hero .cat-art { animation: dance .9s ease-in-out infinite alternate; }
 .chase-intro h2 { margin: 0; font: 400 32px var(--display); text-align: center; }
 .chase-intro .lede { margin: 0; text-align: center; color: var(--ink-soft); }

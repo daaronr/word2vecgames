@@ -335,25 +335,43 @@
       this.words = [...new Set(words)].filter((w) => space.has(w));
       this.catchK = opts.catchK || 5;
       this.trapK = opts.trapK || 2;
+      // The terrain's rows, side by side, for fast scans (terrains run to a few thousand words).
+      const d = space.dim;
+      this.M = new Float32Array(this.words.length * d);
+      this.words.forEach((w, i) => this.M.set(space.row(w), i * d));
+      this.at = new Map(this.words.map((w, i) => [w, i]));
     }
+    /** Cosine of v with every terrain word. */
+    sims(v) {
+      const d = this.space.dim, n = this.words.length, out = new Float32Array(n);
+      for (let i = 0; i < n; i++) { let s = 0; for (let k = 0, o = i * d; k < d; k++) s += v[k] * this.M[o + k]; out[i] = s; }
+      return out;
+    }
+    /** The terrain word nearest v, skipping `exclude` and near-copies of it ("boats" for "boat"). */
     nearest(v, exclude = []) {
-      let best = null, bs = -Infinity;
-      for (const w of this.words) {
-        if (exclude.includes(w)) continue;
-        const c = this.space.cos(v, this.space.row(w));
-        if (c > bs) { bs = c; best = w; }
+      const sims = this.sims(v);
+      let best = -1;
+      for (let i = 0; i < sims.length; i++) {
+        if (best >= 0 && sims[i] <= sims[best]) continue;
+        const w = this.words[i];
+        if (exclude.some((x) => x === w || related(x, w))) continue;
+        best = i;
       }
-      return best;
+      return best < 0 ? null : this.words[best];
     }
-    hop(from, card, sign) { return this.hopTiles(from, [{ word: card, sign }]); }
-    /** A hop with several cards at once (the cat's pounce): tiles = [{ word, sign }]. */
-    hopTiles(from, tiles) { return this.nearest(this.space.ball(from, tiles), [from, ...tiles.map((t) => t.word)]); }
+    hop(from, card, sign, visited = []) { return this.hopTiles(from, [{ word: card, sign }], visited); }
+    /**
+     * A hop with several cards at once (the mouse's getaway, the cat's pounce): tiles = [{ word, sign }].
+     * `visited`: words this player has already stood on, which it can't land on again; without this,
+     * players bounce between two synonyms (highway, freeway, highway…).
+     */
+    hopTiles(from, tiles, visited = []) { return this.nearest(this.space.ball(from, tiles), [from, ...visited, ...tiles.map((t) => t.word)]); }
     /** 0 if the same word, else 1 + how many terrain words sit closer to `from` than `to` does. */
     rank(from, to) {
       if (from === to) return 0;
-      const v = this.space.row(from), t = this.space.cos(v, this.space.row(to));
+      const sims = this.sims(this.space.row(from)), t = sims[this.at.get(to)], f = this.at.get(from);
       let r = 1;
-      for (const w of this.words) if (w !== from && w !== to && this.space.cos(v, this.space.row(w)) > t) r++;
+      for (let i = 0; i < sims.length; i++) if (sims[i] > t && i !== f && this.words[i] !== to) r++;
       return r;
     }
     caught(cat, mouse) { return this.rank(cat, mouse) <= this.catchK; }
@@ -362,10 +380,10 @@
      * Every move from `from` with these cards: [{ tiles, to }]; with `pairs`, two-card pounces too.
      * `addOnly` leaves out subtracting (the simple rules).
      */
-    moves(from, cards, pairs = false, addOnly = false) {
+    moves(from, cards, pairs = false, addOnly = false, visited = []) {
       const out = [], ok = cards.filter((c) => c !== from); // "muppets − muppets" goes nowhere
       const signs = addOnly ? [1] : [1, -1];
-      const add = (tiles) => { const to = this.hopTiles(from, tiles); if (to) out.push({ tiles, to }); };
+      const add = (tiles) => { const to = this.hopTiles(from, tiles, visited); if (to) out.push({ tiles, to }); };
       for (const word of ok) for (const sign of signs) add([{ word, sign }]);
       if (pairs) {
         for (let i = 0; i < ok.length; i++) for (let j = i + 1; j < ok.length; j++)
@@ -378,16 +396,32 @@
      * wants to land far from the cat. `reach` > 1 picks at random among the best few (an easier bot).
      * With `pairs` (the cat holds a pounce) it pounces only if that beats its best single-card move.
      */
-    botMove(role, me, other, cards, traps, R, reach = 1, pairs = false, addOnly = false) {
+    botMove(role, me, other, cards, traps, R, reach = 1, pairs = false, addOnly = false, visited = []) {
       const scoreOf = (m) => (role === "cat" ? -this.rank(m.to, other) - (this.trapped(m.to, traps) ? 1000 : 0) : this.rank(other, m.to));
       const pick = (list) => {
         const scored = list.map((m) => ({ ...m, score: scoreOf(m) })).sort((a, b) => b.score - a.score);
         return scored.length ? scored[Math.floor(R() * Math.min(reach, scored.length))] : null;
       };
-      const single = pick(this.moves(me, cards, false, addOnly));
+      const single = pick(this.moves(me, cards, false, addOnly, visited));
       if (!pairs) return single;
-      const pounce = pick(this.moves(me, cards, true, addOnly).filter((m) => m.tiles.length === 2));
+      const pounce = pick(this.moves(me, cards, true, addOnly, visited).filter((m) => m.tiles.length === 2));
       return pounce && (!single || pounce.score > single.score) ? pounce : single;
+    }
+    /**
+     * The bot mouse's getaway: up to `size` cards at once, each + or −. Tries `tries` random
+     * combinations (all of them would be thousands of hops) and picks among the `reach` that land
+     * farthest from the cat.
+     */
+    botGetaway(me, cat, cards, R, visited = [], { size = 3, tries = 150, reach = 3 } = {}) {
+      const ok = cards.filter((c) => c !== me), combos = [];
+      for (let i = 0; i < ok.length; i++) for (let j = i + 1; j < ok.length; j++) for (let k = j + 1; k < ok.length; k++)
+        combos.push([ok[i], ok[j], ok[k]].slice(0, size));
+      const opts = R.shuffle(combos).slice(0, tries).map((c) => {
+        const tiles = c.map((word) => ({ word, sign: R() < 0.5 ? 1 : -1 }));
+        const to = this.hopTiles(me, tiles, visited);
+        return to && { tiles, to, score: this.rank(cat, to) };
+      }).filter(Boolean).sort((a, b) => b.score - a.score);
+      return opts.length ? opts[Math.floor(R() * Math.min(reach, opts.length))] : null;
     }
     /** A start word, two traps away from it, and the cards: a shared face-up row, two private hands, a deck. */
     deal(seed, { shared = 16, hand = 3 } = {}) {
