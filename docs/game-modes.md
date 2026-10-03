@@ -127,6 +127,28 @@ from the whole vocabulary the cat almost never catches anyone, since one card
 throws the mouse anywhere, which is why the terrain matters. The test suite
 checks the human-like bot cat catches the bot mouse in 3–11 of 12 games.
 
+### Version 2 (simpler, friendlier)
+
+After a first look: "simplify it, more handholding, more fun".
+
+- **Simple rules by default**: one shared row of 14 cards (refilled from a
+  deck, so it never runs out; version 1 could stall late in a round), add
+  only, the cat's pounce and the traps. Private cards, subtracting, Double,
+  Skip and wild words are behind an "Extras" box.
+- **An illustrated intro** (first visit, and "How to play" any time) with a
+  choice of playing the mouse or the cat.
+- **A coach line every turn** saying what to do and what just happened.
+- **Every card shows where it leads**; as the mouse, also how dangerous that
+  spot is (Safe / Risky / Danger / Caught!). The cat gets destinations but no
+  closeness labels: with full information a cat catches the mouse almost
+  every time on a terrain this small (27–30 of 30 in simulations, whatever
+  the catch radius), so the cat has to judge closeness of meaning itself. The
+  bot cat picks among its 3 best moves, so a careful mouse can escape.
+- **Characters**: a drawn cat and mouse glide across the map; the picked
+  card's destination shows as a dotted arrow.
+- **The big moments**: a pouncing-cat animation with a meow and a squeak for a
+  catch, an explosion for a trap, a dancing mouse for an escape.
+
 ### Still to try
 
 - **More terrains**: sci-fi, food, sports, the 2000s internet, a GPT-2 token

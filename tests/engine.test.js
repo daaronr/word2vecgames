@@ -197,6 +197,9 @@ for (const def of terrainDefs) {
   const d = T.deal("y");
   for (const t of d.traps) assert(T.rank(d.start, t) > T.catchK * 3, `trap ${t} too close to ${d.start}`);
   assert(!T.moves(d.start, [d.start]).length, "playing the word you stand on goes nowhere");
+  // The deck holds the rest of the terrain, to refill the shared row as cards are used.
+  assert.strictEqual(1 + d.traps.length + d.shared.length + d.hands[0].length + d.hands[1].length + d.deck.length, T.words.length);
+  assert(T.moves(d.start, d.shared, false, true).every((m) => m.tiles.every((t) => t.sign > 0)), "add-only moves");
   // A hop lands on another terrain word.
   const to = T.hop(d.start, d.shared[0], 1);
   assert(T.words.includes(to) && to !== d.start && to !== d.shared[0]);
