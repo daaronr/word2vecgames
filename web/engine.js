@@ -345,7 +345,9 @@
       }
       return best;
     }
-    hop(from, card, sign) { return this.nearest(this.space.ball(from, [{ word: card, sign }]), [from, card]); }
+    hop(from, card, sign) { return this.hopTiles(from, [{ word: card, sign }]); }
+    /** A hop with several cards at once (the cat's pounce): tiles = [{ word, sign }]. */
+    hopTiles(from, tiles) { return this.nearest(this.space.ball(from, tiles), [from, ...tiles.map((t) => t.word)]); }
     /** 0 if the same word, else 1 + how many terrain words sit closer to `from` than `to` does. */
     rank(from, to) {
       if (from === to) return 0;
@@ -356,25 +358,32 @@
     }
     caught(cat, mouse) { return this.rank(cat, mouse) <= this.catchK; }
     trapped(cat, traps) { return traps.find((t) => this.rank(t, cat) <= this.trapK) || null; }
-    /** Every move from `from` with these cards: [{ card, sign, to }]. */
-    moves(from, cards) {
-      const out = [];
-      for (const card of cards) for (const sign of [1, -1]) {
-        if (card === from) continue; // "muppets − muppets" goes nowhere
-        const to = this.hop(from, card, sign);
-        if (to) out.push({ card, sign, to });
+    /** Every move from `from` with these cards: [{ tiles, to }]; with `pairs`, two-card pounces too. */
+    moves(from, cards, pairs = false) {
+      const out = [], ok = cards.filter((c) => c !== from); // "muppets − muppets" goes nowhere
+      const add = (tiles) => { const to = this.hopTiles(from, tiles); if (to) out.push({ tiles, to }); };
+      for (const word of ok) for (const sign of [1, -1]) add([{ word, sign }]);
+      if (pairs) {
+        for (let i = 0; i < ok.length; i++) for (let j = i + 1; j < ok.length; j++)
+          for (const a of [1, -1]) for (const b of [1, -1]) add([{ word: ok[i], sign: a }, { word: ok[j], sign: b }]);
       }
       return out;
     }
     /**
      * A bot's move. The cat wants the mouse's word near its landing spot and avoids traps; the mouse
      * wants to land far from the cat. `reach` > 1 picks at random among the best few (an easier bot).
+     * With `pairs` (the cat holds a pounce) it pounces only if that beats its best single-card move.
      */
-    botMove(role, me, other, cards, traps, R, reach = 1) {
-      const scored = this.moves(me, cards).map((m) => ({ ...m,
-        score: role === "cat" ? -this.rank(m.to, other) - (this.trapped(m.to, traps) ? 1000 : 0) : this.rank(other, m.to) }));
-      scored.sort((a, b) => b.score - a.score);
-      return scored.length ? scored[Math.floor(R() * Math.min(reach, scored.length))] : null;
+    botMove(role, me, other, cards, traps, R, reach = 1, pairs = false) {
+      const scoreOf = (m) => (role === "cat" ? -this.rank(m.to, other) - (this.trapped(m.to, traps) ? 1000 : 0) : this.rank(other, m.to));
+      const pick = (list) => {
+        const scored = list.map((m) => ({ ...m, score: scoreOf(m) })).sort((a, b) => b.score - a.score);
+        return scored.length ? scored[Math.floor(R() * Math.min(reach, scored.length))] : null;
+      };
+      const single = pick(this.moves(me, cards));
+      if (!pairs) return single;
+      const pounce = pick(this.moves(me, cards, true).filter((m) => m.tiles.length === 2));
+      return pounce && (!single || pounce.score > single.score) ? pounce : single;
     }
     /** A start word, two traps away from it, and the cards: a shared face-up row and two private hands. */
     deal(seed, { shared = 16, hand = 3 } = {}) {

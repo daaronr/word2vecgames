@@ -1633,11 +1633,14 @@
 
   // ---------- chase: cat and mouse on a themed terrain (one device: against the bot, or a friend) ----------
   // Both start on one word. A move plays one card, + or −, and hops to the nearest word of the terrain
-  // (Terrain in engine.js). The mouse moves first, twice. The cat catches the mouse by landing within
-  // reach (the mouse's word is among the CATCH_K terrain words nearest the cat); a cat that lands
-  // next to a trap explodes. Played cards are used up for both players. Ideas still to build:
+  // (Terrain in engine.js). The mouse moves first, three times. The cat catches the mouse by landing
+  // within reach (the mouse's word is among the catchK terrain words nearest the cat); a cat that lands
+  // next to a trap explodes. Every fifth move the cat earns a pounce: two cards combined in one move.
+  // Played cards are used up for both players. Ideas still to build:
   // docs/game-modes.md ("Cat and mouse").
-  const CHASE = { limit: 12, head: 2, wildEvery: 3, perMove: 10, catchBonus: 50, escapeBonus: 50 };
+  // Balance (bot-against-bot simulations, docs/game-modes.md): with a 3-move head start and a pounce
+  // every 5th cat move, a cat that picks among its 3 best moves catches about 3 mice in 5.
+  const CHASE = { limit: 12, head: 3, wildEvery: 3, pounceEvery: 5, perMove: 10, catchBonus: 50, escapeBonus: 50 };
   const SPECIALS = { double: "Double: move twice", skip: "Skip: the other player misses a turn" };
   let chase = null;   // the match: { def, terrain, opponent, names, mouse (player index), score, roundNo, r (the round) }
   let terrains = null;
@@ -1663,7 +1666,7 @@
     const d = T.deal("chase-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7));
     chase.r = { ...d, shared: [...d.shared, "★double", "★skip"], used: new Set(), pos: { mouse: d.start, cat: d.start },
       trail: { mouse: [d.start], cat: [d.start] }, turn: "mouse", head: CHASE.head, catMoves: 0, mouseMoves: 0,
-      extra: 0, skip: null, pick: null, wild: "", log: [], over: null };
+      extra: 0, skip: null, picks: [], pounceOn: false, pouncesUsed: 0, wild: "", log: [], over: null };
   }
   const roleOf = (i) => (i === chase.mouse ? "mouse" : "cat");
   const playerOf = (role) => (role === "mouse" ? chase.mouse : 1 - chase.mouse);
@@ -1672,13 +1675,19 @@
     return [...r.shared, ...r.hands[playerOf(role)]].filter((c) => !r.used.has(c));
   };
   const wildTurn = () => chase.r.turn === "mouse" && (chase.r.mouseMoves + 1) % CHASE.wildEvery === 0;
+  /** Pounces the cat has in hand: one earned at its 5th move, another at its 10th; unused ones keep. */
+  const pounces = () => Math.floor((chase.r.catMoves + 1) / CHASE.pounceEvery) - chase.r.pouncesUsed;
   const isBotTurn = () => chase && chase.r && !chase.r.over && chase.opponent === "bot" && playerOf(chase.r.turn) === 1;
 
-  /** Play a card for whoever's turn it is: a special, or a word card (or the mouse's wild word) with a sign. */
-  function chasePlay(card, sign) {
+  /**
+   * Play for whoever's turn it is: a special card (`tiles` is its name), or word cards with signs,
+   * [{ word, sign }]: one, or two when the cat pounces.
+   */
+  function chasePlay(tiles) {
     const r = chase.r, T = chase.terrain, role = r.turn, other = role === "mouse" ? "cat" : "mouse", who = chase.names[playerOf(role)];
-    r.pick = null;
-    if (card.startsWith("★")) {
+    r.picks = [];
+    if (typeof tiles === "string") {
+      const card = tiles;
       r.used.add(card);
       if (card === "★double") { r.extra = 1; r.log.push(`${who} (${role}) played Double: two moves in a row.`); }
       else { r.skip = other; r.log.push(`${who} (${role}) played Skip: the ${other} misses its next turn.`); }
@@ -1686,12 +1695,13 @@
       render();
       return maybeChaseBot(); // a special isn't a move: the same player goes on
     }
-    const from = r.pos[role], to = T.hop(from, card, sign);
+    const from = r.pos[role], to = T.hopTiles(from, tiles);
     if (!to) return;
-    r.used.add(card);
+    for (const t of tiles) r.used.add(t.word);
+    if (tiles.length > 1) { r.pouncesUsed++; r.pounceOn = false; }
     r.pos[role] = to;
     r.trail[role].push(to);
-    r.log.push(`${who} (${role}): ${from} ${signChar(sign)} ${card} → ${to}`);
+    r.log.push(`${who} (${role}${tiles.length > 1 ? ", pounce" : ""}): ${from} ${tiles.map((t) => `${signChar(t.sign)} ${t.word}`).join(" ")} → ${to}`);
     sfx.roll(0, 0.25);
     if (role === "mouse") r.mouseMoves++;
     else { r.catMoves++; }
@@ -1760,8 +1770,8 @@
     if (role === "mouse" && cards.includes("★skip") && gap <= 15 && !r.skip) return chasePlay("★skip");
     if (role === "cat" && cards.includes("★double") && gap > 25 && !r.extra) return chasePlay("★double");
     const R = rng(String(Math.random()));
-    const m = T.botMove(role, r.pos[role], r.pos[role === "cat" ? "mouse" : "cat"], words, r.traps, R, 2);
-    if (m) chasePlay(m.card, m.sign);
+    const m = T.botMove(role, r.pos[role], r.pos[role === "cat" ? "mouse" : "cat"], words, r.traps, R, 2, role === "cat" && pounces() > 0);
+    if (m) chasePlay(m.tiles);
     else nextChaseTurn();
   }
   const rng = B.rng;
@@ -1784,7 +1794,7 @@
       h("div", { class: "matchup" },
         h("span", { class: "from" }, "Cat and mouse"),
         h("span", { class: "caption" }, `Terrain: ${chase.def.name}. ${chase.def.blurb}`),
-        h("span", { class: "caption small" }, `Both start on ${q(r.start)}. A move plays one card, added (+) or subtracted (−), and hops to the nearest word of the terrain. The mouse moves twice first. The cat catches it by landing within reach: the mouse's word among the ${T.catchK} words nearest the cat. Land next to a trap and the cat explodes.`)),
+        h("span", { class: "caption small" }, `Both start on ${q(r.start)}. A move plays one card, added (+) or subtracted (−), and hops to the nearest word of the terrain. The mouse moves ${CHASE.head} times first. The cat catches it by landing within reach: the mouse's word among the ${T.catchK} words nearest the cat. Every ${ordinal(CHASE.pounceEvery)} move the cat earns a pounce: two cards combined in one move. Land next to a trap and the cat explodes.`)),
       h("div", { class: "court-col" },
         h("div", { class: "scorebar" }, h("div", { class: "versus-score" }, side(0), side(1)),
           h("span", {}, `Round ${chase.roundNo} · cat moves left: ${CHASE.limit - r.catMoves}`)),
@@ -1811,24 +1821,36 @@
       } else if (myTurn) {
         const mine = r.hands[me].filter((c) => !r.used.has(c));
         const card = (c) => {
-          const sel = r.pick && r.pick.card === c;
+          const pk = r.picks.find((t) => t.word === c), sel = !!pk;
           const label = c.startsWith("★") ? SPECIALS[c.slice(1)] : c;
-          return h("button", { class: `tile ${sel ? (r.pick.sign > 0 ? "plus" : "minus") : ""} ${c.startsWith("★") ? "special" : ""}`, type: "button", "data-key": "card-" + c,
+          return h("button", { class: `tile ${sel ? (pk.sign > 0 ? "plus" : "minus") : ""} ${c.startsWith("★") ? "special" : ""}`, type: "button", "data-key": "card-" + c,
             disabled: busy || c === r.pos[role], title: c === r.pos[role] ? "You're standing on this word" : null, "aria-pressed": sel ? "true" : "false",
             onclick: () => {
               if (c.startsWith("★")) { if ((c === "★double" && r.extra) || (c === "★skip" && r.skip)) return; return chasePlay(c); }
-              r.pick = !sel ? { card: c, sign: 1 } : r.pick.sign > 0 ? { card: c, sign: -1 } : null;
-              sfx.tile(r.pick ? r.pick.sign : 1);
+              // Tap: add (+), again: subtract (−), again: take back. One card a move, two when pouncing.
+              if (!sel) {
+                const max = r.pounceOn ? 2 : 1;
+                if (r.picks.length >= max) r.picks = max === 1 ? [] : r.picks.slice(1);
+                r.picks.push({ word: c, sign: 1 });
+              } else if (pk.sign > 0) pk.sign = -1;
+              else r.picks = r.picks.filter((t) => t !== pk);
+              sfx.tile(1);
               render();
-            } }, label, h("span", { class: "sign", "aria-hidden": "true" }, sel ? signChar(r.pick.sign) : ""));
+            } }, label, h("span", { class: "sign", "aria-hidden": "true" }, sel ? signChar(pk.sign) : ""));
         };
-        const preview = r.pick ? T.hop(r.pos[role], r.pick.card, r.pick.sign) : null;
+        const ready = r.picks.length === (r.pounceOn ? 2 : 1);
+        const preview = ready ? T.hopTiles(r.pos[role], r.picks) : null;
+        const eq = r.picks.map((t) => `${signChar(t.sign)} ${t.word}`).join(" ");
         bench.append(h("div", { class: "play" },
           h("div", { class: "rack" }, h("span", { class: "base" }, r.pos[role]),
-            r.pick ? h("button", { class: `chip ${r.pick.sign > 0 ? "plus" : "minus"}`, type: "button", title: "Tap to switch between adding and subtracting",
-              onclick: () => { r.pick.sign = -r.pick.sign; render(); } }, `${signChar(r.pick.sign)} ${r.pick.card}`) : h("span", { class: "hint" }, "tap a card: once to add, twice to subtract")),
+            r.picks.length ? r.picks.map((t) => h("button", { class: `chip ${t.sign > 0 ? "plus" : "minus"}`, type: "button", title: "Tap to switch between adding and subtracting",
+              onclick: () => { t.sign = -t.sign; render(); } }, `${signChar(t.sign)} ${t.word}`))
+              : h("span", { class: "hint" }, r.pounceOn ? "pounce: tap two cards" : "tap a card: once to add, twice to subtract")),
           h("div", { class: "actions" },
-            h("button", { class: "throw", type: "button", "data-key": "chase-move", disabled: !r.pick || busy, onclick: () => chasePlay(r.pick.card, r.pick.sign) }, "Move"),
+            h("button", { class: "throw", type: "button", "data-key": "chase-move", disabled: !ready || busy, onclick: () => chasePlay(r.picks.slice()) }, r.pounceOn ? "Pounce" : "Move"),
+            role === "cat" && pounces() > 0 && h("button", { class: `ghost ${r.pounceOn ? "on" : ""}`, type: "button", "data-key": "chase-pounce", "aria-pressed": String(r.pounceOn),
+              onclick: () => { r.pounceOn = !r.pounceOn; if (!r.pounceOn) r.picks = r.picks.slice(0, 1); render(); } },
+              r.pounceOn ? "Cancel pounce" : `Pounce (${pounces()}): combine two cards`),
             role === "cat" && h("button", { class: "ghost", type: "button", "data-key": "chase-giveup", onclick: () => endChaseRound("gave-up") }, "Give up")),
           h("p", { class: "hand-help on" }, h("span", { class: "help-text" }, "Shared cards (either player can use them, once):")),
           h("div", { class: "hand" }, r.shared.filter((c) => !r.used.has(c)).map(card)),
@@ -1841,14 +1863,14 @@
             if (r.used.has(w)) { r.wild = `${q(w)} has been played already.`; return render(); }
             if (w === r.pos[role]) { r.wild = `You're standing on ${q(w)}; pick another word.`; return render(); }
             r.wild = "";
-            r.pick = { card: w, sign: 1 };
+            r.picks = [{ word: w, sign: 1 }];
             render();
           } },
             h("label", { class: "hint", for: "chaseWild" }, "Mouse's wild turn: play any word as a card "),
             h("input", { id: "chaseWild", name: "wild", autocomplete: "off", autocapitalize: "none", placeholder: "any word" }),
             h("button", { class: "ghost", type: "submit" }, "Use it")),
           r.wild && h("p", { class: "status warn" }, r.wild),
-          preview && h("p", { class: "hint" }, `${r.pos[role]} ${signChar(r.pick.sign)} ${r.pick.card} would hop to ${q(preview)}.`)));
+          preview && h("p", { class: "hint" }, `${r.pos[role]} ${eq} would hop to ${q(preview)}.`)));
       }
       bench.append(h("ol", { class: "log chase-log", "aria-label": "Moves this round" }, [...r.log].reverse().map((l) => h("li", {}, l))));
       return bench;

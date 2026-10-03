@@ -95,9 +95,12 @@ new mouse.
   map as a card.
 - **Traps.** Two trap words per round. A cat that lands within the 2 words
   nearest a trap explodes, and the mouse gets all the remaining points.
-- **Head start.** The mouse moves twice before the cat's first move. Without
-  it the cat, starting on the same word, catches the mouse on move 1 almost
-  every time.
+- **Head start.** The mouse moves three times before the cat's first move.
+  Without it the cat, starting on the same word, catches the mouse on move 1
+  almost every time.
+- **Pounce.** At its 5th and 10th moves the cat earns a pounce: two cards
+  combined in one move (kept until used). This is the catch-up power that
+  keeps the chase winnable for the cat.
 - **Scoring.** The mouse earns 10 points for every cat move it survives
   (12 cat moves a round). A catch gives the cat 50 and makes it the mouse. If
   the mouse lasts all 12, it gets 50 more and stays the mouse. The cat may
@@ -108,12 +111,21 @@ new mouse.
 - **Map.** A 2-D sketch of the terrain (its two strongest directions, by PCA),
   with both players' trails, the cat's reach and the trap zones.
 
-Balance, from bot-against-bot simulations: with cards from the whole
-vocabulary the cat almost never catches anyone (one card throws the mouse
-anywhere), which is why the terrain matters. On the TV terrain with a catch
-radius of 5, a perfect cat catches a perfect mouse in about 3 rounds in 4,
-spread across the round. People will play worse than either bot. The test
-suite checks the bot cat catches the bot mouse in 2–11 of 12 games.
+Balance, from bot-against-bot simulations (40 rounds each; the "human-like"
+cat picks at random among its 3 best moves, against the game's bot mouse):
+
+| Rules | Human-like cat catches | Typical catch |
+| --- | --- | --- |
+| 2-move head start, no pounce | 13 / 40 | move 1 (luck) |
+| + pounce every 3rd move | 33 / 40 | move 3 |
+| + pounce every 4th move | 29 / 40 | move 4 |
+| + extra cat move every 4th turn | 19 / 40 | move 2 |
+| 3-move head start, pounce every 5th (built) | 24 / 40 | move 5 |
+
+A sharper cat catches more (37 / 40 with a pounce every 4th move). With cards
+from the whole vocabulary the cat almost never catches anyone, since one card
+throws the mouse anywhere, which is why the terrain matters. The test suite
+checks the human-like bot cat catches the bot mouse in 3–11 of 12 games.
 
 ### Still to try
 
@@ -128,7 +140,8 @@ suite checks the bot cat catches the bot mouse in 2–11 of 12 games.
   card).
 - **Random wild turns** instead of every third move, and wild words for the
   cat too, rarer.
-- **Calibration**: catch radius, round length (12 cat moves now; 20 was
+- **Calibration**: the pounce interval (every 5th move now) and head start,
+  catch radius, round length (12 cat moves now; 20 was
   suggested), points for giving up (half now; a quarter was suggested), and
   whether the bot should bluff.
 - **Traps the mouse can lure the cat onto**, scored for the mouse.

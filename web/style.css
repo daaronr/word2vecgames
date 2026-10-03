@@ -491,3 +491,4 @@ dialog::backdrop { background: rgba(10, 20, 16, .55); }
 .tile.special { border-style: dashed; font-weight: 600; font-size: 13.5px; background: color-mix(in srgb, var(--jack) 18%, var(--enamel)); }
 .chase-log li { display: block; font: 400 13.5px var(--mono); padding: 6px 2px; }
 @media (min-width: 860px) { .chase .table { grid-template-columns: minmax(0, min(560px, calc(100vh - 150px))) minmax(0, 1fr); } }
+.ghost.on { background: var(--orange); color: #fff; border-color: var(--orange); }

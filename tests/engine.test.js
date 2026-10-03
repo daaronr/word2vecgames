@@ -206,16 +206,21 @@ for (const def of terrainDefs) {
     const R = B.rng("chase" + g), dd = T.deal("chase" + g), used = new Set();
     let mouse = dd.start, cat = dd.start;
     const free = (cards) => cards.filter((c) => !used.has(c));
-    for (let turn = 0; turn < 14; turn++) {
+    for (let turn = 0; turn < 15; turn++) {
       const m = T.botMove("mouse", mouse, cat, free([...dd.shared, ...dd.hands[0]]), dd.traps, R, 2);
-      if (m) { used.add(m.card); mouse = m.to; }
-      if (turn < 2) continue; // head start
-      const c = T.botMove("cat", cat, mouse, free([...dd.shared, ...dd.hands[1]]), dd.traps, R, 2);
-      if (c) { used.add(c.card); cat = c.to; }
+      if (m) { m.tiles.forEach((t) => used.add(t.word)); mouse = m.to; }
+      if (turn < 3) continue; // head start (CHASE.head in app.js)
+      const catMove = turn - 2, pounce = catMove % 5 === 0; // a pounce every 5th cat move (CHASE.pounceEvery)
+      const c = T.botMove("cat", cat, mouse, free([...dd.shared, ...dd.hands[1]]), dd.traps, R, 3, pounce);
+      if (c) { c.tiles.forEach((t) => used.add(t.word)); cat = c.to; }
       if (T.caught(cat, mouse)) { caught++; break; }
     }
   }
-  assert(caught >= 2 && caught <= 11, `terrain ${def.id}: bot cat caught ${caught}/12`);
+  // A cat choosing among its 3 best moves should catch some mice but not all.
+  assert(caught >= 3 && caught <= 11, `terrain ${def.id}: bot cat caught ${caught}/12`);
+  // A pounce combines two cards in one hop.
+  const two = T.moves(d.start, d.shared.slice(0, 3), true).filter((x) => x.tiles.length === 2);
+  assert.strictEqual(two.length, 3 * 4, "three cards make three pairs, each with four sign choices");
 }
 
 console.log("engine ok");
