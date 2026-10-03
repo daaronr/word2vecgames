@@ -1793,8 +1793,16 @@
     wrap.append(h("div", { class: "table" },
       h("div", { class: "matchup" },
         h("span", { class: "from" }, "Cat and mouse"),
-        h("span", { class: "caption" }, `Terrain: ${chase.def.name}. ${chase.def.blurb}`),
-        h("span", { class: "caption small" }, `Both start on ${q(r.start)}. A move plays one card, added (+) or subtracted (−), and hops to the nearest word of the terrain. The mouse moves ${CHASE.head} times first. The cat catches it by landing within reach: the mouse's word among the ${T.catchK} words nearest the cat. Every ${ordinal(CHASE.pounceEvery)} move the cat earns a pounce: two cards combined in one move. Land next to a trap and the cat explodes.`)),
+        h("div", { class: "quickhow" },
+          h("p", {}, h("b", {}, "How to play, in 20 seconds. "), `Terrain: ${chase.def.name}.`),
+          h("ol", {},
+            h("li", {}, "Tap a card (tap twice to subtract it), then ", h("b", {}, "Move"), ". You hop to the TV word nearest to “where you are + card”."),
+            h("li", {}, h("b", {}, "Mouse 🐭:"), " get far away from the cat. ", h("b", {}, "Cat 🐱:"), ` land close to the mouse: within its ${T.catchK} nearest words is a catch.`),
+            h("li", {}, "Avoid the red ✸ traps (as the cat). A card, once played, is gone for both of you. Catch the mouse and you become the mouse.")),
+          h("details", {}, h("summary", {}, "All the rules"),
+            h("p", {}, `Both start on the same word (this round: ${q(r.start)}); the mouse moves ${CHASE.head} times first. The cat has ${CHASE.limit} moves a round. Every ${ordinal(CHASE.pounceEvery)} move it earns a pounce: two cards combined in one move. Shared cards are open to both; your private cards are yours. Double lets you move twice; Skip makes the other player miss a turn. Every ${ordinal(CHASE.wildEvery)} mouse move is a wild turn: play any word at all.`),
+            h("p", {}, `Points: the mouse scores ${CHASE.perMove} for each cat move it survives, and ${CHASE.escapeBonus} more if it lasts the round. A catch scores the cat ${CHASE.catchBonus}. A cat that lands next to a trap explodes and the mouse gets all the remaining points. The cat may give up: the mouse gets half the remaining points.`),
+            h("p", { class: "hint" }, chase.def.blurb)))),
       h("div", { class: "court-col" },
         h("div", { class: "scorebar" }, h("div", { class: "versus-score" }, side(0), side(1)),
           h("span", {}, `Round ${chase.roundNo} · cat moves left: ${CHASE.limit - r.catMoves}`)),
@@ -2325,6 +2333,7 @@
     if (m === "daily" && !ends.daily) ends.daily = dealDaily();
     if (m === "practice" && !ends.practice) ends.practice = dealPractice();
     if (m === "tutorial") ends.tutorial = dealTutorial();
+    if (m === "chase") store.set("seenChase", true);
     if (m === "chase" && !chase) { mode = m; setHash(m); return startChase("bot"); }
     setHash(m === "party" && (party && party.code || partyJoinCode) ? "room=" + (party && party.code || partyJoinCode) : m);
     render();
@@ -2360,6 +2369,14 @@
     }
     for (const el of document.querySelectorAll("[data-wordset] > button")) {
       el.addEventListener("click", () => switchWordSet(el.closest("[data-wordset]").dataset.wordset));
+    }
+    // "New: Cat and mouse" note under the header, until it's played or dismissed.
+    const news = $("#newsbar");
+    if (news && !store.get("seenChase", false)) news.hidden = false;
+    const hideNews = () => { if (news) news.hidden = true; store.set("seenChase", true); };
+    if (news) {
+      $("#newsClose").addEventListener("click", hideNews);
+      $("#newsPlay").addEventListener("click", (e) => { e.preventDefault(); hideNews(); switchMode("chase"); });
     }
     const wanted = store.get("wordSet", "sense");
     try {
