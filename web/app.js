@@ -635,11 +635,12 @@
   function render() {
     hideTip();
     for (const b of document.querySelectorAll(".modes button")) {
-      b.setAttribute("aria-selected", String(b.dataset.mode === mode || (mode === "party" && b.dataset.mode === "versus")));
+      b.setAttribute("aria-selected", String(b.dataset.mode === mode || ((mode === "party" || mode === "chase") && b.dataset.mode === "versus")));
     }
     const focusKey = document.activeElement && document.activeElement.dataset ? document.activeElement.dataset.key : null;
     const m = main();
     if (mode === "tokens") m.replaceChildren(renderTokensPage());
+    else if (mode === "chase") m.replaceChildren(renderChase());
     else if (mode === "puzzles" && !ends.puzzle) m.replaceChildren(renderPuzzleList());
     else if (mode === "versus" && !vs) m.replaceChildren(renderVersusSetup());
     else if (mode === "party" && !partyInRound()) m.replaceChildren(renderPartyLobby());
@@ -1277,6 +1278,11 @@
         h("button", { class: "primary", type: "button", onclick: () => start("bot", "club") }, "Play the bot"),
         h("button", { type: "button", onclick: () => start("bot", "pro") }, "Play the bot (pro)"),
         h("button", { type: "button", onclick: () => start("friend") }, "Two players, one device")),
+      h("h2", {}, "Cat and mouse ", h("small", { class: "new" }, "new")),
+      h("p", {}, "A chase on a themed terrain (to start: 80s & 90s TV). Both start on the same word. The mouse plays cards to hop away; the cat plays cards to land within reach of it. Played cards are used up for both, there are Double and Skip cards, the mouse gets wild words, and trap words blow up the cat. Catch the mouse and you become the mouse."),
+      h("div", { class: "row" },
+        h("button", { class: "primary", type: "button", "data-key": "go-chase", onclick: () => { mode = "chase"; setHash("chase"); startChase("bot"); } }, "Play the bot"),
+        h("button", { type: "button", onclick: () => { mode = "chase"; setHash("chase"); startChase("friend"); } }, "Two players, one device")),
       h("h2", {}, "Online"),
       h("p", {}, "Play friends on their own phones or computers: everyone throws at the same court at once."),
       h("div", { class: "row" },
@@ -1623,6 +1629,259 @@
         }))));
     }
     return wrap;
+  }
+
+  // ---------- chase: cat and mouse on a themed terrain (one device: against the bot, or a friend) ----------
+  // Both start on one word. A move plays one card, + or −, and hops to the nearest word of the terrain
+  // (Terrain in engine.js). The mouse moves first, twice. The cat catches the mouse by landing within
+  // reach (the mouse's word is among the CATCH_K terrain words nearest the cat); a cat that lands
+  // next to a trap explodes. Played cards are used up for both players. Ideas still to build:
+  // docs/game-modes.md ("Cat and mouse").
+  const CHASE = { limit: 12, head: 2, wildEvery: 3, perMove: 10, catchBonus: 50, escapeBonus: 50 };
+  const SPECIALS = { double: "Double: move twice", skip: "Skip: the other player misses a turn" };
+  let chase = null;   // the match: { def, terrain, opponent, names, mouse (player index), score, roundNo, r (the round) }
+  let terrains = null;
+  async function startChase(opponent) {
+    chase = { loading: true, opponent };
+    render();
+    try {
+      if (!terrains) terrains = await fetch("chase/terrains.json").then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); });
+      const def = terrains[0];
+      const bundle = await fetchWordSet(def.map);
+      chase = { def, terrain: new B.Terrain(bundle.space, def.words), opponent, mouse: 0, score: [0, 0], roundNo: 0,
+        names: opponent === "bot" ? ["You", "Bot"] : ["Player 1", "Player 2"] };
+      newChaseRound();
+    } catch (e) {
+      chase = { error: "The chase didn't load. Check your connection and try again.", opponent };
+    }
+    render();
+    maybeChaseBot();
+  }
+  function newChaseRound() {
+    const T = chase.terrain;
+    chase.roundNo++;
+    const d = T.deal("chase-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7));
+    chase.r = { ...d, shared: [...d.shared, "★double", "★skip"], used: new Set(), pos: { mouse: d.start, cat: d.start },
+      trail: { mouse: [d.start], cat: [d.start] }, turn: "mouse", head: CHASE.head, catMoves: 0, mouseMoves: 0,
+      extra: 0, skip: null, pick: null, wild: "", log: [], over: null };
+  }
+  const roleOf = (i) => (i === chase.mouse ? "mouse" : "cat");
+  const playerOf = (role) => (role === "mouse" ? chase.mouse : 1 - chase.mouse);
+  const chaseCards = (role) => {
+    const r = chase.r;
+    return [...r.shared, ...r.hands[playerOf(role)]].filter((c) => !r.used.has(c));
+  };
+  const wildTurn = () => chase.r.turn === "mouse" && (chase.r.mouseMoves + 1) % CHASE.wildEvery === 0;
+  const isBotTurn = () => chase && chase.r && !chase.r.over && chase.opponent === "bot" && playerOf(chase.r.turn) === 1;
+
+  /** Play a card for whoever's turn it is: a special, or a word card (or the mouse's wild word) with a sign. */
+  function chasePlay(card, sign) {
+    const r = chase.r, T = chase.terrain, role = r.turn, other = role === "mouse" ? "cat" : "mouse", who = chase.names[playerOf(role)];
+    r.pick = null;
+    if (card.startsWith("★")) {
+      r.used.add(card);
+      if (card === "★double") { r.extra = 1; r.log.push(`${who} (${role}) played Double: two moves in a row.`); }
+      else { r.skip = other; r.log.push(`${who} (${role}) played Skip: the ${other} misses its next turn.`); }
+      sfx.tile(1);
+      render();
+      return maybeChaseBot(); // a special isn't a move: the same player goes on
+    }
+    const from = r.pos[role], to = T.hop(from, card, sign);
+    if (!to) return;
+    r.used.add(card);
+    r.pos[role] = to;
+    r.trail[role].push(to);
+    r.log.push(`${who} (${role}): ${from} ${signChar(sign)} ${card} → ${to}`);
+    sfx.roll(0, 0.25);
+    if (role === "mouse") r.mouseMoves++;
+    else { r.catMoves++; }
+    // Did that move end the round?
+    const trap = role === "cat" ? T.trapped(r.pos.cat, r.traps) : null;
+    if (trap) return endChaseRound("trap", trap);
+    // (During its head start the mouse can't run into the cat: they start on the same word.)
+    if ((role === "cat" || r.head <= 1) && T.caught(r.pos.cat, r.pos.mouse)) return endChaseRound(role === "cat" ? "caught" : "ran-in");
+    if (role === "cat") chase.score[chase.mouse] += CHASE.perMove; // the mouse survived another cat move
+    if (r.catMoves >= CHASE.limit) return endChaseRound("escaped");
+    nextChaseTurn();
+  }
+  function nextChaseTurn() {
+    const r = chase.r;
+    const again = () => { render(); maybeChaseBot(); };
+    if (r.extra) { r.extra = 0; return again(); }                    // Double: same player again
+    if (r.turn === "mouse" && r.head > 1) { r.head--; return again(); } // the mouse's head start
+    r.head = 0;
+    let next = r.turn === "mouse" ? "cat" : "mouse";
+    if (r.skip === next) {
+      r.skip = null;
+      r.log.push(`The ${next} misses a turn.`);
+      if (next === "cat") { r.catMoves++; chase.score[chase.mouse] += CHASE.perMove; if (r.catMoves >= CHASE.limit) return endChaseRound("escaped"); }
+      next = r.turn;
+    }
+    r.turn = next;
+    render();
+    maybeChaseBot();
+  }
+  function endChaseRound(why, trap) {
+    const r = chase.r, left = CHASE.limit - r.catMoves, m = chase.mouse, c = 1 - m;
+    let text;
+    if (why === "caught" || why === "ran-in") {
+      chase.score[c] += CHASE.catchBonus;
+      text = `${why === "caught" ? "Caught!" : "The mouse ran into the cat!"} ${q(r.pos.cat)} is within reach of ${q(r.pos.mouse)}. ` +
+        `${chase.names[c]} ${c === 0 && chase.opponent === "bot" ? "score" : "scores"} ${CHASE.catchBonus} and ${c === 0 && chase.opponent === "bot" ? "become" : "becomes"} the mouse.`;
+      chase.mouse = c;
+      sfx.clack();
+    } else if (why === "trap") {
+      chase.score[m] += left * CHASE.perMove;
+      text = `Boom! The cat landed on ${q(r.pos.cat)}, next to the trap ${q(trap)}. The mouse gets all ${left * CHASE.perMove} remaining points and stays the mouse.`;
+      sfx.lose();
+    } else if (why === "gave-up") {
+      const pts = Math.round((left * CHASE.perMove) / 2);
+      chase.score[m] += pts;
+      text = `The cat gave up. The mouse gets half the remaining points (${pts}) and stays the mouse.`;
+    } else {
+      chase.score[m] += CHASE.escapeBonus;
+      text = `The mouse escaped all ${CHASE.limit} of the cat's moves: ${CHASE.escapeBonus} bonus points, and it stays the mouse.`;
+      sfx.win();
+    }
+    r.over = { why, text };
+    render();
+  }
+  async function maybeChaseBot() {
+    if (!isBotTurn() || busy) return;
+    busy = true;
+    render();
+    await sleep(800);
+    busy = false;
+    if (!isBotTurn()) return;
+    const r = chase.r, T = chase.terrain, role = r.turn;
+    const cards = chaseCards(role), words = cards.filter((c) => !c.startsWith("★"));
+    // Specials, simply: the mouse skips the cat when it's close; the cat doubles when it's far.
+    const gap = T.rank(r.pos.cat, r.pos.mouse);
+    if (role === "mouse" && cards.includes("★skip") && gap <= 15 && !r.skip) return chasePlay("★skip");
+    if (role === "cat" && cards.includes("★double") && gap > 25 && !r.extra) return chasePlay("★double");
+    const R = rng(String(Math.random()));
+    const m = T.botMove(role, r.pos[role], r.pos[role === "cat" ? "mouse" : "cat"], words, r.traps, R, 2);
+    if (m) chasePlay(m.card, m.sign);
+    else nextChaseTurn();
+  }
+  const rng = B.rng;
+
+  function renderChase() {
+    const wrap = h("div", { class: "chase" });
+    if (!chase || chase.loading) { wrap.append(h("div", { class: "loading" }, h("b", {}, "Laying out the terrain…"), "Loading the raw-text words (once).")); return wrap; }
+    if (chase.error) {
+      wrap.append(h("div", { class: "setup" }, h("p", { class: "status warn" }, chase.error),
+        h("div", { class: "row" }, h("button", { type: "button", onclick: () => startChase(chase.opponent) }, "Try again"))));
+      return wrap;
+    }
+    const r = chase.r, T = chase.terrain, role = r.turn, me = playerOf(role);
+    const myTurn = !r.over && !isBotTurn();
+    const gap = T.rank(r.pos.cat, r.pos.mouse);
+    // scorebar
+    const side = (i) => h("span", { class: `side ${roleOf(i)}` }, h("b", {}, String(chase.score[i])), ` ${chase.names[i]} `,
+      h("small", {}, roleOf(i) === "mouse" ? "🐭 mouse" : "🐱 cat"));
+    wrap.append(h("div", { class: "table" },
+      h("div", { class: "matchup" },
+        h("span", { class: "from" }, "Cat and mouse"),
+        h("span", { class: "caption" }, `Terrain: ${chase.def.name}. ${chase.def.blurb}`),
+        h("span", { class: "caption small" }, `Both start on ${q(r.start)}. A move plays one card, added (+) or subtracted (−), and hops to the nearest word of the terrain. The mouse moves twice first. The cat catches it by landing within reach: the mouse's word among the ${T.catchK} words nearest the cat. Land next to a trap and the cat explodes.`)),
+      h("div", { class: "court-col" },
+        h("div", { class: "scorebar" }, h("div", { class: "versus-score" }, side(0), side(1)),
+          h("span", {}, `Round ${chase.roundNo} · cat moves left: ${CHASE.limit - r.catMoves}`)),
+        chaseMap(),
+        h("p", { class: "legend" }, `A flat sketch of a ${T.space.dim}-dimensional space, so distances on it are rough. Orange rings: the cat's reach. Red: traps.`)),
+      renderChaseBench()));
+    return wrap;
+
+    function renderChaseBench() {
+      const bench = h("section", { class: "bench", "aria-label": "Chase controls" });
+      bench.append(h("div", { class: "turn-banner" },
+        r.over ? "Round over." : isBotTurn() ? `The bot (${role}) is thinking…`
+          : `${chase.opponent === "bot" ? "Your move" : chase.names[me] + "'s move"} as the ${role}${r.head > 0 && role === "mouse" ? " (head start)" : ""}${chase.opponent === "friend" ? ". Pass the device." : "."}`),
+        h("p", { class: "chase-status" }, `🐭 Mouse on ${q(r.pos.mouse)} · 🐱 cat on ${q(r.pos.cat)}. `,
+          gap === 0 ? "Same word!" : `The mouse is the cat's ${ordinal(gap)} nearest word (caught at ${T.catchK} or closer).`,
+          ` Traps: ${r.traps.map(q).join(", ")}.`));
+      if (r.over) {
+        bench.append(h("div", { class: "endcard" }, h("h2", {}, r.over.why === "caught" || r.over.why === "ran-in" ? "Caught" : r.over.why === "trap" ? "Boom" : "The mouse is safe"),
+          h("p", {}, r.over.text),
+          h("p", {}, `Score: ${chase.names[0]} ${chase.score[0]}, ${chase.names[1]} ${chase.score[1]}.`),
+          h("div", { class: "row" },
+            h("button", { type: "button", "data-key": "chase-next", onclick: () => { newChaseRound(); render(); maybeChaseBot(); } }, "Next round"),
+            h("button", { class: "alt", type: "button", onclick: () => { chase = null; switchMode("versus"); } }, "Back to Versus"))));
+      } else if (myTurn) {
+        const mine = r.hands[me].filter((c) => !r.used.has(c));
+        const card = (c) => {
+          const sel = r.pick && r.pick.card === c;
+          const label = c.startsWith("★") ? SPECIALS[c.slice(1)] : c;
+          return h("button", { class: `tile ${sel ? (r.pick.sign > 0 ? "plus" : "minus") : ""} ${c.startsWith("★") ? "special" : ""}`, type: "button", "data-key": "card-" + c,
+            disabled: busy || c === r.pos[role], title: c === r.pos[role] ? "You're standing on this word" : null, "aria-pressed": sel ? "true" : "false",
+            onclick: () => {
+              if (c.startsWith("★")) { if ((c === "★double" && r.extra) || (c === "★skip" && r.skip)) return; return chasePlay(c); }
+              r.pick = !sel ? { card: c, sign: 1 } : r.pick.sign > 0 ? { card: c, sign: -1 } : null;
+              sfx.tile(r.pick ? r.pick.sign : 1);
+              render();
+            } }, label, h("span", { class: "sign", "aria-hidden": "true" }, sel ? signChar(r.pick.sign) : ""));
+        };
+        const preview = r.pick ? T.hop(r.pos[role], r.pick.card, r.pick.sign) : null;
+        bench.append(h("div", { class: "play" },
+          h("div", { class: "rack" }, h("span", { class: "base" }, r.pos[role]),
+            r.pick ? h("button", { class: `chip ${r.pick.sign > 0 ? "plus" : "minus"}`, type: "button", title: "Tap to switch between adding and subtracting",
+              onclick: () => { r.pick.sign = -r.pick.sign; render(); } }, `${signChar(r.pick.sign)} ${r.pick.card}`) : h("span", { class: "hint" }, "tap a card: once to add, twice to subtract")),
+          h("div", { class: "actions" },
+            h("button", { class: "throw", type: "button", "data-key": "chase-move", disabled: !r.pick || busy, onclick: () => chasePlay(r.pick.card, r.pick.sign) }, "Move"),
+            role === "cat" && h("button", { class: "ghost", type: "button", "data-key": "chase-giveup", onclick: () => endChaseRound("gave-up") }, "Give up")),
+          h("p", { class: "hand-help on" }, h("span", { class: "help-text" }, "Shared cards (either player can use them, once):")),
+          h("div", { class: "hand" }, r.shared.filter((c) => !r.used.has(c)).map(card)),
+          h("p", { class: "hand-help on" }, h("span", { class: "help-text" }, `${chase.opponent === "bot" ? "Your" : chase.names[me] + "'s"} private cards:`)),
+          h("div", { class: "hand" }, mine.length ? mine.map(card) : h("span", { class: "hint" }, "none left")),
+          wildTurn() && h("form", { class: "joker-form", onsubmit: (e) => {
+            e.preventDefault();
+            const w = String(new FormData(e.target).get("wild") || "").trim().toLowerCase();
+            if (!T.space.has(w)) { r.wild = `${q(w)} isn't on the raw-text map.`; return render(); }
+            if (r.used.has(w)) { r.wild = `${q(w)} has been played already.`; return render(); }
+            if (w === r.pos[role]) { r.wild = `You're standing on ${q(w)}; pick another word.`; return render(); }
+            r.wild = "";
+            r.pick = { card: w, sign: 1 };
+            render();
+          } },
+            h("label", { class: "hint", for: "chaseWild" }, "Mouse's wild turn: play any word as a card "),
+            h("input", { id: "chaseWild", name: "wild", autocomplete: "off", autocapitalize: "none", placeholder: "any word" }),
+            h("button", { class: "ghost", type: "submit" }, "Use it")),
+          r.wild && h("p", { class: "status warn" }, r.wild),
+          preview && h("p", { class: "hint" }, `${r.pos[role]} ${signChar(r.pick.sign)} ${r.pick.card} would hop to ${q(preview)}.`)));
+      }
+      bench.append(h("ol", { class: "log chase-log", "aria-label": "Moves this round" }, [...r.log].reverse().map((l) => h("li", {}, l))));
+      return bench;
+    }
+
+    function chaseMap() {
+      const W = 400, H = 400, P = 28;
+      const mp = T.map(), xy = (w) => { const [x, y] = mp.get(w); return { x: P + x * (W - 2 * P), y: P + y * (H - 2 * P) }; };
+      const svg = s("svg", { class: "court chase-map", viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": `Map of the ${chase.def.name} terrain` });
+      svg.append(s("rect", { x: 6, y: 6, width: W - 12, height: H - 12, rx: 10, style: "fill:var(--gravel)" }));
+      const reach = new Set(T.words.filter((w) => w !== r.pos.cat).sort((a, b) => T.rank(r.pos.cat, a) - T.rank(r.pos.cat, b)).slice(0, T.catchK));
+      const trapZone = new Set(r.traps.flatMap((t) => [t, ...T.words.filter((w) => w !== t && T.rank(t, w) <= T.trapK)]));
+      for (const w of T.words) {
+        const { x, y } = xy(w);
+        svg.append(s("circle", { cx: x.toFixed(1), cy: y.toFixed(1), r: 2.4, class: `tdot ${trapZone.has(w) ? "trap" : ""}` }));
+        if (reach.has(w)) svg.append(s("circle", { cx: x.toFixed(1), cy: y.toFixed(1), r: 7, class: "reach" }));
+      }
+      for (const [role2, cls] of [["mouse", "mouse"], ["cat", "cat"]]) {
+        const pts = r.trail[role2].map(xy);
+        if (pts.length > 1) svg.append(s("polyline", { class: `trail ${cls}`, points: pts.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ") }));
+      }
+      const labels = new Map();
+      for (const t of r.traps) labels.set(t, "trap");
+      labels.set(r.pos.mouse, "mouse");
+      labels.set(r.pos.cat, r.pos.cat === r.pos.mouse ? "both" : "cat");
+      for (const [w, kind] of labels) {
+        const { x, y } = xy(w);
+        if (kind !== "trap") svg.append(s("circle", { cx: x, cy: y, r: 9, class: `piece ${kind}` }));
+        svg.append(s("text", { x: x.toFixed(1), y: (y - 12).toFixed(1), "text-anchor": "middle", class: `tlabel ${kind}` },
+          kind === "trap" ? "✸ " + w : (kind === "mouse" ? "🐭 " : kind === "cat" ? "🐱 " : "🐱🐭 ") + w));
+      }
+      return svg;
+    }
   }
 
   // ---------- tokens: how a language model reads text (the Tokens tab, and the token view of the hand) ----------
@@ -2044,6 +2303,7 @@
     if (m === "daily" && !ends.daily) ends.daily = dealDaily();
     if (m === "practice" && !ends.practice) ends.practice = dealPractice();
     if (m === "tutorial") ends.tutorial = dealTutorial();
+    if (m === "chase" && !chase) { mode = m; setHash(m); return startChase("bot"); }
     setHash(m === "party" && (party && party.code || partyJoinCode) ? "room=" + (party && party.code || partyJoinCode) : m);
     render();
     maybeBot();
@@ -2102,7 +2362,7 @@
       store.set("tutorialOffered", true);
       return switchMode("tutorial");
     }
-    switchMode(["daily", "practice", "puzzles", "versus", "tutorial", "party", "tokens"].includes(want) ? want : "daily");
+    switchMode(["daily", "practice", "puzzles", "versus", "tutorial", "party", "tokens", "chase"].includes(want) ? want : "daily");
   }
   boot();
 })();

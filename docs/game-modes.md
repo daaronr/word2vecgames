@@ -63,3 +63,72 @@ database. Once they're collected, they can:
 - promote suggested words into `pools.json` (or weight them in `deal()`),
 - flag deals where players repeatedly wanted a word that the deal filters out,
 - tune the hand mix (pulls, sheds, lures, near-misses).
+
+## 5. Cat and mouse (a chase) — first version built
+
+Suggested 2026-10-03. One player is the mouse, the other the cat. Both start
+on the same word. On each turn a player plays one card, added or subtracted,
+and hops to a new word; the cat tries to land close enough to the mouse to
+catch it, and the mouse tries to stay away. A caught mouse makes the cat the
+new mouse.
+
+### What the first version does (`renderChase` in `web/app.js`, `Terrain` in `web/engine.js`)
+
+- **Terrain.** Every card and every landing spot comes from one small themed
+  word set (`web/chase/terrains.json`). The first is "80s & 90s TV" (131
+  words: seinfeld, kramer, homer, bart, mulder, scully, picard, baywatch,
+  sitcom, cliffhanger, rerun, diner, precinct…), on the raw-text map, which
+  knows the show and character names (the common-sense map doesn't).
+- **Moves hop to words.** From word W, card C with sign s lands on the terrain
+  word nearest to W + s·C (not W or C): seinfeld + bart − jerry → simpsons.
+  An earlier version that kept adding cards onto a running total drifted into
+  meaningless regions within a few moves.
+- **Catching.** The cat catches the mouse when the mouse's word is among the 5
+  terrain words nearest the cat's word (or they're on the same word). The
+  mouse can also blunder into the cat.
+- **Cards.** 16 shared face-up cards plus 3 private cards each. A played card
+  is used up for both players, so the cat can't follow with the mouse's card.
+  You can't play the word you're standing on.
+- **Uno-style cards** in the shared row: Double (move twice) and Skip (the
+  other player misses a turn).
+- **Wild words.** Every third mouse move, the mouse may play any word on the
+  map as a card.
+- **Traps.** Two trap words per round. A cat that lands within the 2 words
+  nearest a trap explodes, and the mouse gets all the remaining points.
+- **Head start.** The mouse moves twice before the cat's first move. Without
+  it the cat, starting on the same word, catches the mouse on move 1 almost
+  every time.
+- **Scoring.** The mouse earns 10 points for every cat move it survives
+  (12 cat moves a round). A catch gives the cat 50 and makes it the mouse. If
+  the mouse lasts all 12, it gets 50 more and stays the mouse. The cat may
+  give up at any time; the mouse then gets half the remaining points.
+- **Opponents.** The bot (greedy, choosing at random among its two best
+  moves; it uses Skip when the cat is close and Double when the mouse is far)
+  or a friend on the same device.
+- **Map.** A 2-D sketch of the terrain (its two strongest directions, by PCA),
+  with both players' trails, the cat's reach and the trap zones.
+
+Balance, from bot-against-bot simulations: with cards from the whole
+vocabulary the cat almost never catches anyone (one card throws the mouse
+anywhere), which is why the terrain matters. On the TV terrain with a catch
+radius of 5, a perfect cat catches a perfect mouse in about 3 rounds in 4,
+spread across the round. People will play worse than either bot. The test
+suite checks the bot cat catches the bot mouse in 2–11 of 12 games.
+
+### Still to try
+
+- **More terrains**: sci-fi, food, sports, the 2000s internet, a GPT-2 token
+  terrain (capitalised names live there).
+- **Online rooms** (on `web/net.js`), and **several cats** racing to catch one
+  mouse first.
+- **Private cards the others can see but not use**, as suggested: a visible
+  hand tells the cat where the mouse might run.
+- **More Uno cards**: Reverse (swap roles for one turn), Draw two (take two
+  cards from a face-down pile), Freeze (the other player must play a shared
+  card).
+- **Random wild turns** instead of every third move, and wild words for the
+  cat too, rarer.
+- **Calibration**: catch radius, round length (12 cat moves now; 20 was
+  suggested), points for giving up (half now; a quarter was suggested), and
+  whether the bot should bluff.
+- **Traps the mouse can lure the cat onto**, scored for the mouse.
