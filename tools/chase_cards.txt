@@ -1,0 +1,48 @@
+# Cards for Cat and mouse: describing words and doing words, played onto the
+# terrain's things (dog + wild, kitchen + cold, car + fly). Familiar words only.
+# tools/build_terrains.py keeps the ones on each terrain's map and writes them
+# into web/chase/terrains.json as that terrain's "cards".
+
+# --- describing words (adjectives) ---
+big small tiny huge giant tall short long wide narrow thick thin deep shallow
+heavy light hot cold warm cool frozen icy wet dry damp muddy dusty sandy rocky
+hard soft smooth rough sharp blunt sticky slippery fluffy furry hairy bald
+fast slow quick lazy busy quiet loud noisy silent calm wild tame fierce gentle
+old new young ancient modern fresh stale rotten ripe raw baked fried
+sweet sour bitter salty spicy tasty delicious juicy crunchy creamy greasy
+bright dark dim shiny dull clear cloudy foggy sunny rainy snowy windy stormy
+red orange yellow green blue purple pink brown black white gray golden silver
+clean dirty messy neat empty full open closed broken round square flat
+rich poor cheap expensive fancy plain simple fake real precious valuable
+happy sad angry scared brave shy proud lonely sleepy hungry thirsty tired sick
+healthy strong weak fat skinny pretty ugly beautiful cute scary funny serious
+strange weird magic holy evil kind cruel friendly rude polite clever stupid
+smart wise silly crazy famous secret private public royal noble humble
+safe dangerous deadly poisonous toxic wooden metal plastic glass paper stone
+leather woolly cotton silk electric digital mechanical natural artificial
+tropical arctic desert rural urban local foreign domestic wild marine
+aquatic indoor outdoor underground underwater floating flying military medical
+musical religious legal criminal athletic sporty romantic tiny elegant cozy
+festive spooky sacred
+# --- doing words (verbs) ---
+eat drink bite chew swallow cook bake fry boil grill roast brew pour taste
+sleep dream wake rest sit stand lie walk run jog sprint jump hop climb crawl
+swim dive float sink fly soar glide fall drop throw catch kick hit punch
+fight attack defend guard hunt chase hide seek escape steal rob arrest
+build make break fix repair cut chop saw drill dig plant grow harvest farm
+water wash clean scrub sweep wipe polish paint draw write read print type
+sing dance play act perform laugh cry shout whisper talk speak listen hear
+see watch look stare smell touch feel hug kiss love hate fear worry
+teach learn study think count measure weigh calculate solve test experiment
+buy sell pay spend save trade shop rent borrow lend owe earn win lose bet
+drive ride sail row steer park crash race travel explore camp hike fish
+heal cure treat operate nurse breathe cough bleed sweat
+burn melt freeze heat cool dry soak spray splash drip leak flow flood
+open close lock unlock knock ring call send mail post deliver carry lift
+push pull drag roll spin twist bend fold wrap tie sew knit weave stitch
+shine glow sparkle flash light shade cover wear dress button zip
+pray worship marry divorce celebrate mourn bury vote rule govern serve obey
+bark roar howl hiss buzz sting graze nest hatch
+wrestle box ski skate surf golf bowl juggle cheer dribble score shoot
+invent discover design program compute record film photograph broadcast
+store pack fill empty pump mix stir blend grind slice peel squeeze spread

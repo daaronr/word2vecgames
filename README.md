@@ -64,14 +64,17 @@ are active on the token map). An online room uses the host's set.
   Up to six players. Browsers connect directly (WebRTC via the free PeerJS
   broker, `web/net.js`); the host's tab is the room, and nothing is stored.
 - **Cat and mouse** (under Versus; direct link `#chase`): a chase through about
-  1,300 everyday words on the common-sense map. Both start on one word; each
-  move plays a card, added or subtracted, and hops to the nearest word you
-  haven't visited (you don't see where until you play it). The mouse opens
-  with a getaway of up to three cards; the cat catches it by landing within
-  its 40 nearest words, and can pounce with two cards every 5th move; trap
-  words blow up the cat. A banner shows each move (the bot's too), both
-  journeys are listed, and the round ends with a story of the chase. Against
-  the bot or a friend on one device. Design: `docs/game-modes.md`.
+  1,300 everyday things on the common-sense map, moving by describing and
+  doing words (car + fly → airplane). Each move adds or subtracts a card and
+  hops to the nearest word you haven't visited (you don't see where until you
+  play it). The mouse opens with a getaway of up to three cards; the cat
+  catches it by landing within its 30 nearest words, can pounce with two
+  cards every 5th move, and can pass for a fresh row of cards; trap words blow
+  up the cat. The game says where everyone is and tells each move card by
+  card (the bot's too), lists both journeys, and ends with a story of the
+  chase. Against the bot or a friend on one device. Cards:
+  `tools/chase_cards.txt` → `tools/build_terrains.py`. Design:
+  `docs/game-modes.md`.
 - **Tokens**: how a chatbot reads text, with GPT-2's real tokenizer
   (`web/tokens.js`). Split your own text into tokens and see their IDs, play
   "Guess the split" (eight rounds, each explaining a quirk that matters for

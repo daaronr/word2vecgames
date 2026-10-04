@@ -540,6 +540,19 @@ dialog::backdrop { background: rgba(10, 20, 16, .55); }
 .lastmove .to { font-size: 17px; }
 .lastmove.mouse { border-color: var(--teal); background: color-mix(in srgb, var(--teal) 14%, var(--panel)); }
 .lastmove.cat { border-color: var(--orange); background: color-mix(in srgb, var(--orange) 14%, var(--panel)); }
+.lastmove { align-items: flex-start; }
+.lastmove .steps { margin: 4px 0; padding-left: 1.2em; }
+.lastmove .steps li { margin: 1px 0; }
+.lastmove.earlier { opacity: .72; border-width: 1px; font-size: 14px; }
+.lastmove.earlier .to { font-size: 15px; }
+.feed { display: flex; flex-direction: column; gap: 8px; }
+.whereabouts { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; border-radius: 10px; background: var(--panel); border: 1px solid var(--line); }
+.whereabouts p { margin: 0; display: flex; align-items: center; gap: 8px; }
+.whereabouts .where { font-size: 17px; }
+.whereabouts .where b { font-size: 19px; }
+.whereabouts .where.mouse b { color: var(--teal); } .whereabouts .where.cat b { color: var(--orange); }
+.whereabouts .gap { font-size: 14px; color: var(--ink-soft); padding-left: 34px; }
+.whereabouts .gap.caught, .whereabouts .gap.hot { color: var(--red); font-weight: 700; }
 @keyframes lastmove-in { from { transform: translateY(-6px); opacity: 0; } to { transform: none; opacity: 1; } }
 .journey { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .jcol { min-width: 0; padding: 8px 10px; border-radius: 10px; background: var(--panel); border: 1px solid var(--line); border-top: 3px solid; }

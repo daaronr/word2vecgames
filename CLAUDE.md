@@ -38,8 +38,10 @@ jack's **rank** among the ball's nearest words (rank 1 = "bacio").
   - `chase/terrains.json` + `Terrain` (engine.js) + the chase section of `app.js`:
     "Cat and mouse" (under Versus). Moves hop to the nearest unvisited word of a
     terrain (now "Everyday things", 1,285 words on the common-sense map; each terrain
-    names its map, catch radius and trap radius); catch radius, traps, bots and the
-    2-D map live in `Terrain`. `tests/engine.test.js` checks words and bot balance.
+    names its map, catch radius, trap radius, card weight and cards). Cards are
+    describing and doing words from `tools/chase_cards.txt`, written in by
+    `tools/build_terrains.py`. Catch radius, traps, bots and the 2-D map live in
+    `Terrain`. `tests/engine.test.js` checks words and bot balance.
   - `net.js`: online rooms over PeerJS (loaded from jsDelivr only when a room is
     opened). The host's browser holds the state; only seeds and tile choices
     are sent, and every browser scores throws itself.

@@ -335,6 +335,12 @@
       this.words = [...new Set(words)].filter((w) => space.has(w));
       this.catchK = opts.catchK || 5;
       this.trapK = opts.trapK || 2;
+      // Cards can come from their own list (describing and doing words: dog + wild, car + fly);
+      // without one, the terrain's words are the cards.
+      this.cards = opts.cards ? [...new Set(opts.cards)].filter((w) => space.has(w)) : null;
+      // How hard a card pulls, against the word you stand on. At 1, many different cards land on the
+      // same neighbour of where you are; at 1.5 they spread out (and car + fly reaches airplane).
+      this.cardWeight = opts.cardWeight || 1;
       // The terrain's rows, side by side, for fast scans (terrains run to a few thousand words).
       const d = space.dim;
       this.M = new Float32Array(this.words.length * d);
@@ -365,7 +371,17 @@
      * `visited`: words this player has already stood on, which it can't land on again; without this,
      * players bounce between two synonyms (highway, freeway, highway…).
      */
-    hopTiles(from, tiles, visited = []) { return this.nearest(this.space.ball(from, tiles), [from, ...visited, ...tiles.map((t) => t.word)]); }
+    hopTiles(from, tiles, visited = []) {
+      const d = this.space.dim, v = Float32Array.from(this.space.row(from));
+      for (const t of tiles) { const r = this.space.row(t.word); for (let k = 0; k < d; k++) v[k] += t.sign * this.cardWeight * r[k]; }
+      let ss = 0;
+      for (let k = 0; k < d; k++) ss += v[k] * v[k];
+      const inv = ss > 0 ? 1 / Math.sqrt(ss) : 0;
+      for (let k = 0; k < d; k++) v[k] *= inv;
+      return this.nearest(v, [from, ...visited, ...tiles.map((t) => t.word)]);
+    }
+    /** Where a several-card move goes card by card: [after the first card, after two, …]. */
+    steps(from, tiles, visited = []) { return tiles.map((_, i) => this.hopTiles(from, tiles.slice(0, i + 1), visited)); }
     /** 0 if the same word, else 1 + how many terrain words sit closer to `from` than `to` does. */
     rank(from, to) {
       if (from === to) return 0;
@@ -423,6 +439,14 @@
       }).filter(Boolean).sort((a, b) => b.score - a.score);
       return opts.length ? opts[Math.floor(R() * Math.min(reach, opts.length))] : null;
     }
+    /**
+     * The bot cat passes (and the row is dealt afresh) when no card would bring it nearer the mouse
+     * than it is now.
+     */
+    botShouldPass(cat, mouse, cards, traps, visited = []) {
+      const now = this.rank(cat, mouse);
+      return !this.moves(cat, cards, false, false, visited).some((m) => !this.trapped(m.to, traps) && this.rank(m.to, mouse) < now);
+    }
     /** A start word, two traps away from it, and the cards: a shared face-up row, two private hands, a deck. */
     deal(seed, { shared = 16, hand = 3 } = {}) {
       const R = rng(seed);
@@ -431,6 +455,11 @@
       const traps = [];
       for (let i = 0; i < pool.length && traps.length < 2; i++) {
         if (this.rank(start, pool[i]) > this.catchK * 3) traps.push(pool.splice(i--, 1)[0]);
+      }
+      if (this.cards) {
+        const cards = R.shuffle(this.cards.filter((c) => c !== start && !traps.includes(c)));
+        return { start, traps, shared: cards.slice(0, shared), hands: [cards.slice(shared, shared + hand), cards.slice(shared + hand, shared + 2 * hand)],
+          deck: cards.slice(shared + 2 * hand) };
       }
       return { start, traps, shared: pool.slice(0, shared), hands: [pool.slice(shared, shared + hand), pool.slice(shared + hand, shared + 2 * hand)],
         deck: pool.slice(shared + 2 * hand) }; // face down: refills the shared row as cards are used
