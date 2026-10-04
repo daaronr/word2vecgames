@@ -1298,7 +1298,7 @@
         h("button", { type: "button", onclick: () => start("bot", "pro") }, "Play the bot (pro)"),
         h("button", { type: "button", onclick: () => start("friend") }, "Two players, one device")),
       h("h2", {}, "Cat and mouse ", h("small", { class: "new" }, "new")),
-      h("p", {}, "A chase through about 1,300 everyday words. Both start on the same word. The mouse plays word cards (+ or −) to hop away; the cat plays them to land close to the mouse. Played cards are used up for both, trap words blow up the cat, and every fifth turn the cat may pounce. Catch the mouse and you swap roles. At the end, tell the story of the chase."),
+      h("p", {}, "A chase through about 1,300 everyday things. Both start on the same word. The mouse plays describing and doing words (+ or −) to hop away; the cat plays them to land close to the mouse, and can pass for fresh cards. Played cards are used up for both, trap words blow up the cat, and every fifth turn the cat may pounce. Catch the mouse and you swap roles. At the end, tell the story of the chase."),
       h("div", { class: "row" },
         h("button", { class: "primary", type: "button", "data-key": "go-chase", onclick: () => { mode = "chase"; setHash("chase"); startChase("bot"); } }, "Play the bot"),
         h("button", { type: "button", onclick: () => { mode = "chase"; setHash("chase"); startChase("friend"); } }, "Two players, one device")),
@@ -1669,7 +1669,7 @@
       if (!terrains) terrains = await fetch("chase/terrains.json").then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); });
       const def = terrains.find((t) => !t.hidden);
       const bundle = await fetchWordSet(def.map);
-      chase = { def, terrain: new B.Terrain(bundle.space, def.words, { catchK: def.catchK, trapK: def.trapK }), opponent, mouse: 0, score: [0, 0], roundNo: 0,
+      chase = { def, terrain: new B.Terrain(bundle.space, def.words, { catchK: def.catchK, trapK: def.trapK, cards: def.cards, cardWeight: def.cardWeight }), opponent, mouse: 0, score: [0, 0], roundNo: 0,
         names: opponent === "bot" ? ["You", "Bot"] : ["Player 1", "Player 2"], intro: !store.get("chaseIntroSeen2", false) || opts.intro };
       newChaseRound();
     } catch (e) {
@@ -1683,7 +1683,7 @@
     chase.roundNo++;
     const d = T.deal("chase-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7), { shared: CHASE.row, hand: 0 });
     chase.r = { start: d.start, traps: d.traps, shared: d.shared, deck: d.deck, used: new Set(), pos: { mouse: d.start, cat: d.start },
-      trail: { mouse: [d.start], cat: [d.start] }, moves: { mouse: [], cat: [] }, turn: "mouse", getaway: true, catMoves: 0,
+      trail: { mouse: [d.start], cat: [d.start] }, moves: { mouse: [], cat: [] }, feed: [], turn: "mouse", getaway: true, catMoves: 0,
       picks: [], pounceOn: false, pouncesUsed: 0, over: null, last: null, story: null };
   }
   const playerOf = (role) => (role === "mouse" ? chase.mouse : 1 - chase.mouse);
@@ -1705,6 +1705,7 @@
     const r = chase.r, T = chase.terrain, role = r.turn, who = chase.names[playerOf(role)];
     const from = r.pos[role], to = T.hopTiles(from, tiles, r.trail[role]);
     if (!to) return;
+    const prevGap = T.rank(r.pos.cat, r.pos.mouse), steps = tiles.length > 1 ? T.steps(from, tiles, r.trail[role]) : [to];
     r.picks = [];
     for (const t of tiles) r.used.add(t.word);
     refillRow();
@@ -1713,7 +1714,8 @@
     r.pos[role] = to;
     r.trail[role].push(to);
     r.moves[role].push({ from, tiles, to, kind });
-    r.last = { role, who, from, tiles, to, kind, gap: T.rank(r.pos.cat, r.pos.mouse) };
+    r.last = { role, who, from, tiles, to, kind, steps, prevGap, gap: T.rank(r.pos.cat, r.pos.mouse) };
+    r.feed.push(r.last);
     if (role === "mouse") { sfx.squeak(); r.getaway = false; } else { r.catMoves++; sfx.roll(0, 0.25); }
     const trap = role === "cat" ? T.trapped(r.pos.cat, r.traps) : null;
     if (trap) return endChaseRound("trap", trap);
@@ -1722,6 +1724,25 @@
     if (role === "cat") chase.score[chase.mouse] += CHASE.perMove; // the mouse survived another cat move
     if (r.catMoves >= CHASE.limit) return endChaseRound("escaped");
     r.turn = role === "mouse" ? "cat" : "mouse";
+    render();
+    maybeChaseBot();
+  }
+  /** The cat passes: it stays put, the whole row goes back under the deck and a fresh one is dealt. Uses up a move. */
+  function chasePass() {
+    const r = chase.r, T = chase.terrain, who = chase.names[playerOf("cat")], gap = T.rank(r.pos.cat, r.pos.mouse);
+    r.picks = [];
+    r.pounceOn = false;
+    r.deck.push(...r.shared);
+    r.shared = [];
+    refillRow();
+    r.catMoves++;
+    r.moves.cat.push({ from: r.pos.cat, tiles: [], to: r.pos.cat, kind: "pass" });
+    r.last = { role: "cat", who, from: r.pos.cat, tiles: [], to: r.pos.cat, kind: "pass", steps: [], prevGap: gap, gap };
+    r.feed.push(r.last);
+    sfx.tile(1);
+    chase.score[chase.mouse] += CHASE.perMove;
+    if (r.catMoves >= CHASE.limit) return endChaseRound("escaped");
+    r.turn = "mouse";
     render();
     maybeChaseBot();
   }
@@ -1766,7 +1787,7 @@
     if (!isBotTurn() || busy) return;
     busy = true;
     render();
-    await sleep(1100);
+    await sleep(1700); // time to read the announcement of your own move first
     busy = false;
     if (!isBotTurn()) return;
     const r = chase.r, T = chase.terrain, role = r.turn, R = B.rng(String(Math.random()));
@@ -1775,6 +1796,8 @@
       const m = T.botGetaway(r.pos.mouse, r.pos.cat, r.shared, R, r.trail.mouse, { size: CHASE.getaway });
       if (m) return chasePlay(m.tiles);
     }
+    // The bot cat passes for fresh cards when none of these would bring it nearer the mouse.
+    if (role === "cat" && T.botShouldPass(r.pos.cat, r.pos.mouse, r.shared, r.traps, r.trail.cat)) return chasePass();
     // The bot cat picks among its 5 best moves, the bot mouse among its 3 best: beatable, not careless.
     const m = T.botMove(role, r.pos[role], r.pos[role === "cat" ? "mouse" : "cat"], r.shared, r.traps, R,
       role === "cat" ? 5 : 3, role === "cat" && pounces() > 0, false, r.trail[role]);
@@ -1796,7 +1819,7 @@
       const acts = [took.length && `grabbed ${the(took)}`, left.length && `dropped ${the(left)}`].filter(Boolean);
       lines.push(`${pick(["With a whisker-twitch", "In a flash of tail", "On tiptoe"])}, the mouse ${acts.join(", ")} and fled all the way to the ${M[0].to}.`);
     }
-    const mouseRest = M.slice(1).map((m) => m.to), catPath = C.map((m) => m.to);
+    const mouseRest = M.slice(1).map((m) => m.to), catPath = C.filter((m) => m.kind !== "pass").map((m) => m.to);
     if (catPath.length) lines.push(`The cat ${pick(["licked its lips", "stretched", "narrowed its eyes"])} and ${pick(["set off after it", "followed its nose", "padded after it"])}, past ${the(catPath)}.`);
     if (mouseRest.length) lines.push(`${pick(["Meanwhile", "All the while", "Ahead of it"])} the mouse ${pick(["scurried", "darted", "scampered"])} past ${the(mouseRest)}${mouseRest.length > 4 ? ", never stopping for long" : ""}.`);
     const pounce = C.find((m) => m.kind === "pounce");
@@ -1810,7 +1833,7 @@
   }
   function chaseStoryPrompt() {
     const r = chase.r;
-    const path = (role) => [r.start, ...r.moves[role].map((m) => `${eqOf(m.tiles)} → ${m.to}`)].join("  ");
+    const path = (role) => [r.start, ...r.moves[role].map((m) => m.kind === "pass" ? "(waits a turn)" : `${eqOf(m.tiles)} → ${m.to}`)].join("  ");
     const end = r.over ? r.over.text : "";
     return `Write a short, funny story (under 200 words) for all ages about a cat chasing a mouse. They visit these places, in order; use every one.\n` +
       `Mouse: ${path("mouse")}\nCat: ${path("cat")}\nEnding: ${end}`;
@@ -1870,37 +1893,71 @@
       renderChaseBench()));
     return wrap;
 
-    /** What just happened, in big type, so the other player's move (the bot's too) is never missed. */
-    function lastMoveBanner() {
-      const L = r.last;
-      if (!L) return null;
-      const mine = chase.opponent === "bot" ? playerOf(L.role) === 0 : false;
-      const verb = L.kind === "getaway" ? "made a getaway with" : L.kind === "pounce" ? "pounced with" : "played";
-      const c = closeness(L.gap);
-      const after = L.role === "cat"
-        ? (c.key === "caught" ? "" : ` The mouse is ${c.label} (${ordinal(L.gap)} nearest to the cat).`)
-        : ` The cat is ${c.label}: the mouse is the cat's ${ordinal(L.gap)} nearest word.`;
-      // Slide in once per move, not on every redraw (tapping a card redraws the bench).
-      const fresh = chase.shownLast !== L;
+    // (function declarations: this part of renderChase runs after its return statement)
+    function isMine(rl) { return chase.opponent === "bot" && playerOf(rl) === 0; }
+    function nameOf(rl) { return isMine(rl) ? "You" : chase.opponent === "bot" ? "The bot" : chase.names[playerOf(rl)]; }
+
+    /** Where everyone is now, in plain words: "You're the cat, on “straw”." */
+    function whereabouts() {
+      const line = (rl) => {
+        const mine = isMine(rl);
+        return h("p", { class: `where ${rl}` }, artOf(rl, 26),
+          h("span", {}, mine ? `You're the ${rl}, on ` : chase.opponent === "bot" ? `The bot (${rl}) is on ` : `${nameOf(rl)} is the ${rl}, on `,
+            h("b", {}, q(r.pos[rl])), "."));
+      };
+      const gap = T.rank(r.pos.cat, r.pos.mouse), c = closeness(gap);
+      const order = chase.opponent === "bot" ? [roleOf(0), roleOf(1)] : [role, role === "cat" ? "mouse" : "cat"];
+      return h("div", { class: "whereabouts" }, line(order[0]), line(order[1]),
+        h("p", { class: `gap ${c.key}` }, gap === 0 ? "Same word!" : `The mouse is the cat's ${ordinal(gap)} nearest word: ${c.label}. The cat catches it at ${T.catchK} or nearer.`));
+    }
+
+    /**
+     * The last two moves, told step by step: who played what, where each card took them, where
+     * they landed and whether the cat got closer. The newest is highlighted.
+     */
+    function announcements() {
+      const items = r.feed.slice(-2);
+      if (!items.length) return null;
+      const L = r.last, fresh = chase.shownLast !== L; // slide in once per move, not on every redraw
       chase.shownLast = L;
-      return h("div", { class: `lastmove ${L.role} ${fresh ? "fresh" : ""}` }, artOf(L.role, 30),
-        h("p", {}, h("b", {}, `${mine ? "You" : L.who === "Bot" ? "The bot" : L.who} (${L.role}) ${verb} `),
-          h("span", { class: "eqs" }, `${L.from} ${eqOf(L.tiles)}`), " → ", h("b", { class: "to" }, L.to), ".", after));
+      return h("div", { class: "feed", "aria-live": "polite" }, items.map((m) => announce(m, m === L, m === L && fresh)));
+    }
+    function announce(m, latest, fresh) {
+      const mine = isMine(m.role), who = nameOf(m.role), cls = `lastmove ${m.role} ${latest ? "latest" : "earlier"} ${fresh ? "fresh" : ""}`;
+      const tag = chase.opponent === "bot" ? ` (${m.role})` : ` (the ${m.role})`;
+      if (m.kind === "pass") {
+        return h("div", { class: cls }, artOf(m.role, 30), h("div", {},
+          h("p", {}, h("b", {}, `${who}${tag} passed.`), ` ${mine ? "You stay" : "It stays"} on ${q(m.to)}, and the whole row of cards was swapped for a fresh one.`)));
+      }
+      const verb = m.kind === "getaway" ? "made a getaway with" : m.kind === "pounce" ? "pounced with" : "played";
+      // Card by card: where each card took them, from where they stood.
+      const lines = m.tiles.map((t, i) => h("li", {}, h("span", { class: "eqs" }, i === 0 ? `${m.from} ${signChar(t.sign)} ${t.word}` : `then ${signChar(t.sign)} ${t.word}`),
+        " → ", i === m.tiles.length - 1 ? h("b", { class: "to" }, m.steps[i] || m.to) : h("span", {}, m.steps[i] || "?"),
+        i > 0 && m.steps[i] === m.steps[i - 1] ? h("small", {}, " (no change)") : null));
+      const K = T.catchK, c = closeness(m.gap);
+      const trend = m.gap === 0 ? "" : m.prevGap === 0 ? " The mouse is off!" : m.gap < m.prevGap ? ` The cat got closer (from ${ordinal(m.prevGap)}).` : m.gap > m.prevGap ? ` The mouse got further away (from ${ordinal(m.prevGap)}).` : " No nearer, no further.";
+      const dist = m.gap <= K ? (m.role === "cat" ? "Within reach!" : "Right into the cat's reach!")
+        : `Now the mouse is the cat's ${ordinal(m.gap)} nearest word: ${c.label}.${trend}`;
+      return h("div", { class: cls }, artOf(m.role, 30), h("div", {},
+        h("p", {}, h("b", {}, `${who}${tag} ${verb} ${m.tiles.map((t) => `${signChar(t.sign)} ${t.word}`).join(" ")}`), ` from ${q(m.from)}:`),
+        h("ul", { class: "steps" }, lines),
+        h("p", {}, h("b", {}, `${mine ? "You land" : `The ${m.role} lands`} on ${q(m.to)}.`), " ", dist)));
     }
 
     function coachText() {
       const K = T.catchK;
       if (role === "mouse" && r.getaway) {
-        return `Getaway! Pick up to ${CHASE.getaway} cards; tap a card once to add it (+), twice to subtract it (−). Your word ${q(r.pos.mouse)} plus and minus those lands you on a new word. Try to end up far, in meaning, from the cat. Then press Get away.`;
+        return `Getaway! Pick up to ${CHASE.getaway} cards: tap once to add (+), twice to subtract (−). They all go onto ${q(r.pos.mouse)} at once. Aim for somewhere far, in meaning, from the cat. Then press Get away.`;
       }
-      if (role === "mouse") return `The cat is on ${q(r.pos.cat)}. Pick one card (tap twice for −) to hop somewhere far from it in meaning. If you land among the ${K} words closest to the cat, you're caught.`;
-      const pounce = pounces() > 0 ? " Pounce is ready: you may use two cards this move." : ` (In ${CHASE.pounceEvery - ((r.catMoves + 1) % CHASE.pounceEvery || CHASE.pounceEvery)} more move${CHASE.pounceEvery - ((r.catMoves + 1) % CHASE.pounceEvery || CHASE.pounceEvery) === 1 ? "" : "s"} you can pounce with two cards.)`;
-      return `The mouse is on ${q(r.pos.mouse)}. Pick a card (tap twice for −) that should land you near it in meaning. Land among the ${K} words closest to you with the mouse in them, and you catch it. Avoid the traps ${r.traps.map(q).join(" and ")}.${pounce}`;
+      if (role === "mouse") return `Pick one card (tap twice for −) that takes ${q(r.pos.mouse)} somewhere far from ${q(r.pos.cat)} in meaning. Land among the ${K} words nearest the cat and you're caught.`;
+      const left = CHASE.pounceEvery - ((r.catMoves + 1) % CHASE.pounceEvery || CHASE.pounceEvery);
+      const pounce = pounces() > 0 ? " Pounce is ready: you may use two cards this move." : ` (In ${left} more move${left === 1 ? "" : "s"} you can pounce with two cards.)`;
+      return `Pick a card (tap twice for −) that takes ${q(r.pos.cat)} toward ${q(r.pos.mouse)} in meaning. Avoid the traps ${r.traps.map(q).join(" and ")}. No good cards? Pass for a fresh row (it uses a move).${pounce}`;
     }
 
     function journey() {
       const col = (rl) => h("div", { class: `jcol ${rl}` }, h("h4", {}, artOf(rl, 20), rl === "mouse" ? " Mouse's journey" : " Cat's journey"),
-        h("ol", {}, h("li", {}, h("b", {}, r.start)), r.moves[rl].map((m) => h("li", {}, h("span", { class: "eqs" }, eqOf(m.tiles)), " → ", h("b", {}, m.to),
+        h("ol", {}, h("li", {}, h("b", {}, r.start)), r.moves[rl].map((m) => m.kind === "pass" ? h("li", {}, h("small", {}, "passed: new cards")) : h("li", {}, h("span", { class: "eqs" }, eqOf(m.tiles)), " → ", h("b", {}, m.to),
           m.kind !== "move" ? h("small", {}, ` ${m.kind}`) : null))));
       return h("div", { class: "journey" }, col("mouse"), col("cat"));
     }
@@ -1923,8 +1980,9 @@
               } }, "Copy a prompt to have a chatbot write it"),
               h("button", { class: "ghost", type: "button", onclick: () => { r.telling = (r.telling || 0) + 1; r.story = chaseStory(r.telling); render(); } }, "Tell it again"))));
       } else {
-        const banner = lastMoveBanner();
-        if (banner) bench.append(banner);
+        bench.append(whereabouts());
+        const feed = announcements();
+        if (feed) bench.append(feed);
         if (!myTurn) bench.append(h("div", { class: "coach chase-coach" }, artOf(role, 34), h("p", {}, `The bot (${role}) is thinking…`)));
         else {
           const who = chase.opponent === "bot" ? "You're" : `${chase.names[me]} is`;
@@ -1955,6 +2013,7 @@
               role === "cat" && pounces() > 0 && h("button", { class: `ghost ${r.pounceOn ? "on" : ""}`, type: "button", "data-key": "chase-pounce", "aria-pressed": String(r.pounceOn),
                 onclick: () => { r.pounceOn = !r.pounceOn; if (!r.pounceOn) r.picks = r.picks.slice(0, 1); render(); } },
                 r.pounceOn ? "Cancel pounce" : "Pounce: use two cards"),
+              role === "cat" && h("button", { class: "ghost", type: "button", "data-key": "chase-pass", disabled: busy, onclick: () => chasePass() }, "Pass: new cards"),
               role === "cat" && h("button", { class: "ghost", type: "button", "data-key": "chase-giveup", onclick: () => endChaseRound("gave-up") }, "Give up")),
             h("div", { class: "hand" }, r.shared.map(card))));
         }
@@ -2036,18 +2095,19 @@
       };
       const bot = chase.opponent === "bot", midGame = chase.intro === "help";
       // The worked example: the only place where the game shows where a card leads.
-      const ex = (chase.def.examples || []).map(([a, b], i) => ({ a, b, sign: i % 2 ? -1 : 1, to: T.hop(a, b, i % 2 ? -1 : 1) })).filter((e) => e.to);
+      const ex = (chase.def.examples || []).map(([a, b, sign = 1]) => ({ a, b, sign, to: T.hop(a, b, sign) })).filter((e) => e.to);
       return h("div", { class: "chase-intro" },
         h("div", { class: "hero", "aria-hidden": "true" }, catArt(110), h("span", { class: "dash" }, "· · ·"), mouseArt(80)),
         h("h2", {}, "Cat and mouse"),
-        h("p", { class: "lede" }, "A chase across a map of meaning. Every everyday word has a spot on it; you move by adding and subtracting words."),
+        h("p", { class: "lede" }, "A chase across a map of meaning. Everyday things each have a spot on it; you move by adding and subtracting describing and doing words."),
         h("div", { class: "example" }, h("p", {}, h("b", {}, "How a move works. "), "You stand on a word. Play a card, and you jump to the word closest to “your word + card” (or “− card”):"),
           h("ul", {}, ex.map((e) => h("li", {}, h("span", { class: "eqs" }, `${e.a} ${signChar(e.sign)} ${e.b}`), " → ", h("b", {}, e.to)))),
           h("p", { class: "hint" }, "In the game you won't see where a card leads until you play it. Guessing well is the skill.")),
         h("ol", { class: "steps" },
           h("li", {}, mouseArt(26), h("b", {}, " The mouse "), `goes first with a getaway: up to ${CHASE.getaway} cards at once, each + or −. After that, one card a move. Stay far from the cat, in meaning.`),
           h("li", {}, catArt(26), h("b", {}, " The cat "), `chases, one card a move. It catches the mouse when the mouse's word is among the ${T.catchK} words closest to the cat's. Every ${ordinal(CHASE.pounceEvery)} move it can pounce with two cards. Stepping next to a ✸ trap blows it up.`),
-          h("li", {}, h("b", {}, "Cards "), "sit in one shared row. A card, once played, is gone for both of you. You can't land on a word you've already visited."),
+          h("li", {}, h("b", {}, "Cards "), "are describing and doing words (cold, fly, sweet), in one shared row. A card, once played, is gone for both of you. You can't land on a word you've already visited. Stuck? The cat can pass: it stays put and the whole row is dealt afresh (that uses a move)."),
+          h("li", {}, h("b", {}, "After every move "), "the game tells you what was played, where each card took the player, where they landed, and whether the cat got closer."),
           h("li", {}, h("b", {}, "Points: "), `the mouse scores ${CHASE.perMove} for every cat move it survives, and the cat has ${CHASE.limit} moves. A catch scores ${CHASE.catchBonus} and the cat becomes the mouse. At the end, read the story of your chase.`)),
         h("div", { class: "row" },
           midGame && h("button", { class: "primary", type: "button", "data-key": "chase-back", onclick: () => { chase.intro = false; render(); maybeChaseBot(); } }, "Back to the game"),

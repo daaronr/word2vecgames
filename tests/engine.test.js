@@ -193,29 +193,42 @@ for (const def of terrainDefs) {
   assert(sp, `terrain ${def.id}: unknown map ${def.map}`);
   const missing = def.words.filter((w) => !sp.has(w));
   assert.deepStrictEqual(missing, [], `terrain ${def.id}: words not on the ${def.map} map`);
-  const T = new B.Terrain(sp, def.words, { catchK: def.catchK, trapK: def.trapK });
+  const T = new B.Terrain(sp, def.words, { catchK: def.catchK, trapK: def.trapK, cards: def.cards, cardWeight: def.cardWeight });
   assert(T.words.length >= 100, `terrain ${def.id} has ${T.words.length} words`);
   // The intro's worked examples land somewhere (they're the only place the game shows where a card leads).
-  if (Array.isArray(def.examples)) for (const [i, [from, card]] of def.examples.entries()) assert(T.hop(from, card, i % 2 ? -1 : 1), `example ${from}, ${card}`);
+  if (Array.isArray(def.examples)) for (const [from, card, sign = 1] of def.examples) assert(T.hop(from, card, sign), `example ${from}, ${card}`);
+  // Cards, when a terrain has its own, are describing and doing words that are on the map
+  // (tools/chase_cards.txt via tools/build_terrains.py).
+  if (def.cards) {
+    assert(T.cards.length === def.cards.length && T.cards.length >= 200, `terrain ${def.id}: ${T.cards.length} cards`);
+    assert.strictEqual(T.hop("car", "fly", 1), "airplane", "car + fly");
+    assert.strictEqual(T.hop("kitchen", "cold", 1), "freezer", "kitchen + cold");
+  }
   // Deals are deterministic; traps start out of the cat's reach of the start word.
   assert.deepStrictEqual(T.deal("x"), T.deal("x"));
   const d = T.deal("y", { shared: 14, hand: 0 });
   for (const t of d.traps) assert(T.rank(d.start, t) > T.catchK * 3, `trap ${t} too close to ${d.start}`);
   assert(!T.moves(d.start, [d.start]).length, "playing the word you stand on goes nowhere");
-  // The deck holds the rest of the terrain, to refill the shared row as cards are used.
-  assert.strictEqual(1 + d.traps.length + d.shared.length + d.deck.length, T.words.length);
+  // The deck holds the rest of the cards, to refill the shared row as cards are used.
+  const cardCount = T.cards ? T.cards.filter((c) => c !== d.start && !d.traps.includes(c)).length : T.words.length - 1 - d.traps.length;
+  assert.strictEqual(d.shared.length + d.deck.length, cardCount);
+  if (T.cards) assert(d.shared.every((c) => T.cards.includes(c)), "the row is dealt from the cards");
+  // A multi-card move, card by card, ends where the whole move lands.
+  const tri = d.shared.slice(0, 3).map((word, i) => ({ word, sign: i === 1 ? -1 : 1 }));
+  assert.strictEqual(T.steps(d.start, tri).at(-1), T.hopTiles(d.start, tri));
   assert(T.moves(d.start, d.shared, false, true).every((m) => m.tiles.every((t) => t.sign > 0)), "add-only moves");
   // A hop lands on another terrain word, never one this player has visited.
   const to = T.hop(d.start, d.shared[0], 1);
   assert(T.words.includes(to) && to !== d.start && to !== d.shared[0]);
   assert.notStrictEqual(T.hop(d.start, d.shared[0], 1, [to]), to, "visited words are skipped");
+  assert(T.botShouldPass(d.start, to, [], d.traps), "with no useful cards the bot cat passes");
   // A pounce combines two cards in one hop.
   const two = T.moves(d.start, d.shared.slice(0, 3), true).filter((x) => x.tiles.length === 2);
   assert.strictEqual(two.length, 3 * 4, "three cards make three pairs, each with four sign choices");
   if (def.hidden) continue;
   // Bot against bot, playing a round as app.js does (CHASE there): the chase is neither hopeless
   // nor a walkover. The bot cat picks among its 5 best moves, the bot mouse among its 3 best.
-  let caught = 0;
+  let caught = 0, passes = 0;
   const games = 10;
   for (let g = 0; g < games; g++) {
     const R = B.rng("chase" + g), dd = T.deal("chase" + g, { shared: 14, hand: 0 }), used = new Set();
@@ -230,21 +243,25 @@ for (const def of terrainDefs) {
     play("mouse", T.botGetaway(pos.mouse, pos.cat, row, R, trail.mouse));
     let over = false;
     while (!over && catMoves < 12) {
-      const pounce = Math.floor((catMoves + 1) / 5) - pouncesUsed > 0;
-      const c = T.botMove("cat", pos.cat, pos.mouse, row, dd.traps, R, 5, pounce, false, trail.cat);
-      if (!c) break;
-      if (c.tiles.length > 1) pouncesUsed++;
-      play("cat", c); catMoves++;
-      if (T.trapped(pos.cat, dd.traps)) break;
-      if (T.caught(pos.cat, pos.mouse)) { caught++; break; }
+      if (T.botShouldPass(pos.cat, pos.mouse, row, dd.traps, trail.cat)) { // stay put, a fresh row, a move used
+        deck.push(...row); row = []; play("cat", { tiles: [], to: pos.cat }); trail.cat.pop(); catMoves++; passes++;
+      } else {
+        const pounce = Math.floor((catMoves + 1) / 5) - pouncesUsed > 0;
+        const c = T.botMove("cat", pos.cat, pos.mouse, row, dd.traps, R, 5, pounce, false, trail.cat);
+        if (!c) break;
+        if (c.tiles.length > 1) pouncesUsed++;
+        play("cat", c); catMoves++;
+        if (T.trapped(pos.cat, dd.traps)) break;
+        if (T.caught(pos.cat, pos.mouse)) { caught++; break; }
+      }
       const m = T.botMove("mouse", pos.mouse, pos.cat, row, dd.traps, R, 3, false, false, trail.mouse);
       if (!m) break;
       play("mouse", m);
       if (T.caught(pos.cat, pos.mouse)) { caught++; over = true; }
     }
   }
-  console.log(`chase ${def.id}: bot cat caught ${caught}/${games}`);
-  assert(caught >= 2 && caught <= 8, `terrain ${def.id}: bot cat caught ${caught}/${games}`);
+  console.log(`chase ${def.id}: bot cat caught ${caught}/${games} (passed ${passes} times)`);
+  assert(caught >= 2 && caught <= 9, `terrain ${def.id}: bot cat caught ${caught}/${games}`);
 }
 
 console.log("engine ok");

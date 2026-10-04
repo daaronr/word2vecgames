@@ -200,6 +200,42 @@ Balance (bot against bot, 10 games each, 12 cat moves, pounce every 5th):
 A person can't see where cards lead, so they play below the greedy bots; the
 bots here are deliberately loose.
 
+### Version 4 (telling the moves, helpful cards, passing)
+
+Feedback on version 3: say clearly what each player did and where it got
+them, rather than jumping to where everyone ended up; say where you are
+("you're the cat, on straw"); the cards were mostly things, which are
+outcomes, not directions, and adjectives and verbs should steer better; and
+let the cat pass for a fresh set of cards when its cards are no help.
+
+- **Where you are**: a panel above the cards: "You're the cat, on “zombie”.
+  The bot (mouse) is on “symphony”. The mouse is the cat's 1,181st nearest
+  word: cold. The cat catches it at 30 or nearer."
+- **Each move told step by step**: the last two moves (yours and the other
+  player's, the bot's included) stay on screen, newest highlighted: who
+  played which cards from where, where each card took them (for a getaway:
+  "bear + fry → grill, then − calculate → grill (no change), then + happy →
+  grill"), where they landed, and whether the cat got closer ("The cat got
+  closer (from 1,075th)"). `Terrain.steps` works out the card-by-card stops.
+  The bot waits 1.7 s before moving, so you can read your own move first.
+- **Cards are describing and doing words**: 481 adjectives and verbs from
+  `tools/chase_cards.txt` (wild, cold, sweet, fly, bake, swim), written into
+  `terrains.json` by `tools/build_terrains.py`; players still stand on things.
+  Cards also pull harder (`cardWeight` 1.5: ball = v(word) + 1.5·Σ ±v(card)).
+  At weight 1, 28 possible moves from a word reached only about 7 different
+  words, mostly the word's nearest neighbour; at 1.5 about 13, and the
+  results read better: car + fly → airplane, kitchen + cold → freezer,
+  cake + sweet → dessert, bread + sweet → pastry, church + sing → choir.
+- **The cat can pass**: "Pass: new cards" keeps the cat where it is, puts
+  the whole row back under the deck and deals a fresh one. It uses up a move
+  (and the mouse scores for surviving it). The bot cat passes when no card
+  would bring it nearer the mouse (`Terrain.botShouldPass`); with 14 cards
+  that is rare.
+- **Balance**: helpful cards help the cat more than the mouse. With catch
+  radius 40 the bot cat caught 8 of 12 bot mice; at 30 about 7 of 12 (6 of 10
+  in the test). Shipped: catch radius 30 (of 1,285 words), bot cat among its
+  5 best moves, bot mouse among its 3 best.
+
 ### Still to try
 
 - **More terrains**: themed ones (food, sports) for variety, a GPT-2 token
