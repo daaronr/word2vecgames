@@ -33,6 +33,9 @@ suggest a mystery or a better clue.
   `artifact.html` (the claude.ai Artifact version), `judge-vectors.bin` (robot-judge word vectors).
 - `tools/build.mjs` builds `site/`; `tools/build_vectors.py` makes `judge-vectors.bin` from
   `../web/data-sense` (ConceptNet Numberbatch, CC BY-SA 4.0), reduced to 96 dimensions.
+- `netlify/functions/judge.mjs` the AI judge (`/api/judge`); `netlify/lib/judge-core.mjs` its testable
+  logic; `netlify/lib/items.mjs` the answers it may judge (written by the build).
+- `eval/` hand-scored guesses and the script that compares judges.
 - `vendor/` the bundled Anthropic SDK used only for the bring-your-own-API-key judge.
 - `tests/whatisit.test.js` content schema, robot-judge behaviour, AI-reply parsing, Daily determinism.
 
@@ -42,20 +45,32 @@ suggest a mystery or a better clue.
 node whatisit/tools/build.mjs                  # rebuild site/ after editing src/ or content/
 python3 whatisit/tools/build_vectors.py        # only if the word vectors change
 node whatisit/tests/whatisit.test.js
+node whatisit/tests/judge-function.test.mjs  # the /api/judge logic with a fake model
+node whatisit/eval/score_judges.mjs           # judges vs hand-scored guesses
 cd whatisit/site && python3 -m http.server 8000   # play locally at http://localhost:8000
 ```
 
-## Hosting
+## Hosting on Netlify (with the AI judge)
 
-- **Netlify (current trial):** `site/index.html` is deployed as a single file. The robot judge fetches
-  `judge-vectors.bin` next to the page if present, otherwise from this repository on GitHub.
-  Ratings go to Netlify Forms once form detection is switched on for the site (Site configuration >
-  Forms); until then they stay in each player's browser (Settings > Copy them all).
-- **Git-connected Netlify site:** set the base directory to `whatisit` (see `netlify.toml`); the
-  vectors file then ships alongside the page.
-- **claude.ai Artifact:** `site/artifact.html` plus `judge-vectors.bin` published as
-  `judge-vectors.wasm`. There the AI judge runs on each viewer's own Claude plan (the `sample`
-  capability) and ratings are shared through the artifact's database (`db`).
+One-time setup in the Netlify UI:
+1. **Add new project > Import an existing project > GitHub**, pick `daaronr/word2vecgames`.
+2. Branch: `main` (or this work's branch until it is merged). **Base directory: `whatisit`.**
+   Build command and publish directory come from `netlify.toml`.
+3. Deploy. Netlify installs `package.json`, publishes `site/` and deploys the AI judge at
+   `/api/judge`. AI Gateway switches on after the first production deploy and needs a credit-based
+   plan (Free, Personal or Pro); calls are billed to the team's Netlify credits.
+4. **Project configuration > Forms > Enable form detection**, then redeploy, so ratings and
+   suggestions land in the Forms tab.
+5. Optional environment variables: `JUDGE_PROVIDER` (anthropic, openai, gemini), `JUDGE_MODEL`,
+   `JUDGE_DAILY_CAP` (default 300), `SHARE_URL` (link in the Daily's share text). Setting your own
+   `ANTHROPIC_API_KEY` (or OpenAI/Gemini key) makes that provider bill you instead of Netlify.
+
+Without the function (any other static host, or a plain file upload) the page still works: the
+word-vector robot judges, and players can bring their own AI in Settings.
+
+**claude.ai Artifact:** `site/artifact.html` plus `judge-vectors.bin` published as
+`judge-vectors.wasm`. There the AI judge runs on each viewer's own Claude plan (the `sample`
+capability) and ratings are shared through the artifact's database (`db`).
 
 ## Changing the Daily
 

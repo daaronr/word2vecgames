@@ -1,8 +1,13 @@
-# For a Netlify site connected to this repository, set the site's base directory to "whatisit".
-# (The current trial site was created by uploading site/index.html on its own.)
+# Netlify site connected to this repository: set the site's base directory to "whatisit".
+# Netlify installs package.json's dependencies, runs the build, publishes site/ and deploys the
+# AI judge in netlify/functions/ at /api/judge (through Netlify AI Gateway; see that file).
 [build]
   command = "node tools/build.mjs"
   publish = "site"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
 
 [[headers]]
   for = "/judge-vectors.bin"

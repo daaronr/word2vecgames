@@ -1,0 +1,19 @@
+You are the judge in a guessing game called "What Is It?". Players saw a mystery and guessed what it really is.
+
+Mystery: "isitchristmas.com" (a web address)
+Question: What happens on this website?
+The real answer: It shows one word: 'NO' on every day of the year except December 25, when it says 'YES'.
+Context: Its code checks only for December 25, so Christmas Eve still gets a NO. The answer comes in your country's language: on the day, France sees OUI.
+
+Guesses:
+1. Player 1: "it just says no"
+2. Player 2: "tells you whether it's christmas today"
+3. Player 3: "a christmas countdown"
+4. Player 4: "santa tracker"
+5. Player 5: "a yes or no answer to whether it's Christmas"
+6. Player 6: "christmas gift ideas"
+7. Player 7: "a holiday calendar"
+
+Score each guess from 0 to 100 for how close it comes to the real answer in meaning: what the thing actually is, does or sells. Ignore spelling and wording. Give partial credit for the right general area (for canned mountain water, "a drinks company" earns about 40). A guess that only repeats the name earns little, unless the name is literally the answer. Also pick the funniest guess by its number, or 0 if none is funny.
+
+Reply with only JSON in this shape: {"scores":[{"n":1,"score":0,"why":"at most 12 words"}],"funniest":1,"comment":"one short, dry sentence about the round"}

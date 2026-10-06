@@ -56,3 +56,5 @@ dist/
 
 # Player suggestions collected by the server (private)
 feedback.db
+node_modules/
+!whatisit/netlify/lib/

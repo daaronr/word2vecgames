@@ -140,6 +140,7 @@ function settingsScreen() {
   const model = h("select", { class: "input", id: "set-model" }, MODELS.map((m) => h("option", { value: m.id, selected: m.id === SETTINGS.model }, m.label)));
   const pg = h("input", { type: "checkbox", id: "set-pg13", checked: SETTINGS.pg13, onchange: (e) => { SETTINGS.pg13 = e.target.checked; saveSettings(); } });
   const choices = [["auto", "Best available"]];
+  if (CONFIG.judgeApi) choices.push(["site", "The game's AI judge"]);
   if (RT.sample) choices.push(["claude", "Claude (your plan)"]);
   if (CONFIG.env !== "artifact") choices.push(["key", "Your API key"]);
   choices.push(["paste", "Paste into a chatbot"]);
@@ -147,8 +148,9 @@ function settingsScreen() {
     h("div", { class: "stack-sm" }, h("span", { class: "eyebrow" }, "Settings"), h("h2", {}, "Judges and content")),
     h("section", { class: "panel stack" },
       h("h3", {}, "AI judge"),
-      h("p", { class: "muted" }, "The robot judge is free and built in. The AI judge reads every guess like a person would; it runs on an AI account that belongs to you, not us."),
+      h("p", { class: "muted" }, "The AI judge reads every guess like a person would. On the website it is free for players; you can also run it on your own AI account. The word-vector robot is the offline fallback."),
       h("ul", { class: "small", style: { margin: 0, paddingLeft: "1.2em", display: "grid", gap: "4px" } },
+        CONFIG.judgeApi ? h("li", {}, h("b", {}, "The game's AI judge: "), siteJudgeUsable() ? "free for players; a small model run by the site." : "not available right now.") : null,
         h("li", {}, h("b", {}, "Claude, on your own plan: "), RT.sample ? "available here." : "works when this page is opened inside claude.ai."),
         CONFIG.env !== "artifact" ? h("li", {}, h("b", {}, "Your Anthropic API key: "), SETTINGS.apiKey ? "saved in this browser." : "add one below. It stays in this browser and goes only to Anthropic.") : null,
         h("li", {}, h("b", {}, "Paste into a chatbot: "), "always works. Copy the prompt into ChatGPT, Claude or Gemini and paste the reply back.")),
@@ -207,6 +209,7 @@ function notesScreen() {
   shell();
   const start = (location.hash || "").replace("#", "");
   go(SCREENS[start] ? start : "hub");
+  window.addEventListener("hashchange", () => { const k = location.hash.replace("#", ""); if (SCREENS[k] && k !== current) go(k); });
   if (window.claude && typeof window.claude.use === "function") {
     window.claude.use("sample").then((s) => { RT.sample = s; if (current === "settings") go("settings"); }).catch(() => {});
     window.claude.use("db").then((d) => { RT.db = d; }).catch(() => {});

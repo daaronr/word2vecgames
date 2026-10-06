@@ -1,0 +1,106 @@
+{
+  "bombas": {
+    "scores": [
+      {"n": 1, "score": 90, "why": "correct on primary product socks"},
+      {"n": 2, "score": 100, "why": "nailed the product and donation model"},
+      {"n": 3, "score": 0, "why": "wrong; just a pun on the name"},
+      {"n": 4, "score": 0, "why": "wrong; fireworks name play"},
+      {"n": 5, "score": 25, "why": "wrong product category"},
+      {"n": 6, "score": 70, "why": "right general area of clothing"},
+      {"n": 7, "score": 85, "why": "correct products mentioned"}
+    ],
+    "funniest": 3,
+    "comment": "Bath bombs punned on the name; guess two nailed the donation model."
+  },
+  "bring-your-own-balls": {
+    "scores": [
+      {"n": 1, "score": 95, "why": "nearly exact; missing forum context"},
+      {"n": 2, "score": 85, "why": "correct context; misses pool debate"},
+      {"n": 3, "score": 15, "why": "wrong sport entirely"},
+      {"n": 4, "score": 5, "why": "completely wrong sport"},
+      {"n": 5, "score": 5, "why": "completely wrong sport"},
+      {"n": 6, "score": 30, "why": "right vibe; wrong specifics"},
+      {"n": 7, "score": 0, "why": "just a cop-out guess"}
+    ],
+    "funniest": 7,
+    "comment": "Most grasped pool correctly; guess seven surrendered."
+  },
+  "camelcamelcamel": {
+    "scores": [
+      {"n": 1, "score": 95, "why": "essentially correct; missing email feature"},
+      {"n": 2, "score": 100, "why": "perfect description of the service"},
+      {"n": 3, "score": 0, "why": "wrong; pure camel name play"},
+      {"n": 4, "score": 75, "why": "right area; lacks tracker specificity"},
+      {"n": 5, "score": 0, "why": "wrong; camel charity name play"},
+      {"n": 6, "score": 80, "why": "close; missing the price history aspect"},
+      {"n": 7, "score": 0, "why": "wrong; camel kids site name play"}
+    ],
+    "funniest": 5,
+    "comment": "The camel name sent several guesses off into the desert."
+  },
+  "concealing-baldness": {
+    "scores": [
+      {"n": 1, "score": 100, "why": "exact answer"},
+      {"n": 2, "score": 40, "why": "baldness solution but not this one"},
+      {"n": 3, "score": 100, "why": "perfectly describes the technique"},
+      {"n": 4, "score": 30, "why": "a component but incomplete answer"},
+      {"n": 5, "score": 35, "why": "alternative baldness solution"},
+      {"n": 6, "score": 40, "why": "related cosmetic solution"},
+      {"n": 7, "score": 20, "why": "cheating solution; doesn't invent"}
+    ],
+    "funniest": 7,
+    "comment": "Guesses one and three nailed the comb-over; hat is the honest way out."
+  },
+  "display-devices": {
+    "scores": [
+      {"n": 1, "score": 100, "why": "exact answer"},
+      {"n": 2, "score": 100, "why": "perfect description of mechanism"},
+      {"n": 3, "score": 10, "why": "display device but entirely wrong"},
+      {"n": 4, "score": 5, "why": "display device; wrong interpretation"},
+      {"n": 5, "score": 60, "why": "right mood; too vague"},
+      {"n": 6, "score": 5, "why": "literal display device; wrong"},
+      {"n": 7, "score": 65, "why": "right category; too general"}
+    ],
+    "funniest": 6,
+    "comment": "Two guesses nailed the lava lamp; scoreboard took display literally."
+  },
+  "drop-bears": {
+    "scores": [
+      {"n": 1, "score": 100, "why": "perfect description of the legend"},
+      {"n": 2, "score": 85, "why": "right concept; less specific"},
+      {"n": 3, "score": 0, "why": "wrong; gummy bears name play"},
+      {"n": 4, "score": 60, "why": "part of it; missing the hoax aspect"},
+      {"n": 5, "score": 15, "why": "completely wrong direction"},
+      {"n": 6, "score": 70, "why": "right concept; lacks specificity"},
+      {"n": 7, "score": 85, "why": "descriptive; nearly correct"}
+    ],
+    "funniest": 3,
+    "comment": "Guess one nailed the tall tale; gummy bears is the obvious candy trap."
+  },
+  "eelslap": {
+    "scores": [
+      {"n": 1, "score": 85, "why": "close; eel is subject not object"},
+      {"n": 2, "score": 100, "why": "perfect description of the mechanic"},
+      {"n": 3, "score": 75, "why": "right idea; misses interactive aspect"},
+      {"n": 4, "score": 0, "why": "wrong; eel recipes"},
+      {"n": 5, "score": 0, "why": "wrong; fishmonger"},
+      {"n": 6, "score": 0, "why": "wrong; eel hatred site"},
+      {"n": 7, "score": 50, "why": "vague but right spirit"}
+    ],
+    "funniest": 4,
+    "comment": "Guess two nailed the mechanic; eel recipes read the menu wrong."
+  },
+  "exercising-a-cat": {
+    "scores": [
+      {"n": 1, "score": 100, "why": "exact answer"},
+      {"n": 2, "score": 100, "why": "perfect description"},
+      {"n": 3, "score": 20, "why": "wrong device"},
+      {"n": 4, "score": 40, "why": "similar toy; wrong type"},
+      {"n": 5, "score": 70, "why": "correct general category"},
+      {"n": 6, "score": 95, "why": "essentially right; misses device"},
+      {"n": 7, "score": 25, "why": "wrong device; silly concept"}
+    ],
+    "funniest": 0,
+    "comment": "Guesses one and two described the laser pointer precisely."
+  }
+}

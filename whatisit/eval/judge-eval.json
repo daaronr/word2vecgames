@@ -1,0 +1,1028 @@
+{
+ "about": "Hand-scored guesses for comparing judges. gold = how close a careful human judge would rate each guess (0-100). Written 2026-10-06 before any judge was run.",
+ "rounds": [
+  {
+   "id": "eelslap",
+   "guesses": [
+    {
+     "text": "you slap a guy in the face with a fish",
+     "gold": 85
+    },
+    {
+     "text": "move your cursor and a dude gets slapped by an eel",
+     "gold": 98
+    },
+    {
+     "text": "an eel slapping game",
+     "gold": 80
+    },
+    {
+     "text": "eel recipes",
+     "gold": 5
+    },
+    {
+     "text": "a fishmonger that sells eels",
+     "gold": 5
+    },
+    {
+     "text": "a website for people who hate eels",
+     "gold": 10
+    },
+    {
+     "text": "silly interactive video thing",
+     "gold": 45
+    }
+   ]
+  },
+  {
+   "id": "kafka-com",
+   "guesses": [
+    {
+     "text": "a PR firm",
+     "gold": 85
+    },
+    {
+     "text": "marketing agency in Florida",
+     "gold": 95
+    },
+    {
+     "text": "the Apache Kafka software site",
+     "gold": 5
+    },
+    {
+     "text": "a Franz Kafka fan site",
+     "gold": 5
+    },
+    {
+     "text": "some small company named after its owners",
+     "gold": 40
+    },
+    {
+     "text": "an ad agency",
+     "gold": 80
+    },
+    {
+     "text": "a law firm",
+     "gold": 15
+    }
+   ]
+  },
+  {
+   "id": "zombo",
+   "guesses": [
+    {
+     "text": "an old joke site where a voice welcomes you and nothing happens",
+     "gold": 95
+    },
+    {
+     "text": "a parody of flash intro pages",
+     "gold": 90
+    },
+    {
+     "text": "zombie game",
+     "gold": 0
+    },
+    {
+     "text": "a website that says anything is possible",
+     "gold": 80
+    },
+    {
+     "text": "a meme website from the early internet",
+     "gold": 50
+    },
+    {
+     "text": "horror movie reviews",
+     "gold": 0
+    },
+    {
+     "text": "a loading screen that never ends",
+     "gold": 70
+    }
+   ]
+  },
+  {
+   "id": "is-it-christmas",
+   "guesses": [
+    {
+     "text": "it just says no",
+     "gold": 85
+    },
+    {
+     "text": "tells you whether it's christmas today",
+     "gold": 95
+    },
+    {
+     "text": "a christmas countdown",
+     "gold": 25
+    },
+    {
+     "text": "santa tracker",
+     "gold": 10
+    },
+    {
+     "text": "a yes or no answer to whether it's Christmas",
+     "gold": 100
+    },
+    {
+     "text": "christmas gift ideas",
+     "gold": 5
+    },
+    {
+     "text": "a holiday calendar",
+     "gold": 35
+    }
+   ]
+  },
+  {
+   "id": "radio-garden",
+   "guesses": [
+    {
+     "text": "listen to radio stations from around the world on a globe",
+     "gold": 100
+    },
+    {
+     "text": "online radio",
+     "gold": 70
+    },
+    {
+     "text": "a gardening podcast",
+     "gold": 5
+    },
+    {
+     "text": "a map of world music",
+     "gold": 55
+    },
+    {
+     "text": "a gardening shop",
+     "gold": 0
+    },
+    {
+     "text": "streaming live radio by location",
+     "gold": 95
+    },
+    {
+     "text": "plants that play music",
+     "gold": 5
+    }
+   ]
+  },
+  {
+   "id": "window-swap",
+   "guesses": [
+    {
+     "text": "videos of the view from strangers' windows around the world",
+     "gold": 100
+    },
+    {
+     "text": "a window replacement company",
+     "gold": 0
+    },
+    {
+     "text": "a house swap site",
+     "gold": 10
+    },
+    {
+     "text": "live webcams of cities",
+     "gold": 60
+    },
+    {
+     "text": "see what other people see out their window",
+     "gold": 95
+    },
+    {
+     "text": "trade old windows",
+     "gold": 5
+    },
+    {
+     "text": "relaxing scenery videos",
+     "gold": 50
+    }
+   ]
+  },
+  {
+   "id": "camelcamelcamel",
+   "guesses": [
+    {
+     "text": "amazon price tracker",
+     "gold": 100
+    },
+    {
+     "text": "tracks prices and tells you when things go on sale",
+     "gold": 95
+    },
+    {
+     "text": "camel rides in the desert",
+     "gold": 0
+    },
+    {
+     "text": "a shopping deals site",
+     "gold": 60
+    },
+    {
+     "text": "a camel charity",
+     "gold": 0
+    },
+    {
+     "text": "price comparison website",
+     "gold": 70
+    },
+    {
+     "text": "a site about camels for kids",
+     "gold": 0
+    }
+   ]
+  },
+  {
+   "id": "http-cat",
+   "guesses": [
+    {
+     "text": "cat pictures for each error code like 404",
+     "gold": 100
+    },
+    {
+     "text": "funny cat pictures",
+     "gold": 45
+    },
+    {
+     "text": "a cat adoption site",
+     "gold": 5
+    },
+    {
+     "text": "http status codes explained with cats",
+     "gold": 100
+    },
+    {
+     "text": "a website about web servers",
+     "gold": 30
+    },
+    {
+     "text": "a cat cafe webcam",
+     "gold": 10
+    },
+    {
+     "text": "error pages",
+     "gold": 45
+    }
+   ]
+  },
+  {
+   "id": "liquid-death",
+   "guesses": [
+    {
+     "text": "water in a can",
+     "gold": 95
+    },
+    {
+     "text": "canned mountain water with metal branding",
+     "gold": 100
+    },
+    {
+     "text": "an energy drink",
+     "gold": 30
+    },
+    {
+     "text": "a heavy metal band",
+     "gold": 5
+    },
+    {
+     "text": "drain cleaner",
+     "gold": 0
+    },
+    {
+     "text": "beer",
+     "gold": 25
+    },
+    {
+     "text": "bottled water",
+     "gold": 80
+    }
+   ]
+  },
+  {
+   "id": "kewpie",
+   "guesses": [
+    {
+     "text": "japanese mayo",
+     "gold": 100
+    },
+    {
+     "text": "mayonnaise",
+     "gold": 100
+    },
+    {
+     "text": "baby dolls",
+     "gold": 0
+    },
+    {
+     "text": "condiments",
+     "gold": 65
+    },
+    {
+     "text": "salad dressing",
+     "gold": 70
+    },
+    {
+     "text": "baby food",
+     "gold": 5
+    },
+    {
+     "text": "a japanese sauce company",
+     "gold": 70
+    }
+   ]
+  },
+  {
+   "id": "toto",
+   "guesses": [
+    {
+     "text": "toilets",
+     "gold": 100
+    },
+    {
+     "text": "japanese toilets with bidets",
+     "gold": 100
+    },
+    {
+     "text": "the band Toto",
+     "gold": 0
+    },
+    {
+     "text": "dog food",
+     "gold": 0
+    },
+    {
+     "text": "bathroom fixtures",
+     "gold": 85
+    },
+    {
+     "text": "plumbing supplies",
+     "gold": 65
+    },
+    {
+     "text": "tote bags",
+     "gold": 0
+    }
+   ]
+  },
+  {
+   "id": "postman",
+   "guesses": [
+    {
+     "text": "software for testing APIs",
+     "gold": 100
+    },
+    {
+     "text": "developer tools",
+     "gold": 70
+    },
+    {
+     "text": "a courier service",
+     "gold": 0
+    },
+    {
+     "text": "email newsletter software",
+     "gold": 15
+    },
+    {
+     "text": "a tool programmers use to send web requests",
+     "gold": 95
+    },
+    {
+     "text": "mail delivery",
+     "gold": 0
+    },
+    {
+     "text": "a coding company",
+     "gold": 50
+    }
+   ]
+  },
+  {
+   "id": "lemonade",
+   "guesses": [
+    {
+     "text": "insurance",
+     "gold": 95
+    },
+    {
+     "text": "renters insurance app",
+     "gold": 100
+    },
+    {
+     "text": "lemonade drinks",
+     "gold": 0
+    },
+    {
+     "text": "a fintech app",
+     "gold": 45
+    },
+    {
+     "text": "lemon cleaning spray",
+     "gold": 0
+    },
+    {
+     "text": "home and pet insurance",
+     "gold": 100
+    },
+    {
+     "text": "a bank",
+     "gold": 30
+    }
+   ]
+  },
+  {
+   "id": "bombas",
+   "guesses": [
+    {
+     "text": "socks",
+     "gold": 95
+    },
+    {
+     "text": "socks that donate a pair for each one bought",
+     "gold": 100
+    },
+    {
+     "text": "bath bombs",
+     "gold": 0
+    },
+    {
+     "text": "fireworks",
+     "gold": 0
+    },
+    {
+     "text": "shoes",
+     "gold": 35
+    },
+    {
+     "text": "clothing",
+     "gold": 60
+    },
+    {
+     "text": "underwear and socks",
+     "gold": 100
+    }
+   ]
+  },
+  {
+   "id": "who-gives-a-crap",
+   "guesses": [
+    {
+     "text": "toilet paper",
+     "gold": 100
+    },
+    {
+     "text": "recycled toilet paper delivered in boxes",
+     "gold": 100
+    },
+    {
+     "text": "funny t-shirts",
+     "gold": 5
+    },
+    {
+     "text": "compost",
+     "gold": 10
+    },
+    {
+     "text": "bathroom supplies",
+     "gold": 60
+    },
+    {
+     "text": "a charity",
+     "gold": 20
+    },
+    {
+     "text": "tissues",
+     "gold": 70
+    }
+   ]
+  },
+  {
+   "id": "freitag",
+   "guesses": [
+    {
+     "text": "bags made from truck tarps",
+     "gold": 100
+    },
+    {
+     "text": "backpacks",
+     "gold": 80
+    },
+    {
+     "text": "recycled bags",
+     "gold": 90
+    },
+    {
+     "text": "a bakery",
+     "gold": 0
+    },
+    {
+     "text": "a calendar company",
+     "gold": 5
+    },
+    {
+     "text": "a german clothing brand",
+     "gold": 30
+    },
+    {
+     "text": "upcycled fashion accessories",
+     "gold": 70
+    }
+   ]
+  },
+  {
+   "id": "pigeon",
+   "guesses": [
+    {
+     "text": "baby bottles",
+     "gold": 100
+    },
+    {
+     "text": "baby products",
+     "gold": 85
+    },
+    {
+     "text": "birdseed",
+     "gold": 0
+    },
+    {
+     "text": "a courier company",
+     "gold": 0
+    },
+    {
+     "text": "pacifiers and feeding gear for babies",
+     "gold": 100
+    },
+    {
+     "text": "pet supplies",
+     "gold": 5
+    },
+    {
+     "text": "breastfeeding products",
+     "gold": 80
+    }
+   ]
+  },
+  {
+   "id": "plate-knku-out",
+   "guesses": [
+    {
+     "text": "anesthesiologist",
+     "gold": 100
+    },
+    {
+     "text": "a doctor who knocks you out for surgery",
+     "gold": 100
+    },
+    {
+     "text": "a boxer",
+     "gold": 5
+    },
+    {
+     "text": "a nurse",
+     "gold": 40
+    },
+    {
+     "text": "a sleep clinic",
+     "gold": 45
+    },
+    {
+     "text": "knock you out",
+     "gold": 10
+    },
+    {
+     "text": "a surgeon",
+     "gold": 60
+    }
+   ]
+  },
+  {
+   "id": "plate-ipa-lot",
+   "guesses": [
+    {
+     "text": "loves IPA beer",
+     "gold": 100
+    },
+    {
+     "text": "craft beer fan",
+     "gold": 90
+    },
+    {
+     "text": "I pee a lot",
+     "gold": 0
+    },
+    {
+     "text": "a brewer",
+     "gold": 70
+    },
+    {
+     "text": "parking lot attendant",
+     "gold": 0
+    },
+    {
+     "text": "drinks a lot",
+     "gold": 55
+    },
+    {
+     "text": "india pale ale",
+     "gold": 100
+    }
+   ]
+  },
+  {
+   "id": "plate-nvw3n17",
+   "guesses": [
+    {
+     "text": "it says lineman upside down",
+     "gold": 100
+    },
+    {
+     "text": "an electrician",
+     "gold": 60
+    },
+    {
+     "text": "a power line worker",
+     "gold": 85
+    },
+    {
+     "text": "random numbers",
+     "gold": 0
+    },
+    {
+     "text": "a utility worker",
+     "gold": 70
+    },
+    {
+     "text": "Nevada plate",
+     "gold": 0
+    },
+    {
+     "text": "reads differently upside down",
+     "gold": 50
+    }
+   ]
+  },
+  {
+   "id": "plate-oink-b8",
+   "guesses": [
+    {
+     "text": "pig feed seller",
+     "gold": 100
+    },
+    {
+     "text": "a pig farmer",
+     "gold": 60
+    },
+    {
+     "text": "BBQ restaurant",
+     "gold": 10
+    },
+    {
+     "text": "sells corn",
+     "gold": 50
+    },
+    {
+     "text": "fishing bait",
+     "gold": 0
+    },
+    {
+     "text": "farm animal food",
+     "gold": 85
+    },
+    {
+     "text": "loves bacon",
+     "gold": 10
+    }
+   ]
+  },
+  {
+   "id": "plate-chp-noo",
+   "guesses": [
+    {
+     "text": "doesn't want rock chips on the paint",
+     "gold": 100
+    },
+    {
+     "text": "protecting the car's paint",
+     "gold": 90
+    },
+    {
+     "text": "anti highway patrol",
+     "gold": 0
+    },
+    {
+     "text": "a fish and chip shop",
+     "gold": 0
+    },
+    {
+     "text": "no scratches please",
+     "gold": 80
+    },
+    {
+     "text": "a retired cop",
+     "gold": 0
+    },
+    {
+     "text": "a careful driver",
+     "gold": 35
+    }
+   ]
+  },
+  {
+   "id": "plate-gtta-poo",
+   "guesses": [
+    {
+     "text": "gotta play outside often",
+     "gold": 100
+    },
+    {
+     "text": "an off-roader",
+     "gold": 85
+    },
+    {
+     "text": "potty training",
+     "gold": 0
+    },
+    {
+     "text": "a dog walker",
+     "gold": 0
+    },
+    {
+     "text": "likes the outdoors",
+     "gold": 75
+    },
+    {
+     "text": "mud lover",
+     "gold": 60
+    },
+    {
+     "text": "a pool guy",
+     "gold": 0
+    }
+   ]
+  },
+  {
+   "id": "plate-puritto",
+   "guesses": [
+    {
+     "text": "a cat wrapped like a burrito",
+     "gold": 100
+    },
+    {
+     "text": "purring cat",
+     "gold": 60
+    },
+    {
+     "text": "a burrito shop",
+     "gold": 15
+    },
+    {
+     "text": "a water purifier",
+     "gold": 0
+    },
+    {
+     "text": "cat lover",
+     "gold": 45
+    },
+    {
+     "text": "puerto rico",
+     "gold": 0
+    },
+    {
+     "text": "a cat in a blanket",
+     "gold": 95
+    }
+   ]
+  },
+  {
+   "id": "exercising-a-cat",
+   "guesses": [
+    {
+     "text": "a laser pointer",
+     "gold": 100
+    },
+    {
+     "text": "shining a red dot for the cat to chase",
+     "gold": 100
+    },
+    {
+     "text": "a cat treadmill",
+     "gold": 10
+    },
+    {
+     "text": "a feather toy on a stick",
+     "gold": 15
+    },
+    {
+     "text": "a cat toy",
+     "gold": 45
+    },
+    {
+     "text": "making a cat chase a light",
+     "gold": 95
+    },
+    {
+     "text": "cat gym",
+     "gold": 20
+    }
+   ]
+  },
+  {
+   "id": "package-saver",
+   "guesses": [
+    {
+     "text": "the little plastic table in a pizza box",
+     "gold": 100
+    },
+    {
+     "text": "pizza saver",
+     "gold": 100
+    },
+    {
+     "text": "bubble wrap",
+     "gold": 5
+    },
+    {
+     "text": "a thing that stops the pizza box lid from sagging",
+     "gold": 100
+    },
+    {
+     "text": "a parcel protector",
+     "gold": 10
+    },
+    {
+     "text": "a takeout container",
+     "gold": 30
+    },
+    {
+     "text": "plastic tripod in pizza boxes",
+     "gold": 100
+    }
+   ]
+  },
+  {
+   "id": "concealing-baldness",
+   "guesses": [
+    {
+     "text": "the comb-over",
+     "gold": 100
+    },
+    {
+     "text": "a wig",
+     "gold": 10
+    },
+    {
+     "text": "a way to comb hair over a bald spot",
+     "gold": 100
+    },
+    {
+     "text": "hair spray",
+     "gold": 30
+    },
+    {
+     "text": "hair transplant",
+     "gold": 10
+    },
+    {
+     "text": "spray-on hair powder",
+     "gold": 10
+    },
+    {
+     "text": "a hat",
+     "gold": 5
+    }
+   ]
+  },
+  {
+   "id": "display-devices",
+   "guesses": [
+    {
+     "text": "lava lamp",
+     "gold": 100
+    },
+    {
+     "text": "a lamp with blobs of wax floating",
+     "gold": 100
+    },
+    {
+     "text": "a TV screen",
+     "gold": 5
+    },
+    {
+     "text": "a shop window display",
+     "gold": 0
+    },
+    {
+     "text": "a mood light",
+     "gold": 50
+    },
+    {
+     "text": "a scoreboard",
+     "gold": 0
+    },
+    {
+     "text": "a glowing decoration",
+     "gold": 45
+    }
+   ]
+  },
+  {
+   "id": "bring-your-own-balls",
+   "guesses": [
+    {
+     "text": "pool players bringing their own balls",
+     "gold": 100
+    },
+    {
+     "text": "a billiards forum",
+     "gold": 85
+    },
+    {
+     "text": "bowling league rules",
+     "gold": 15
+    },
+    {
+     "text": "a golf range",
+     "gold": 10
+    },
+    {
+     "text": "a dodgeball league",
+     "gold": 5
+    },
+    {
+     "text": "a sports bar policy",
+     "gold": 35
+    },
+    {
+     "text": "something rude",
+     "gold": 0
+    }
+   ]
+  },
+  {
+   "id": "wilhelm-scream",
+   "guesses": [
+    {
+     "text": "a famous movie sound effect of a man screaming",
+     "gold": 100
+    },
+    {
+     "text": "a scream sound effect",
+     "gold": 95
+    },
+    {
+     "text": "a horror movie",
+     "gold": 15
+    },
+    {
+     "text": "a roller coaster",
+     "gold": 0
+    },
+    {
+     "text": "a meme",
+     "gold": 25
+    },
+    {
+     "text": "stock audio used in star wars",
+     "gold": 90
+    },
+    {
+     "text": "a painting",
+     "gold": 5
+    }
+   ]
+  },
+  {
+   "id": "drop-bears",
+   "guesses": [
+    {
+     "text": "a joke australians tell tourists about killer koalas",
+     "gold": 100
+    },
+    {
+     "text": "a fake animal",
+     "gold": 70
+    },
+    {
+     "text": "gummy bears",
+     "gold": 0
+    },
+    {
+     "text": "koalas",
+     "gold": 60
+    },
+    {
+     "text": "bear safety",
+     "gold": 10
+    },
+    {
+     "text": "a hoax",
+     "gold": 65
+    },
+    {
+     "text": "falling bears in australia",
+     "gold": 85
+    }
+   ]
+  }
+ ]
+}

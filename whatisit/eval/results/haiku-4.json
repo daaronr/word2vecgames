@@ -1,0 +1,93 @@
+{
+  "postman": {
+    "scores": [
+      {"n": 1, "score": 95, "why": "Exactly identifies software for testing APIs"},
+      {"n": 2, "score": 85, "why": "Correct general area, API tools are developer tools"},
+      {"n": 3, "score": 5, "why": "Name-based guess, courier service is wrong"},
+      {"n": 4, "score": 10, "why": "Name-based guess, email newsletter wrong"},
+      {"n": 5, "score": 90, "why": "Accurate core concept, testing APIs uses requests"},
+      {"n": 6, "score": 5, "why": "Name literal, mail delivery not the answer"},
+      {"n": 7, "score": 60, "why": "Mentions coders but overstates it as a company"}
+    ],
+    "funniest": 3,
+    "comment": "Most players either nailed it or took the name literally."
+  },
+  "radio-garden": {
+    "scores": [
+      {"n": 1, "score": 100, "why": "Perfect description of globe, dots, and live radio"},
+      {"n": 2, "score": 75, "why": "Correct but lacks location-specific detail"},
+      {"n": 3, "score": 5, "why": "Name-based guess, gardening podcast is wrong"},
+      {"n": 4, "score": 80, "why": "Good, captures globe and international music"},
+      {"n": 5, "score": 0, "why": "Name-based only, garden shop is wrong"},
+      {"n": 6, "score": 90, "why": "Strong, captures streaming and location mechanics"},
+      {"n": 7, "score": 15, "why": "Creative but wrong, plants don't play music"}
+    ],
+    "funniest": 7,
+    "comment": "One player solved it immediately; another created an absurd plant orchestra."
+  },
+  "toto": {
+    "scores": [
+      {"n": 1, "score": 100, "why": "Perfect, toilets is exactly right"},
+      {"n": 2, "score": 95, "why": "Very specific and accurate about Washlets"},
+      {"n": 3, "score": 0, "why": "Wrong, the band Toto not the brand"},
+      {"n": 4, "score": 0, "why": "Wrong, dog food reference misses the mark"},
+      {"n": 5, "score": 90, "why": "Correct general category, bathroom fixtures"},
+      {"n": 6, "score": 85, "why": "Correct but broader than just bathrooms"},
+      {"n": 7, "score": 5, "why": "Phonetic mishearing, tote bags wrong"}
+    ],
+    "funniest": 4,
+    "comment": "Players either got it cold or made the Wizard of Oz connection."
+  },
+  "who-gives-a-crap": {
+    "scores": [
+      {"n": 1, "score": 95, "why": "Correct, misses recycled and delivery details"},
+      {"n": 2, "score": 100, "why": "Perfect, includes delivery and materials"},
+      {"n": 3, "score": 5, "why": "Name-based oddly, funny t-shirts wrong"},
+      {"n": 4, "score": 5, "why": "Wrong, compost not toilet paper"},
+      {"n": 5, "score": 85, "why": "Correct general area, bathroom supplies"},
+      {"n": 6, "score": 20, "why": "Related to company values but not what it sells"},
+      {"n": 7, "score": 80, "why": "Partial, tissues are part of product line"}
+    ],
+    "funniest": 3,
+    "comment": "One perfect answer, rest captured different aspects or took the name oddly."
+  },
+  "wilhelm-scream": {
+    "scores": [
+      {"n": 1, "score": 95, "why": "Nearly perfect, captures the sound effect concept"},
+      {"n": 2, "score": 85, "why": "Correct but vague, misses the iconic reuse"},
+      {"n": 3, "score": 15, "why": "Wrong genre, horror movies aren't the point"},
+      {"n": 4, "score": 10, "why": "Absurd guess, screaming isn't the connection"},
+      {"n": 5, "score": 70, "why": "Partial, iconic reuse is meme-like but mislabeled"},
+      {"n": 6, "score": 80, "why": "Good specific example but misses broader use"},
+      {"n": 7, "score": 0, "why": "Wrong, paintings have nothing to do with it"}
+    ],
+    "funniest": 4,
+    "comment": "Players understood the sound effect except one with a random coaster association."
+  },
+  "window-swap": {
+    "scores": [
+      {"n": 1, "score": 100, "why": "Perfect description of submitted window views"},
+      {"n": 2, "score": 5, "why": "Literal name-based, window replacement wrong"},
+      {"n": 3, "score": 40, "why": "Related swap concept but wrong application"},
+      {"n": 4, "score": 75, "why": "Mostly right, not quite live webcams"},
+      {"n": 5, "score": 95, "why": "Excellent, captures essence of shared perspective"},
+      {"n": 6, "score": 0, "why": "Literal name-based, no windows traded"},
+      {"n": 7, "score": 85, "why": "Captures calm vibe, misses specific premise"}
+    ],
+    "funniest": 2,
+    "comment": "One perfect answer; another imagined a hardware store perfectly."
+  },
+  "zombo": {
+    "scores": [
+      {"n": 1, "score": 100, "why": "Perfect, nails the joke and lack of purpose"},
+      {"n": 2, "score": 95, "why": "Excellent, identifies Flash parody and form"},
+      {"n": 3, "score": 5, "why": "Wrong, no zombie game exists there"},
+      {"n": 4, "score": 75, "why": "Partial, site does claim anything is possible"},
+      {"n": 5, "score": 85, "why": "Correct era and meme status"},
+      {"n": 6, "score": 0, "why": "Wrong, no horror reviews"},
+      {"n": 7, "score": 80, "why": "Good capture of futility and stasis"}
+    ],
+    "funniest": 3,
+    "comment": "Retro internet experts dominated; one imaginative zombie guess landed."
+  }
+}

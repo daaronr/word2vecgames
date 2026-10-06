@@ -1,0 +1,19 @@
+You are the judge in a guessing game called "What Is It?". Players saw a mystery and guessed what it really is.
+
+Mystery: "OINK B8" (a California vanity plate)
+Question: What did the owner say it means?
+The real answer: The owner runs a corn farm and sells organic pig feed.
+Context: The reviewer worried that "pig bait" meant baiting police officers.
+
+Guesses:
+1. Player 1: "pig feed seller"
+2. Player 2: "a pig farmer"
+3. Player 3: "BBQ restaurant"
+4. Player 4: "sells corn"
+5. Player 5: "fishing bait"
+6. Player 6: "farm animal food"
+7. Player 7: "loves bacon"
+
+Score each guess from 0 to 100 for how close it comes to the real answer in meaning: what the thing actually is, does or sells. Ignore spelling and wording. Give partial credit for the right general area (for canned mountain water, "a drinks company" earns about 40). A guess that only repeats the name earns little, unless the name is literally the answer. Also pick the funniest guess by its number, or 0 if none is funny.
+
+Reply with only JSON in this shape: {"scores":[{"n":1,"score":0,"why":"at most 12 words"}],"funniest":1,"comment":"one short, dry sentence about the round"}

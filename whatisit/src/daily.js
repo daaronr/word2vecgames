@@ -56,7 +56,8 @@ function dailyScreen(opts = {}) {
   const root = h("div", { class: "stack" });
   let rating = null;
   let robot = "loading";
-  loadRobot().then((s) => { robot = s ? "ready" : "failed"; if (!st.rounds[st.i] || !st.rounds[st.i].revealed) render(); });
+  // The AI judge scores guesses when the site has one; the word-vector robot stands in otherwise.
+  if (!siteJudgeUsable()) loadRobot().then((s) => { robot = s ? "ready" : "failed"; if (!st.rounds[st.i] || !st.rounds[st.i].revealed) render(); });
   render();
   return root;
 
@@ -91,6 +92,8 @@ function dailyScreen(opts = {}) {
         h("span", { class: "s lv" + w.level }, g.s),
         last && withChips && g.res ? h("div", { class: "why" }, warmthMeter(g.s)) : null,
         last && withChips && g.res ? h("div", { class: "why" }, matchChips(g.res)) : null,
+        last && withChips && g.by === "ai" ? h("div", { class: "why" }, warmthMeter(g.s)) : null,
+        g.hint ? h("div", { class: "why small muted" }, g.hint) : null,
         g.trap ? h("div", { class: "why trapnote small" }, "That's close to a tempting wrong answer: “" + g.trap + "”") : null);
     }));
   }
@@ -101,11 +104,22 @@ function dailyScreen(opts = {}) {
     const go = async () => {
       const text = input.value.trim();
       if (!text) return;
-      const sp = await loadRobot();
-      if (!sp) { toast("The robot judge didn't load. Use “Pick from four” instead."); return; }
-      const res = robotScore(text, item);
-      r.guesses.push({ t: text, s: res.score, trap: res.trap ? res.trap.decoy : null, res: { matches: res.matches, unknown: res.unknown } });
-      if (res.score >= 85 || r.guesses.length >= MAX_GUESSES) finish(item, r);
+      input.disabled = true;
+      let entry = null;
+      if (siteJudgeUsable()) {
+        try {
+          const out = await siteJudge({ mode: "score", id: item.id, guesses: [text] });
+          entry = { t: text, s: out.score, hint: out.hint, by: "ai" };
+        } catch (e) { /* fall back to the robot below */ }
+      }
+      if (!entry) {
+        const sp = await loadRobot();
+        if (!sp) { input.disabled = false; toast("The judge didn't load. Use “Pick from four” instead."); return; }
+        const res = robotScore(text, item);
+        entry = { t: text, s: res.score, trap: res.trap ? res.trap.decoy : null, res: { matches: res.matches, unknown: res.unknown }, by: "robot" };
+      }
+      r.guesses.push(entry);
+      if (entry.s >= 85 || r.guesses.length >= MAX_GUESSES) finish(item, r);
       persist();
       render();
       const again = $("#daily-guess");
@@ -129,7 +143,7 @@ function dailyScreen(opts = {}) {
     } else {
       root.append(h("div", { class: "guessrow" }, input, h("button", { class: "btn primary", onclick: go, disabled: left <= 0 }, "Guess")));
       root.append(h("p", { class: "small muted" },
-        robot === "loading" ? "Warming up the robot judge… " : robot === "failed" ? "The robot judge couldn't load here; pick from four instead. " : "",
+        siteJudgeUsable() ? "The AI judge scores each guess. " : robot === "loading" ? "Warming up the robot judge… " : robot === "failed" ? "The judge couldn't load here; pick from four instead. " : "",
         `${left} guess${left === 1 ? "" : "es"} left. A score of 85 or more counts as spot on.`));
     }
 
@@ -173,7 +187,7 @@ function dailyScreen(opts = {}) {
     const log = guessLog(r, false);
     if (log) root.append(log);
 
-    if (r.guesses.length) {
+    if (r.guesses.length && r.guesses.some((g) => g.by !== "ai")) {
       const aiBox = h("div", { class: "stack-sm" });
       if (r.ai) aiBox.append(aiCompare(r));
       else {
@@ -182,7 +196,7 @@ function dailyScreen(opts = {}) {
           btn.textContent = "Asking…";
           try {
             const out = await aiJudge(
-              { prompt: item.prompt, kindLabel: kindLabel(item), ask: item.ask, truth: item.truth, more: item.more },
+              { id: item.id, prompt: item.prompt, kindLabel: kindLabel(item), ask: item.ask, truth: item.truth, more: item.more },
               r.guesses.map((g, i) => ({ name: "Guess " + (i + 1), text: g.t })));
             r.ai = { source: out.source, scores: out.scores.map((s) => (s ? s.score : null)), why: out.scores.map((s) => (s ? s.why : "")), comment: out.comment };
             persist();
@@ -238,8 +252,8 @@ function dailyScreen(opts = {}) {
 
 function howJudging() {
   return h("details", { class: "how" },
-    h("summary", {}, "How the robot judge scores"),
+    h("summary", {}, "How guesses are scored"),
     h("div", { class: "prose small" },
-      h("p", {}, "Each mystery has a few key ideas (for Liquid Death: water, canned, drink). The robot compares the words of your guess with those ideas using ConceptNet Numberbatch word vectors, the same “common sense” word map as Word Bocce, so near-synonyms count: “store” lands close to “shop”."),
-      h("p", {}, "It reads your first eight words and ignores filler like “a website where”. 85 or more is spot on. It is quick and free, and sometimes too generous with close cousins (shoes for a sock company). After the reveal you can ask an AI judge for a second opinion and compare.")));
+      h("p", {}, "A small AI model reads your guess next to the real answer and scores how close it is in meaning, from 0 to 100, with a hint that doesn't give the answer away. 85 or more is spot on."),
+      h("p", {}, "If the AI judge isn't available, a free word-vector \u201crobot\u201d stands in: it compares your words with each answer's key ideas using the ConceptNet Numberbatch word map from Word Bocce. It is quicker but more literal.")));
 }

@@ -190,8 +190,30 @@ const MODELS = [
   { id: "claude-sonnet-5-5", label: "Claude Sonnet 5.5 (about ½¢ a round)" },
   { id: "claude-haiku-4-5", label: "Claude Haiku 4.5 (about 0.15¢ a round)" },
 ];
+// The site's own AI judge (netlify/functions/judge.mjs): free for players, paid by the site.
+// null = not tried yet, true = working, false = unavailable (not deployed, or today's cap is used up).
+let SITE_OK = null;
+async function siteJudge(body) {
+  if (!CONFIG.judgeApi || SITE_OK === false) throw new Error("The site's AI judge isn't available here.");
+  let res;
+  try {
+    res = await fetch(CONFIG.judgeApi, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  } catch (e) {
+    throw new Error("Couldn't reach the AI judge.");
+  }
+  const out = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    if (res.status === 404 || res.status === 503 || res.status === 405) SITE_OK = false;
+    throw new Error(out.error || "The AI judge couldn't answer (" + res.status + ").");
+  }
+  SITE_OK = true;
+  return out;
+}
+function siteJudgeUsable() { return !!CONFIG.judgeApi && SITE_OK !== false; }
+
 function aiSources() {
   const out = [];
+  if (siteJudgeUsable()) out.push("site");
   if (RT.sample) out.push("claude");
   if (CONFIG.env !== "artifact" && SETTINGS.apiKey) out.push("key");
   out.push("paste");
@@ -202,7 +224,7 @@ function aiSource() {
   return avail.includes(SETTINGS.aiSource) ? SETTINGS.aiSource : avail[0];
 }
 function aiSourceLabel(src) {
-  return { claude: "Claude, on your own plan", key: "your API key", paste: "a chatbot you paste into" }[src];
+  return { site: "the game's AI judge", claude: "Claude, on your own plan", key: "your API key", paste: "a chatbot you paste into" }[src];
 }
 
 let sdkPromise = null;
@@ -220,6 +242,13 @@ function loadSdk() {
 async function aiJudge(round, guesses) {
   const prompt = J.judgePrompt(round, guesses);
   const src = aiSource();
+  if (src === "site") {
+    const body = round.id
+      ? { id: round.id, guesses }
+      : { custom: { prompt: round.prompt, truth: round.truth, kind: /web address/.test(round.kindLabel || "") ? "domain" : "phrase", results: round.results }, guesses };
+    const out = await siteJudge(body);
+    return { scores: out.scores, funniest: out.funniest, comment: out.comment, source: "site" };
+  }
   if (src === "claude") {
     try {
       const out = await RT.sample.json(prompt, { modelTier: "quick" });

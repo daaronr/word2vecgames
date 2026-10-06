@@ -37,6 +37,9 @@ for (const it of items) {
   ids.add(it.id);
 }
 const contentJson = JSON.stringify(items).replace(/</g, "\\u003c");
+// The AI judge function looks answers up by id, so it only judges this game's mysteries.
+const answers = Object.fromEntries(items.map((it) => [it.id, { prompt: it.prompt, cat: it.cat, ask: it.ask, truth: it.truth, more: it.more || "" }]));
+writeFileSync(join(ROOT, "netlify/lib/items.mjs"), "// Written by tools/build.mjs from content/. Do not edit.\nexport default " + JSON.stringify(answers, null, 1) + ";\n");
 
 // ---------- code ----------
 const css = read("src/style.css");
@@ -61,6 +64,7 @@ const config = (env) => {
       `${RAW}/${BRANCH}/whatisit/site/judge-vectors.bin`,
     ],
     shareUrl: env === "artifact" ? "" : process.env.SHARE_URL || "",
+    judgeApi: env === "artifact" ? "" : "/api/judge",
   };
   return `<script>const CONFIG = ${JSON.stringify(c)};</script>`;
 };

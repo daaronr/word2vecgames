@@ -1,0 +1,330 @@
+{
+ "pigeon": {
+  "scores": [
+   {
+    "n": 1,
+    "score": 100,
+    "why": "Exact core product category."
+   },
+   {
+    "n": 2,
+    "score": 95,
+    "why": "Correct general category, less specific."
+   },
+   {
+    "n": 3,
+    "score": 0,
+    "why": "Completely wrong direction."
+   },
+   {
+    "n": 4,
+    "score": 0,
+    "why": "Completely wrong interpretation."
+   },
+   {
+    "n": 5,
+    "score": 100,
+    "why": "Exact products within feeding range."
+   },
+   {
+    "n": 6,
+    "score": 5,
+    "why": "Wrong product category entirely."
+   },
+   {
+    "n": 7,
+    "score": 75,
+    "why": "Related but narrower than full range."
+   }
+  ],
+  "funniest": 3,
+  "comment": "Strong showing with two exact hits; birdseed guess amusingly literal."
+ },
+ "plate-chp-noo": {
+  "scores": [
+   {
+    "n": 1,
+    "score": 100,
+    "why": "Exactly correct answer and meaning."
+   },
+   {
+    "n": 2,
+    "score": 95,
+    "why": "Same meaning, slightly less specific."
+   },
+   {
+    "n": 3,
+    "score": 10,
+    "why": "Misunderstood CHP acronym entirely."
+   },
+   {
+    "n": 4,
+    "score": 0,
+    "why": "Completely wrong product entirely."
+   },
+   {
+    "n": 5,
+    "score": 70,
+    "why": "Right category, different damage type."
+   },
+   {
+    "n": 6,
+    "score": 5,
+    "why": "Wrong profession and meaning."
+   },
+   {
+    "n": 7,
+    "score": 30,
+    "why": "Tangentially related to paint care."
+   }
+  ],
+  "funniest": 4,
+  "comment": "Perfect opener with two exact hits; fish shop guess hilariously misses."
+ },
+ "plate-gtta-poo": {
+  "scores": [
+   {
+    "n": 1,
+    "score": 100,
+    "why": "Exact phrase match verbatim."
+   },
+   {
+    "n": 2,
+    "score": 100,
+    "why": "Exact meaning, different expression."
+   },
+   {
+    "n": 3,
+    "score": 5,
+    "why": "Misread acronym as literal word."
+   },
+   {
+    "n": 4,
+    "score": 30,
+    "why": "Outdoors activity but wrong one."
+   },
+   {
+    "n": 5,
+    "score": 80,
+    "why": "Right general category, vague."
+   },
+   {
+    "n": 6,
+    "score": 75,
+    "why": "Off-roading consequence, not passion."
+   },
+   {
+    "n": 7,
+    "score": 10,
+    "why": "Wrong outdoor activity entirely."
+   }
+  ],
+  "funniest": 3,
+  "comment": "Two perfect answers plus amusing potty training misread."
+ },
+ "plate-ipa-lot": {
+  "scores": [
+   {
+    "n": 1,
+    "score": 100,
+    "why": "Exact answer with beer type."
+   },
+   {
+    "n": 2,
+    "score": 85,
+    "why": "Right category, missing beer type."
+   },
+   {
+    "n": 3,
+    "score": 0,
+    "why": "Official DMV misreading, not answer."
+   },
+   {
+    "n": 4,
+    "score": 50,
+    "why": "Beer-adjacent but wrong profession."
+   },
+   {
+    "n": 5,
+    "score": 0,
+    "why": "Misread LOT acronym entirely."
+   },
+   {
+    "n": 6,
+    "score": 20,
+    "why": "Drinking interest but wrong direction."
+   },
+   {
+    "n": 7,
+    "score": 100,
+    "why": "Exact answer, different phrasing."
+   }
+  ],
+  "funniest": 3,
+  "comment": "Two exact answers overshadow amusing official misreading."
+ },
+ "plate-knku-out": {
+  "scores": [
+   {
+    "n": 1,
+    "score": 100,
+    "why": "Exact profession named correctly."
+   },
+   {
+    "n": 2,
+    "score": 100,
+    "why": "Exact meaning, more descriptive."
+   },
+   {
+    "n": 3,
+    "score": 15,
+    "why": "Wrong meaning of knock out phrase."
+   },
+   {
+    "n": 4,
+    "score": 30,
+    "why": "Medical field but wrong specialty."
+   },
+   {
+    "n": 5,
+    "score": 55,
+    "why": "Sleep-related but broader category."
+   },
+   {
+    "n": 6,
+    "score": 20,
+    "why": "Phrase identification without profession."
+   },
+   {
+    "n": 7,
+    "score": 40,
+    "why": "Medical but not anesthesia specialty."
+   }
+  ],
+  "funniest": 3,
+  "comment": "Clean sweep of exact answers; boxer guess charmingly misses."
+ },
+ "plate-nvw3n17": {
+  "scores": [
+   {
+    "n": 1,
+    "score": 100,
+    "why": "Exact answer with mechanism explained."
+   },
+   {
+    "n": 2,
+    "score": 95,
+    "why": "Same profession, simpler phrasing."
+   },
+   {
+    "n": 3,
+    "score": 100,
+    "why": "Exact meaning, professional description."
+   },
+   {
+    "n": 4,
+    "score": 0,
+    "why": "Dismissed as meaningless entirely."
+   },
+   {
+    "n": 5,
+    "score": 75,
+    "why": "Broader category, captures essence."
+   },
+   {
+    "n": 6,
+    "score": 0,
+    "why": "State identification, not profession."
+   },
+   {
+    "n": 7,
+    "score": 60,
+    "why": "Right mechanism, vague profession."
+   }
+  ],
+  "funniest": 4,
+  "comment": "Three strong answers with funny defeat from random numbers."
+ },
+ "plate-oink-b8": {
+  "scores": [
+   {
+    "n": 1,
+    "score": 100,
+    "why": "Exact job and product described."
+   },
+   {
+    "n": 2,
+    "score": 80,
+    "why": "Pig focus correct, feed angle."
+   },
+   {
+    "n": 3,
+    "score": 10,
+    "why": "Pig-themed but wrong business."
+   },
+   {
+    "n": 4,
+    "score": 65,
+    "why": "Key ingredient but incomplete."
+   },
+   {
+    "n": 5,
+    "score": 10,
+    "why": "Decoded B8 correctly, wrong item."
+   },
+   {
+    "n": 6,
+    "score": 75,
+    "why": "Right category, less specific."
+   },
+   {
+    "n": 7,
+    "score": 5,
+    "why": "Pig association but wrong angle."
+   }
+  ],
+  "funniest": 3,
+  "comment": "One exact hit with BBQ restaurant guess as funny misdirection."
+ },
+ "plate-puritto": {
+  "scores": [
+   {
+    "n": 1,
+    "score": 100,
+    "why": "Exact answer with both elements."
+   },
+   {
+    "n": 2,
+    "score": 70,
+    "why": "Cat part correct, missing wrapped."
+   },
+   {
+    "n": 3,
+    "score": 0,
+    "why": "Misread as burrito business."
+   },
+   {
+    "n": 4,
+    "score": 0,
+    "why": "Wrong product entirely."
+   },
+   {
+    "n": 5,
+    "score": 20,
+    "why": "Cat part only, incomplete answer."
+   },
+   {
+    "n": 6,
+    "score": 0,
+    "why": "Completely wrong interpretation."
+   },
+   {
+    "n": 7,
+    "score": 100,
+    "why": "Exact meaning, different phrasing."
+   }
+  ],
+  "funniest": 3,
+  "comment": "Two perfect answers bookending an absurdly literal burrito shop."
+ }
+}

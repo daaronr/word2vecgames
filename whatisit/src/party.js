@@ -12,7 +12,7 @@ function partyScreen() {
 
   function setup() {
     clear(root);
-    const cfg = Object.assign({ style: "points", entry: "typed", judge: "robot", timer: 0 }, load("party-cfg", {}));
+    const cfg = Object.assign({ style: "points", entry: "typed", judge: siteJudgeUsable() ? "ai" : "robot", timer: 0 }, load("party-cfg", {}));
     let editor;
     const edHost = h("div");
     const paintEditor = () => {
@@ -140,7 +140,7 @@ function partyScreen() {
       area.append(revealCard(item));
       const rating = funRating(item, "party");
       judgePanel(area, {
-        round: { prompt: item.prompt, kindLabel: kindLabel(item), ask: item.ask, truth: item.truth, more: item.more },
+        round: { id: item.id, prompt: item.prompt, kindLabel: kindLabel(item), ask: item.ask, truth: item.truth, more: item.more },
         item, players: names, guesses, mode: "party", defaultJudge: P.cfg.entry === "typed" ? P.cfg.judge : "room",
         onAward: (winners, funniest) => {
           rating.flush();

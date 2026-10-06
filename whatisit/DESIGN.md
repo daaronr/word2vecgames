@@ -61,9 +61,25 @@ value. Players can suggest a better clue from any reveal, which feeds the conten
 | Robot | Word vectors: compares the guess's words with each item's 2-5 key ideas (ConceptNet Numberbatch, the Word Bocce "common sense" map, 96 dims) | Free, instant, offline | Fair ranking of plain guesses; it explains each match; spots guesses that fell for a decoy | Generous with close cousins (shoes for a sock company); literal; knows no brand names |
 | AI | An LLM reads every guess against the truth, scores 0-100 with a reason, and picks the funniest | About 0.015-1¢ a round | Nuance, partial credit, humour | Costs money; slower; needs an account |
 
-The trials default to the robot, offer the AI on request, and always let people overrule.
-A better free judge is possible: a small sentence-embedding model in the browser (all-MiniLM-L6-v2 is
-23 MB at int8 and embeds a sentence in tens of milliseconds) would understand phrases and brand names.
+**Tested (6 Oct 2026):** 31 mysteries, 217 realistic guesses, each scored by hand before any judge
+saw them (`eval/judge-eval.json`; rerun with `node whatisit/eval/score_judges.mjs`).
+
+| | Word vectors (robot) | Claude Haiku 4.5, same prompt the game uses |
+|---|---|---|
+| Picks the right winner | 27 of 31 rounds (87%) | 31 of 31 (100%) |
+| Same order as the hand scores (Spearman, per round) | 0.81 | 0.95 |
+| Correlation with the hand scores | 0.78 | 0.96 |
+| Mean error | 18 points | 8 points |
+| Wrong guesses scored warm | 13 of 74 | 4 of 74 |
+| Right guesses scored cold | 8 of 72 | 0 of 72 |
+
+The robot's misses are the ones players would notice: "a PR firm" for a PR agency scored 18 (it
+doesn't know "PR"), "condiments" for mayonnaise 0, "an off-roader" 21, while "spray-on hair powder"
+scored 89 for the comb-over because it shares the words hair and spray. A cheap model gets these
+right and explains itself. Caveat: one person wrote both the guesses and the hand scores.
+
+So the site now uses a small AI model as the judge (a Netlify Function, below), and the robot stays
+only as the free fallback when the function is down or over its daily cap.
 
 **Cheating.** In a solo game you can always search the answer, as you can look up a crossword. A
 daily can ask for a first guess before any clue, show a timer, and rely on honour. Party play
@@ -75,8 +91,9 @@ answer with a date; Bring-your-own does the live search on the players' own devi
 
 ## 4. How it's built (trial version)
 
-- One static page (`site/index.html`, about 480 KB with all 167 mysteries inlined) and one data file
-  (`judge-vectors.bin`, 2.2 MB, fetched the first time a guess is judged). No server.
+- One static page (`site/index.html`, about 480 KB with all 167 mysteries inlined), one Netlify
+  Function for the AI judge (`netlify/functions/judge.mjs`), and the fallback robot's data file
+  (`judge-vectors.bin`, 2.2 MB, fetched only when the AI judge is unavailable).
 - Content is plain JSON with key ideas, clues, decoys, source and check date per item; a Node test
   checks the schema, that the robot knows every key idea, and that the Daily is deterministic.
 - Ratings, version feedback, suggestions and robot-vs-AI comparisons go to the claude.ai artifact's
@@ -149,8 +166,17 @@ What that means:
 | Chrome's built-in Gemini Nano (Prompt API) | Desktop Chrome, about 22 GB free disk | Nobody | Free but desktop-only and a big download |
 | A ChatGPT app (Apps SDK) or a Claude connector (MCP app) | An account on that platform | Probably the player's plan *(inferred)* | Distribution inside the chat apps; more work |
 
-Recommendation: keep the robot as the default judge everywhere; make the AI judge a
-bring-your-own feature (claude.ai, OpenRouter, paste); pay for AI only in a paid party mode.
+Recommendation (updated after the test above): run a cheap model ourselves, behind limits, so
+players need nothing. `netlify/functions/judge.mjs` does this through Netlify AI Gateway: Netlify
+supplies the provider keys and bills the calls to the team's Netlify credits (Free includes 300
+credits a month for everything; when credits run out a Free site pauses, so watch usage). The
+function only judges this game's own answers (looked up by id), allows 20 requests a minute per
+visitor, stops after `JUDGE_DAILY_CAP` calls a day (default 300) and caches repeat questions.
+Default model: Claude Haiku 4.5, the one tested; switch with `JUDGE_PROVIDER` / `JUDGE_MODEL` to
+Gemini Flash-Lite or GPT-5 nano for roughly a tenth of the cost (check the exact model names in
+Netlify's AI Gateway list; those two were not tested here). A per-guess call costs about 0.09¢
+with Haiku and about 0.01¢ with GPT-5 nano ($0.05 / $0.40 per million tokens). Bring-your-own AI
+stays available in Settings.
 
 ## 6. Making money
 

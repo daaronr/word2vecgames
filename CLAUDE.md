@@ -75,6 +75,7 @@ jack's **rank** among the ball's nearest words (rank 1 = "bacio").
 node tests/engine.test.js                 # engine checks against the real vectors
 node tests/tokens.test.js                 # tokenizer and quiz checks
 node whatisit/tests/whatisit.test.js      # What Is It? content and judge checks
+node whatisit/tests/judge-function.test.mjs  # What Is It? AI judge function (fake model)
 cd web && python3 -m http.server 8000     # play locally
 uvicorn word_bocce_mvp_fastapi:app --reload
 ```

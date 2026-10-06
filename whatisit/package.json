@@ -1,0 +1,18 @@
+{
+  "name": "whatisit",
+  "private": true,
+  "description": "What Is It? guessing game: static page plus a Netlify Function for the AI judge.",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "test": "node tests/whatisit.test.js && node tests/judge-function.test.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "0.131.0",
+    "@google/genai": "2.27.0",
+    "@netlify/blobs": "11.1.3",
+    "openai": "7.28.0"
+  },
+  "devDependencies": {
+    "@netlify/functions": "6.0.2"
+  }
+}
