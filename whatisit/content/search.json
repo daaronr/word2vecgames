@@ -41,6 +41,63 @@
     "title": "Bring Your Own Pool Balls - BYOPB?",
     "domain": "forums.azbilliards.com"
    }
+  ],
+  "graded": [
+   {
+    "g": "a pool forum thread about bringing your own balls",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "billiards players arguing over using their own ball set",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "something about pool balls",
+    "s": 72,
+    "h": "Close; who's talking, and where?"
+   },
+   {
+    "g": "a sports forum debate",
+    "s": 55,
+    "h": "Getting there; which game?"
+   },
+   {
+    "g": "a billiards hall's rules page",
+    "s": 55,
+    "h": "Right game; who's talking?"
+   },
+   {
+    "g": "a forum post",
+    "s": 30,
+    "h": "Right kind of site; what's the topic?"
+   },
+   {
+    "g": "a bowling league rule",
+    "s": 20,
+    "h": "Right idea of bringing gear; wrong sport."
+   },
+   {
+    "g": "a golf range price list",
+    "s": 12,
+    "h": "Wrong sport."
+   },
+   {
+    "g": "dodgeball league sign-up",
+    "s": 10,
+    "h": "Wrong sport."
+   },
+   {
+    "g": "a rude meme",
+    "s": 5,
+    "h": "Too cheeky: it's innocent."
+   },
+   {
+    "g": "a potluck invitation",
+    "s": 3,
+    "h": "Off track."
+   }
   ]
  },
  {
@@ -84,6 +141,58 @@
    {
     "title": "Who's on First?",
     "domain": "abookandahug.com"
+   }
+  ],
+  "graded": [
+   {
+    "g": "abbott and costello comedy sketch",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "baseball reference page on the who's on first routine",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "classic comedy bit about confusing baseball names",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "a comedy routine",
+    "s": 72,
+    "h": "Close; who performed it?"
+   },
+   {
+    "g": "a children's picture book",
+    "s": 40,
+    "h": "Related, but the top hit is different."
+   },
+   {
+    "g": "a baseball stats site",
+    "s": 35,
+    "h": "Right site; what's the topic?"
+   },
+   {
+    "g": "a movie about baseball",
+    "s": 25,
+    "h": "Right sport, wrong format."
+   },
+   {
+    "g": "baseball batting order rules",
+    "s": 15,
+    "h": "Too literal."
+   },
+   {
+    "g": "who's vs whose grammar",
+    "s": 10,
+    "h": "Too literal."
+   },
+   {
+    "g": "dating advice on the first move",
+    "s": 3,
+    "h": "Off track."
    }
   ]
  },
@@ -129,6 +238,58 @@
     "title": "UnAnything Wiki",
     "domain": "unanything.fandom.com"
    }
+  ],
+  "graded": [
+   {
+    "g": "the viral video of a prairie dog turning its head",
+    "s": 97,
+    "h": "Spot on."
+   },
+   {
+    "g": "wikipedia page on the dramatic chipmunk meme",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "a chipmunk turning around to dramatic music",
+    "s": 88,
+    "h": "Spot on, but check the species."
+   },
+   {
+    "g": "know your meme page on the clip",
+    "s": 75,
+    "h": "Right subject, different site."
+   },
+   {
+    "g": "an old youtube meme",
+    "s": 65,
+    "h": "Close; what happens in it?"
+   },
+   {
+    "g": "a funny animal video",
+    "s": 45,
+    "h": "Getting there; it's famous and very short."
+   },
+   {
+    "g": "alvin and the chipmunks movie",
+    "s": 15,
+    "h": "Wrong chipmunks."
+   },
+   {
+    "g": "chipmunk stuffing its cheeks",
+    "s": 15,
+    "h": "Not the famous one."
+   },
+   {
+    "g": "a drama school mascot",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "a squirrel feeder",
+    "s": 2,
+    "h": "Off track."
+   }
   ]
  },
  {
@@ -172,6 +333,68 @@
    {
     "title": "What are Sea-Monkeys?",
     "domain": "livescience.com"
+   }
+  ],
+  "graded": [
+   {
+    "g": "brine shrimp sold as pets",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "wikipedia on sea-monkeys, the novelty pet kits",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "those instant pets from comic book ads",
+    "s": 92,
+    "h": "Spot on."
+   },
+   {
+    "g": "tiny shrimp",
+    "s": 70,
+    "h": "Close; why are they famous?"
+   },
+   {
+    "g": "a novelty pet from the 60s",
+    "s": 85,
+    "h": "Spot on."
+   },
+   {
+    "g": "a mail-order kit for kids",
+    "s": 55,
+    "h": "Getting there; what's inside?"
+   },
+   {
+    "g": "a kids' toy",
+    "s": 45,
+    "h": "Getting there, but it's alive."
+   },
+   {
+    "g": "an aquarium",
+    "s": 30,
+    "h": "Water's involved; think much smaller."
+   },
+   {
+    "g": "proboscis monkeys",
+    "s": 10,
+    "h": "Too literal: no monkeys here."
+   },
+   {
+    "g": "a cartoon about undersea monkeys",
+    "s": 10,
+    "h": "Too literal."
+   },
+   {
+    "g": "a surf clothing brand",
+    "s": 5,
+    "h": "Off track."
+   },
+   {
+    "g": "a rock band",
+    "s": 3,
+    "h": "Off track."
    }
   ]
  },
@@ -218,6 +441,58 @@
     "title": "The Kettle War",
     "domain": "amusingplanet.com"
    }
+  ],
+  "graded": [
+   {
+    "g": "1784 standoff where the only shot hit a soup kettle",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "a tiny dutch-austrian war over a river",
+    "s": 88,
+    "h": "Spot on."
+   },
+   {
+    "g": "a funny little war in european history",
+    "s": 70,
+    "h": "Close; what makes it funny?"
+   },
+   {
+    "g": "a wikipedia page about an old war",
+    "s": 50,
+    "h": "Right kind of page; which war?"
+   },
+   {
+    "g": "a war fought over kettles",
+    "s": 45,
+    "h": "Real event, but kettles weren't the cause."
+   },
+   {
+    "g": "a price war on electric kettles",
+    "s": 10,
+    "h": "Too literal."
+   },
+   {
+    "g": "tea brands fighting",
+    "s": 8,
+    "h": "Too literal."
+   },
+   {
+    "g": "camping stove boiling contest",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "a metal band",
+    "s": 3,
+    "h": "Off track."
+   },
+   {
+    "g": "kettle corn",
+    "s": 2,
+    "h": "Off track."
+   }
   ]
  },
  {
@@ -263,6 +538,58 @@
     "title": "Puppy Chow (cereal snack)",
     "domain": "barrypopik.com"
    }
+  ],
+  "graded": [
+   {
+    "g": "chex mix with chocolate and powdered sugar",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "muddy buddies",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "a sweet snack made from cereal",
+    "s": 92,
+    "h": "Spot on."
+   },
+   {
+    "g": "a midwestern snack",
+    "s": 75,
+    "h": "Close; what's in it?"
+   },
+   {
+    "g": "chex mix",
+    "s": 65,
+    "h": "Close; sweeter than that."
+   },
+   {
+    "g": "a dessert recipe",
+    "s": 55,
+    "h": "Getting there; what's it made from?"
+   },
+   {
+    "g": "purina dog food",
+    "s": 10,
+    "h": "Too literal: not for dogs."
+   },
+   {
+    "g": "homemade dog treats",
+    "s": 8,
+    "h": "Too literal."
+   },
+   {
+    "g": "a puppy feeding guide",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "a cartoon dog",
+    "s": 2,
+    "h": "Off track."
+   }
   ]
  },
  {
@@ -306,6 +633,58 @@
    {
     "title": "What Is A Banana Republic? Understanding The Concept And Its Implications",
     "domain": "blog.kamer.nl"
+   }
+  ],
+  "graded": [
+   {
+    "g": "the clothing store",
+    "s": 92,
+    "h": "Spot on."
+   },
+   {
+    "g": "banana republic, the gap-owned clothes brand",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "a fashion retailer",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "an old safari outfitter",
+    "s": 60,
+    "h": "Getting there; that's how it started."
+   },
+   {
+    "g": "the gap",
+    "s": 55,
+    "h": "Right family, different brand."
+   },
+   {
+    "g": "a mall store",
+    "s": 50,
+    "h": "Getting there; what does it sell?"
+   },
+   {
+    "g": "an unstable country run by fruit companies",
+    "s": 15,
+    "h": "Real term, but not the top result."
+   },
+   {
+    "g": "banana exports from ecuador",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "a banana island strategy game",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "a smoothie bar",
+    "s": 2,
+    "h": "Off track."
    }
   ]
  },
@@ -351,6 +730,63 @@
     "title": "wilhelm scream",
     "domain": "knowyourmeme.com"
    }
+  ],
+  "graded": [
+   {
+    "g": "a stock scream sound effect used in movies",
+    "s": 97,
+    "h": "Spot on."
+   },
+   {
+    "g": "the famous movie scream sound",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "a scream from star wars",
+    "s": 72,
+    "h": "Close; it's in plenty of others."
+   },
+   {
+    "g": "a sound effect",
+    "s": 70,
+    "h": "Close; which one?"
+   },
+   {
+    "g": "a movie trope",
+    "s": 45,
+    "h": "Right world; it's something you hear."
+   },
+   {
+    "g": "a meme",
+    "s": 30,
+    "h": "Older than memes; you've heard it."
+   },
+   {
+    "g": "a german horror film",
+    "s": 15,
+    "h": "Not a film itself."
+   },
+   {
+    "g": "munch's painting the scream",
+    "s": 10,
+    "h": "Wrong scream; this one you hear."
+   },
+   {
+    "g": "a german emperor",
+    "s": 5,
+    "h": "Too literal: no royalty."
+   },
+   {
+    "g": "a punk band",
+    "s": 8,
+    "h": "Off track."
+   },
+   {
+    "g": "a german roller coaster",
+    "s": 5,
+    "h": "Off track."
+   }
   ]
  },
  {
@@ -394,6 +830,58 @@
    {
     "title": "Neutral Milk Hotel",
     "domain": "ukutabs.com"
+   }
+  ],
+  "graded": [
+   {
+    "g": "an indie rock band",
+    "s": 92,
+    "h": "Spot on."
+   },
+   {
+    "g": "the band behind in the aeroplane over the sea",
+    "s": 97,
+    "h": "Spot on."
+   },
+   {
+    "g": "jeff mangum's band",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "a band",
+    "s": 82,
+    "h": "Close; what kind?"
+   },
+   {
+    "g": "a musician",
+    "s": 65,
+    "h": "Close; there's more than one."
+   },
+   {
+    "g": "an album",
+    "s": 60,
+    "h": "Getting there; think bigger than one record."
+   },
+   {
+    "g": "a hotel with fresh dairy",
+    "s": 5,
+    "h": "Too literal: no rooms."
+   },
+   {
+    "g": "plant-based milk brand",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "minimalist hotel design",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "a dairy farm",
+    "s": 3,
+    "h": "Off track."
    }
   ]
  },
@@ -440,6 +928,58 @@
     "title": "Xkcd Up Goer Five",
     "domain": "linode.nexstar.tv"
    }
+  ],
+  "graded": [
+   {
+    "g": "the xkcd comic explaining a rocket with simple words",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "xkcd saturn v diagram using only common words",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "a moon rocket drawn with easy labels",
+    "s": 88,
+    "h": "Spot on."
+   },
+   {
+    "g": "a diagram of a rocket",
+    "s": 70,
+    "h": "Close; what's special about it?"
+   },
+   {
+    "g": "an xkcd comic",
+    "s": 65,
+    "h": "Close; which one?"
+   },
+   {
+    "g": "a webcomic",
+    "s": 50,
+    "h": "Getting there; about what?"
+   },
+   {
+    "g": "a rocket board game",
+    "s": 15,
+    "h": "Right vehicle, wrong format."
+   },
+   {
+    "g": "an elevator picture book",
+    "s": 10,
+    "h": "Too literal."
+   },
+   {
+    "g": "a stair climbing plan",
+    "s": 3,
+    "h": "Too literal."
+   },
+   {
+    "g": "a children's song",
+    "s": 3,
+    "h": "Off track."
+   }
   ]
  },
  {
@@ -485,6 +1025,58 @@
     "title": "The Immaculate Reception",
     "domain": "profootballhof.com"
    }
+  ],
+  "graded": [
+   {
+    "g": "franco harris's famous catch",
+    "s": 97,
+    "h": "Spot on."
+   },
+   {
+    "g": "a legendary 1972 steelers playoff touchdown",
+    "s": 97,
+    "h": "Spot on."
+   },
+   {
+    "g": "a famous football play",
+    "s": 88,
+    "h": "Spot on."
+   },
+   {
+    "g": "a moment in nfl history",
+    "s": 60,
+    "h": "Getting there; which moment?"
+   },
+   {
+    "g": "the steelers",
+    "s": 50,
+    "h": "Right team; what happened?"
+   },
+   {
+    "g": "a hail mary pass",
+    "s": 50,
+    "h": "Getting there, but a different famous moment."
+   },
+   {
+    "g": "the immaculate conception",
+    "s": 10,
+    "h": "Too literal: the name is a pun."
+   },
+   {
+    "g": "a fancy wedding reception",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "perfect cell phone signal",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "a cleaning service",
+    "s": 2,
+    "h": "Off track."
+   }
   ]
  },
  {
@@ -528,6 +1120,58 @@
    {
     "title": "Drop Bears",
     "domain": "rodeo-stampede.fandom.com"
+   }
+  ],
+  "graded": [
+   {
+    "g": "an aussie joke about killer koalas",
+    "s": 97,
+    "h": "Spot on."
+   },
+   {
+    "g": "a made-up animal australians scare tourists with",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "an australian myth",
+    "s": 80,
+    "h": "Close; about what creature?"
+   },
+   {
+    "g": "koalas falling from trees",
+    "s": 72,
+    "h": "Close; but is it real?"
+   },
+   {
+    "g": "a cryptid",
+    "s": 70,
+    "h": "Close; where's it from?"
+   },
+   {
+    "g": "bears that fall out of trees",
+    "s": 50,
+    "h": "Getting there; but is it real?"
+   },
+   {
+    "g": "black bear safety tips",
+    "s": 10,
+    "h": "Too literal."
+   },
+   {
+    "g": "a bear market crash",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "sour gummy bears",
+    "s": 3,
+    "h": "Off track."
+   },
+   {
+    "g": "a hip hop crew",
+    "s": 2,
+    "h": "Off track."
    }
   ]
  }

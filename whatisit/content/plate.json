@@ -30,7 +30,59 @@
   "checked": "2026-10-06",
   "fun": 5,
   "difficulty": 3,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "lineman upside down",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "spells lineman, works on power lines",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "owner is a power line worker",
+    "s": 88,
+    "h": "Right job. Now see how it's spelled."
+   },
+   {
+    "g": "electrician",
+    "s": 65,
+    "h": "Close: a more specific trade."
+   },
+   {
+    "g": "football lineman",
+    "s": 45,
+    "h": "Right word, wrong field."
+   },
+   {
+    "g": "some word written upside down",
+    "s": 40,
+    "h": "Right trick; which word?"
+   },
+   {
+    "g": "new vw owner",
+    "s": 10,
+    "h": "Too literal: try another angle."
+   },
+   {
+    "g": "lucky numbers and initials",
+    "s": 5,
+    "h": "Not random. Try reading it differently."
+   },
+   {
+    "g": "random serial number",
+    "s": 5,
+    "h": "It means something. Look again."
+   },
+   {
+    "g": "video game cheat code",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-yoga911",
@@ -63,7 +115,59 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 1,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "yoga teacher who helps with yoga emergencies",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "yoga instructor, call me for yoga help",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "yoga emergency responder",
+    "s": 82,
+    "h": "Hot: what's their day job?"
+   },
+   {
+    "g": "yoga emergency",
+    "s": 75,
+    "h": "Right joke; who's answering the call?"
+   },
+   {
+    "g": "yoga teacher",
+    "s": 72,
+    "h": "Right owner; what's the 911 for?"
+   },
+   {
+    "g": "physical therapist",
+    "s": 45,
+    "h": "Warm: right helper, wrong discipline."
+   },
+   {
+    "g": "someone who got hurt doing yoga",
+    "s": 25,
+    "h": "Close theme; think about who answers."
+   },
+   {
+    "g": "yoga studio phone number",
+    "s": 25,
+    "h": "Right world; 911 isn't part of a number."
+   },
+   {
+    "g": "porsche 911 owner who does yoga",
+    "s": 15,
+    "h": "The 911 isn't a car here."
+   },
+   {
+    "g": "september 11 memorial",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-chp-noo",
@@ -96,7 +200,59 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 3,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "chip no, no rock chips on my paint",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "no rock chips on the paint please",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "protect the windshield from chips",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "chip no",
+    "s": 72,
+    "h": "Right reading; what kind of chip?"
+   },
+   {
+    "g": "keep the car clean",
+    "s": 45,
+    "h": "Right idea; be more specific."
+   },
+   {
+    "g": "no potato chips in the car",
+    "s": 35,
+    "h": "Right word, wrong chip."
+   },
+   {
+    "g": "computer chip shortage",
+    "s": 12,
+    "h": "Right word, wrong kind."
+   },
+   {
+    "g": "message to the highway patrol: nope",
+    "s": 10,
+    "h": "That's how the DMV read it."
+   },
+   {
+    "g": "retired highway patrol officer",
+    "s": 8,
+    "h": "Read CHP as a word."
+   },
+   {
+    "g": "fish and chips shop",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-mnt-chp",
@@ -129,7 +285,64 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "mint chip",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "mint chocolate chip ice cream",
+    "s": 100,
+    "h": "Spot on."
+   },
+   {
+    "g": "mint chip gelato",
+    "s": 90,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "favorite ice cream flavor",
+    "s": 75,
+    "h": "Right treat; which flavor?"
+   },
+   {
+    "g": "ice cream truck",
+    "s": 50,
+    "h": "Right treat; what kind?"
+   },
+   {
+    "g": "chocolate chip cookies",
+    "s": 40,
+    "h": "Right kind of chip, wrong dessert."
+   },
+   {
+    "g": "car is mint green",
+    "s": 25,
+    "h": "Right color thought; it's something you eat."
+   },
+   {
+    "g": "mint condition chopper",
+    "s": 10,
+    "h": "Right first word, wrong meaning."
+   },
+   {
+    "g": "mountain highway patrol",
+    "s": 5,
+    "h": "That's how the DMV read it."
+   },
+   {
+    "g": "computer chip company",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "monte carlo casino chips",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-oink-b8",
@@ -162,7 +375,64 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "sells feed for pigs from a corn farm",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "organic pig feed",
+    "s": 92,
+    "h": "Spot on."
+   },
+   {
+    "g": "pig feed",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "corn farmer",
+    "s": 60,
+    "h": "Half right; who eats the crop?"
+   },
+   {
+    "g": "hog farmer",
+    "s": 55,
+    "h": "Right farm world; what's being sold?"
+   },
+   {
+    "g": "pig bait",
+    "s": 50,
+    "h": "Right reading; why would pigs want it?"
+   },
+   {
+    "g": "bbq restaurant van",
+    "s": 15,
+    "h": "Pigs, yes; wrong business."
+   },
+   {
+    "g": "pig racing team number 8",
+    "s": 10,
+    "h": "Pigs, yes; not racing."
+   },
+   {
+    "g": "fishing bait shop",
+    "s": 10,
+    "h": "Wrong animal."
+   },
+   {
+    "g": "baiting the police",
+    "s": 5,
+    "h": "That's how the DMV read it."
+   },
+   {
+    "g": "vegan activist",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-g-pigheartr",
@@ -195,7 +465,59 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "guinea pig lover",
+    "s": 92,
+    "h": "Spot on."
+   },
+   {
+    "g": "rescues guinea pigs",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "hamster lover",
+    "s": 55,
+    "h": "Close: a different small pet."
+   },
+   {
+    "g": "pet rescue",
+    "s": 50,
+    "h": "Right area; which animal?"
+   },
+   {
+    "g": "loves pigs",
+    "s": 45,
+    "h": "Right feeling; G changes the animal."
+   },
+   {
+    "g": "volunteers for experiments",
+    "s": 20,
+    "h": "Close phrase, wrong sense."
+   },
+   {
+    "g": "grandma loves pigs",
+    "s": 15,
+    "h": "Read G as part of the animal."
+   },
+   {
+    "g": "peppa pig fan",
+    "s": 15,
+    "h": "Wrong pig."
+   },
+   {
+    "g": "gangster pig lover",
+    "s": 8,
+    "h": "That's how the DMV read it."
+   },
+   {
+    "g": "loves bacon",
+    "s": 5,
+    "h": "Wrong kind of love for pigs."
+   }
+  ]
  },
  {
   "id": "plate-knku-out",
@@ -228,7 +550,64 @@
   "checked": "2026-10-06",
   "fun": 5,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "anesthesiologist",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "doctor who puts patients under",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "nurse anesthetist",
+    "s": 92,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "sleep doctor",
+    "s": 70,
+    "h": "Hot: what kind of sleep?"
+   },
+   {
+    "g": "surgeon",
+    "s": 55,
+    "h": "Right room, wrong specialist."
+   },
+   {
+    "g": "hospital worker",
+    "s": 50,
+    "h": "Right place; which job?"
+   },
+   {
+    "g": "sells sleeping pills",
+    "s": 40,
+    "h": "Right effect, different line of work."
+   },
+   {
+    "g": "knock you out",
+    "s": 20,
+    "h": "Too literal: whose job is this?"
+   },
+   {
+    "g": "boxer",
+    "s": 10,
+    "h": "Wrong kind of knockout."
+   },
+   {
+    "g": "kickboxing gym",
+    "s": 8,
+    "h": "Wrong kind of knockout."
+   },
+   {
+    "g": "demolition company",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-isu-nuke",
@@ -261,7 +640,59 @@
   "checked": "2026-10-06",
   "fun": 3,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "idaho state nuclear engineering",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "nuclear engineering student",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "iowa state nuclear engineer",
+    "s": 85,
+    "h": "Right field; wrong state."
+   },
+   {
+    "g": "nuclear physicist",
+    "s": 70,
+    "h": "Hot; think about the I-S-U."
+   },
+   {
+    "g": "works at a nuclear power plant",
+    "s": 60,
+    "h": "Right field; what's ISU?"
+   },
+   {
+    "g": "college student",
+    "s": 45,
+    "h": "Right life stage; what subject?"
+   },
+   {
+    "g": "i see you nuke",
+    "s": 8,
+    "h": "Read ISU as a school."
+   },
+   {
+    "g": "microwave repair",
+    "s": 5,
+    "h": "Wrong kind of nuke."
+   },
+   {
+    "g": "anti-war protester",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "fan of a band called nuke",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-plce-box",
@@ -294,7 +725,59 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "tardis",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "the doctor who police box",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "doctor who fan",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "time machine",
+    "s": 65,
+    "h": "Hot: which one?"
+   },
+   {
+    "g": "bill and ted's phone booth",
+    "s": 50,
+    "h": "Right idea, wrong show."
+   },
+   {
+    "g": "police box",
+    "s": 45,
+    "h": "Right object, but whose?"
+   },
+   {
+    "g": "phone booth",
+    "s": 30,
+    "h": "Close object; think British TV."
+   },
+   {
+    "g": "retired cop car",
+    "s": 10,
+    "h": "Not about real police."
+   },
+   {
+    "g": "police boxing club",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "storage unit company",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-xpctopm",
@@ -327,7 +810,59 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "expecto patronum",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "the patronus charm from harry potter",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "harry potter spell",
+    "s": 85,
+    "h": "Right; can you name it?"
+   },
+   {
+    "g": "harry potter fan",
+    "s": 72,
+    "h": "Hot: what exactly is it?"
+   },
+   {
+    "g": "a magic spell",
+    "s": 60,
+    "h": "Warm: from which story?"
+   },
+   {
+    "g": "wingardium leviosa",
+    "s": 60,
+    "h": "Right world, wrong words."
+   },
+   {
+    "g": "expectant father",
+    "s": 10,
+    "h": "Close sound, wrong meaning."
+   },
+   {
+    "g": "expect to pay more",
+    "s": 8,
+    "h": "Cold: read it aloud again."
+   },
+   {
+    "g": "expect opium",
+    "s": 5,
+    "h": "That's how the DMV read it."
+   },
+   {
+    "g": "export company",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-ipa-lot",
@@ -360,7 +895,64 @@
   "checked": "2026-10-06",
   "fun": 5,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "drinks a lot of ipa",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "loves india pale ale",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "craft beer fan",
+    "s": 80,
+    "h": "Hot: which style?"
+   },
+   {
+    "g": "beer",
+    "s": 60,
+    "h": "Right drink; which kind?"
+   },
+   {
+    "g": "brewery owner",
+    "s": 55,
+    "h": "Warm: they're drinking it, not making it."
+   },
+   {
+    "g": "hop farmer",
+    "s": 40,
+    "h": "Right ingredient, wrong role."
+   },
+   {
+    "g": "drinks lots of wine",
+    "s": 30,
+    "h": "Right idea, wrong drink."
+   },
+   {
+    "g": "i pee a lot",
+    "s": 8,
+    "h": "That's how the DMV read it."
+   },
+   {
+    "g": "linguist, ipa phonetic alphabet",
+    "s": 8,
+    "h": "Wrong IPA."
+   },
+   {
+    "g": "parking lot attendant",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "ipad seller",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-highhvy",
@@ -393,7 +985,64 @@
   "checked": "2026-10-06",
   "fun": 3,
   "difficulty": 3,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "high heavy topspin tennis shot",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "tennis topspin",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "a heavy ball in tennis",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "a ball hit with lots of spin",
+    "s": 70,
+    "h": "Hot: which sport?"
+   },
+   {
+    "g": "tennis",
+    "s": 55,
+    "h": "Right sport; which shot?"
+   },
+   {
+    "g": "lob shot",
+    "s": 45,
+    "h": "Right sport; different shot."
+   },
+   {
+    "g": "baseball high fastball",
+    "s": 35,
+    "h": "Right idea, wrong sport."
+   },
+   {
+    "g": "lifted truck that sits high",
+    "s": 10,
+    "h": "Not the vehicle's look."
+   },
+   {
+    "g": "weightlifter",
+    "s": 8,
+    "h": "Wrong kind of heavy."
+   },
+   {
+    "g": "high and heavy, stoned",
+    "s": 5,
+    "h": "That's what worried the DMV."
+   },
+   {
+    "g": "heavy metal fan",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-8brainz",
@@ -426,7 +1075,59 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 1,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "ate brains, zombie",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "zombies",
+    "s": 85,
+    "h": "Spot on."
+   },
+   {
+    "g": "the walking dead fan",
+    "s": 80,
+    "h": "Hot: right monster."
+   },
+   {
+    "g": "ate brains",
+    "s": 70,
+    "h": "Right reading; who eats them?"
+   },
+   {
+    "g": "hannibal lecter",
+    "s": 40,
+    "h": "Right appetite, wrong monster."
+   },
+   {
+    "g": "smart person",
+    "s": 15,
+    "h": "Brains, yes; wrong sense."
+   },
+   {
+    "g": "neuroscientist",
+    "s": 15,
+    "h": "Brains, yes, but not science."
+   },
+   {
+    "g": "eight brains, a genius",
+    "s": 10,
+    "h": "Read the number aloud."
+   },
+   {
+    "g": "quiz champion",
+    "s": 10,
+    "h": "Cold."
+   },
+   {
+    "g": "smart car",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-ftl-spd",
@@ -459,7 +1160,59 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 3,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "faster than light speed",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "ftl travel from sci-fi",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "warp speed",
+    "s": 88,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "speed of light",
+    "s": 70,
+    "h": "Hot: go a bit past it."
+   },
+   {
+    "g": "star trek fan",
+    "s": 55,
+    "h": "Right genre; how fast?"
+   },
+   {
+    "g": "space travel",
+    "s": 50,
+    "h": "Right area; how fast?"
+   },
+   {
+    "g": "speed racer",
+    "s": 15,
+    "h": "Speed, yes; wrong kind."
+   },
+   {
+    "g": "full time speeder",
+    "s": 10,
+    "h": "Read FTL another way."
+   },
+   {
+    "g": "fatal speed",
+    "s": 5,
+    "h": "That's how the DMV read it."
+   },
+   {
+    "g": "fort lauderdale police",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-doh-nuts",
@@ -492,7 +1245,59 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 1,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "donuts, homer simpson",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "homer saying doh about doughnuts",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "doughnuts",
+    "s": 85,
+    "h": "Right; whose catchphrase?"
+   },
+   {
+    "g": "homer simpson fan",
+    "s": 75,
+    "h": "Hot: what does he love?"
+   },
+   {
+    "g": "dunkin fan",
+    "s": 70,
+    "h": "Hot: right treat; whose joke?"
+   },
+   {
+    "g": "the simpsons",
+    "s": 60,
+    "h": "Right show; what's on the plate?"
+   },
+   {
+    "g": "bakery owner",
+    "s": 45,
+    "h": "Warm: right shop, where's the joke?"
+   },
+   {
+    "g": "doh, i'm nuts",
+    "s": 25,
+    "h": "Close sound; say it as one word."
+   },
+   {
+    "g": "crazy person",
+    "s": 10,
+    "h": "Read the two words together."
+   },
+   {
+    "g": "peanut farmer",
+    "s": 8,
+    "h": "Wrong kind of nut."
+   }
+  ]
  },
  {
   "id": "plate-n8r-h8r",
@@ -525,7 +1330,64 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 3,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "nader hater, drives a corvair",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "hates ralph nader because of the corvair",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "hates ralph nader",
+    "s": 85,
+    "h": "Right; now say why."
+   },
+   {
+    "g": "nader hater",
+    "s": 80,
+    "h": "Hot: why the grudge?"
+   },
+   {
+    "g": "drives a corvair",
+    "s": 70,
+    "h": "Hot: who's the grudge against?"
+   },
+   {
+    "g": "hates car safety critics",
+    "s": 70,
+    "h": "Hot: which critic?"
+   },
+   {
+    "g": "hates a political candidate",
+    "s": 35,
+    "h": "Warm: one particular one."
+   },
+   {
+    "g": "later hater",
+    "s": 10,
+    "h": "First word is a name."
+   },
+   {
+    "g": "nature hater",
+    "s": 10,
+    "h": "Close sound, wrong word."
+   },
+   {
+    "g": "navigator who hates maps",
+    "s": 5,
+    "h": "Read N8R differently."
+   },
+   {
+    "g": "hates the neighbors",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-hkyheartmom",
@@ -558,7 +1420,64 @@
   "checked": "2026-10-06",
   "fun": 3,
   "difficulty": 1,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "hockey mom",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "my kid plays hockey",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "loves being a hockey mom",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "hockey fan",
+    "s": 50,
+    "h": "Right sport; who is the owner?"
+   },
+   {
+    "g": "soccer mom",
+    "s": 50,
+    "h": "Right role, wrong sport."
+   },
+   {
+    "g": "hockey player who loves his mom",
+    "s": 45,
+    "h": "Right sport; flip who's who."
+   },
+   {
+    "g": "loves mom",
+    "s": 25,
+    "h": "Right person; what's the first part?"
+   },
+   {
+    "g": "hiking mom",
+    "s": 25,
+    "h": "Right role, wrong hobby."
+   },
+   {
+    "g": "loves kentucky mom",
+    "s": 10,
+    "h": "KY is not a state here."
+   },
+   {
+    "g": "hickey mom",
+    "s": 5,
+    "h": "That's what the DMV feared."
+   },
+   {
+    "g": "grandma who knits",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-goatnut",
@@ -591,7 +1510,64 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "goat herd called nutty for goats",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "keeps goats",
+    "s": 88,
+    "h": "Spot on."
+   },
+   {
+    "g": "goat farmer",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "nuts about goats",
+    "s": 82,
+    "h": "Hot: how many do they have?"
+   },
+   {
+    "g": "goat lover",
+    "s": 70,
+    "h": "Hot: they do more than love them."
+   },
+   {
+    "g": "goat cheese maker",
+    "s": 45,
+    "h": "Right animal, wrong product."
+   },
+   {
+    "g": "loves animals",
+    "s": 40,
+    "h": "Right area; which animal?"
+   },
+   {
+    "g": "pistachio farmer",
+    "s": 10,
+    "h": "Wrong kind of nut."
+   },
+   {
+    "g": "tom brady fan",
+    "s": 5,
+    "h": "Wrong kind of goat."
+   },
+   {
+    "g": "greatest of all time nut",
+    "s": 8,
+    "h": "That's how the DMV read it."
+   },
+   {
+    "g": "coconut",
+    "s": 2,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-cat-75",
@@ -623,7 +1599,64 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 3,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "loves cats and paris",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "cat lover, paris is 75",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "cat lover from paris",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "cat lover in france",
+    "s": 75,
+    "h": "Hot: which part of France?"
+   },
+   {
+    "g": "cat lover",
+    "s": 50,
+    "h": "Half right; what's 75?"
+   },
+   {
+    "g": "loves paris",
+    "s": 50,
+    "h": "Half right; what about the first word?"
+   },
+   {
+    "g": "cat born in 1975",
+    "s": 25,
+    "h": "Right pet; 75 isn't a year."
+   },
+   {
+    "g": "a cat that's 75 in cat years",
+    "s": 20,
+    "h": "Right pet; rethink the number."
+   },
+   {
+    "g": "75 cats",
+    "s": 15,
+    "h": "Right pet; the number means a place."
+   },
+   {
+    "g": "1975 caterpillar tractor",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "category 5 storm chaser",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-pewxpew",
@@ -656,7 +1689,59 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "star wars blaster sound",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "laser gun noise",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "star wars fan",
+    "s": 70,
+    "h": "Hot: which part of it?"
+   },
+   {
+    "g": "pew pew",
+    "s": 70,
+    "h": "Right reading; what makes it?"
+   },
+   {
+    "g": "gunshot sound",
+    "s": 50,
+    "h": "Warm: what kind of gun?"
+   },
+   {
+    "g": "laser tag",
+    "s": 50,
+    "h": "Warm: right noise, wrong place."
+   },
+   {
+    "g": "video game shooter",
+    "s": 40,
+    "h": "Warm: think films, not games."
+   },
+   {
+    "g": "church pews",
+    "s": 5,
+    "h": "Read it aloud."
+   },
+   {
+    "g": "bad smell, pew",
+    "s": 8,
+    "h": "Cold: it's a noise."
+   },
+   {
+    "g": "pewter collector",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-tr8r-h8r",
@@ -689,7 +1774,64 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 3,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "traitor hater, stormtrooper from star wars",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "tr-8r from the force awakens",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "hates finn from star wars",
+    "s": 80,
+    "h": "Hot: who says it?"
+   },
+   {
+    "g": "star wars quote",
+    "s": 75,
+    "h": "Hot: who says it?"
+   },
+   {
+    "g": "traitor hater",
+    "s": 65,
+    "h": "Right reading; where's it from?"
+   },
+   {
+    "g": "star wars fan",
+    "s": 60,
+    "h": "Warm: which moment?"
+   },
+   {
+    "g": "hates traitors",
+    "s": 50,
+    "h": "Right words; who said them?"
+   },
+   {
+    "g": "transformers fan",
+    "s": 10,
+    "h": "Wrong franchise."
+   },
+   {
+    "g": "trader hater",
+    "s": 10,
+    "h": "Close sound, wrong word."
+   },
+   {
+    "g": "hates tractors",
+    "s": 5,
+    "h": "Read each 8 differently."
+   },
+   {
+    "g": "hates caravans",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-sit-lord",
@@ -722,7 +1864,59 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "sith lord",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "star wars villain",
+    "s": 88,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "darth vader",
+    "s": 80,
+    "h": "Hot: think rank, not name."
+   },
+   {
+    "g": "star wars fan",
+    "s": 60,
+    "h": "Warm: which kind of character?"
+   },
+   {
+    "g": "dark lord, voldemort",
+    "s": 40,
+    "h": "Right darkness, wrong films."
+   },
+   {
+    "g": "lord of the rings",
+    "s": 15,
+    "h": "Wrong saga."
+   },
+   {
+    "g": "tells the lord to sit",
+    "s": 8,
+    "h": "That's what worried the DMV."
+   },
+   {
+    "g": "dog trainer, sit command",
+    "s": 5,
+    "h": "Not the dog trainer."
+   },
+   {
+    "g": "lazy landlord",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "church usher",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-c8h18-x",
@@ -755,7 +1949,64 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "octane",
+    "s": 92,
+    "h": "Spot on."
+   },
+   {
+    "g": "chemical formula for octane",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "high octane racing fuel",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "gasoline formula",
+    "s": 80,
+    "h": "Hot: which molecule?"
+   },
+   {
+    "g": "hydrocarbon",
+    "s": 65,
+    "h": "Hot: which one?"
+   },
+   {
+    "g": "a chemical formula",
+    "s": 55,
+    "h": "Warm: which molecule?"
+   },
+   {
+    "g": "methane",
+    "s": 40,
+    "h": "Right family, wrong one."
+   },
+   {
+    "g": "chemistry teacher",
+    "s": 35,
+    "h": "Warm: what does it spell?"
+   },
+   {
+    "g": "gang number 18",
+    "s": 5,
+    "h": "That's what worried the DMV."
+   },
+   {
+    "g": "random letters and numbers",
+    "s": 5,
+    "h": "Look for a pattern."
+   },
+   {
+    "g": "corvette model code",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-notgasi",
@@ -788,7 +2039,69 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 1,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "electric car",
+    "s": 92,
+    "h": "Spot on."
+   },
+   {
+    "g": "not gas, it's an ev",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "doesn't need gas",
+    "s": 88,
+    "h": "Spot on."
+   },
+   {
+    "g": "tesla",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "eco-friendly driver",
+    "s": 65,
+    "h": "Warm: what's under the hood?"
+   },
+   {
+    "g": "hybrid car",
+    "s": 55,
+    "h": "Close, but goes further."
+   },
+   {
+    "g": "anti oil activist",
+    "s": 35,
+    "h": "Warm: look at the vehicle itself."
+   },
+   {
+    "g": "bicycle",
+    "s": 30,
+    "h": "Right idea, more wheels."
+   },
+   {
+    "g": "not gassy",
+    "s": 10,
+    "h": "That's how the DMV read it."
+   },
+   {
+    "g": "gas station owner's joke",
+    "s": 10,
+    "h": "Cold."
+   },
+   {
+    "g": "after a bean dinner",
+    "s": 5,
+    "h": "Wrong kind of gas."
+   },
+   {
+    "g": "a japanese name",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-copnope",
@@ -821,7 +2134,59 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "not a cop, it's an old police car",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "retired cop car, don't pull over",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "i'm not a cop",
+    "s": 75,
+    "h": "Hot: why would people think so?"
+   },
+   {
+    "g": "old police car",
+    "s": 75,
+    "h": "Hot: so what's the message?"
+   },
+   {
+    "g": "crown vic",
+    "s": 55,
+    "h": "Warm: what's the message?"
+   },
+   {
+    "g": "ex-cop",
+    "s": 35,
+    "h": "Right world; whose past is it?"
+   },
+   {
+    "g": "anti police",
+    "s": 15,
+    "h": "Not a protest."
+   },
+   {
+    "g": "cop saying nope",
+    "s": 15,
+    "h": "Close; think about the vehicle."
+   },
+   {
+    "g": "copenhagen fan",
+    "s": 3,
+    "h": "Cold."
+   },
+   {
+    "g": "copy shop owner",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-kicroxx",
@@ -854,7 +2219,64 @@
   "checked": "2026-10-06",
   "fun": 3,
   "difficulty": 3,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "marathon runner who kicks rocks",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "trail runner",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "runner",
+    "s": 80,
+    "h": "Hot: what distance?"
+   },
+   {
+    "g": "jogger",
+    "s": 75,
+    "h": "Hot: go longer."
+   },
+   {
+    "g": "hiker",
+    "s": 45,
+    "h": "Warm: faster than that."
+   },
+   {
+    "g": "kick rocks",
+    "s": 30,
+    "h": "Right words; who does it?"
+   },
+   {
+    "g": "soccer player",
+    "s": 25,
+    "h": "Right feet, wrong sport."
+   },
+   {
+    "g": "kickboxer",
+    "s": 15,
+    "h": "Wrong kind of kick."
+   },
+   {
+    "g": "kick rocks, go away",
+    "s": 10,
+    "h": "That's how the DMV read it."
+   },
+   {
+    "g": "geologist",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "rock band fan",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-ur-salty",
@@ -887,7 +2309,59 @@
   "checked": "2026-10-06",
   "fun": 3,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "opposite of you're sweet",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "you're salty, not sweet",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "you are salty",
+    "s": 50,
+    "h": "Right reading; what's the joke?"
+   },
+   {
+    "g": "you're sweet",
+    "s": 50,
+    "h": "Close: the plate says otherwise."
+   },
+   {
+    "g": "teasing a friend",
+    "s": 45,
+    "h": "Warm: what's the tease?"
+   },
+   {
+    "g": "you're salty, you're mad",
+    "s": 40,
+    "h": "Right words; owner meant something gentler."
+   },
+   {
+    "g": "insulting other drivers",
+    "s": 20,
+    "h": "Too harsh; it's teasing."
+   },
+   {
+    "g": "margarita fan",
+    "s": 8,
+    "h": "Cold."
+   },
+   {
+    "g": "retired sailor",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "pretzel company",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-blk-moly",
@@ -920,7 +2394,59 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 3,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "black molly fish",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "black molly",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "favorite aquarium fish",
+    "s": 70,
+    "h": "Hot: which one?"
+   },
+   {
+    "g": "tropical fish",
+    "s": 65,
+    "h": "Hot: which one?"
+   },
+   {
+    "g": "goldfish",
+    "s": 45,
+    "h": "Right kind of pet; wrong one."
+   },
+   {
+    "g": "black lab named molly",
+    "s": 15,
+    "h": "Right name, wrong animal."
+   },
+   {
+    "g": "drugs",
+    "s": 10,
+    "h": "That's the slang the DMV knew."
+   },
+   {
+    "g": "moly grease",
+    "s": 10,
+    "h": "Cold."
+   },
+   {
+    "g": "holy moly",
+    "s": 8,
+    "h": "Cold: what's BLK short for?"
+   },
+   {
+    "g": "goth band",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-e999058",
@@ -953,7 +2479,64 @@
   "checked": "2026-10-06",
   "fun": 3,
   "difficulty": 3,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "engine 51's plate from emergency!",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "fire truck plate from the show emergency",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "tv show fire engine",
+    "s": 85,
+    "h": "Spot on; which show?"
+   },
+   {
+    "g": "fire truck",
+    "s": 55,
+    "h": "Warm: whose fire truck?"
+   },
+   {
+    "g": "plate from a tv car",
+    "s": 55,
+    "h": "Warm: which vehicle?"
+   },
+   {
+    "g": "firefighter",
+    "s": 45,
+    "h": "Warm: a famous one, though."
+   },
+   {
+    "g": "knight rider kitt plate",
+    "s": 40,
+    "h": "Right idea, wrong show."
+   },
+   {
+    "g": "emergency hotline number",
+    "s": 15,
+    "h": "Not a phone number."
+   },
+   {
+    "g": "random plate",
+    "s": 5,
+    "h": "It's a copy of something."
+   },
+   {
+    "g": "mercedes e class",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "military id number",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-62n-4o8",
@@ -986,7 +2569,64 @@
   "checked": "2026-10-06",
   "fun": 3,
   "difficulty": 3,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "maxwell smart's citroen plate",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "get smart car plate",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "get smart fan",
+    "s": 80,
+    "h": "Hot: what exactly is it?"
+   },
+   {
+    "g": "tv spy car plate",
+    "s": 70,
+    "h": "Hot: which spy?"
+   },
+   {
+    "g": "agent 86",
+    "s": 70,
+    "h": "Hot: what of his is it?"
+   },
+   {
+    "g": "plate from a tv show",
+    "s": 50,
+    "h": "Warm: which show?"
+   },
+   {
+    "g": "james bond car plate",
+    "s": 45,
+    "h": "Right job, wrong agent."
+   },
+   {
+    "g": "san jose area code",
+    "s": 10,
+    "h": "That's how the DMV read it."
+   },
+   {
+    "g": "house number and zip code",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "1962 nissan",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "lottery numbers",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-br8knex",
@@ -1019,7 +2659,59 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "ex break dancer",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "former breakdancer",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "break dancer",
+    "s": 75,
+    "h": "Hot: check the tense."
+   },
+   {
+    "g": "ex dancer",
+    "s": 70,
+    "h": "Hot: what style?"
+   },
+   {
+    "g": "dancer",
+    "s": 60,
+    "h": "Warm: what style, and when?"
+   },
+   {
+    "g": "breaking up with an ex",
+    "s": 10,
+    "h": "Close words, wrong meaning."
+   },
+   {
+    "g": "chiropractor",
+    "s": 10,
+    "h": "Wrong reading of NEX."
+   },
+   {
+    "g": "wrestler",
+    "s": 8,
+    "h": "Cold."
+   },
+   {
+    "g": "brake repair shop",
+    "s": 8,
+    "h": "Cold."
+   },
+   {
+    "g": "break necks",
+    "s": 5,
+    "h": "That's how the DMV read it."
+   }
+  ]
  },
  {
   "id": "plate-lmboetr",
@@ -1052,7 +2744,59 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 3,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "lake mathews boater",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "lake tahoe boater",
+    "s": 85,
+    "h": "Right hobby, wrong lake."
+   },
+   {
+    "g": "takes a boat out on a lake",
+    "s": 80,
+    "h": "Hot: which one?"
+   },
+   {
+    "g": "boater",
+    "s": 70,
+    "h": "Hot: where?"
+   },
+   {
+    "g": "jet skier",
+    "s": 55,
+    "h": "Warm: close hobby."
+   },
+   {
+    "g": "fisherman",
+    "s": 45,
+    "h": "Warm: same spot, different hobby."
+   },
+   {
+    "g": "lambo eater",
+    "s": 5,
+    "h": "That's how the DMV read it."
+   },
+   {
+    "g": "beats lamborghinis",
+    "s": 8,
+    "h": "Cold."
+   },
+   {
+    "g": "chef who cooks lamb",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "limbo dancer",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-myroo8u",
@@ -1085,7 +2829,64 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 3,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "my subaru ate you",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "my subaru is hungry",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "my roo ate you",
+    "s": 75,
+    "h": "Hot: what's a Roo?"
+   },
+   {
+    "g": "hungry car",
+    "s": 70,
+    "h": "Hot: which car?"
+   },
+   {
+    "g": "subaru owner",
+    "s": 65,
+    "h": "Right car; what's it doing to you?"
+   },
+   {
+    "g": "my car beats yours",
+    "s": 40,
+    "h": "Warm: right idea, wrong verb."
+   },
+   {
+    "g": "my kangaroo ate you",
+    "s": 30,
+    "h": "Right joke shape, wrong roo."
+   },
+   {
+    "g": "kangaroo",
+    "s": 15,
+    "h": "Wrong kind of roo."
+   },
+   {
+    "g": "my ru ate you, rupaul",
+    "s": 10,
+    "h": "Wrong Ru."
+   },
+   {
+    "g": "australian pub",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "rubik's cube fan",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-puritto",
@@ -1118,7 +2919,64 @@
   "checked": "2026-10-06",
   "fun": 5,
   "difficulty": 3,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "purr burrito, cat wrapped in a blanket",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "cat burrito",
+    "s": 92,
+    "h": "Spot on."
+   },
+   {
+    "g": "purring burrito",
+    "s": 80,
+    "h": "Hot: who's inside?"
+   },
+   {
+    "g": "taco cat",
+    "s": 50,
+    "h": "Right pet, wrong dish."
+   },
+   {
+    "g": "cat lover",
+    "s": 45,
+    "h": "Warm: what's the cat doing?"
+   },
+   {
+    "g": "swaddled baby",
+    "s": 45,
+    "h": "Right idea, wrong creature."
+   },
+   {
+    "g": "burrito",
+    "s": 30,
+    "h": "Half there; what's the other half?"
+   },
+   {
+    "g": "pure burrito",
+    "s": 25,
+    "h": "Close; what's the first part?"
+   },
+   {
+    "g": "puerto rico food truck",
+    "s": 8,
+    "h": "Cold."
+   },
+   {
+    "g": "water purifier",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "purebred dog breeder",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-pin-movr",
@@ -1151,7 +3009,59 @@
   "checked": "2026-10-06",
   "fun": 3,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "pinball machine mover",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "hauls pinball machines",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "arcade game mover",
+    "s": 80,
+    "h": "Hot: which game?"
+   },
+   {
+    "g": "pinball fan",
+    "s": 65,
+    "h": "Warm: what's the vehicle for?"
+   },
+   {
+    "g": "piano mover",
+    "s": 40,
+    "h": "Right job, wrong cargo."
+   },
+   {
+    "g": "moving company",
+    "s": 35,
+    "h": "Warm: moving what?"
+   },
+   {
+    "g": "bowling pin mover",
+    "s": 20,
+    "h": "Right word, wrong game."
+   },
+   {
+    "g": "sewing pins",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "needles, drugs",
+    "s": 5,
+    "h": "That's what the DMV wondered."
+   },
+   {
+    "g": "pin code",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-poo-mny",
@@ -1184,7 +3094,59 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "plumber makes money from poo",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "plumbing contractor",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "plumber",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "septic tank service",
+    "s": 70,
+    "h": "Hot: close trade."
+   },
+   {
+    "g": "sewer worker",
+    "s": 65,
+    "h": "Warm: close trade."
+   },
+   {
+    "g": "pet waste pickup",
+    "s": 35,
+    "h": "Right stuff, wrong job."
+   },
+   {
+    "g": "fertilizer seller",
+    "s": 25,
+    "h": "Right stuff, wrong job."
+   },
+   {
+    "g": "poop money",
+    "s": 20,
+    "h": "Too literal: whose money?"
+   },
+   {
+    "g": "winnie the pooh fan",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "bad investment",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-trktwrk",
@@ -1217,7 +3179,59 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "truck to work",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "work truck",
+    "s": 92,
+    "h": "Spot on."
+   },
+   {
+    "g": "truck at work",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "commutes in a truck",
+    "s": 80,
+    "h": "Hot."
+   },
+   {
+    "g": "truck that works hard",
+    "s": 65,
+    "h": "Warm: whose work is it?"
+   },
+   {
+    "g": "trucker",
+    "s": 45,
+    "h": "Warm: not a trucker by trade."
+   },
+   {
+    "g": "trucking network",
+    "s": 15,
+    "h": "Read it as three words."
+   },
+   {
+    "g": "tractor workshop",
+    "s": 8,
+    "h": "Cold."
+   },
+   {
+    "g": "truck twerk",
+    "s": 5,
+    "h": "That's how the DMV read it."
+   },
+   {
+    "g": "dance instructor",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-ctcrzy",
@@ -1250,7 +3264,59 @@
   "checked": "2026-10-06",
   "fun": 3,
   "difficulty": 1,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "cat crazy",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "crazy cat lady",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "loves cats",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "cat",
+    "s": 50,
+    "h": "Half; what about them?"
+   },
+   {
+    "g": "pet lover",
+    "s": 45,
+    "h": "Right feeling; which pet?"
+   },
+   {
+    "g": "dog lover",
+    "s": 35,
+    "h": "Right feeling, wrong pet."
+   },
+   {
+    "g": "crazy",
+    "s": 20,
+    "h": "Half; what's CT?"
+   },
+   {
+    "g": "crazy city driver",
+    "s": 15,
+    "h": "Right crazy, wrong C-T."
+   },
+   {
+    "g": "connecticut fan",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "catering company",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-exloser",
@@ -1282,7 +3348,64 @@
   "checked": "2026-10-06",
   "fun": 3,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "no longer a loser",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "former loser, now a winner",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "ex loser",
+    "s": 85,
+    "h": "Spot on."
+   },
+   {
+    "g": "former underdog",
+    "s": 70,
+    "h": "Hot: harsher word."
+   },
+   {
+    "g": "comeback story",
+    "s": 60,
+    "h": "Warm: what kind?"
+   },
+   {
+    "g": "lottery winner",
+    "s": 40,
+    "h": "Warm: it's about the owner, broadly."
+   },
+   {
+    "g": "my ex is a loser",
+    "s": 30,
+    "h": "Right words, wrong ex."
+   },
+   {
+    "g": "loser",
+    "s": 30,
+    "h": "Half right; what's EX?"
+   },
+   {
+    "g": "lost a lot of weight",
+    "s": 20,
+    "h": "Wrong kind of losing."
+   },
+   {
+    "g": "former laser technician",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "explorer",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-evil-vet",
@@ -1315,7 +3438,54 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "evil corvette",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "mean-looking vette",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "mean sports car",
+    "s": 70,
+    "h": "Hot: which model?"
+   },
+   {
+    "g": "evil car",
+    "s": 65,
+    "h": "Warm: which car?"
+   },
+   {
+    "g": "corvette",
+    "s": 65,
+    "h": "Warm: what kind of look?"
+   },
+   {
+    "g": "chevy sports car",
+    "s": 55,
+    "h": "Warm: which model, and what look?"
+   },
+   {
+    "g": "evil veterinarian",
+    "s": 8,
+    "h": "That's what the DMV wondered."
+   },
+   {
+    "g": "war veteran's motorbike",
+    "s": 10,
+    "h": "Cold."
+   },
+   {
+    "g": "horror movie fan",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-m6-rockt",
@@ -1348,7 +3518,64 @@
   "checked": "2026-10-06",
   "fun": 3,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "bmw m6 and rocket engineer",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "drives an m6, builds rocket engines",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "fast bmw, works on rockets",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "rocket engineer",
+    "s": 60,
+    "h": "Half: what's M6?"
+   },
+   {
+    "g": "spacex employee",
+    "s": 55,
+    "h": "Warm: half the plate."
+   },
+   {
+    "g": "bmw m6 owner",
+    "s": 50,
+    "h": "Half: what about the rest?"
+   },
+   {
+    "g": "my m6 is fast as a rocket",
+    "s": 40,
+    "h": "Right car; the rocket is literal."
+   },
+   {
+    "g": "motorway speed demon",
+    "s": 15,
+    "h": "M6 isn't a road."
+   },
+   {
+    "g": "fireworks seller",
+    "s": 10,
+    "h": "Cold."
+   },
+   {
+    "g": "weapons",
+    "s": 5,
+    "h": "That's what worried the DMV."
+   },
+   {
+    "g": "video gamer",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-14-mpg",
@@ -1381,7 +3608,64 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 1,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "14 miles per gallon",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "joke about bad mileage",
+    "s": 88,
+    "h": "Spot on."
+   },
+   {
+    "g": "muscle car that drinks gas",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "gas guzzler",
+    "s": 80,
+    "h": "Hot."
+   },
+   {
+    "g": "fuel economy",
+    "s": 75,
+    "h": "Hot: why brag about it?"
+   },
+   {
+    "g": "mpg",
+    "s": 70,
+    "h": "Hot: why brag about 14?"
+   },
+   {
+    "g": "hybrid car",
+    "s": 15,
+    "h": "Wrong end of the scale."
+   },
+   {
+    "g": "2014 mustang",
+    "s": 10,
+    "h": "Cold."
+   },
+   {
+    "g": "gang number 14",
+    "s": 5,
+    "h": "That's what worried the DMV."
+   },
+   {
+    "g": "14th marathon",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "radio station",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-og-frog",
@@ -1414,7 +3698,59 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 1,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "original frog lover",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "loves frogs",
+    "s": 88,
+    "h": "Spot on."
+   },
+   {
+    "g": "frog collector",
+    "s": 75,
+    "h": "Hot."
+   },
+   {
+    "g": "has a pet frog",
+    "s": 60,
+    "h": "Warm."
+   },
+   {
+    "g": "kermit fan",
+    "s": 45,
+    "h": "Right animal; think broader."
+   },
+   {
+    "g": "frogman, navy seal",
+    "s": 15,
+    "h": "Wrong kind of frog."
+   },
+   {
+    "g": "gangster frog",
+    "s": 8,
+    "h": "That's how the DMV read it."
+   },
+   {
+    "g": "original gangster",
+    "s": 5,
+    "h": "That's how the DMV read it."
+   },
+   {
+    "g": "french chef",
+    "s": 5,
+    "h": "Wrong kind of frog."
+   },
+   {
+    "g": "scuba diver",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-8o5-og",
@@ -1447,7 +3783,64 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 3,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "orange grower from the 805",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "orange grower",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "citrus farmer",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "fruit farmer",
+    "s": 70,
+    "h": "Hot: which fruit?"
+   },
+   {
+    "g": "olive grower",
+    "s": 60,
+    "h": "Hot: right job, wrong crop."
+   },
+   {
+    "g": "farmer from santa barbara",
+    "s": 55,
+    "h": "Warm: which crop?"
+   },
+   {
+    "g": "805 area code",
+    "s": 30,
+    "h": "Half: what's OG?"
+   },
+   {
+    "g": "805 beer fan",
+    "s": 10,
+    "h": "Cold: wrong thing from there."
+   },
+   {
+    "g": "805 original gangster",
+    "s": 8,
+    "h": "That's how the DMV read it."
+   },
+   {
+    "g": "original gamer",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "warriors fan",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-ca-conc",
@@ -1480,7 +3873,64 @@
   "checked": "2026-10-06",
   "fun": 3,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "california concrete",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "concrete company",
+    "s": 92,
+    "h": "Spot on."
+   },
+   {
+    "g": "cement contractor",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "sidewalk builder",
+    "s": 75,
+    "h": "Hot: what's the material?"
+   },
+   {
+    "g": "paving company",
+    "s": 70,
+    "h": "Hot: what material?"
+   },
+   {
+    "g": "construction business",
+    "s": 60,
+    "h": "Warm: which material?"
+   },
+   {
+    "g": "concord, california",
+    "s": 15,
+    "h": "Cold: read CONC differently."
+   },
+   {
+    "g": "conceal carry",
+    "s": 8,
+    "h": "That's what the DMV considered."
+   },
+   {
+    "g": "california concert promoter",
+    "s": 8,
+    "h": "Cold."
+   },
+   {
+    "g": "conch shell collector",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "concussion doctor",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-jiayouu",
@@ -1513,7 +3963,69 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 3,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "jia you, keep going",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "go for it in chinese",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "add oil",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "chinese cheer",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "jia you",
+    "s": 70,
+    "h": "Right; what does it mean?"
+   },
+   {
+    "g": "good luck",
+    "s": 70,
+    "h": "Hot: close in spirit."
+   },
+   {
+    "g": "chinese phrase",
+    "s": 50,
+    "h": "Warm: what does it mean?"
+   },
+   {
+    "g": "oil change shop",
+    "s": 25,
+    "h": "Right literal word, wrong use."
+   },
+   {
+    "g": "chinese name",
+    "s": 25,
+    "h": "Right language, not a name."
+   },
+   {
+    "g": "chinese restaurant",
+    "s": 10,
+    "h": "Cold."
+   },
+   {
+    "g": "jiu jitsu fan",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "dog named jia",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-voetsek",
@@ -1546,7 +4058,64 @@
   "checked": "2026-10-06",
   "fun": 3,
   "difficulty": 3,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "get lost in afrikaans",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "go away",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "buzz off",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "go away in dutch",
+    "s": 80,
+    "h": "Hot: close language."
+   },
+   {
+    "g": "afrikaans swear word",
+    "s": 70,
+    "h": "Hot: what does it tell you?"
+   },
+   {
+    "g": "south african slang",
+    "s": 50,
+    "h": "Warm: what does it say?"
+   },
+   {
+    "g": "hello in afrikaans",
+    "s": 30,
+    "h": "Right language, wrong mood."
+   },
+   {
+    "g": "podiatrist",
+    "s": 10,
+    "h": "Half a translation, wrong meaning."
+   },
+   {
+    "g": "dutch football club",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "sock brand",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "a russian name",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-mishuga",
@@ -1578,7 +4147,64 @@
   "checked": "2026-10-06",
   "fun": 3,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "crazy in yiddish",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "meshuga, a little crazy",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "nuts",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "silly",
+    "s": 80,
+    "h": "Hot: a bit more than that."
+   },
+   {
+    "g": "mishigas, nonsense",
+    "s": 75,
+    "h": "Hot: related word."
+   },
+   {
+    "g": "yiddish word",
+    "s": 50,
+    "h": "Warm: what does it mean?"
+   },
+   {
+    "g": "hebrew for blessing",
+    "s": 15,
+    "h": "Close language, wrong meaning."
+   },
+   {
+    "g": "my sugar, sweetheart",
+    "s": 10,
+    "h": "Cold: sounds like it, isn't."
+   },
+   {
+    "g": "sugar free bakery",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "japanese name",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "mission statement",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-idrivu",
@@ -1611,7 +4237,59 @@
   "checked": "2026-10-06",
   "fun": 3,
   "difficulty": 1,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "uber driver",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "rideshare driver",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "taxi driver",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "celebrity chauffeur",
+    "s": 60,
+    "h": "Warm: less exclusive passengers."
+   },
+   {
+    "g": "i drive you",
+    "s": 50,
+    "h": "Right reading; for what?"
+   },
+   {
+    "g": "designated driver",
+    "s": 50,
+    "h": "Warm: it's paid work."
+   },
+   {
+    "g": "driving instructor",
+    "s": 30,
+    "h": "Close: wrong kind of passenger."
+   },
+   {
+    "g": "drives you crazy",
+    "s": 10,
+    "h": "Cold."
+   },
+   {
+    "g": "golf pro",
+    "s": 8,
+    "h": "Wrong kind of drive."
+   },
+   {
+    "g": "road rage",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-cuswim",
@@ -1644,7 +4322,64 @@
   "checked": "2026-10-06",
   "fun": 3,
   "difficulty": 3,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "swam for the university of colorado",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "cu boulder swimmer",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "college swimmer",
+    "s": 75,
+    "h": "Hot: which school?"
+   },
+   {
+    "g": "columbia swim team",
+    "s": 75,
+    "h": "Right sport; wrong CU."
+   },
+   {
+    "g": "diver",
+    "s": 55,
+    "h": "Warm: where did they compete?"
+   },
+   {
+    "g": "loves swimming",
+    "s": 45,
+    "h": "Warm: more serious than that."
+   },
+   {
+    "g": "university of colorado fan",
+    "s": 40,
+    "h": "Half; what sport?"
+   },
+   {
+    "g": "see you swim",
+    "s": 10,
+    "h": "Read CU as a school."
+   },
+   {
+    "g": "cruise ship lifeguard",
+    "s": 10,
+    "h": "Cold."
+   },
+   {
+    "g": "swim coach saying goodbye",
+    "s": 8,
+    "h": "Cold."
+   },
+   {
+    "g": "copper swimming pool",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-woopigg",
@@ -1677,7 +4412,64 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 3,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "woo pig sooie, arkansas fan",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "razorbacks fan",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "arkansas fan",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "southern sports cheer",
+    "s": 65,
+    "h": "Warm: which team?"
+   },
+   {
+    "g": "college football fan",
+    "s": 55,
+    "h": "Warm: which team?"
+   },
+   {
+    "g": "hog calling",
+    "s": 35,
+    "h": "Right call, but why?"
+   },
+   {
+    "g": "woo pig",
+    "s": 20,
+    "h": "Literal; who shouts it?"
+   },
+   {
+    "g": "loves pigs",
+    "s": 10,
+    "h": "Cold."
+   },
+   {
+    "g": "pig farmer",
+    "s": 8,
+    "h": "Cold."
+   },
+   {
+    "g": "cop hater",
+    "s": 5,
+    "h": "That's what worried the DMV."
+   },
+   {
+    "g": "bbq lover",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-pigsfly",
@@ -1710,7 +4502,59 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 3,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "their house is called when pigs fly",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "name of the owner's house",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "name of the farm",
+    "s": 65,
+    "h": "Hot: close place."
+   },
+   {
+    "g": "name of their boat",
+    "s": 55,
+    "h": "Right idea, wrong property."
+   },
+   {
+    "g": "when pigs fly",
+    "s": 45,
+    "h": "Right phrase; what's it for?"
+   },
+   {
+    "g": "finally bought a house",
+    "s": 40,
+    "h": "Warm: right place; why the phrase?"
+   },
+   {
+    "g": "never going to happen",
+    "s": 30,
+    "h": "Right meaning; why is it here?"
+   },
+   {
+    "g": "airline joke",
+    "s": 8,
+    "h": "Cold."
+   },
+   {
+    "g": "pilot who raises pigs",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "cop hater",
+    "s": 5,
+    "h": "That's what worried the DMV."
+   }
+  ]
  },
  {
   "id": "plate-h84by4z",
@@ -1743,7 +4587,54 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 3,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "i hate 4x4s, on a 4x4 as a joke",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "hates 4x4s but drives one",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "i hate four by fours",
+    "s": 65,
+    "h": "Hot: what's it stuck on?"
+   },
+   {
+    "g": "hates suvs",
+    "s": 55,
+    "h": "Warm: right target; where's the joke?"
+   },
+   {
+    "g": "anti-truck environmentalist",
+    "s": 40,
+    "h": "Close, but who's driving?"
+   },
+   {
+    "g": "loves off-roading",
+    "s": 35,
+    "h": "Right world, wrong feeling."
+   },
+   {
+    "g": "hates bicycles",
+    "s": 10,
+    "h": "Cold."
+   },
+   {
+    "g": "birthdate and initials",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "hot air balloon license",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-braaap7",
@@ -1776,7 +4667,64 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "dirt bike sound",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "braap motorcycle noise and lucky 7",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "motocross racer number 7",
+    "s": 70,
+    "h": "Hot: what's the BRAAAP?"
+   },
+   {
+    "g": "sound of an engine",
+    "s": 70,
+    "h": "Hot: which vehicle?"
+   },
+   {
+    "g": "loud exhaust",
+    "s": 65,
+    "h": "Warm: on what?"
+   },
+   {
+    "g": "motorcycle",
+    "s": 60,
+    "h": "Warm: what about it?"
+   },
+   {
+    "g": "gunshot sound",
+    "s": 15,
+    "h": "That's how the DMV read it."
+   },
+   {
+    "g": "burp",
+    "s": 10,
+    "h": "Right kind of word, wrong source."
+   },
+   {
+    "g": "rapper name",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "baby's first word",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "lingerie shop",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-gtta-poo",
@@ -1809,7 +4757,59 @@
   "checked": "2026-10-06",
   "fun": 5,
   "difficulty": 3,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "gotta play outside often, off-roader",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "gotta play outside",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "off-roading",
+    "s": 70,
+    "h": "Hot: what's POO?"
+   },
+   {
+    "g": "mudding",
+    "s": 70,
+    "h": "Hot: what's POO?"
+   },
+   {
+    "g": "outdoorsy person",
+    "s": 60,
+    "h": "Warm: what's POO stand for?"
+   },
+   {
+    "g": "camping lover",
+    "s": 45,
+    "h": "Warm: rougher hobby."
+   },
+   {
+    "g": "dog walker's reminder",
+    "s": 10,
+    "h": "Cold."
+   },
+   {
+    "g": "gotta poo",
+    "s": 5,
+    "h": "That's how the DMV read it."
+   },
+   {
+    "g": "potty training",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "pool cleaner",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-13heartgram",
@@ -1842,7 +4842,59 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "13 grandkids love grandma",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "grandma loves her 13 grandkids",
+    "s": 92,
+    "h": "Spot on."
+   },
+   {
+    "g": "grandma of 13",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "loves grandma",
+    "s": 50,
+    "h": "Half; what's 13?"
+   },
+   {
+    "g": "13 kids",
+    "s": 45,
+    "h": "Warm: one generation off."
+   },
+   {
+    "g": "loves her grandma",
+    "s": 45,
+    "h": "Half; count again."
+   },
+   {
+    "g": "13 gram gold chain",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "instagram",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "baker's dozen",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "gang 13",
+    "s": 5,
+    "h": "That's what worried the DMV."
+   }
+  ]
  },
  {
   "id": "plate-byte-me2",
@@ -1875,7 +4927,64 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "matches the spouse's byte me plate",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "byte me too, his and hers",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "matching plates with my wife",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "second car with this plate",
+    "s": 70,
+    "h": "Hot: whose was first?"
+   },
+   {
+    "g": "byte me, computer nerd",
+    "s": 45,
+    "h": "Half: why the 2?"
+   },
+   {
+    "g": "computer nerd",
+    "s": 40,
+    "h": "Warm: what about the 2?"
+   },
+   {
+    "g": "bite me too",
+    "s": 10,
+    "h": "That's how the DMV read it."
+   },
+   {
+    "g": "bite me twice",
+    "s": 10,
+    "h": "Cold."
+   },
+   {
+    "g": "vampire fan",
+    "s": 8,
+    "h": "Cold."
+   },
+   {
+    "g": "dentist",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "mosquito control",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-mgadeth",
@@ -1908,7 +5017,59 @@
   "checked": "2026-10-06",
   "fun": 3,
   "difficulty": 1,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "megadeth",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "megadeth fan",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "thrash metal fan",
+    "s": 80,
+    "h": "Hot: which band?"
+   },
+   {
+    "g": "heavy metal band",
+    "s": 75,
+    "h": "Hot: which one?"
+   },
+   {
+    "g": "loves death metal",
+    "s": 60,
+    "h": "Warm: which band?"
+   },
+   {
+    "g": "metallica",
+    "s": 50,
+    "h": "Right genre, wrong band."
+   },
+   {
+    "g": "mega death",
+    "s": 25,
+    "h": "Close; read it as a name."
+   },
+   {
+    "g": "mega debt",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "life insurance salesman",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "video game fan",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-aaarsnl",
@@ -1941,7 +5102,69 @@
   "checked": "2026-10-06",
   "fun": 3,
   "difficulty": 1,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "arsenal",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "arsenal fan",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "gunners fan",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "soccer fan",
+    "s": 55,
+    "h": "Warm: which team?"
+   },
+   {
+    "g": "english premier league",
+    "s": 65,
+    "h": "Warm: which team?"
+   },
+   {
+    "g": "chelsea fan",
+    "s": 45,
+    "h": "Right league, wrong team."
+   },
+   {
+    "g": "arsenal of weapons",
+    "s": 15,
+    "h": "Right word, wrong meaning."
+   },
+   {
+    "g": "gun collector",
+    "s": 10,
+    "h": "Cold."
+   },
+   {
+    "g": "weapons dealer",
+    "s": 8,
+    "h": "Cold."
+   },
+   {
+    "g": "aaa auto club",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "arson investigator",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "pirate saying arrr",
+    "s": 5,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-olaf-13",
@@ -1974,7 +5197,64 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 1,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "olaf from frozen",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "frozen snowman",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "frozen fan",
+    "s": 80,
+    "h": "Hot: which character?"
+   },
+   {
+    "g": "olaf",
+    "s": 75,
+    "h": "Hot: which Olaf?"
+   },
+   {
+    "g": "snowman",
+    "s": 60,
+    "h": "Warm: which one?"
+   },
+   {
+    "g": "disney movie",
+    "s": 55,
+    "h": "Warm: which one?"
+   },
+   {
+    "g": "born in 2013",
+    "s": 20,
+    "h": "Right year, not a birthday."
+   },
+   {
+    "g": "viking reenactor",
+    "s": 8,
+    "h": "Cold."
+   },
+   {
+    "g": "norwegian man's 13th car",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "footballer number 13",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "gang 13",
+    "s": 5,
+    "h": "That's what worried the DMV."
+   }
+  ]
  },
  {
   "id": "plate-hla-slo",
@@ -2006,7 +5286,69 @@
   "checked": "2026-10-06",
   "fun": 3,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "my car is hella slow",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "hella slow",
+    "s": 92,
+    "h": "Spot on."
+   },
+   {
+    "g": "slow car",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "slow driver",
+    "s": 65,
+    "h": "Hot: who's really slow?"
+   },
+   {
+    "g": "hella",
+    "s": 40,
+    "h": "Half; what's SLO?"
+   },
+   {
+    "g": "drives carefully",
+    "s": 50,
+    "h": "Warm: blame the machine."
+   },
+   {
+    "g": "hello slow",
+    "s": 30,
+    "h": "Close; first word is slang."
+   },
+   {
+    "g": "hates slow drivers",
+    "s": 30,
+    "h": "Right idea, wrong target."
+   },
+   {
+    "g": "san luis obispo",
+    "s": 15,
+    "h": "SLO isn't a place here."
+   },
+   {
+    "g": "hello kitty fan",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "slow flow yoga",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "hula dancer",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  },
  {
   "id": "plate-ih8pri-s",
@@ -2039,6 +5381,63 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 2,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "i hate prius",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "hates priuses",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "hates hybrids",
+    "s": 75,
+    "h": "Hot: which one?"
+   },
+   {
+    "g": "hates electric cars",
+    "s": 60,
+    "h": "Warm: which kind exactly?"
+   },
+   {
+    "g": "hates toyota",
+    "s": 60,
+    "h": "Warm: which model?"
+   },
+   {
+    "g": "hates other drivers",
+    "s": 40,
+    "h": "Warm: which ones?"
+   },
+   {
+    "g": "loves prius",
+    "s": 30,
+    "h": "Right car, wrong feeling."
+   },
+   {
+    "g": "i hate prices",
+    "s": 10,
+    "h": "Close; that's not the word."
+   },
+   {
+    "g": "i hate priests",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "i hate prison",
+    "s": 5,
+    "h": "Cold."
+   },
+   {
+    "g": "i ate a pie",
+    "s": 3,
+    "h": "Cold."
+   }
+  ]
  }
 ]

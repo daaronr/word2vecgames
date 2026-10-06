@@ -1,0 +1,1440 @@
+[
+  {
+    "id": "zoom-strawberry",
+    "cat": "zoom",
+    "kind": "image",
+    "prompt": "Under the magnifying glass",
+    "ask": "What is this, seen up close?",
+    "image": "img/zoom-strawberry.svg",
+    "focus": [
+      0.5,
+      0.51
+    ],
+    "zooms": [
+      8,
+      4,
+      2,
+      1
+    ],
+    "truth": "A strawberry.",
+    "more": "Those dark specks are its seeds, worn on the outside. Each one is, botanically, a tiny fruit of its own called an achene.",
+    "key": [
+      "strawberry",
+      "berry",
+      "fruit",
+      "seeds"
+    ],
+    "clues": [
+      "A dark, glossy pod sunk into a soft red surface.",
+      "There are several of them, spaced out like dimples, on something sweet.",
+      "A summer fruit with a leafy green cap, often served with cream."
+    ],
+    "decoys": [
+      "A raspberry.",
+      "A ladybug.",
+      "A slice of watermelon."
+    ],
+    "url": "https://github.com/microsoft/fluentui-emoji",
+    "source": "Fluent Emoji, icon 'strawberry'",
+    "credit": "Fluent Emoji by Microsoft (MIT licence)",
+    "checked": "2026-10-06",
+    "fun": 3,
+    "difficulty": 1,
+    "rating": "G",
+    "graded": [
+      {
+        "g": "strawberry",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "a ripe strawberry with seeds",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "berry",
+        "s": 70,
+        "h": "Right family: name the berry."
+      },
+      {
+        "g": "fruit",
+        "s": 45,
+        "h": "Right area: which fruit?"
+      },
+      {
+        "g": "raspberry",
+        "s": 40,
+        "h": "Close family, wrong berry."
+      },
+      {
+        "g": "cherry",
+        "s": 30,
+        "h": "Red fruit, wrong one."
+      },
+      {
+        "g": "watermelon",
+        "s": 25,
+        "h": "Red with dark seeds, wrong fruit."
+      },
+      {
+        "g": "ladybug",
+        "s": 10,
+        "h": "Red and spotted, but it doesn't crawl."
+      },
+      {
+        "g": "lips",
+        "s": 5,
+        "h": "Cold."
+      },
+      {
+        "g": "a fire truck",
+        "s": 0,
+        "h": "Cold."
+      }
+    ]
+  },
+  {
+    "id": "zoom-pineapple",
+    "cat": "zoom",
+    "kind": "image",
+    "prompt": "Under the magnifying glass",
+    "ask": "What is this, seen up close?",
+    "image": "img/zoom-pineapple.svg",
+    "focus": [
+      0.45,
+      0.45
+    ],
+    "zooms": [
+      10,
+      5,
+      2.5,
+      1
+    ],
+    "truth": "A pineapple.",
+    "more": "Each diamond on the skin marks one of the many small fruits that fuse together as a pineapple grows.",
+    "key": [
+      "pineapple",
+      "fruit",
+      "tropical"
+    ],
+    "clues": [
+      "An orange diamond on a lighter, peachy surface.",
+      "The diamonds repeat in a criss-cross pattern over a tough skin.",
+      "A tropical fruit with a crown of spiky leaves; some people put it on pizza."
+    ],
+    "decoys": [
+      "A pine cone.",
+      "A waffle.",
+      "A cantaloupe."
+    ],
+    "url": "https://github.com/microsoft/fluentui-emoji",
+    "source": "Fluent Emoji, icon 'pineapple'",
+    "credit": "Fluent Emoji by Microsoft (MIT licence)",
+    "checked": "2026-10-06",
+    "fun": 3,
+    "difficulty": 2,
+    "rating": "G",
+    "graded": [
+      {
+        "g": "pineapple",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "a pineapple fruit",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "ananas",
+        "s": 95,
+        "h": "Spot on, in another language."
+      },
+      {
+        "g": "tropical fruit",
+        "s": 65,
+        "h": "Hot: name the fruit."
+      },
+      {
+        "g": "fruit",
+        "s": 45,
+        "h": "Right area: which fruit?"
+      },
+      {
+        "g": "mango",
+        "s": 40,
+        "h": "Tropical fruit, wrong one."
+      },
+      {
+        "g": "pine cone",
+        "s": 20,
+        "h": "Right pattern, but you can't eat it."
+      },
+      {
+        "g": "waffle",
+        "s": 10,
+        "h": "Criss-cross, but not breakfast."
+      },
+      {
+        "g": "fish scales",
+        "s": 10,
+        "h": "Scaly, but not an animal."
+      },
+      {
+        "g": "a sunset",
+        "s": 0,
+        "h": "Cold."
+      }
+    ]
+  },
+  {
+    "id": "zoom-watermelon",
+    "cat": "zoom",
+    "kind": "image",
+    "prompt": "Under the magnifying glass",
+    "ask": "What is this, seen up close?",
+    "image": "img/zoom-watermelon.svg",
+    "focus": [
+      0.11,
+      0.45
+    ],
+    "zooms": [
+      10,
+      6,
+      2.5,
+      1
+    ],
+    "truth": "A slice of watermelon.",
+    "more": "The lens started on the edge of the slice: dark green skin, then the pale rind, then red flesh. Watermelon is over 90 percent water.",
+    "key": [
+      "watermelon",
+      "melon",
+      "slice",
+      "fruit"
+    ],
+    "clues": [
+      "A green band beside a pale cream one.",
+      "Past the cream, a third band begins, and it is bright red.",
+      "A heavy summer fruit, eaten cold in juicy wedges, black seeds and all."
+    ],
+    "decoys": [
+      "A cucumber.",
+      "A slice of cantaloupe.",
+      "A slice of lime."
+    ],
+    "url": "https://github.com/microsoft/fluentui-emoji",
+    "source": "Fluent Emoji, icon 'watermelon'",
+    "credit": "Fluent Emoji by Microsoft (MIT licence)",
+    "checked": "2026-10-06",
+    "fun": 3,
+    "difficulty": 1,
+    "rating": "G",
+    "graded": [
+      {
+        "g": "watermelon",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "slice of watermelon",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "melon",
+        "s": 70,
+        "h": "Right family: which kind?"
+      },
+      {
+        "g": "cantaloupe",
+        "s": 45,
+        "h": "Close family, wrong one."
+      },
+      {
+        "g": "fruit",
+        "s": 40,
+        "h": "Right area: which fruit?"
+      },
+      {
+        "g": "cucumber",
+        "s": 25,
+        "h": "Green skin, wrong food."
+      },
+      {
+        "g": "lime slice",
+        "s": 20,
+        "h": "Green and pale, wrong fruit."
+      },
+      {
+        "g": "italian flag",
+        "s": 5,
+        "h": "Right colors, but you can eat it."
+      },
+      {
+        "g": "a road with a grass verge",
+        "s": 5,
+        "h": "Cold."
+      },
+      {
+        "g": "a lizard",
+        "s": 0,
+        "h": "Cold."
+      }
+    ]
+  },
+  {
+    "id": "zoom-baseball",
+    "cat": "zoom",
+    "kind": "image",
+    "prompt": "Under the magnifying glass",
+    "ask": "What is this, seen up close?",
+    "image": "img/zoom-baseball.svg",
+    "focus": [
+      0.42,
+      0.7
+    ],
+    "zooms": [
+      10,
+      5,
+      2.5,
+      1
+    ],
+    "truth": "A baseball.",
+    "more": "The red marks are the stitches. A regulation baseball has 108 double stitches holding its two pieces of cowhide together.",
+    "key": [
+      "baseball",
+      "ball",
+      "stitches"
+    ],
+    "clues": [
+      "A dark curved line with a red mark beside it.",
+      "The red marks repeat along the line in a V pattern, like a zipper.",
+      "Two pieces of white leather sewn into a sphere and thrown by a pitcher."
+    ],
+    "decoys": [
+      "A softball.",
+      "A cricket ball.",
+      "A tennis ball."
+    ],
+    "url": "https://github.com/microsoft/fluentui-emoji",
+    "source": "Fluent Emoji, icon 'baseball'",
+    "credit": "Fluent Emoji by Microsoft (MIT licence)",
+    "checked": "2026-10-06",
+    "fun": 3,
+    "difficulty": 2,
+    "rating": "G",
+    "graded": [
+      {
+        "g": "baseball",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "a baseball with red stitching",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "softball",
+        "s": 60,
+        "h": "Close cousin: think smaller and harder."
+      },
+      {
+        "g": "ball",
+        "s": 50,
+        "h": "Right shape: which sport?"
+      },
+      {
+        "g": "cricket ball",
+        "s": 45,
+        "h": "Right idea, wrong sport."
+      },
+      {
+        "g": "tennis ball",
+        "s": 30,
+        "h": "A ball, but no stitches there."
+      },
+      {
+        "g": "stitches",
+        "s": 25,
+        "h": "That's the detail: on what?"
+      },
+      {
+        "g": "a wound with stitches",
+        "s": 5,
+        "h": "Stitches, but no doctor needed."
+      },
+      {
+        "g": "railroad tracks",
+        "s": 5,
+        "h": "Cold."
+      },
+      {
+        "g": "a pencil",
+        "s": 0,
+        "h": "Cold."
+      }
+    ]
+  },
+  {
+    "id": "zoom-basketball",
+    "cat": "zoom",
+    "kind": "image",
+    "prompt": "Under the magnifying glass",
+    "ask": "What is this, seen up close?",
+    "image": "img/zoom-basketball.svg",
+    "focus": [
+      0.4,
+      0.35
+    ],
+    "zooms": [
+      10,
+      5,
+      2.5,
+      1
+    ],
+    "truth": "A basketball.",
+    "more": "The dark bands are the seams between its panels. James Naismith invented the game in 1891, with peach baskets for hoops.",
+    "key": [
+      "basketball",
+      "ball",
+      "sport"
+    ],
+    "clues": [
+      "Two dark bands cross on bright orange.",
+      "The bands curve away across a pebbly orange surface.",
+      "You dribble it down a court and shoot it at a hoop."
+    ],
+    "decoys": [
+      "A hot cross bun.",
+      "A pumpkin.",
+      "A tiger."
+    ],
+    "url": "https://github.com/microsoft/fluentui-emoji",
+    "source": "Fluent Emoji, icon 'basketball'",
+    "credit": "Fluent Emoji by Microsoft (MIT licence)",
+    "checked": "2026-10-06",
+    "fun": 2,
+    "difficulty": 1,
+    "rating": "G",
+    "graded": [
+      {
+        "g": "basketball",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "a basket ball",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "ball",
+        "s": 50,
+        "h": "Right shape: which sport?"
+      },
+      {
+        "g": "volleyball",
+        "s": 40,
+        "h": "Right kind of thing, wrong sport."
+      },
+      {
+        "g": "soccer ball",
+        "s": 35,
+        "h": "A ball, wrong sport."
+      },
+      {
+        "g": "orange",
+        "s": 15,
+        "h": "Right color, wrong thing."
+      },
+      {
+        "g": "pumpkin",
+        "s": 15,
+        "h": "Orange and round, but not food."
+      },
+      {
+        "g": "hot cross bun",
+        "s": 10,
+        "h": "A cross, but you can't eat it."
+      },
+      {
+        "g": "x marks the spot",
+        "s": 5,
+        "h": "Too literal: step back."
+      },
+      {
+        "g": "a crow",
+        "s": 0,
+        "h": "Cold."
+      }
+    ]
+  },
+  {
+    "id": "zoom-tennis",
+    "cat": "zoom",
+    "kind": "image",
+    "prompt": "Under the magnifying glass",
+    "ask": "What is this, seen up close?",
+    "image": "img/zoom-tennis.svg",
+    "focus": [
+      0.62,
+      0.3
+    ],
+    "zooms": [
+      10,
+      5,
+      2.5,
+      1
+    ],
+    "truth": "A tennis racket, with a ball beside it.",
+    "more": "The grid is the racket's strings. Natural gut strings, made from cow intestine, are still used by some professional players.",
+    "key": [
+      "racket",
+      "tennis",
+      "strings",
+      "ball"
+    ],
+    "clues": [
+      "Pale strands crossing at right angles.",
+      "The strands are pulled tight and woven over and under, like a net.",
+      "Held by a handle and swung on a court to send a ball over the net."
+    ],
+    "decoys": [
+      "A badminton racket, with a shuttlecock.",
+      "A snowshoe.",
+      "A fly swatter."
+    ],
+    "url": "https://github.com/microsoft/fluentui-emoji",
+    "source": "Fluent Emoji, icon 'tennis'",
+    "credit": "Fluent Emoji by Microsoft (MIT licence)",
+    "checked": "2026-10-06",
+    "fun": 3,
+    "difficulty": 2,
+    "rating": "G",
+    "graded": [
+      {
+        "g": "tennis racket",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "a racquet and a tennis ball",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "racket",
+        "s": 80,
+        "h": "Hot: which sport's?"
+      },
+      {
+        "g": "tennis",
+        "s": 80,
+        "h": "Right sport: name the gear."
+      },
+      {
+        "g": "badminton racket",
+        "s": 55,
+        "h": "Right kind of gear, wrong sport."
+      },
+      {
+        "g": "strings",
+        "s": 35,
+        "h": "That's the detail: on what?"
+      },
+      {
+        "g": "badminton",
+        "s": 45,
+        "h": "Right kind of game, wrong sport."
+      },
+      {
+        "g": "a fishing net",
+        "s": 20,
+        "h": "Woven, but not for fish."
+      },
+      {
+        "g": "window screen",
+        "s": 10,
+        "h": "A grid, but not on a house."
+      },
+      {
+        "g": "waffle",
+        "s": 5,
+        "h": "Cold."
+      },
+      {
+        "g": "spaghetti",
+        "s": 3,
+        "h": "Cold."
+      }
+    ]
+  },
+  {
+    "id": "zoom-tiger",
+    "cat": "zoom",
+    "kind": "image",
+    "prompt": "Under the magnifying glass",
+    "ask": "What is this, seen up close?",
+    "image": "img/zoom-tiger.svg",
+    "focus": [
+      0.51,
+      0.55
+    ],
+    "zooms": [
+      8,
+      4,
+      2,
+      1
+    ],
+    "truth": "A tiger.",
+    "more": "The stripes go deeper than the fur: a tiger's skin is striped too, and no two tigers have the same pattern.",
+    "key": [
+      "tiger",
+      "cat",
+      "stripes",
+      "animal"
+    ],
+    "clues": [
+      "Dark bands on bright orange.",
+      "The bands run down an animal's back and side.",
+      "The biggest wild cat, from the forests and grasslands of Asia."
+    ],
+    "decoys": [
+      "A bumblebee.",
+      "A clownfish.",
+      "A monarch butterfly."
+    ],
+    "url": "https://github.com/microsoft/fluentui-emoji",
+    "source": "Fluent Emoji, icon 'tiger'",
+    "credit": "Fluent Emoji by Microsoft (MIT licence)",
+    "checked": "2026-10-06",
+    "fun": 3,
+    "difficulty": 1,
+    "rating": "G",
+    "graded": [
+      {
+        "g": "tiger",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "bengal tiger",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "a big striped cat",
+        "s": 88,
+        "h": "Spot on."
+      },
+      {
+        "g": "big cat",
+        "s": 65,
+        "h": "Hot: which big cat?"
+      },
+      {
+        "g": "leopard",
+        "s": 45,
+        "h": "Right family, wrong pattern."
+      },
+      {
+        "g": "lion",
+        "s": 40,
+        "h": "Right family, no stripes."
+      },
+      {
+        "g": "zebra",
+        "s": 25,
+        "h": "Stripes, but wrong colors."
+      },
+      {
+        "g": "bumblebee",
+        "s": 15,
+        "h": "Striped, but much too small."
+      },
+      {
+        "g": "basketball",
+        "s": 5,
+        "h": "Cold."
+      },
+      {
+        "g": "traffic cone",
+        "s": 0,
+        "h": "Cold."
+      }
+    ]
+  },
+  {
+    "id": "zoom-giraffe",
+    "cat": "zoom",
+    "kind": "image",
+    "prompt": "Under the magnifying glass",
+    "ask": "What is this, seen up close?",
+    "image": "img/zoom-giraffe.svg",
+    "focus": [
+      0.5,
+      0.52
+    ],
+    "zooms": [
+      10,
+      5,
+      2,
+      1
+    ],
+    "truth": "A giraffe.",
+    "more": "No two giraffes have the same patch pattern, and the giraffe is the tallest animal on land.",
+    "key": [
+      "giraffe",
+      "animal",
+      "patches",
+      "neck"
+    ],
+    "clues": [
+      "Brown shapes separated by pale lines, like crazy paving.",
+      "The shapes cover the body of an animal from the African savanna.",
+      "The tallest animal alive, with a very long neck."
+    ],
+    "decoys": [
+      "A leopard.",
+      "A crocodile.",
+      "A crazy-paving path."
+    ],
+    "url": "https://github.com/microsoft/fluentui-emoji",
+    "source": "Fluent Emoji, icon 'giraffe'",
+    "credit": "Fluent Emoji by Microsoft (MIT licence)",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 2,
+    "rating": "G",
+    "graded": [
+      {
+        "g": "giraffe",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "a giraffe's patterned coat",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "animal fur",
+        "s": 40,
+        "h": "Right area: which animal?"
+      },
+      {
+        "g": "leopard",
+        "s": 35,
+        "h": "Patterned animal, wrong one."
+      },
+      {
+        "g": "cheetah",
+        "s": 35,
+        "h": "Patterned animal, wrong one."
+      },
+      {
+        "g": "cow",
+        "s": 25,
+        "h": "Patches, wrong animal."
+      },
+      {
+        "g": "camel",
+        "s": 20,
+        "h": "Right colors, wrong animal."
+      },
+      {
+        "g": "crazy paving",
+        "s": 10,
+        "h": "Right pattern, but it walks."
+      },
+      {
+        "g": "cracked mud",
+        "s": 5,
+        "h": "Cold: it's alive."
+      },
+      {
+        "g": "a cookie",
+        "s": 0,
+        "h": "Cold."
+      }
+    ]
+  },
+  {
+    "id": "zoom-lady-beetle",
+    "cat": "zoom",
+    "kind": "image",
+    "prompt": "Under the magnifying glass",
+    "ask": "What is this, seen up close?",
+    "image": "img/zoom-lady-beetle.svg",
+    "focus": [
+      0.5,
+      0.58
+    ],
+    "zooms": [
+      10,
+      5,
+      2.5,
+      1
+    ],
+    "truth": "A ladybug, also called a ladybird.",
+    "more": "The line down its back is where its two hard wing cases meet. They lift apart to let the thin flying wings unfold.",
+    "key": [
+      "beetle",
+      "ladybug",
+      "insect",
+      "spots"
+    ],
+    "clues": [
+      "A thin dark line runs straight down the middle.",
+      "On each side of the line: red, with round black spots.",
+      "A small spotted insect that gardeners welcome because it eats aphids."
+    ],
+    "decoys": [
+      "A strawberry.",
+      "A red poppy.",
+      "A slice of watermelon."
+    ],
+    "url": "https://github.com/microsoft/fluentui-emoji",
+    "source": "Fluent Emoji, icon 'lady-beetle'",
+    "credit": "Fluent Emoji by Microsoft (MIT licence)",
+    "checked": "2026-10-06",
+    "fun": 3,
+    "difficulty": 2,
+    "rating": "G",
+    "graded": [
+      {
+        "g": "ladybug",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "ladybird",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "lady bug",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "a red beetle with black spots",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "beetle",
+        "s": 70,
+        "h": "Hot: which one?"
+      },
+      {
+        "g": "bug",
+        "s": 55,
+        "h": "Right kind of creature: be specific."
+      },
+      {
+        "g": "insect",
+        "s": 55,
+        "h": "Right kind of creature: be specific."
+      },
+      {
+        "g": "strawberry",
+        "s": 15,
+        "h": "Red and spotty, but it crawls."
+      },
+      {
+        "g": "poppy",
+        "s": 15,
+        "h": "Red and dark, but it crawls."
+      },
+      {
+        "g": "mushroom",
+        "s": 10,
+        "h": "Cold."
+      },
+      {
+        "g": "a hamburger",
+        "s": 0,
+        "h": "Cold."
+      }
+    ]
+  },
+  {
+    "id": "zoom-peacock",
+    "cat": "zoom",
+    "kind": "image",
+    "prompt": "Under the magnifying glass",
+    "ask": "What is this, seen up close?",
+    "image": "img/zoom-peacock.svg",
+    "focus": [
+      0.12,
+      0.42
+    ],
+    "zooms": [
+      10,
+      5,
+      2.5,
+      1
+    ],
+    "truth": "A peacock with its tail fanned out.",
+    "more": "The circles are eyespots on its long train feathers. Only the male is a peacock; the female, the peahen, has no long train.",
+    "key": [
+      "peacock",
+      "bird",
+      "feathers",
+      "tail"
+    ],
+    "clues": [
+      "Green, with a yellow and blue shape like an eye.",
+      "There are many of these eyes, each at the tip of something long and green.",
+      "A big bird that spreads them in a fan to show off."
+    ],
+    "decoys": [
+      "A parrot.",
+      "A butterfly.",
+      "A tropical fish."
+    ],
+    "url": "https://github.com/microsoft/fluentui-emoji",
+    "source": "Fluent Emoji, icon 'peacock'",
+    "credit": "Fluent Emoji by Microsoft (MIT licence)",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 2,
+    "rating": "G",
+    "graded": [
+      {
+        "g": "peacock",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "peacock feathers",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "peafowl",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "feather",
+        "s": 55,
+        "h": "Right detail: whose?"
+      },
+      {
+        "g": "bird",
+        "s": 50,
+        "h": "Right kind of animal: which bird?"
+      },
+      {
+        "g": "parrot",
+        "s": 35,
+        "h": "Colorful bird, wrong one."
+      },
+      {
+        "g": "butterfly wing",
+        "s": 20,
+        "h": "Eyespots, wrong creature."
+      },
+      {
+        "g": "an eye",
+        "s": 10,
+        "h": "Too literal: it doesn't see."
+      },
+      {
+        "g": "a leaf",
+        "s": 5,
+        "h": "Cold."
+      },
+      {
+        "g": "a tennis ball",
+        "s": 0,
+        "h": "Cold."
+      }
+    ]
+  },
+  {
+    "id": "zoom-doughnut",
+    "cat": "zoom",
+    "kind": "image",
+    "prompt": "Under the magnifying glass",
+    "ask": "What is this, seen up close?",
+    "image": "img/zoom-doughnut.svg",
+    "focus": [
+      0.25,
+      0.42
+    ],
+    "zooms": [
+      10,
+      5,
+      2.5,
+      1
+    ],
+    "truth": "A chocolate doughnut with sprinkles.",
+    "more": "The blue and pink sticks are sprinkles. A ring doughnut's hole lets the middle cook through as it fries.",
+    "key": [
+      "doughnut",
+      "donut",
+      "sprinkles",
+      "chocolate"
+    ],
+    "clues": [
+      "A short blue stick lying on a brown surface.",
+      "More sticks, pink and blue, are scattered over a glossy brown glaze.",
+      "Fried, sweet and round, with a hole in the middle."
+    ],
+    "decoys": [
+      "A chocolate cupcake with sprinkles.",
+      "A chocolate-covered pretzel.",
+      "A slice of birthday cake."
+    ],
+    "url": "https://github.com/microsoft/fluentui-emoji",
+    "source": "Fluent Emoji, icon 'doughnut'",
+    "credit": "Fluent Emoji by Microsoft (MIT licence)",
+    "checked": "2026-10-06",
+    "fun": 3,
+    "difficulty": 2,
+    "rating": "G",
+    "graded": [
+      {
+        "g": "donut",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "chocolate doughnut with sprinkles",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "chocolate donut",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "sprinkles",
+        "s": 50,
+        "h": "Right topping: on what?"
+      },
+      {
+        "g": "cupcake",
+        "s": 40,
+        "h": "Sprinkles yes, wrong treat."
+      },
+      {
+        "g": "chocolate",
+        "s": 35,
+        "h": "Right flavor: what is it?"
+      },
+      {
+        "g": "cake",
+        "s": 35,
+        "h": "Sweet treat, wrong one."
+      },
+      {
+        "g": "bagel",
+        "s": 30,
+        "h": "Right shape, wrong food."
+      },
+      {
+        "g": "pills",
+        "s": 5,
+        "h": "Cold."
+      },
+      {
+        "g": "a brown sofa",
+        "s": 0,
+        "h": "Cold."
+      }
+    ]
+  },
+  {
+    "id": "zoom-pretzel",
+    "cat": "zoom",
+    "kind": "image",
+    "prompt": "Under the magnifying glass",
+    "ask": "What is this, seen up close?",
+    "image": "img/zoom-pretzel.svg",
+    "focus": [
+      0.45,
+      0.43
+    ],
+    "zooms": [
+      10,
+      5,
+      2.5,
+      1
+    ],
+    "truth": "A salted pretzel.",
+    "more": "The white lumps are coarse salt. Traditional pretzels are dipped in lye before baking, which gives them their shiny brown crust.",
+    "key": [
+      "bread",
+      "pretzel",
+      "salt",
+      "twisted",
+      "snack"
+    ],
+    "clues": [
+      "A white crystal on a glossy orange-brown surface.",
+      "The crystals sit on baked dough that loops around.",
+      "A knot of bread, popular in Germany and at ballparks."
+    ],
+    "decoys": [
+      "A sugared doughnut.",
+      "A croissant.",
+      "A sesame bagel."
+    ],
+    "url": "https://github.com/microsoft/fluentui-emoji",
+    "source": "Fluent Emoji, icon 'pretzel'",
+    "credit": "Fluent Emoji by Microsoft (MIT licence)",
+    "checked": "2026-10-06",
+    "fun": 3,
+    "difficulty": 2,
+    "rating": "G",
+    "graded": [
+      {
+        "g": "pretzel",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "soft pretzel with salt",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "bread",
+        "s": 45,
+        "h": "Right area: what shape?"
+      },
+      {
+        "g": "salt",
+        "s": 35,
+        "h": "Right detail: on what?"
+      },
+      {
+        "g": "bagel",
+        "s": 35,
+        "h": "Baked dough, wrong shape."
+      },
+      {
+        "g": "croissant",
+        "s": 30,
+        "h": "Baked dough, wrong one."
+      },
+      {
+        "g": "cheese puff",
+        "s": 15,
+        "h": "A snack, wrong one."
+      },
+      {
+        "g": "sugar cube",
+        "s": 10,
+        "h": "Too literal: step back."
+      },
+      {
+        "g": "ice cube",
+        "s": 5,
+        "h": "Cold."
+      },
+      {
+        "g": "a car",
+        "s": 0,
+        "h": "Cold."
+      }
+    ]
+  },
+  {
+    "id": "zoom-sunflower",
+    "cat": "zoom",
+    "kind": "image",
+    "prompt": "Under the magnifying glass",
+    "ask": "What is this, seen up close?",
+    "image": "img/zoom-sunflower.svg",
+    "focus": [
+      0.5,
+      0.33
+    ],
+    "zooms": [
+      10,
+      5,
+      2.5,
+      1
+    ],
+    "truth": "A sunflower.",
+    "more": "The diamond pattern is the seed head. Its seeds grow in interlocking spirals, and the spiral counts are usually Fibonacci numbers such as 34 and 55.",
+    "key": [
+      "sunflower",
+      "flower",
+      "seeds",
+      "yellow"
+    ],
+    "clues": [
+      "Faint diamonds on a dark brown disk.",
+      "The diamonds are packed seeds, and something yellow circles the disk.",
+      "A tall garden plant with big yellow petals; its seeds are a ballpark snack."
+    ],
+    "decoys": [
+      "A waffle.",
+      "A pine cone.",
+      "A chocolate bar."
+    ],
+    "url": "https://github.com/microsoft/fluentui-emoji",
+    "source": "Fluent Emoji, icon 'sunflower'",
+    "credit": "Fluent Emoji by Microsoft (MIT licence)",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 3,
+    "rating": "G",
+    "graded": [
+      {
+        "g": "sunflower",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "sunflower head with seeds",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "sunflower seeds",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "flower",
+        "s": 50,
+        "h": "Right area: which one?"
+      },
+      {
+        "g": "daisy",
+        "s": 40,
+        "h": "Right kind of plant, wrong one."
+      },
+      {
+        "g": "seeds",
+        "s": 40,
+        "h": "Right detail: from what?"
+      },
+      {
+        "g": "pine cone",
+        "s": 15,
+        "h": "Right pattern, wrong plant."
+      },
+      {
+        "g": "waffle",
+        "s": 10,
+        "h": "Diamonds, but not breakfast."
+      },
+      {
+        "g": "chocolate",
+        "s": 10,
+        "h": "Right color, wrong thing."
+      },
+      {
+        "g": "a rug",
+        "s": 3,
+        "h": "Cold."
+      },
+      {
+        "g": "a frog",
+        "s": 0,
+        "h": "Cold."
+      }
+    ]
+  },
+  {
+    "id": "zoom-yarn",
+    "cat": "zoom",
+    "kind": "image",
+    "prompt": "Under the magnifying glass",
+    "ask": "What is this, seen up close?",
+    "image": "img/zoom-yarn.svg",
+    "focus": [
+      0.6,
+      0.45
+    ],
+    "zooms": [
+      10,
+      5,
+      2.5,
+      1
+    ],
+    "truth": "A ball of yarn with knitting needles.",
+    "more": "The blue bands are one strand of yarn wound round and round. Knitting turns a single continuous strand into fabric by pulling loops through loops.",
+    "key": [
+      "yarn",
+      "wool",
+      "knitting",
+      "ball"
+    ],
+    "clues": [
+      "Smooth blue bands, lying across one another.",
+      "The bands are all one long strand, wound in layers.",
+      "Two pointed needles stick out of it; a scarf could start here."
+    ],
+    "decoys": [
+      "A ball of string.",
+      "A rubber-band ball.",
+      "A spool of thread."
+    ],
+    "url": "https://github.com/microsoft/fluentui-emoji",
+    "source": "Fluent Emoji, icon 'yarn'",
+    "credit": "Fluent Emoji by Microsoft (MIT licence)",
+    "checked": "2026-10-06",
+    "fun": 3,
+    "difficulty": 2,
+    "rating": "G",
+    "graded": [
+      {
+        "g": "ball of yarn",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "wool and knitting needles",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "yarn",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "wool",
+        "s": 85,
+        "h": "Spot on."
+      },
+      {
+        "g": "knitting",
+        "s": 75,
+        "h": "Hot: name the material."
+      },
+      {
+        "g": "string",
+        "s": 55,
+        "h": "Close: thicker and softer."
+      },
+      {
+        "g": "thread",
+        "s": 50,
+        "h": "Close: thicker and softer."
+      },
+      {
+        "g": "rubber bands",
+        "s": 25,
+        "h": "Wound up, wrong material."
+      },
+      {
+        "g": "ocean waves",
+        "s": 5,
+        "h": "Cold."
+      },
+      {
+        "g": "a blue planet",
+        "s": 3,
+        "h": "Cold."
+      }
+    ]
+  },
+  {
+    "id": "zoom-mirror-ball",
+    "cat": "zoom",
+    "kind": "image",
+    "prompt": "Under the magnifying glass",
+    "ask": "What is this, seen up close?",
+    "image": "img/zoom-mirror-ball.svg",
+    "focus": [
+      0.35,
+      0.65
+    ],
+    "zooms": [
+      8,
+      4,
+      2,
+      1
+    ],
+    "truth": "A disco ball.",
+    "more": "Each gray square is a small flat mirror. Hung from the ceiling and turned slowly under a spotlight, it throws specks of light around the room.",
+    "key": [
+      "disco",
+      "mirror",
+      "ball",
+      "dance"
+    ],
+    "clues": [
+      "Flat gray tiles, set at slightly different angles.",
+      "The tiles are tiny mirrors, curving around something round.",
+      "It hangs from the ceiling and spins over a dance floor."
+    ],
+    "decoys": [
+      "A geodesic dome.",
+      "A tiled bathroom wall.",
+      "A silver Christmas ornament."
+    ],
+    "url": "https://github.com/microsoft/fluentui-emoji",
+    "source": "Fluent Emoji, icon 'mirror-ball'",
+    "credit": "Fluent Emoji by Microsoft (MIT licence)",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 3,
+    "rating": "G",
+    "graded": [
+      {
+        "g": "disco ball",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "mirror ball",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "glitter ball",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "mirror",
+        "s": 45,
+        "h": "Right material: what shape?"
+      },
+      {
+        "g": "christmas ornament",
+        "s": 35,
+        "h": "Shiny and hung up, wrong occasion."
+      },
+      {
+        "g": "tiles",
+        "s": 25,
+        "h": "Right pattern: what's tiled?"
+      },
+      {
+        "g": "geodesic dome",
+        "s": 20,
+        "h": "Right shape, wrong size."
+      },
+      {
+        "g": "golf ball",
+        "s": 15,
+        "h": "Round, but no mirrors."
+      },
+      {
+        "g": "a skyscraper",
+        "s": 10,
+        "h": "Glassy, but much smaller."
+      },
+      {
+        "g": "an elephant",
+        "s": 0,
+        "h": "Cold."
+      }
+    ]
+  }
+]

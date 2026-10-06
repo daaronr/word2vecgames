@@ -35,6 +35,15 @@
   --awning-a: #1e6b57;
   --awning-b: #f1ead6;
   --search-ring: #c9ced8;
+  --newsprint: #f1ede1;
+  --lens-rim: #2a2d33;
+  --lens-handle: #5b3a22;
+  --tv-frame: #15161a;
+  --tv-sky: #2b4a8a;
+  --tv-night: #0b1530;
+  --tv-desk: #6b4a2b;
+  --chyron-bg: #f4f4f2;
+  --chyron-ink: #111216;
   --shadow: 0 1px 2px rgba(20, 24, 33, 0.06), 0 6px 18px rgba(20, 24, 33, 0.07);
 
   --display: "Bungee", "Arial Black", Impact, sans-serif;
@@ -328,6 +337,55 @@ details.how summary { cursor: pointer; font-weight: 700; }
 details.how[open] summary { margin-bottom: 8px; }
 .prose { display: grid; gap: 10px; max-width: 65ch; }
 .prose ul { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; }
+
+/* ---------- more habitats ---------- */
+.lens-wrap { position: relative; width: min(calc(100% - 64px), 300px); aspect-ratio: 1; margin: 6px auto 46px; }
+.lens { width: 100%; height: 100%; border-radius: 50%; background-color: var(--paper); background-repeat: no-repeat; border: 12px solid var(--lens-rim); box-shadow: inset 0 0 28px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.14), var(--shadow); transition: background-size 0.6s ease, background-position 0.6s ease; position: relative; }
+.lens::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 38%); pointer-events: none; }
+.lens-wrap .handle { position: absolute; left: calc(85.4% - 12px); top: 85.4%; width: 24px; height: 72px; border-radius: 10px; background: var(--lens-handle); transform: rotate(-45deg); transform-origin: top center; box-shadow: var(--shadow); }
+.reveal-img { width: 132px; height: 132px; justify-self: start; }
+.reveal .cite { font-size: var(--step--1); color: var(--muted); margin: 0; }
+
+.paper { background: var(--paper); color: var(--paper-ink); border-radius: 4px; padding: 14px 20px 18px; box-shadow: var(--shadow); font-family: var(--serif); display: grid; gap: 10px; }
+.paper .jhd { display: flex; justify-content: space-between; gap: 12px; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; border-bottom: 1px solid var(--paper-rule); padding-bottom: 6px; }
+.paper .ptitle { font-size: clamp(1.3rem, 4.6vw, 1.8rem); font-weight: 700; line-height: 1.2; text-align: center; text-wrap: balance; }
+.paper .ptitle .rest { color: var(--paper-rule); font-weight: 400; }
+.paper .authors { text-align: center; font-style: italic; font-size: 0.9rem; }
+.redact { background: var(--paper-ink); color: transparent; border-radius: 2px; user-select: none; }
+.paper .lines, .news .cols { display: grid; gap: 6px; }
+.paper .lines i, .news .cols i { height: 6px; border-radius: 3px; background: color-mix(in srgb, var(--paper-rule) 35%, transparent); }
+.paper .lines i:last-child { width: 55%; }
+
+.lyric { background: var(--paper); color: var(--paper-ink); border-radius: 6px; padding: 16px 20px 20px; box-shadow: var(--shadow); display: grid; gap: 14px; }
+.lyric .staff { height: 33px; background: repeating-linear-gradient(to bottom, var(--paper-rule) 0 1px, transparent 1px 8px); opacity: 0.55; }
+.lyric .line { font-family: var(--serif); font-style: italic; font-size: clamp(1.25rem, 4.6vw, 1.65rem); line-height: 1.35; margin: 0; text-align: center; text-wrap: balance; }
+
+.tv { background: var(--tv-frame); border-radius: 16px; padding: 12px; box-shadow: var(--shadow); }
+.tv .screen { position: relative; aspect-ratio: 16 / 8; min-height: 150px; border-radius: 8px; overflow: hidden; background: radial-gradient(ellipse at 50% 25%, var(--tv-sky), var(--tv-night) 72%); }
+.tv .desk { position: absolute; left: 12%; right: 12%; bottom: 30%; height: 16%; border-radius: 6px 6px 0 0; background: var(--tv-desk); }
+.tv .chyron { position: absolute; left: 0; right: 0; bottom: 7%; display: flex; background: var(--chyron-bg); color: var(--chyron-ink); }
+.tv .chyron .tag { flex: none; display: flex; align-items: center; padding: 6px 10px; background: var(--spot); color: #fff; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+.tv .chyron .story { padding: 7px 12px; font-weight: 800; font-size: clamp(0.9rem, 3.6vw, 1.15rem); line-height: 1.25; }
+
+.news { background: var(--newsprint); color: var(--paper-ink); border-radius: 2px; padding: 12px 18px 18px; box-shadow: var(--shadow); font-family: var(--serif); display: grid; gap: 8px; }
+.news .mast { text-align: center; font-weight: 900; font-size: clamp(1.05rem, 4vw, 1.35rem); letter-spacing: 0.04em; border-bottom: 3px double var(--paper-ink); padding-bottom: 4px; }
+.news .dateline { display: flex; justify-content: space-between; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid var(--paper-rule); padding-bottom: 4px; }
+.news .head { font-size: clamp(1.45rem, 5.6vw, 2.15rem); font-weight: 900; line-height: 1.08; text-align: center; text-wrap: balance; }
+.news .cols { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 14px; }
+
+/* ---------- party extras ---------- */
+.tile.locked[disabled] { background: color-mix(in srgb, var(--sign-board) 35%, var(--surface-2)); color: color-mix(in srgb, var(--sign-ink) 55%, transparent); cursor: not-allowed; }
+.scores .sc.control { box-shadow: inset 0 0 0 2px var(--ink); }
+.scores .sc.team-x b { color: var(--spot); }
+.scores .sc.team-o b { color: var(--cold); }
+.pick.off button[aria-pressed="true"] { border-color: var(--bad); background: color-mix(in srgb, var(--bad) 12%, var(--surface)); }
+.dd { border: 2px solid var(--accent); background: var(--accent-soft); }
+.board.c4 { grid-template-columns: repeat(var(--cols, 5), minmax(0, 1fr)); max-width: 520px; width: 100%; margin: 0 auto; padding: 8px; border-radius: 14px; background: var(--sign-board); }
+.board.c4 .drop { min-height: 42px; padding: 4px 2px; border: 0; border-radius: 8px; background: var(--accent); color: var(--accent-ink); font-weight: 800; font-size: clamp(0.6rem, 2.6vw, 0.8rem); line-height: 1.1; cursor: pointer; overflow-wrap: anywhere; }
+.board.c4 .drop[disabled] { opacity: 0.35; cursor: default; }
+.board.c4 .slot { aspect-ratio: 1; border-radius: 50%; background: var(--bg); box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.35); }
+.board.c4 .slot.x { background: var(--spot); }
+.board.c4 .slot.o { background: var(--cold); }
 
 @media (max-width: 520px) {
   .topnav button { padding: 5px 6px; font-size: 0.75rem; }

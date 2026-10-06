@@ -63,8 +63,11 @@ jack's **rank** among the ball's nearest words (rank 1 = "bacio").
   serves the game.
 - `archive/` — superseded UI, docs and deploy configs. Don't edit; don't
   resurrect without reason.
-- `whatisit/` — "What Is It?", a separate guessing-game prototype (guess what a web
-  address, brand, licence plate or patent really is). Self-contained, so it can move out:
+- `whatisit/` — "What Is It?", a separate guessing-game prototype (guess what a web address,
+  brand, licence plate, patent, close-up picture, paper title or odd song line really is). Each
+  mystery carries an answer key (`graded`) so common guesses are scored without an AI call; the AI
+  judge (`whatisit/netlify/functions/judge.mjs`) only uses a provider key you set yourself, never
+  Netlify credits unless opted in. Self-contained, so it can move out:
   see `whatisit/README.md` and `whatisit/DESIGN.md`. Its robot judge reuses the
   `web/data-sense` vectors via `whatisit/tools/build_vectors.py`; rebuild `whatisit/site/`
   with `node whatisit/tools/build.mjs` after editing `whatisit/src` or `whatisit/content`.

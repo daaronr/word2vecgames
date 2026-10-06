@@ -1,0 +1,1343 @@
+[
+  {
+    "id": "paper-gorillas",
+    "cat": "paper",
+    "kind": "paper",
+    "prompt": "Gorillas in our midst",
+    "ask": "What field is it from, and what is the paper about?",
+    "full": "Gorillas in our midst: sustained inattentional blindness for dynamic events",
+    "authors": "Simons & Chabris",
+    "journal": "Perception",
+    "year": 1999,
+    "field": "Psychology",
+    "truth": "Psychology. About half the volunteers counting basketball passes in a video failed to notice a person in a gorilla suit walking through the game: inattentional blindness.",
+    "more": "The gorilla stops among the players, faces the camera and thumps its chest. The study won the 2004 Ig Nobel Prize in psychology; the title plays on the Dian Fossey film Gorillas in the Mist.",
+    "key": [
+      "attention",
+      "notice",
+      "gorilla",
+      "blindness",
+      "psychology"
+    ],
+    "clues": [
+      "The study used a short video and gave volunteers a simple task.",
+      "The volunteers were busy counting passes between players in white shirts.",
+      "Something big and hairy strolled through the middle of the game, and many never saw it."
+    ],
+    "decoys": [
+      "Primatology. A census of mountain gorillas in Rwanda found that groups living near villages had changed their daily routes to avoid people.",
+      "Psychology. Zoo visitors who watched gorillas for ten minutes rated them as more human-like than visitors who only read about them.",
+      "Ecology. Gorillas living near forest edges spread the seeds of fruit trees farther than any other animal, helping logged land regrow."
+    ],
+    "graded": [
+      {
+        "g": "psychology, people miss a gorilla in a video while counting passes",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "inattentional blindness",
+        "s": 88,
+        "h": "Spot on; the field is implied."
+      },
+      {
+        "g": "the invisible gorilla experiment",
+        "s": 86,
+        "h": "Right study; name the field too."
+      },
+      {
+        "g": "people focused on a task don't notice a guy in a gorilla suit",
+        "s": 86,
+        "h": "Right finding; name the field too."
+      },
+      {
+        "g": "psychology study about attention",
+        "s": 55,
+        "h": "Right field and theme; what happened?"
+      },
+      {
+        "g": "psychology of how people see gorillas",
+        "s": 30,
+        "h": "Right field, wrong question."
+      },
+      {
+        "g": "basketball players' teamwork",
+        "s": 12,
+        "h": "The game on screen is a distraction."
+      },
+      {
+        "g": "primatology, wild gorillas living near people",
+        "s": 6,
+        "h": "Too literal: no real apes studied."
+      },
+      {
+        "g": "zoology of gorilla family groups",
+        "s": 5,
+        "h": "Too literal: think about the viewers."
+      },
+      {
+        "g": "inflation in economics",
+        "s": 0,
+        "h": "Nowhere near."
+      }
+    ],
+    "rating": "G",
+    "fun": 4,
+    "difficulty": 2,
+    "url": "https://doi.org/10.1068/p281059",
+    "source": "Perception 28(9):1059-1074, https://doi.org/10.1068/p281059; Ig Nobel 2004: https://improbable.com/2010/05/07/did-you-see-the-gorilla-book/",
+    "checked": "2026-10-06"
+  },
+  {
+    "id": "paper-dead-salmon",
+    "cat": "paper",
+    "kind": "paper",
+    "prompt": "Neural correlates of interspecies perspective taking in the post-mortem Atlantic Salmon",
+    "ask": "What field is it from, and what is the paper about?",
+    "full": "Neural Correlates of Interspecies Perspective Taking in the Post-Mortem Atlantic Salmon: An Argument For Proper Multiple Comparisons Correction",
+    "authors": "Bennett et al.",
+    "journal": "Journal of Serendipitous and Unexpected Results",
+    "year": 2010,
+    "field": "Neuroscience",
+    "truth": "Neuroscience. A dead salmon in a brain scanner, 'shown' photos of people, seemed to have brain activity until the statistics were corrected for running thousands of tests at once: a warning about false positives in fMRI.",
+    "more": "The methods section notes the salmon 'was not alive at the time of scanning.' First shown as a conference poster in 2009, the study won the 2012 Ig Nobel Prize in neuroscience.",
+    "key": [
+      "statistics",
+      "dead",
+      "fish",
+      "brain",
+      "false",
+      "scan"
+    ],
+    "clues": [
+      "The subject of the experiment kept perfectly still the whole time.",
+      "It was shown photos of people and asked what they were feeling.",
+      "The scanner found 'activity' in a fish that was long past thinking, until the numbers were crunched properly."
+    ],
+    "decoys": [
+      "Neuroscience. Brain scans of live salmon showed that fish can tell individual human faces apart, using a brain region much like the one people use.",
+      "Biology. Salmon swimming upstream to spawn find their home river by smell, and the paper traced the brain cells that store the scent.",
+      "Neuroscience. Researchers measured how long a fish's brain cells keep firing after death, to help fishermen keep their catch fresh."
+    ],
+    "graded": [
+      {
+        "g": "neuroscience, a dead fish shows brain activity, so correct your statistics",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "brain scan false positives shown with a dead salmon",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "a joke about bad statistics in brain imaging",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "they scanned a dead fish and found fake brain activity",
+        "s": 85,
+        "h": "Right; say what it warns about."
+      },
+      {
+        "g": "multiple comparisons problem",
+        "s": 80,
+        "h": "Right lesson; now who was the subject?"
+      },
+      {
+        "g": "neuroscience study of empathy in fish",
+        "s": 30,
+        "h": "Right field; take post-mortem seriously."
+      },
+      {
+        "g": "how salmon brains work",
+        "s": 18,
+        "h": "Right organ, wrong point."
+      },
+      {
+        "g": "can fish read human emotions",
+        "s": 12,
+        "h": "Too literal: read the title's end."
+      },
+      {
+        "g": "marine biology of salmon migration",
+        "s": 5,
+        "h": "Wrong field, wrong question."
+      },
+      {
+        "g": "salmon recipes",
+        "s": 0,
+        "h": "Nowhere near."
+      }
+    ],
+    "rating": "G",
+    "fun": 5,
+    "difficulty": 2,
+    "url": "https://w.mriquestions.com/uploads/3/4/5/7/34572113/bennett_salmon_journal_serendipity.pdf",
+    "source": "JSUR 1(1):1-5 (2010), paper PDF at the url; https://law.stanford.edu/2009/09/18/what-a-dead-salmon-reminds-us-about-fmri-analysis/; Ig Nobel 2012 per https://www.jhunewsletter.com/article/2016/12/toast-jesus-dead-salmon-and-taxi-drivers-the-ig-nobel-prizes",
+    "checked": "2026-10-06"
+  },
+  {
+    "id": "paper-lemons",
+    "cat": "paper",
+    "kind": "paper",
+    "prompt": "The Market for \"Lemons\"",
+    "ask": "What field is it from, and what is the paper about?",
+    "full": "The Market for \"Lemons\": Quality Uncertainty and the Market Mechanism",
+    "authors": "Akerlof",
+    "journal": "The Quarterly Journal of Economics",
+    "year": 1970,
+    "field": "Economics",
+    "truth": "Economics. When sellers know more about quality than buyers, as with used cars, buyers will only pay an average price, owners of good cars stop selling, and bad ones take over the market: asymmetric information.",
+    "more": "Three journals turned it down first, two of them for 'triviality', and one referee objected that if it were correct, economics would be different. Akerlof shared the 2001 Nobel Prize in economics for work on markets with asymmetric information.",
+    "key": [
+      "information",
+      "cars",
+      "quality",
+      "sellers",
+      "economics"
+    ],
+    "clues": [
+      "The fruit in the title is slang; nobody squeezes anything.",
+      "The main example is a buyer on a used-car lot who can't tell a good car from a bad one.",
+      "The seller knows something the buyer doesn't, and the good products drift out of the market."
+    ],
+    "decoys": [
+      "Economics. Lemon prices swing from year to year because growers plant according to last season's price, a textbook boom-and-bust cycle.",
+      "Economics. Buyers judge cars by brand name, so carmakers with good reputations can charge more for nearly identical models.",
+      "Economics. Laws letting buyers return faulty cars made used-car dealers raise prices, pushing poorer buyers out of the market."
+    ],
+    "graded": [
+      {
+        "g": "economics, asymmetric information in the used car market",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "adverse selection",
+        "s": 88,
+        "h": "Spot on; the field is implied."
+      },
+      {
+        "g": "sellers know more than buyers so bad products drive out good",
+        "s": 88,
+        "h": "Right idea; name the field too."
+      },
+      {
+        "g": "used cars and hidden defects",
+        "s": 75,
+        "h": "Close; why does the market break down?"
+      },
+      {
+        "g": "economics of the used car market",
+        "s": 65,
+        "h": "Right field and example; what goes wrong?"
+      },
+      {
+        "g": "lemon laws for faulty cars",
+        "s": 40,
+        "h": "Right kind of lemon, wrong question."
+      },
+      {
+        "g": "economics of the citrus fruit trade",
+        "s": 30,
+        "h": "Right field, but the fruit is slang."
+      },
+      {
+        "g": "agriculture, lemon crop prices",
+        "s": 8,
+        "h": "Too literal: these lemons aren't fruit."
+      },
+      {
+        "g": "making lemonade out of bad situations",
+        "s": 3,
+        "h": "Nowhere near."
+      },
+      {
+        "g": "biology of citrus trees",
+        "s": 0,
+        "h": "Nowhere near."
+      }
+    ],
+    "rating": "G",
+    "fun": 3,
+    "difficulty": 2,
+    "url": "https://doi.org/10.2307/1879431",
+    "source": "QJE 84(3):488-500, https://doi.org/10.2307/1879431; rejection history in Akerlof's 2001 essay: https://equitablegrowth.org/must-read-george-akerlof-2001-writing-the-the-market-for-lemons-a-personal-interpretive-essay/",
+    "checked": "2026-10-06"
+  },
+  {
+    "id": "paper-bowling-alone",
+    "cat": "paper",
+    "kind": "paper",
+    "prompt": "Bowling Alone",
+    "ask": "What field is it from, and what is the paper about?",
+    "full": "Bowling Alone: America's Declining Social Capital",
+    "authors": "Putnam",
+    "journal": "Journal of Democracy",
+    "year": 1995,
+    "field": "Political science",
+    "truth": "Political science (or sociology). Americans had been joining fewer clubs, unions, churches and civic groups for decades, and Putnam argued this loss of 'social capital', the trust and ties that make communities work, was weakening democracy.",
+    "more": "The title comes from one statistic: between 1980 and 1993 the number of Americans who bowled rose 10 percent while league bowling fell 40 percent. The article grew into a 2000 book of the same name.",
+    "key": [
+      "community",
+      "decline",
+      "civic",
+      "clubs",
+      "trust",
+      "social"
+    ],
+    "clues": [
+      "The sport in the title is only an example.",
+      "More people were bowling than before, yet fewer of them in leagues.",
+      "Its subject is the shrinking membership of clubs, churches and parent-teacher groups, and the trust that goes with it."
+    ],
+    "decoys": [
+      "Sociology. Americans spend more leisure time alone than they used to, and the paper links solo hobbies like bowling and fishing to rising rates of depression.",
+      "Economics. Bowling alleys closed in large numbers after the 1970s because the suburbs left them stranded downtown, an example of how cities shape business.",
+      "Political science. Voters who live alone are much less likely to turn out on election day, so the rise of one-person homes is lowering turnout."
+    ],
+    "graded": [
+      {
+        "g": "sociology, americans join fewer groups and lose social capital",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "political science about the decline of civic life in america",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "social capital",
+        "s": 88,
+        "h": "Spot on; the field is implied."
+      },
+      {
+        "g": "decline of community groups in america",
+        "s": 86,
+        "h": "Right idea; name the field too."
+      },
+      {
+        "g": "loneliness in modern america",
+        "s": 55,
+        "h": "Right worry, narrower subject."
+      },
+      {
+        "g": "people spending more time alone",
+        "s": 50,
+        "h": "Warm; think about what people belong to."
+      },
+      {
+        "g": "political science about voting",
+        "s": 35,
+        "h": "Right field, missing the main idea."
+      },
+      {
+        "g": "economics of the bowling industry",
+        "s": 20,
+        "h": "The bowling numbers are only a symptom."
+      },
+      {
+        "g": "sports science of bowling",
+        "s": 5,
+        "h": "Too literal: the sport is an example."
+      },
+      {
+        "g": "the history of cricket",
+        "s": 0,
+        "h": "Nowhere near."
+      }
+    ],
+    "rating": "G",
+    "fun": 3,
+    "difficulty": 2,
+    "url": "https://doi.org/10.1353/jod.1995.0002",
+    "source": "Journal of Democracy 6(1):65-78, https://doi.org/10.1353/jod.1995.0002; https://en.wikipedia.org/wiki/Bowling_Alone",
+    "checked": "2026-10-06"
+  },
+  {
+    "id": "paper-emily-greg",
+    "cat": "paper",
+    "kind": "paper",
+    "prompt": "Are Emily and Greg More Employable than Lakisha and Jamal?",
+    "ask": "What field is it from, and what is the paper about?",
+    "full": "Are Emily and Greg More Employable Than Lakisha and Jamal? A Field Experiment on Labor Market Discrimination",
+    "authors": "Bertrand & Mullainathan",
+    "journal": "American Economic Review",
+    "year": 2004,
+    "field": "Economics",
+    "truth": "Economics. About 5,000 fake resumes sent to job ads in Boston and Chicago got 50 percent more interview callbacks when they carried a white-sounding name than a Black-sounding one: racial discrimination in hiring.",
+    "more": "A better resume raised callbacks for white names far more than for Black names, and employers who advertised as an 'Equal Opportunity Employer' discriminated as much as the rest.",
+    "key": [
+      "discrimination",
+      "race",
+      "names",
+      "resumes",
+      "hiring",
+      "economics"
+    ],
+    "clues": [
+      "The four names were chosen for what they suggest about a person.",
+      "The researchers answered real job ads on behalf of people who didn't exist.",
+      "Only the name at the top changed, and that alone changed who got called back."
+    ],
+    "decoys": [
+      "Economics. Workers with common, easy-to-spell first names earn more over their careers than those with unusual names, even within the same family.",
+      "Psychology. Interviewers rated applicants named Emily and Greg as warmer and those named Lakisha and Jamal as more competent, a study of first impressions.",
+      "Economics. Job seekers who shortened their first names on applications got more interviews at tech firms than at stores or hospitals."
+    ],
+    "graded": [
+      {
+        "g": "economics, fake resumes with Black names got fewer callbacks",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "resume study showing racial discrimination by name",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "racial discrimination in hiring",
+        "s": 88,
+        "h": "Spot on; the field is implied."
+      },
+      {
+        "g": "whether names affect your job chances",
+        "s": 70,
+        "h": "Close; say what the names signal."
+      },
+      {
+        "g": "racism",
+        "s": 60,
+        "h": "Right theme; where did it show up?"
+      },
+      {
+        "g": "economics of first names and earnings",
+        "s": 40,
+        "h": "Right field, missing the main point."
+      },
+      {
+        "g": "gender discrimination at work",
+        "s": 35,
+        "h": "Right kind of bias, wrong group."
+      },
+      {
+        "g": "education levels of different students",
+        "s": 8,
+        "h": "Cold; think about employers."
+      },
+      {
+        "g": "which baby names are most popular",
+        "s": 5,
+        "h": "Too literal; think about employers."
+      },
+      {
+        "g": "a sitcom about two couples",
+        "s": 0,
+        "h": "Nowhere near."
+      }
+    ],
+    "rating": "G",
+    "fun": 3,
+    "difficulty": 1,
+    "url": "https://doi.org/10.1257/0002828042002561",
+    "source": "AER 94(4):991-1013; NBER working paper w9873: https://www.nber.org/system/files/working_papers/w9873/w9873.pdf",
+    "checked": "2026-10-06"
+  },
+  {
+    "id": "paper-hot-hand",
+    "cat": "paper",
+    "kind": "paper",
+    "prompt": "The hot hand in basketball",
+    "ask": "What field is it from, and what is the paper about?",
+    "full": "The hot hand in basketball: On the misperception of random sequences",
+    "authors": "Gilovich, Vallone & Tversky",
+    "journal": "Cognitive Psychology",
+    "year": 1985,
+    "field": "Psychology",
+    "truth": "Psychology. Fans and players believe a shooter who has just scored is more likely to score again, but shooting records showed no more streaks than chance would produce: people misread randomness.",
+    "more": "The data came from the Philadelphia 76ers, Boston Celtics free throws and a shooting test with Cornell players. In 2018 Miller and Sanjurjo found a subtle bias in this way of counting streaks; corrected, the data suggest a modest hot hand may exist after all.",
+    "key": [
+      "streaks",
+      "random",
+      "illusion",
+      "shooting",
+      "psychology"
+    ],
+    "clues": [
+      "Its subject is a belief that nearly every fan and coach holds.",
+      "The researchers checked whether a made shot really makes the next one more likely.",
+      "People see patterns in coin-flip sequences that aren't there."
+    ],
+    "decoys": [
+      "Sports science. Players who warm up their hands before a game shoot more accurately in cold arenas, measured with thermal cameras.",
+      "Psychology. Players who have just scored take harder shots, so their hit rate drops, which hides a real streak from fans watching.",
+      "Physiology. Shooting accuracy rises with heart rate up to a point, so players shoot best in the closing minutes of close games."
+    ],
+    "graded": [
+      {
+        "g": "psychology, the hot hand is a fallacy and streaks are just chance",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "hot hand fallacy",
+        "s": 88,
+        "h": "Spot on; the field is implied."
+      },
+      {
+        "g": "people see streaks in random sequences",
+        "s": 88,
+        "h": "Spot on; name the field too."
+      },
+      {
+        "g": "gambler's fallacy",
+        "s": 65,
+        "h": "Close cousin, pointing the other way."
+      },
+      {
+        "g": "whether basketball players really get on streaks",
+        "s": 65,
+        "h": "Right question; what did they find?"
+      },
+      {
+        "g": "statistics of basketball shooting",
+        "s": 50,
+        "h": "Warm; what were they really studying?"
+      },
+      {
+        "g": "psychology of confidence in sports",
+        "s": 35,
+        "h": "Right field, wrong idea."
+      },
+      {
+        "g": "sports science, how players get on a hot streak",
+        "s": 25,
+        "h": "Too literal: they tested the belief."
+      },
+      {
+        "g": "hand temperature and grip in basketball",
+        "s": 3,
+        "h": "Too literal."
+      },
+      {
+        "g": "cooking with hot peppers",
+        "s": 0,
+        "h": "Nowhere near."
+      }
+    ],
+    "rating": "G",
+    "fun": 4,
+    "difficulty": 2,
+    "url": "https://doi.org/10.1016/0010-0285(85)90010-6",
+    "source": "Cognitive Psychology 17(3):295-314; follow-up Miller & Sanjurjo, Econometrica 86(6):2019-2047, https://doi.org/10.3982/ECTA14943",
+    "checked": "2026-10-06"
+  },
+  {
+    "id": "paper-parachute",
+    "cat": "paper",
+    "kind": "paper",
+    "prompt": "Parachute use to prevent death and major trauma related to gravitational challenge",
+    "ask": "What field is it from, and what is the paper about?",
+    "full": "Parachute use to prevent death and major trauma related to gravitational challenge: systematic review of randomised controlled trials",
+    "authors": "Smith & Pell",
+    "journal": "BMJ",
+    "year": 2003,
+    "field": "Medicine",
+    "truth": "Medicine. A deadpan review found no randomized controlled trials showing that parachutes save lives, poking fun at the demand for trial evidence before accepting treatments whose benefit is obvious.",
+    "more": "It ran in the BMJ's Christmas issue and suggests that the strictest champions of evidence-based medicine volunteer for a placebo-controlled trial. In 2018 the BMJ published a real one: 23 people jumped with a parachute or an empty backpack and nobody was hurt, because the planes were parked on the ground.",
+    "key": [
+      "trials",
+      "evidence",
+      "parachutes",
+      "satire",
+      "medicine"
+    ],
+    "clues": [
+      "It appeared in a holiday issue known for straight-faced jokes.",
+      "The authors searched the literature and found nothing at all.",
+      "Nobody has ever tested this safety device against a placebo, and nobody needs to."
+    ],
+    "decoys": [
+      "Medicine. Among skydiving deaths seen at trauma centers, most came from late or failed parachute opening, so automatic openers could save lives.",
+      "Aviation medicine. Pilots who ejected from fighter jets suffered spinal injuries in about a third of cases, mostly from the force of the ejection seat.",
+      "Medicine. A review of hospital falls, the main 'gravitational challenge' on wards, found that low beds and soft floors cut deaths among elderly patients."
+    ],
+    "graded": [
+      {
+        "g": "medical satire, no RCTs prove parachutes work",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "a joke about evidence based medicine demanding trials for obvious things",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "there are no randomized trials of parachutes",
+        "s": 86,
+        "h": "Right finding; name the field too."
+      },
+      {
+        "g": "evidence based medicine critique",
+        "s": 78,
+        "h": "Close; tie it to the title."
+      },
+      {
+        "g": "do parachutes really save lives",
+        "s": 50,
+        "h": "Right question; why ask it?"
+      },
+      {
+        "g": "medicine, skydiving injuries",
+        "s": 35,
+        "h": "Right field; reread the title's tone."
+      },
+      {
+        "g": "falling deaths and trauma injuries",
+        "s": 20,
+        "h": "Too literal; consider why it was written."
+      },
+      {
+        "g": "skydiving safety statistics",
+        "s": 15,
+        "h": "Too literal; consider why it was written."
+      },
+      {
+        "g": "physics of air resistance",
+        "s": 5,
+        "h": "Wrong field, too literal."
+      },
+      {
+        "g": "a cookbook",
+        "s": 0,
+        "h": "Nowhere near."
+      }
+    ],
+    "rating": "G",
+    "fun": 5,
+    "difficulty": 2,
+    "url": "https://doi.org/10.1136/bmj.327.7429.1459",
+    "source": "BMJ 327:1459, https://pmc.ncbi.nlm.nih.gov/articles/PMC300808/; 2018 trial (Yeh et al., BMJ): https://pmc.ncbi.nlm.nih.gov/articles/PMC6298200/",
+    "checked": "2026-10-06"
+  },
+  {
+    "id": "paper-penguin-pooh",
+    "cat": "paper",
+    "kind": "paper",
+    "prompt": "Pressures produced when penguins pooh",
+    "ask": "What field is it from, and what is the paper about?",
+    "full": "Pressures produced when penguins pooh—calculations on avian defaecation",
+    "authors": "Meyer-Rochow & Gal",
+    "journal": "Polar Biology",
+    "year": 2003,
+    "field": "Biology",
+    "truth": "Biology. Penguins shoot their droppings out of the nest, and the authors worked out the pressure needed from how far and how runny the droppings were: about 10 to 60 kilopascals for a squirt of some 40 centimeters.",
+    "more": "It won the 2005 Ig Nobel Prize in fluid dynamics. A 2020 follow-up estimated that a penguin on a high perch can send its droppings more than 1.3 meters.",
+    "key": [
+      "droppings",
+      "pressure",
+      "penguins",
+      "distance",
+      "biology"
+    ],
+    "clues": [
+      "The study worked from photographs taken at a colony of birds.",
+      "The birds keep their nests clean by aiming over the edge.",
+      "From how far the mess flew and how runny it was, the authors calculated the force behind it."
+    ],
+    "decoys": [
+      "Biology. Diving penguins face water pressures of dozens of atmospheres, and the paper shows how their bones and blood avoid damage on the way down.",
+      "Biology. Emperor penguins huddled against winter storms press together so tightly that birds in the middle can barely move or breathe.",
+      "Ecology. Droppings from big penguin colonies stain the ice so heavily that the colonies can be counted on satellite photos of Antarctica."
+    ],
+    "graded": [
+      {
+        "g": "biology, how hard penguins squirt their poop",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "the physics of penguins shooting droppings out of the nest",
+        "s": 92,
+        "h": "Spot on."
+      },
+      {
+        "g": "penguin poop pressure",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "how far penguins can poop",
+        "s": 80,
+        "h": "Close; what got calculated?"
+      },
+      {
+        "g": "biology of penguin digestion",
+        "s": 45,
+        "h": "Right field and topic; what got measured?"
+      },
+      {
+        "g": "water pressure on diving penguins",
+        "s": 20,
+        "h": "Right bird, wrong pressure."
+      },
+      {
+        "g": "penguin mating behavior",
+        "s": 10,
+        "h": "Right bird, wrong behavior."
+      },
+      {
+        "g": "peer pressure among penguins",
+        "s": 8,
+        "h": "Wrong kind of pressure."
+      },
+      {
+        "g": "air pressure in antarctica",
+        "s": 5,
+        "h": "Cold."
+      },
+      {
+        "g": "winnie the pooh",
+        "s": 0,
+        "h": "Nowhere near."
+      }
+    ],
+    "rating": "PG",
+    "fun": 5,
+    "difficulty": 1,
+    "url": "https://improbable.com/2020/07/03/penguin-poo-pressure-calculated-anew/",
+    "source": "Polar Biology 27:56-58 (2003); Ig Nobel 2005 and 2020 follow-up: https://improbable.com/2020/07/03/penguin-poo-pressure-calculated-anew/; https://www.mentalfloss.com/article/70087/some-penguins-are-projectile-poopers",
+    "checked": "2026-10-06"
+  },
+  {
+    "id": "paper-cat-rheology",
+    "cat": "paper",
+    "kind": "paper",
+    "prompt": "On the rheology of cats",
+    "ask": "What field is it from, and what is the paper about?",
+    "full": "On the rheology of cats",
+    "authors": "Fardin",
+    "journal": "Rheology Bulletin",
+    "year": 2014,
+    "field": "Physics",
+    "truth": "Physics. Prompted by photos of cats filling sinks, jars and boxes, the paper asks whether a cat is a liquid, and uses the physics of flow to argue that, given time to settle, it behaves like one.",
+    "more": "Rheology is the study of how materials flow. Fardin estimated a cat's 'relaxation time' at between one second and one minute, and won the 2017 Ig Nobel Prize in physics for it.",
+    "key": [
+      "liquid",
+      "cats",
+      "flow",
+      "physics",
+      "containers"
+    ],
+    "clues": [
+      "The paper started from internet photos of pets in odd places.",
+      "The long word in the title names the science of how honey, paint and dough move.",
+      "A cat poured into a fishbowl takes the shape of the bowl."
+    ],
+    "decoys": [
+      "Physics. The paper measured how a cat's fur sheds water, explaining why cats stay drier than dogs after the same soaking.",
+      "Physics. It explains how a falling cat twists in midair to land on its feet without anything to push against.",
+      "Biology. It shows how cats lap up milk by pulling a column of it upward with the tip of the tongue, several times a second."
+    ],
+    "graded": [
+      {
+        "g": "physics, whether cats are liquid",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "cats flow into containers like fluids",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "are cats liquids",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "cat physics",
+        "s": 50,
+        "h": "Right field; what's the question?"
+      },
+      {
+        "g": "fluid dynamics of cats drinking",
+        "s": 45,
+        "h": "Right science, wrong question."
+      },
+      {
+        "g": "physics of how cats land on their feet",
+        "s": 35,
+        "h": "Right field, wrong cat trick."
+      },
+      {
+        "g": "the study of cat behavior",
+        "s": 20,
+        "h": "Wrong field; look up the long word."
+      },
+      {
+        "g": "how cats purr",
+        "s": 10,
+        "h": "Cold."
+      },
+      {
+        "g": "rheumatism in cats",
+        "s": 8,
+        "h": "Misread word: it isn't joint disease."
+      },
+      {
+        "g": "tax law",
+        "s": 0,
+        "h": "Nowhere near."
+      }
+    ],
+    "rating": "G",
+    "fun": 5,
+    "difficulty": 2,
+    "url": "https://fermatslibrary.com/s/on-the-rheology-of-cats",
+    "source": "Rheology Bulletin 83(2):16-17, 30 (July 2014); Ig Nobel 2017: https://www.ens-lyon.fr/en/node/350483; https://www.smithsonianmag.com/smart-news/ig-nobel-prizes-recognize-humorous-real-research-180964916/",
+    "checked": "2026-10-06"
+  },
+  {
+    "id": "paper-sleeping-beauties",
+    "cat": "paper",
+    "kind": "paper",
+    "prompt": "Sleeping Beauties in science",
+    "ask": "What field is it from, and what is the paper about?",
+    "full": "Sleeping Beauties in science",
+    "authors": "van Raan",
+    "journal": "Scientometrics",
+    "year": 2004,
+    "field": "Information science",
+    "truth": "Information science (scientometrics). It measured how often research papers go almost uncited for years and then suddenly collect many citations, a pattern van Raan named 'Sleeping Beauties'.",
+    "more": "He scored each one by how deeply and how long it slept and how strongly it woke. Later studies found such late bloomers are fairly common; Einstein's 1935 'EPR' paper on quantum entanglement is a famous one.",
+    "key": [
+      "citations",
+      "delayed",
+      "papers",
+      "ignored",
+      "recognition"
+    ],
+    "clues": [
+      "The fairy tale is a metaphor; the subjects are documents.",
+      "The study counted how often things were referred to, year by year.",
+      "Some research goes unnoticed for decades before the world suddenly catches up."
+    ],
+    "decoys": [
+      "Biology. Some seeds and spores lie dormant for centuries and still sprout, and the paper lists the oldest ones revived in labs.",
+      "Information science. Papers by unknown scientists are cited less than the same work by famous ones, until the unknowns become famous themselves.",
+      "Medicine. Scientists who nap during the day file more patents than those who don't, a study of sleep and creativity."
+    ],
+    "graded": [
+      {
+        "g": "scientometrics, delayed recognition of research papers",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "papers ignored for years that suddenly get lots of citations",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "research ahead of its time that got noticed late",
+        "s": 82,
+        "h": "Right idea; name the field too."
+      },
+      {
+        "g": "citation analysis",
+        "s": 50,
+        "h": "Right field; what pattern?"
+      },
+      {
+        "g": "information science about famous scientists",
+        "s": 35,
+        "h": "Right field, wrong subject."
+      },
+      {
+        "g": "women in science being overlooked",
+        "s": 20,
+        "h": "Wrong kind of overlooked."
+      },
+      {
+        "g": "sleep research on scientists",
+        "s": 10,
+        "h": "Too literal: nobody's asleep."
+      },
+      {
+        "g": "dormant seeds",
+        "s": 8,
+        "h": "Cold, though the idea rhymes."
+      },
+      {
+        "g": "biology of hibernation",
+        "s": 5,
+        "h": "Too literal."
+      },
+      {
+        "g": "the history of fairy tales",
+        "s": 2,
+        "h": "Nowhere near."
+      }
+    ],
+    "rating": "G",
+    "fun": 3,
+    "difficulty": 3,
+    "url": "https://en.wikipedia.org/wiki/Paper_with_delayed_recognition",
+    "source": "Scientometrics 59(3):467-472 (2004); https://en.wikipedia.org/wiki/Paper_with_delayed_recognition; https://scinapse.io/papers/2159299749",
+    "checked": "2026-10-06"
+  },
+  {
+    "id": "paper-gym",
+    "cat": "paper",
+    "kind": "paper",
+    "prompt": "Paying Not to Go to the Gym",
+    "ask": "What field is it from, and what is the paper about?",
+    "full": "Paying Not to Go to the Gym",
+    "authors": "DellaVigna & Malmendier",
+    "journal": "American Economic Review",
+    "year": 2006,
+    "field": "Economics",
+    "truth": "Economics. Health-club members on monthly contracts of over $70 went about four times a month, paying over $17 a visit when a $10-a-visit pass was on offer, because they overestimated how often they would go.",
+    "more": "The data covered 7,752 members of three US health clubs over three years. The authors estimate members gave up about $600 each over a membership, a textbook case of overconfidence about future self-control.",
+    "key": [
+      "membership",
+      "unused",
+      "gym",
+      "attendance",
+      "optimism",
+      "economics"
+    ],
+    "clues": [
+      "The data came from the front-desk records of three health clubs.",
+      "Compare what each member paid with how often they actually showed up.",
+      "A pay-per-visit pass would have been cheaper for most of them."
+    ],
+    "decoys": [
+      "Economics. Gyms earn most of their profit from January sign-ups after New Year, and the paper shows how they price contracts around it.",
+      "Economics. Paying people a small cash bonus for each gym visit doubled their attendance, and many kept going after the payments stopped.",
+      "Psychology. Members who paid more for their membership went more often, because they felt they had to get their money's worth."
+    ],
+    "graded": [
+      {
+        "g": "economics, people overpay for gym memberships they barely use",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "people buy gym memberships and don't go",
+        "s": 88,
+        "h": "Spot on; the field is implied."
+      },
+      {
+        "g": "overconfidence about future self control",
+        "s": 75,
+        "h": "Right idea; tie it to the title."
+      },
+      {
+        "g": "gym pricing strategies",
+        "s": 55,
+        "h": "Warm; who's making the mistake?"
+      },
+      {
+        "g": "behavioral economics",
+        "s": 45,
+        "h": "Right field; what's the finding?"
+      },
+      {
+        "g": "economics of the fitness industry",
+        "s": 40,
+        "h": "Right field, too broad."
+      },
+      {
+        "g": "a study of laziness",
+        "s": 40,
+        "h": "Warm; what does it cost them?"
+      },
+      {
+        "g": "exercise and health outcomes",
+        "s": 15,
+        "h": "Wrong field and question."
+      },
+      {
+        "g": "gyms paying people to stay away",
+        "s": 15,
+        "h": "Too literal."
+      },
+      {
+        "g": "chess openings",
+        "s": 0,
+        "h": "Nowhere near."
+      }
+    ],
+    "rating": "G",
+    "fun": 4,
+    "difficulty": 2,
+    "url": "https://doi.org/10.1257/aer.96.3.694",
+    "source": "AER 96(3):694-719, https://eml.berkeley.edu/~ulrike/Papers/gym.pdf; https://ideas.repec.org/a/aea/aecrev/v96y2006i3p694-719.html",
+    "checked": "2026-10-06"
+  },
+  {
+    "id": "paper-more-is-different",
+    "cat": "paper",
+    "kind": "paper",
+    "prompt": "More Is Different",
+    "ask": "What field is it from, and what is the paper about?",
+    "full": "More Is Different: Broken symmetry and the nature of the hierarchical structure of science",
+    "authors": "Anderson",
+    "journal": "Science",
+    "year": 1972,
+    "field": "Physics",
+    "truth": "Physics. Knowing the laws for the smallest parts does not let you work out how large collections of them behave: at each level of complexity new properties emerge, so chemistry and biology are more than applied physics.",
+    "more": "Anderson, a condensed-matter physicist, won the 1977 Nobel Prize in physics. The essay ends with an exchange from 1920s Paris: Fitzgerald says the rich are different from us, and Hemingway replies, yes, they have more money.",
+    "key": [
+      "emergence",
+      "complexity",
+      "levels",
+      "reduction",
+      "physics"
+    ],
+    "clues": [
+      "It is a short essay against a popular view of how the sciences fit together.",
+      "Its author argues that the rules for particles won't tell you how a crowd of them behaves.",
+      "At each new scale, wholly new behavior appears, so the whole is more than its parts."
+    ],
+    "decoys": [
+      "Physics. Adding more particles to a quantum system makes it behave like an everyday object, which is why we never see a cat in two places at once.",
+      "Economics. Firms that double in size become more than twice as productive because larger teams share ideas faster, an argument for big research labs.",
+      "Physics. The universe holds far more matter than antimatter, and the paper proposes a broken symmetry in the early universe to explain why."
+    ],
+    "graded": [
+      {
+        "g": "physics, emergence, the whole is more than the sum of its parts",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "reductionism fails at higher levels of complexity",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "emergence",
+        "s": 88,
+        "h": "Spot on; the field is implied."
+      },
+      {
+        "g": "complex systems behave differently from their parts",
+        "s": 88,
+        "h": "Spot on; name the field too."
+      },
+      {
+        "g": "biology of crowds and swarms",
+        "s": 45,
+        "h": "Warm example; what's the general claim?"
+      },
+      {
+        "g": "physics essay about scale",
+        "s": 45,
+        "h": "Right field; what changes with scale?"
+      },
+      {
+        "g": "quantity versus quality in statistics",
+        "s": 25,
+        "h": "Cool; think about how sciences fit together."
+      },
+      {
+        "g": "economics of mass production",
+        "s": 10,
+        "h": "Wrong field and idea."
+      },
+      {
+        "g": "psychology of wanting more stuff",
+        "s": 5,
+        "h": "Too literal."
+      },
+      {
+        "g": "diet and portion sizes",
+        "s": 0,
+        "h": "Nowhere near."
+      }
+    ],
+    "rating": "G",
+    "fun": 3,
+    "difficulty": 3,
+    "url": "https://doi.org/10.1126/science.177.4047.393",
+    "source": "Science 177(4047):393-396, https://doi.org/10.1126/science.177.4047.393",
+    "checked": "2026-10-06"
+  },
+  {
+    "id": "paper-microprocessor",
+    "cat": "paper",
+    "kind": "paper",
+    "prompt": "Could a Neuroscientist Understand a Microprocessor?",
+    "ask": "What field is it from, and what is the paper about?",
+    "full": "Could a Neuroscientist Understand a Microprocessor?",
+    "authors": "Jonas & Kording",
+    "journal": "PLOS Computational Biology",
+    "year": 2017,
+    "field": "Neuroscience",
+    "truth": "Neuroscience. The authors ran neuroscience's standard data-analysis methods on a simulated classic computer chip playing video games; the methods found patterns but failed to explain how the chip works, which casts doubt on what they reveal about brains.",
+    "more": "The chip was the MOS 6502 of early home computers like the Apple I, and its 'behaviors' were Donkey Kong, Space Invaders and Pitfall. The title echoes a 2002 essay by Yuri Lazebnik, 'Can a biologist fix a radio?'",
+    "key": [
+      "chip",
+      "methods",
+      "brain",
+      "failed",
+      "neuroscience",
+      "games"
+    ],
+    "clues": [
+      "The experimental subject was fully understood by the people who designed it, which was the point.",
+      "Its 'behaviors' were three early video games.",
+      "Lesions, tuning curves and brain-style recordings were applied to transistors."
+    ],
+    "decoys": [
+      "Neuroscience. Recordings from monkeys playing video games showed that single neurons store game strategy much as a computer chip stores data.",
+      "Computer science. A chip built from artificial neurons learned to play Pong faster than an ordinary processor while using a thousandth of the power.",
+      "Neuroscience. Neuroscientists with no electronics training were asked to fix a broken computer, and most managed it by trial and error within an hour."
+    ],
+    "graded": [
+      {
+        "g": "neuroscience, brain analysis methods fail to explain a computer chip",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "they tested neuroscience tools on a microprocessor and they didn't work",
+        "s": 92,
+        "h": "Spot on."
+      },
+      {
+        "g": "neuroscience methods can't even figure out a simple chip",
+        "s": 92,
+        "h": "Spot on."
+      },
+      {
+        "g": "a skeptical test of neuroscience data analysis",
+        "s": 75,
+        "h": "Close; how did they test it?"
+      },
+      {
+        "g": "comparing brains to computers",
+        "s": 45,
+        "h": "Warm; what was actually tested?"
+      },
+      {
+        "g": "neuroscience, can brain scientists learn computer engineering",
+        "s": 30,
+        "h": "Right field, too literal."
+      },
+      {
+        "g": "computer science, chips modeled on brains",
+        "s": 25,
+        "h": "Right overlap, wrong direction."
+      },
+      {
+        "g": "neuroscientists repairing computers",
+        "s": 20,
+        "h": "Too literal."
+      },
+      {
+        "g": "whether AI can understand itself",
+        "s": 10,
+        "h": "Cold."
+      },
+      {
+        "g": "medieval history",
+        "s": 0,
+        "h": "Nowhere near."
+      }
+    ],
+    "rating": "G",
+    "fun": 4,
+    "difficulty": 2,
+    "url": "https://doi.org/10.1371/journal.pcbi.1005268",
+    "source": "PLOS Comput Biol 13(1):e1005268 (2017); https://jonaslab.uchicago.edu/publication/neuroproc/neuroproc; https://www.livescience.com/57485-donkey-kong-experiment-shows-neuroscience-weaknesses.html",
+    "checked": "2026-10-06"
+  },
+  {
+    "id": "paper-writers-block",
+    "cat": "paper",
+    "kind": "paper",
+    "prompt": "The Unsuccessful Self-Treatment of a Case of \"Writer's Block\"",
+    "ask": "What field is it from, and what is the paper about?",
+    "full": "The Unsuccessful Self-Treatment of a Case of \"Writer's Block\"",
+    "authors": "Upper",
+    "journal": "Journal of Applied Behavior Analysis",
+    "year": 1974,
+    "field": "Psychology",
+    "truth": "Psychology. The article is blank: under the title there is no text at all, so the author's attempt to cure his own writer's block plainly failed.",
+    "more": "The printed reviewer's comment says he studied it 'very carefully with lemon juice and X-rays' without finding a flaw in design or writing style. In 2007 the same journal ran a 'multisite cross-cultural replication', also blank.",
+    "key": [
+      "blank",
+      "empty",
+      "page",
+      "joke",
+      "psychology"
+    ],
+    "clues": [
+      "The author was a psychologist working on his own problem.",
+      "A reviewer found no flaws in either its design or its writing style.",
+      "It is often called the shortest paper ever published."
+    ],
+    "decoys": [
+      "Psychology. A psychologist rewarded himself with coffee for every page he wrote, and his output rose for a week before falling back.",
+      "Psychology. A novelist kept a diary of failed attempts to write, and found the block lifted only after he stopped setting deadlines.",
+      "Psychology. Writers who treated their own block with daily freewriting produced no more pages than those who waited for inspiration."
+    ],
+    "graded": [
+      {
+        "g": "psychology joke, the paper is completely blank",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "it has no text because he couldn't write it",
+        "s": 88,
+        "h": "Spot on."
+      },
+      {
+        "g": "a blank paper",
+        "s": 88,
+        "h": "Spot on."
+      },
+      {
+        "g": "a joke paper",
+        "s": 70,
+        "h": "Close; what makes it funny?"
+      },
+      {
+        "g": "psychologist couldn't cure his own writer's block",
+        "s": 60,
+        "h": "True; now picture the article itself."
+      },
+      {
+        "g": "psychology of treatments for writer's block",
+        "s": 35,
+        "h": "Right field; look at the page itself."
+      },
+      {
+        "g": "behavior therapy for a blocked writer",
+        "s": 35,
+        "h": "Right field; look at the page itself."
+      },
+      {
+        "g": "a novelist's case study",
+        "s": 15,
+        "h": "Too literal."
+      },
+      {
+        "g": "treating children who play with blocks",
+        "s": 3,
+        "h": "Nowhere near."
+      },
+      {
+        "g": "physics of black holes",
+        "s": 0,
+        "h": "Nowhere near."
+      }
+    ],
+    "rating": "G",
+    "fun": 5,
+    "difficulty": 2,
+    "url": "https://fermatslibrary.com/s/the-unsuccessful-self-treatment-of-a-case-of-writers-block",
+    "source": "JABA 7(3):497 (1974); https://fermatslibrary.com/s/the-unsuccessful-self-treatment-of-a-case-of-writers-block; 2007 replication (Didden et al., JABA 40(4):773): https://improbable.com/2010/03/30/self-treatments-of-writers-block/",
+    "checked": "2026-10-06"
+  },
+  {
+    "id": "paper-attention",
+    "cat": "paper",
+    "kind": "paper",
+    "prompt": "Attention Is All You Need",
+    "ask": "What field is it from, and what is the paper about?",
+    "full": "Attention Is All You Need",
+    "authors": "Vaswani et al.",
+    "journal": "Advances in Neural Information Processing Systems (NeurIPS)",
+    "year": 2017,
+    "field": "Computer science",
+    "truth": "Computer science. It introduced the Transformer, a neural network for translating language that relies on 'attention' alone and drops older word-by-word designs; it became the basis of chatbots like ChatGPT.",
+    "more": "The eight authors, most of them at Google, were listed in random order with a note that all contributed equally. The 'T' in GPT stands for Transformer.",
+    "key": [
+      "transformer",
+      "neural",
+      "network",
+      "language",
+      "translation",
+      "artificial"
+    ],
+    "clues": [
+      "The word in the title is borrowed from psychology, but the subject is machines.",
+      "Its first job was translating English into German and French.",
+      "The design it introduced is the last letter in the name of a famous chatbot."
+    ],
+    "decoys": [
+      "Psychology. Children's test scores rose more from training their focus than from extra tutoring, a study of attention in schools.",
+      "Computer science. Apps that grab users' attention with notifications keep them twice as long, a study of the attention economy.",
+      "Computer science. It introduced an image-recognition network that learns where to look by copying the eye movements of human viewers."
+    ],
+    "graded": [
+      {
+        "g": "computer science, the transformer model behind ChatGPT",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "the transformer paper",
+        "s": 90,
+        "h": "Spot on; the field is implied."
+      },
+      {
+        "g": "AI language models using attention",
+        "s": 92,
+        "h": "Spot on."
+      },
+      {
+        "g": "deep learning for translation",
+        "s": 78,
+        "h": "Close; name what it introduced."
+      },
+      {
+        "g": "machine learning, a new neural network design",
+        "s": 60,
+        "h": "Right field; which design, and for what?"
+      },
+      {
+        "g": "computer vision for self driving cars",
+        "s": 28,
+        "h": "Right field, wrong problem."
+      },
+      {
+        "g": "the attention economy and social media",
+        "s": 15,
+        "h": "Cool; think of software that reads."
+      },
+      {
+        "g": "psychology study about attention spans",
+        "s": 10,
+        "h": "Wrong field; who is paying attention?"
+      },
+      {
+        "g": "mindfulness and meditation",
+        "s": 3,
+        "h": "Too literal."
+      },
+      {
+        "g": "a self-help book about love",
+        "s": 0,
+        "h": "Nowhere near."
+      }
+    ],
+    "rating": "G",
+    "fun": 4,
+    "difficulty": 2,
+    "url": "https://arxiv.org/abs/1706.03762",
+    "source": "https://arxiv.org/abs/1706.03762 (NeurIPS 2017, Advances in Neural Information Processing Systems 30)",
+    "checked": "2026-10-06"
+  }
+]

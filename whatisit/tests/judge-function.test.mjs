@@ -28,4 +28,32 @@ const many = await judge({ id: "kewpie", guesses: ["mayo", "dolls"] }, async () 
 assert.strictEqual(many.scores[1].score, 5);
 assert.strictEqual(many.funniest, 1);
 await assert.rejects(judge({ mode: "score", id: "kewpie", guesses: ["mayo"] }, async () => "no idea"));
+// Answer keys: a guess that restates a graded one is scored without calling the model.
+import ITEMS from "../netlify/lib/items.mjs";
+import { answerKey, cacheText, kindLabel } from "../netlify/lib/judge-core.mjs";
+const [kid, kit] = Object.entries(ITEMS).find(([, it]) => it.graded && it.graded.length) || [];
+if (kid) {
+  const e = kit.graded[0];
+  const free = await judge({ mode: "score", id: kid, guesses: [" " + e.g.toUpperCase() + "."] }, async () => { throw new Error("the model should not be called"); });
+  assert.deepStrictEqual(free, { score: e.s, hint: e.h, by: "key" });
+  assert.strictEqual(answerKey(buildRequest({ mode: "score", id: kid, guesses: ["zzz qqq unlikely"] })), null);
+}
+// One guess at a curated item is cached by its wording, whatever the player's name or punctuation.
+assert.strictEqual(cacheText(buildRequest({ mode: "score", id: "kewpie", guesses: ["Mayo!"] })), cacheText(buildRequest({ mode: "score", id: "kewpie", guesses: [{ name: "Bo", text: "mayo" }] })));
+assert.strictEqual(kindLabel({ kind: "lyric", song: "Yankee Doodle" }), 'a line from a song ("Yankee Doodle")');
+
+// The function itself: with no key of your own (or only Netlify's gateway key) the AI judge rests.
+for (const k of ["ANTHROPIC_API_KEY", "OPENAI_API_KEY", "GEMINI_API_KEY", "GOOGLE_API_KEY", "JUDGE_PROVIDER"]) delete process.env[k];
+process.env.GEMINI_API_KEY = "netlify-gateway-key";
+process.env.GOOGLE_GEMINI_BASE_URL = "https://example.netlify.app/.netlify/ai";
+const fn = (await import("../netlify/functions/judge.mjs?gateway")).default;
+const post = (body) => fn(new Request("http://x/api/judge", { method: "POST", body: JSON.stringify(body) }), { ip: "1.2.3.4" });
+let res = await post({ mode: "score", id: "kewpie", guesses: ["something new and odd"] });
+assert.strictEqual(res.status, 503);
+assert.strictEqual((await res.json()).reason, "off");
+if (kid) {
+  res = await post({ mode: "score", id: kid, guesses: [kit.graded[0].g] });
+  assert.strictEqual(res.status, 200, "answer-key hits work even with the AI switched off");
+}
+assert.strictEqual((await post({ id: "no-such-item", guesses: ["x"] })).status, 400);
 console.log("judge function: all checks passed");

@@ -19,7 +19,8 @@ const BRANCH = process.env.WII_BRANCH || "claude/quirky-brahmagupta-l9gamm";
 
 // ---------- content ----------
 const REQUIRED = ["id", "cat", "prompt", "ask", "truth", "key", "clues", "decoys", "rating"];
-const CATS = new Set(["web", "brand", "plate", "patent", "search", "double"]);
+const KIND = { web: "domain", double: "domain", brand: "brand", plate: "plate", patent: "patent", search: "phrase", zoom: "image", paper: "paper", lyric: "lyric", latenight: "news", headline: "headline" };
+const CATS = new Set(Object.keys(KIND));
 const items = [];
 for (const f of readdirSync(join(ROOT, "content")).filter((f) => f.endsWith(".json")).sort()) {
   for (const it of JSON.parse(read("content/" + f))) {
@@ -28,6 +29,12 @@ for (const f of readdirSync(join(ROOT, "content")).filter((f) => f.endsWith(".js
     if (missing.length) throw new Error(`${f}: ${it.id || it.prompt} is missing ${missing.join(", ")}`);
     if (!CATS.has(it.cat)) throw new Error(`${f}: ${it.id} has unknown category ${it.cat}`);
     if (!Array.isArray(it.key) || !it.key.length) throw new Error(`${f}: ${it.id} needs key words`);
+    it.kind = it.kind || KIND[it.cat];
+    // Pictures are inlined, so the page stays one file (and works as an Artifact).
+    if (it.image) {
+      const svg = readFileSync(join(ROOT, "content", it.image), "utf8").replace(/\s+/g, " ").replace(/"/g, "'").trim();
+      it.src = "data:image/svg+xml," + svg.replace(/[\r\n%#()<>?[\\\]^`{|}]/g, encodeURIComponent);
+    }
     items.push(it);
   }
 }
@@ -38,7 +45,12 @@ for (const it of items) {
 }
 const contentJson = JSON.stringify(items).replace(/</g, "\\u003c");
 // The AI judge function looks answers up by id, so it only judges this game's mysteries.
-const answers = Object.fromEntries(items.map((it) => [it.id, { prompt: it.prompt, cat: it.cat, ask: it.ask, truth: it.truth, more: it.more || "" }]));
+// Answer keys go too, so a guess that matches one is scored without a model call.
+const answers = Object.fromEntries(items.map((it) => [it.id, {
+  prompt: it.prompt, cat: it.cat, kind: it.kind || KIND[it.cat], ask: it.ask, truth: it.truth, more: it.more || "",
+  ...(it.song ? { song: it.song } : {}),
+  ...(it.graded ? { graded: it.graded.map((e) => ({ g: e.g, s: e.s, h: e.h || "" })) } : {}),
+}]));
 writeFileSync(join(ROOT, "netlify/lib/items.mjs"), "// Written by tools/build.mjs from content/. Do not edit.\nexport default " + JSON.stringify(answers, null, 1) + ";\n");
 
 // ---------- code ----------

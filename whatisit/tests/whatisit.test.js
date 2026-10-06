@@ -14,7 +14,7 @@ const buf = fs.readFileSync(path.join(ROOT, "site", "judge-vectors.bin"));
 const space = new J.Space(buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength));
 
 // ---------- content ----------
-const CATS = new Set(["web", "brand", "plate", "patent", "search", "double"]);
+const CATS = new Set(["web", "brand", "plate", "patent", "search", "double", "zoom", "paper", "lyric", "latenight", "headline"]);
 const ids = new Set();
 for (const it of content) {
   const where = `${it.file}: ${it.id}`;
@@ -32,10 +32,30 @@ for (const it of content) {
   assert(space.lookup(it.key[0]) || it.truth.toLowerCase().includes(it.key[0]), `${where}: first key "${it.key[0]}" is not in the word list`);
   if (it.cat === "plate") assert(["approved", "denied"].includes(it.dmv), `${where}: plate needs the DMV verdict`);
   if (it.cat === "patent") assert(/^US [\d,]+$/.test(it.number) && it.year > 1790, `${where}: patent number/year`);
+  if (it.cat === "zoom") {
+    assert(fs.existsSync(path.join(ROOT, "content", it.image)), `${where}: missing picture ${it.image}`);
+    assert(Array.isArray(it.focus) && it.focus.every((f) => f >= 0 && f <= 1), `${where}: focus is two fractions`);
+    assert(Array.isArray(it.zooms) && it.zooms.length >= 2 && it.zooms[it.zooms.length - 1] === 1, `${where}: zooms end at 1`);
+  }
+  if (it.cat === "paper") assert(it.full && it.full.toLowerCase().startsWith(it.prompt.toLowerCase().slice(0, 12)), `${where}: the prompt is the start of the full title`);
+  if (it.cat === "lyric") assert(it.song && it.pd === true, `${where}: lyrics need the song and must be public domain`);
+  // Only shows confirmed to have done a bit are listed; a verified item needs two.
+  if (it.cat === "latenight") assert(Array.isArray(it.hosts) && it.hosts.length >= (it.status === "unverified" ? 1 : 2), `${where}: name the shows that did bits`);
+  // The answer key: example guesses scored in advance.
+  if (it.graded) {
+    assert(it.graded.length >= 6, `${where}: answer key needs 6+ guesses`);
+    for (const e of it.graded) {
+      assert(typeof e.g === "string" && e.g.trim() && Number.isInteger(e.s) && e.s >= 0 && e.s <= 100, `${where}: bad answer-key entry ${JSON.stringify(e)}`);
+      assert(!e.h || e.h.length <= 80, `${where}: hint too long: ${e.h}`);
+    }
+    assert(it.graded.some((e) => e.s >= 85), `${where}: answer key has no spot-on guess`);
+    assert(it.graded.some((e) => e.s < 30), `${where}: answer key has no wrong guess`);
+  }
 }
 const byCat = {};
 for (const it of content) byCat[it.cat] = (byCat[it.cat] || 0) + 1;
 for (const c of ["web", "brand", "plate", "patent", "search"]) assert(byCat[c] >= 10, `category ${c} has only ${byCat[c] || 0} items`);
+for (const c of ["zoom", "paper", "lyric", "latenight", "headline"]) assert(!byCat[c] || byCat[c] >= 8, `category ${c} has only ${byCat[c]} items`);
 const unknownKeys = content.flatMap((it) => it.key.filter((k) => !space.lookup(k)).map((k) => `${it.id}:${k}`));
 // Secondary keys outside the word list only count when a guess repeats them exactly; keep that rare.
 assert(unknownKeys.length <= content.length / 4, "too many key words the robot doesn't know: " + unknownKeys.join(", "));
@@ -65,6 +85,21 @@ const trapped = J.scoreGuess(space, "a boxer's victory slogan", knock);
 assert(trapped.trap && trapped.score < 30, "decoy guesses are flagged as traps");
 assert(score("a doctor who puts you to sleep", knock) >= 85);
 
+// The answer key: a guess that restates a graded one takes its score and hint.
+const keyed = content.find((it) => it.graded && it.graded.length);
+if (keyed) {
+  const e = keyed.graded[0];
+  const r = J.scoreItem(space, e.g.toUpperCase() + "!", keyed);
+  assert.strictEqual(r.by, "key");
+  assert.strictEqual(r.score, e.s);
+  assert.strictEqual(r.hint, e.h || "");
+}
+assert.strictEqual(J.normGuess("A laser pointer!"), J.normGuess("laser pointers"));
+assert.notStrictEqual(J.normGuess("not a laser pointer"), J.normGuess("a laser pointer"));
+assert(J.textSim(space, "slap a man with an eel", "slapping a guy with an eel") > J.textSim(space, "slap a man with an eel", "eel recipes"));
+const plain = { key: ["socks", "underwear"], truth: "Socks.", decoys: [] };
+assert.strictEqual(J.scoreItem(space, "socks", plain).by, "robot", "no answer key: the robot judges");
+
 // Filler words don't count; empty guesses score 0.
 assert.strictEqual(score("a website where", eel), 0);
 assert.strictEqual(score("", eel), 0);
@@ -86,6 +121,8 @@ assert.throws(() => J.parseJudgeReply("no json here", 2));
 
 // ---------- the Daily ----------
 const day1 = Pick.dailyItems(content, "2026-10-06").map((it) => it.id);
+const cats1 = Pick.dailyItems(content, "2026-10-06").map((it) => it.cat);
+assert.strictEqual(new Set(cats1).size, cats1.length, "one item per category");
 assert.deepStrictEqual(Pick.dailyItems(content, "2026-10-06").map((it) => it.id), day1, "a date always gives the same five");
 assert.strictEqual(new Set(day1).size, 5);
 assert.notDeepStrictEqual(Pick.dailyItems(content, "2026-10-07").map((it) => it.id), day1, "the next day differs");

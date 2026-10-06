@@ -1,0 +1,812 @@
+[
+  {
+    "id": "latenight-suez-ship",
+    "cat": "latenight",
+    "kind": "news",
+    "prompt": "The container ship Ever Given stuck in the Suez Canal (March 2021)",
+    "ask": "What's the deal with it? What joke did the late-night hosts make?",
+    "when": "March 2021",
+    "hosts": [
+      "The Tonight Show Starring Jimmy Fallon",
+      "Jimmy Kimmel Live!"
+    ],
+    "truth": "The world's worst parking job: one boat stuck sideways held up everybody's shopping, and its captain became the most hated driver on the planet.",
+    "more": "Jimmy Fallon said it was a tough day for the captain, who was trending on Twitter as #dockblocker. Jimmy Kimmel said that after years of fighting it was nice to see the whole world come together to make fun of a boat, and that one stuck ship had given capitalism a heart attack.",
+    "key": [
+      "parking",
+      "driver",
+      "traffic",
+      "captain",
+      "shopping"
+    ],
+    "clues": [
+      "The jokes were about something most people do on the way to work.",
+      "The captain got a Twitter nickname you might give someone who blocks the whole road.",
+      "Picture the worst lane-hogger you've ever honked at, then make it a quarter of a mile long."
+    ],
+    "decoys": [
+      "The rescue: hosts cast the little tugboats as underdog heroes in a sports movie, with a training montage on the canal bank.",
+      "Shortages: hosts warned that the jam would empty store shelves of toilet paper again, a year after the first panic.",
+      "The ship's name: hosts said anything called Ever Given was bound to stay put forever, and wrote it a sappy farewell card."
+    ],
+    "graded": [
+      {
+        "g": "worst parking job ever",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "the captain is the worst driver in the world",
+        "s": 92,
+        "h": "Spot on."
+      },
+      {
+        "g": "someone tried to parallel park a ship",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "a traffic jam caused by one bad driver",
+        "s": 85,
+        "h": "Spot on."
+      },
+      {
+        "g": "one boat held up everyone's amazon orders",
+        "s": 60,
+        "h": "Warm: now think about who was steering."
+      },
+      {
+        "g": "the whole world united to laugh at a boat",
+        "s": 55,
+        "h": "One host's line; what did they mock?"
+      },
+      {
+        "g": "tiny excavator digging out a giant ship",
+        "s": 35,
+        "h": "A popular meme; think about who steered."
+      },
+      {
+        "g": "they made fun of the ship",
+        "s": 30,
+        "h": "Right subject, but what was the gag?"
+      },
+      {
+        "g": "a ship got stuck in a canal",
+        "s": 15,
+        "h": "That's just the news. Where's the gag?"
+      },
+      {
+        "g": "toilet paper shortage again",
+        "s": 15,
+        "h": "Wrong gag."
+      },
+      {
+        "g": "pirates hijacked it",
+        "s": 5,
+        "h": "Off course."
+      }
+    ],
+    "url": "https://www.goldderby.com/article/2021/jimmy-kimmel-suez-canal-boat/",
+    "source": "Kimmel's monologue: goldderby.com/article/2021/jimmy-kimmel-suez-canal-boat/. Fallon's #dockblocker line: Reuters, 'Ship stuck in the Suez Canal unleashes flood of Internet jokes' (technology.inquirer.net/108730), March 2021.",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 2,
+    "rating": "G"
+  },
+  {
+    "id": "latenight-chicago-pope",
+    "cat": "latenight",
+    "kind": "news",
+    "prompt": "Pope Leo XIV, the first pope born in the United States, is elected (May 2025)",
+    "ask": "What's the deal with it? What joke did the late-night hosts make?",
+    "when": "May 2025",
+    "hosts": [
+      "The Tonight Show Starring Jimmy Fallon",
+      "The Late Show with Stephen Colbert",
+      "Jimmy Kimmel Live!"
+    ],
+    "truth": "The pope as a regular hometown sports fan from Chicago: hosts imagined deep-dish communion wafers, stadium chants and a pontiff who once tailgated at football games.",
+    "more": "Jimmy Fallon pictured deep-dish communion wafers and said a Villanova graduate might once have done a keg stand outside an Eagles game. Stephen Colbert led his audience in a chant of 'Pope-S-A', and Jimmy Kimmel said an American pope in Rome must be what the first Olive Garden opening felt like.",
+    "key": [
+      "regular",
+      "hometown",
+      "pizza",
+      "sports",
+      "fan"
+    ],
+    "clues": [
+      "The jokes left the Vatican alone and went after where he grew up.",
+      "Hosts swapped church rituals for the food and fan culture of an American city.",
+      "Think deep-dish crust at Mass and a stadium chant for the man in white."
+    ],
+    "decoys": [
+      "His age: hosts said that at 69 he counted as a teenager by Vatican standards, and asked who would drive him to Mass.",
+      "The conclave: hosts treated the locked-room vote as a reality show, with cardinals voting each other off the island.",
+      "His math degree: hosts imagined a pope who grades confessions on a curve and splits every dinner bill to the penny."
+    ],
+    "graded": [
+      {
+        "g": "the pope is a regular chicago guy",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "deep dish pizza communion",
+        "s": 92,
+        "h": "Spot on."
+      },
+      {
+        "g": "da pope, said like a chicago sports fan",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "the pope roots for the white sox",
+        "s": 85,
+        "h": "Spot on."
+      },
+      {
+        "g": "the pope tailgating at football games",
+        "s": 80,
+        "h": "Hot: where did he grow up?"
+      },
+      {
+        "g": "an american pope is like olive garden in rome",
+        "s": 70,
+        "h": "Hot: one host's line. Get more specific."
+      },
+      {
+        "g": "they joked about the white smoke",
+        "s": 35,
+        "h": "Right event, different gag."
+      },
+      {
+        "g": "the pope has a math degree",
+        "s": 15,
+        "h": "True fact; where's the gag?"
+      },
+      {
+        "g": "first american pope",
+        "s": 15,
+        "h": "That's just the news. Where's the gag?"
+      },
+      {
+        "g": "the pope is too young",
+        "s": 15,
+        "h": "Wrong angle."
+      },
+      {
+        "g": "the pope opens a casino",
+        "s": 0,
+        "h": "Off the mark."
+      }
+    ],
+    "url": "https://www.clickondetroit.com/entertainment/2025/05/09/da-pope-leo-xivs-chicago-roots-unleash-spate-of-holy-humor/",
+    "source": "AP, \"'DA POPE!' Leo XIV's Chicago roots unleash spate of holy humor\" (May 9, 2025), quoting Fallon, Colbert and Kimmel; Paste, 'Late Night Last Week: Late Night Reacts to the First American Pope'.",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 2,
+    "rating": "PG"
+  },
+  {
+    "id": "latenight-spy-balloon",
+    "cat": "latenight",
+    "kind": "news",
+    "prompt": "A Chinese surveillance balloon drifts across the United States and is shot down (February 2023)",
+    "ask": "What's the deal with it? What joke did the late-night hosts make?",
+    "when": "February 2023",
+    "hosts": [
+      "Late Night with Seth Meyers",
+      "Saturday Night Live"
+    ],
+    "truth": "A spy balloon is too silly to be scary: hosts treated it like a party balloon, from a get-well-soon balloon at the hospital to a gender reveal when it was shot down.",
+    "more": "Seth Meyers said something about it being a balloon made it very hard to take seriously, and asked whether China was trying to scare us or cheer us up at the hospital. Saturday Night Live opened with Bowen Yang playing the balloon, and on Weekend Update Colin Jost compared the shootdown to a gender reveal party.",
+    "key": [
+      "silly",
+      "party",
+      "birthday",
+      "harmless",
+      "cheerful"
+    ],
+    "clues": [
+      "The hosts had trouble feeling threatened by this particular spy.",
+      "One host asked whether it was meant to frighten the country or wish it a speedy recovery.",
+      "Picture it tied to a kid's chair, next to the cake."
+    ],
+    "decoys": [
+      "UFO fever: hosts said that after decades of alien sightings, the military finally shot something down and it was a weather balloon.",
+      "Speed: hosts timed its trip across the country and said it still beat the average cross-country flight with a layover.",
+      "Weather reports: hosts cast it as a rogue forecaster, filing detailed reports on every backyard barbecue it floated over."
+    ],
+    "graded": [
+      {
+        "g": "a balloon is too silly to be scary",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "it's like a birthday party balloon",
+        "s": 92,
+        "h": "Spot on."
+      },
+      {
+        "g": "get well soon balloon from china",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "shooting it down was a gender reveal",
+        "s": 85,
+        "h": "Spot on: that was one host's line."
+      },
+      {
+        "g": "the balloon had feelings and was sad",
+        "s": 45,
+        "h": "Warm: one sketch did that. Bigger picture?"
+      },
+      {
+        "g": "why spy with a balloon when they have tiktok",
+        "s": 40,
+        "h": "Different gag: think about how it looks."
+      },
+      {
+        "g": "they made fun of china spying on us",
+        "s": 30,
+        "h": "Right subject, but what was the gag?"
+      },
+      {
+        "g": "a balloon got shot down over the us",
+        "s": 15,
+        "h": "That's just the news. Where's the gag?"
+      },
+      {
+        "g": "it was really aliens",
+        "s": 10,
+        "h": "Wrong kind of mystery."
+      },
+      {
+        "g": "a hot dog eating contest",
+        "s": 0,
+        "h": "Off the mark."
+      }
+    ],
+    "url": "https://www.thewrap.com/seth-meyers-chinese-spy-balloon-joke-clip",
+    "source": "TheWrap on Seth Meyers' balloon segment (Feb. 6, 2023); NPR, 'Hours after its demise, the Chinese spy balloon was the star of the SNL cold open' (Feb. 5, 2023, mprnews.org copy), with Bowen Yang as the balloon and Colin Jost's gender reveal joke.",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 2,
+    "rating": "G"
+  },
+  {
+    "id": "latenight-pokemon-go",
+    "cat": "latenight",
+    "kind": "news",
+    "prompt": "The phone game Pokémon Go comes out (July 2016)",
+    "ask": "What's the deal with it? What joke did the late-night hosts make?",
+    "when": "July 2016",
+    "hosts": [
+      "The Late Show with Stephen Colbert",
+      "The Tonight Show Starring Jimmy Fallon"
+    ],
+    "truth": "Players so hooked on chasing invisible monsters on their phones that they wander anywhere with eyes on the screen, even onto a TV set in the middle of a serious speech.",
+    "more": "Stephen Colbert opened The Late Show with a sincere message about a divided country and was interrupted by players wandering onto his stage; when he scolded them, one said he shouldn't have made his theater a PokéStop. Jimmy Fallon did his own bit when the game launched in Russia.",
+    "key": [
+      "obsessed",
+      "wandering",
+      "oblivious",
+      "zombies",
+      "phones"
+    ],
+    "clues": [
+      "The bit began with a host trying to say something serious.",
+      "Strangers kept turning up where they had no business being.",
+      "Heads down and thumbs out, they would follow a cartoon creature straight onto a stage."
+    ],
+    "decoys": [
+      "Grown-ups playing a kids' game: hosts mocked adults in business suits trading cartoon monsters on the train to work.",
+      "Exercise: hosts said the game finally got couch-bound gamers to walk more than any doctor's advice ever had.",
+      "Battery life: hosts said the game drained phones so fast that players spent more time hunting outlets than monsters."
+    ],
+    "graded": [
+      {
+        "g": "people wandering everywhere staring at their phones",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "players walking into places they shouldn't be",
+        "s": 92,
+        "h": "Spot on."
+      },
+      {
+        "g": "phone zombies",
+        "s": 85,
+        "h": "Spot on."
+      },
+      {
+        "g": "people walking into poles while playing",
+        "s": 85,
+        "h": "Spot on."
+      },
+      {
+        "g": "nerds finally going outside",
+        "s": 45,
+        "h": "Warm: where did they end up?"
+      },
+      {
+        "g": "the game made gamers exercise",
+        "s": 35,
+        "h": "Different gag."
+      },
+      {
+        "g": "adults playing a kids game",
+        "s": 35,
+        "h": "Right game, different gag."
+      },
+      {
+        "g": "a new game came out for phones",
+        "s": 15,
+        "h": "That's just the news. Where's the gag?"
+      },
+      {
+        "g": "the game kills your battery",
+        "s": 15,
+        "h": "Wrong gag."
+      },
+      {
+        "g": "a cooking contest",
+        "s": 0,
+        "h": "Off the mark."
+      }
+    ],
+    "url": "https://www.thewrap.com/pokemon-go-stephen-colbert-late-show/",
+    "source": "TheWrap, \"Stephen Colbert's Heartfelt Cold Open Ruined by 'Pokemon Go'\" (July 2016); Government Executive, \"Play of the Day: Everyone has 'Pokemon Go' Fever\" (July 2016), on Fallon's bit.",
+    "checked": "2026-10-06",
+    "fun": 3,
+    "difficulty": 1,
+    "rating": "G"
+  },
+  {
+    "id": "latenight-murder-hornets",
+    "cat": "latenight",
+    "kind": "news",
+    "prompt": "Asian giant hornets, nicknamed murder hornets, turn up in Washington State (May 2020)",
+    "ask": "What's the deal with it? What joke did the late-night hosts make?",
+    "when": "May 2020",
+    "hosts": [
+      "Jimmy Kimmel Live!",
+      "The Late Show with Stephen Colbert"
+    ],
+    "truth": "As if 2020 weren't bad enough: hosts treated the hornets as one more plague in a year already playing out like a disaster movie or the end of the world.",
+    "more": "Jimmy Kimmel sighed that, as if things weren't already insane, the country was now being invaded by something called murder hornets, and Stephen Colbert deadpanned the news of their arrival. A New York Times story that month made the nickname famous; the hornets had first been found in Washington in late 2019.",
+    "key": [
+      "worse",
+      "apocalypse",
+      "plague",
+      "disaster",
+      "year"
+    ],
+    "clues": [
+      "The joke depended more on the calendar than on the bug.",
+      "Hosts reacted like someone ticking items off a list of calamities.",
+      "Next up, presumably: locusts, frogs and a rain of hail."
+    ],
+    "decoys": [
+      "The name: hosts said murder hornet sounded like a heavy metal band and wrote it some entrance music.",
+      "Size: hosts said the hornets were so big they would need a license plate and a parking permit.",
+      "Beekeepers: hosts cast beekeepers in their white suits as astronauts holding off an invasion from outer space."
+    ],
+    "graded": [
+      {
+        "g": "2020 keeps getting worse",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "of course 2020 has murder hornets too",
+        "s": 92,
+        "h": "Spot on."
+      },
+      {
+        "g": "the apocalypse, next comes locusts",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "this year can't get any worse",
+        "s": 88,
+        "h": "Spot on."
+      },
+      {
+        "g": "like a disaster movie",
+        "s": 70,
+        "h": "Hot: why did it fit the moment?"
+      },
+      {
+        "g": "the name sounds like a metal band",
+        "s": 30,
+        "h": "Right bug, different gag."
+      },
+      {
+        "g": "they joked about the hornets",
+        "s": 25,
+        "h": "Right subject, but what was the gag?"
+      },
+      {
+        "g": "scary big bugs",
+        "s": 20,
+        "h": "Restates the news. Where's the gag?"
+      },
+      {
+        "g": "giant hornets that kill bees",
+        "s": 15,
+        "h": "That's just the news. Where's the gag?"
+      },
+      {
+        "g": "honey prices going up",
+        "s": 5,
+        "h": "Off the mark."
+      }
+    ],
+    "url": "https://theweek.com/speedreads/912737/stephen-colbert-trevor-noah-jimmy-kimmel-seth-meyers-mock-trumps-lincoln-complex-fret-murder-hornets",
+    "source": "The Week, 'Stephen Colbert, Trevor Noah, Jimmy Kimmel, Seth Meyers ... fret murder hornets' (May 2020), quoting Colbert and Kimmel; TODAY, 'What are murder hornets and why won't people stop talking about them?'.",
+    "checked": "2026-10-06",
+    "fun": 3,
+    "difficulty": 1,
+    "rating": "G"
+  },
+  {
+    "id": "latenight-cicada-plane",
+    "cat": "latenight",
+    "kind": "news",
+    "prompt": "Cicadas get into the engines of the plane carrying White House reporters to Europe (June 2021)",
+    "ask": "What's the deal with it? What joke did the late-night hosts make?",
+    "when": "June 2021",
+    "hosts": [
+      "The Late Show with Stephen Colbert",
+      "The Tonight Show Starring Jimmy Fallon",
+      "Jimmy Kimmel Live!"
+    ],
+    "truth": "The bugs had it in for the president: hosts treated the swarm as an enemy attack on Joe Biden's trip, with a pilot who turned out to be a cicada and a call for a SWAT team.",
+    "more": "Stephen Colbert said the plane was delayed again when it turned out the pilot was also a cicada, and that Biden needed a swat team more than the Secret Service; that week Biden had brushed a cicada off his neck before boarding Air Force One. The Week rounded up cicada jokes from Colbert, Jimmy Fallon and Jimmy Kimmel.",
+    "key": [
+      "attack",
+      "enemy",
+      "president",
+      "swat",
+      "pilot"
+    ],
+    "clues": [
+      "The hosts gave the insects a motive.",
+      "In the jokes, the swarm had it in for one particular traveler and his entourage.",
+      "Forget the Secret Service, one host said: this man needs a team trained to swat."
+    ],
+    "decoys": [
+      "Snack food: hosts dared the press corps to eat the bugs, since chefs that summer were already frying cicadas for dinner.",
+      "Noise: hosts said the cicadas were so loud that the reporters on board finally knew how it felt to be shouted at.",
+      "Passports: hosts said the bugs only wanted a trip to Europe and had tried to skip the line at border control."
+    ],
+    "graded": [
+      {
+        "g": "the cicadas were out to get biden",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "bugs attacking the president, he needs a swat team",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "the pilot was a cicada",
+        "s": 85,
+        "h": "Spot on: one host's line."
+      },
+      {
+        "g": "insects waging war on the white house",
+        "s": 85,
+        "h": "Spot on."
+      },
+      {
+        "g": "a biblical plague",
+        "s": 50,
+        "h": "Warm: who were they after?"
+      },
+      {
+        "g": "airlines will blame bugs for every delay",
+        "s": 40,
+        "h": "One host's aside; who were they after?"
+      },
+      {
+        "g": "they came out after 17 years",
+        "s": 20,
+        "h": "That's backstory. Where's the gag?"
+      },
+      {
+        "g": "bugs delayed a plane",
+        "s": 15,
+        "h": "That's just the news. Where's the gag?"
+      },
+      {
+        "g": "people eating cicadas",
+        "s": 15,
+        "h": "Wrong gag."
+      },
+      {
+        "g": "a dance craze",
+        "s": 0,
+        "h": "Off the mark."
+      }
+    ],
+    "url": "https://theweek.com/stephen-colbert/1001382/jimmy-fallon-stephen-colbert-and-jimmy-kimmel-laugh-about-bidens-cicada",
+    "source": "The Week, 'Jimmy Fallon, Stephen Colbert, and Jimmy Kimmel laugh about Biden's cicada troubles' (June 2021).",
+    "checked": "2026-10-06",
+    "fun": 3,
+    "difficulty": 2,
+    "rating": "G"
+  },
+  {
+    "id": "latenight-bernie-mittens",
+    "cat": "latenight",
+    "kind": "news",
+    "prompt": "Senator Bernie Sanders at the presidential inauguration (January 2021)",
+    "ask": "What's the deal with it? What joke did the late-night hosts make?",
+    "when": "January 2021",
+    "hosts": [
+      "Jimmy Kimmel Live!",
+      "The Late Show with Stephen Colbert",
+      "Late Night with Seth Meyers"
+    ],
+    "truth": "He looked like a grandpa running errands: bundled in a parka and homemade mittens with a manila envelope, as if waiting for his number at the DMV while everyone else dressed up.",
+    "more": "Jimmy Kimmel said Sanders looked like he had an appointment at the DMV, in his most festive mittens. Stephen Colbert teased him for skipping a hat, and Sanders told Seth Meyers he had only been trying to keep warm; the mittens were made by a Vermont schoolteacher from recycled sweater wool.",
+    "key": [
+      "grandpa",
+      "errands",
+      "grumpy",
+      "waiting",
+      "casual"
+    ],
+    "clues": [
+      "Everyone else came dressed for the history books; he came dressed for something smaller.",
+      "He even brought paperwork, like a man waiting for his number to be called.",
+      "Think license renewal, a long line and a plastic chair."
+    ],
+    "decoys": [
+      "Mittens: hosts said his were so big that he could have used them as oven mitts at the inaugural lunch.",
+      "Distance: hosts said he had found the perfect way to keep everyone six feet away, by looking cross.",
+      "Weather: hosts said he was the only person in Washington who had checked the forecast that morning."
+    ],
+    "graded": [
+      {
+        "g": "he looked like a grandpa running errands",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "like he was waiting at the dmv",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "grumpy old man waiting at the post office",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "he looked like he was waiting for the bus",
+        "s": 80,
+        "h": "Hot: right idea, different everyday place."
+      },
+      {
+        "g": "dressed for a ski trip",
+        "s": 45,
+        "h": "Warm: think of a duller outing."
+      },
+      {
+        "g": "people photoshopped him into everything",
+        "s": 40,
+        "h": "That was the internet. What did he resemble?"
+      },
+      {
+        "g": "he looked cold",
+        "s": 30,
+        "h": "Right outfit, but what was the gag?"
+      },
+      {
+        "g": "his mittens were huge",
+        "s": 25,
+        "h": "Right outfit, different gag."
+      },
+      {
+        "g": "bernie went to the inauguration",
+        "s": 10,
+        "h": "That's just the news. Where's the gag?"
+      },
+      {
+        "g": "a spaceship landing",
+        "s": 0,
+        "h": "Off the mark."
+      }
+    ],
+    "url": "https://www.today.com/news/bernie-sanders-talks-about-mitten-memes-inauguration-day-t206581",
+    "source": "TODAY on Sanders' visit to Late Night with Seth Meyers (Jan. 2021); Kimmel's DMV line and Colbert's hat joke as quoted in inauguration-night coverage (search results pointing to Deadline, 'Stephen Colbert & Jimmy Kimmel In Positive Spirits As Inauguration Lifts Late-Night Trump Doom', Jan. 2021); HuffPost, \"Bernie Sanders' 'Grandpa At The Post Office' Inauguration Outfit\".",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 1,
+    "rating": "G"
+  },
+  {
+    "id": "latenight-the-dress",
+    "cat": "latenight",
+    "kind": "news",
+    "prompt": "A photo of a striped dress goes viral (February 2015)",
+    "ask": "What's the deal with it? What joke did the late-night hosts make?",
+    "when": "February 2015",
+    "hosts": [
+      "Jimmy Kimmel Live!",
+      "The Tonight Show Starring Jimmy Fallon",
+      "Late Night with Seth Meyers"
+    ],
+    "truth": "The whole country split into two camps over the color of one dress, each sure the other side was wrong: friendships and marriages supposedly ended over blue-and-black versus white-and-gold.",
+    "more": "Jimmy Kimmel said the dress split pretty evenly between people who see it as gold and white and people who are wrong. Jimmy Fallon opened by saying he'd just lost all his friends over the color of a dress. The dress was in fact blue and black; people who assumed it sat in shadow saw it as white and gold.",
+    "key": [
+      "argue",
+      "color",
+      "dress",
+      "wrong",
+      "friends"
+    ],
+    "clues": [
+      "The jokes were about people, not about fashion.",
+      "Hosts treated it like a feud that could end friendships.",
+      "Two camps, two color schemes, and each one certain the other was blind."
+    ],
+    "decoys": [
+      "The price: hosts were stunned that a dress everyone was talking about cost less than a dinner out, and tried to buy one live.",
+      "Fashion police: hosts mocked the dress as so ugly that nobody could agree what it even was, and held a makeover.",
+      "Optical illusions: hosts ran a week of eye tests and claimed half their audience needed glasses."
+    ],
+    "graded": [
+      {
+        "g": "everyone fighting over what color it was",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "people losing friends over a dress color",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "half the country is wrong",
+        "s": 88,
+        "h": "Spot on: and which half?"
+      },
+      {
+        "g": "blue and black or white and gold",
+        "s": 70,
+        "h": "Hot: and how did people react?"
+      },
+      {
+        "g": "nobody could agree on the color",
+        "s": 80,
+        "h": "Hot: what did that do to people?"
+      },
+      {
+        "g": "an optical illusion",
+        "s": 35,
+        "h": "That's the science, not the gag."
+      },
+      {
+        "g": "the dress was ugly",
+        "s": 15,
+        "h": "Different gag."
+      },
+      {
+        "g": "a fashion disaster on the red carpet",
+        "s": 5,
+        "h": "Wrong kind of dress story."
+      },
+      {
+        "g": "a wedding dress mixup",
+        "s": 10,
+        "h": "Not a wedding."
+      },
+      {
+        "g": "a cooking show",
+        "s": 0,
+        "h": "Off the mark."
+      }
+    ],
+    "url": "https://www.mediaite.com/media/tv/must-see-late-night-clips-kimmel-meyers-get-in-on-the-dress-color-debate",
+    "source": "Mediaite, 'Must-See Late Night Clips: Kimmel, Meyers Get in on the Dress Color Debate' (2015); Fallon's monologue line: NBC Bay Area, 'Jimmy Fallon Asks: What's The True Color of #TheDress?' (2015); Today.com, 'The Dress is 10 years old' (2025).",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 1,
+    "rating": "G"
+  },
+  {
+    "id": "latenight-louvre-heist",
+    "cat": "latenight",
+    "kind": "news",
+    "prompt": "Thieves take crown jewels from the Louvre in Paris (October 2025)",
+    "ask": "What's the deal with it? What joke did the late-night hosts make?",
+    "when": "October 2025",
+    "hosts": [
+      "The Tonight Show Starring Jimmy Fallon"
+    ],
+    "truth": "It looked too easy to be real: thieves pulled up a furniture lift like a moving crew and were gone in about seven minutes, so hosts played it as a heist movie and went looking for a movie-star culprit.",
+    "more": "On Oct. 19 four thieves used a furniture-lift truck to reach a window of the Galerie d'Apollon and left with eight pieces of France's crown jewels. On The Tonight Show, Jesse Eisenberg, star of the magician-heist Now You See Me films, handed Jimmy Fallon a gift and kept pulling a crown and jewelry out of his bag.",
+    "key": [
+      "easy",
+      "movers",
+      "movie",
+      "security",
+      "lift"
+    ],
+    "clues": [
+      "The hosts sounded more impressed than outraged.",
+      "The crooks' main tool looked like something a company uses to deliver sofas.",
+      "Seven minutes, broad daylight, a ladder truck: it played like a film, and one host had a suspect from the cast."
+    ],
+    "decoys": [
+      "The Mona Lisa: hosts said the thieves skipped her because, like every tourist, they found her smaller than expected.",
+      "Tourist crowds: hosts said the thieves were the first visitors in years to get near anything through the selfie sticks.",
+      "French pride: hosts said Paris was more upset about a new chain coffee shop near the museum than about the jewels."
+    ],
+    "graded": [
+      {
+        "g": "it was way too easy, like hiring movers",
+        "s": 92,
+        "h": "Spot on."
+      },
+      {
+        "g": "the security was a joke",
+        "s": 85,
+        "h": "Spot on."
+      },
+      {
+        "g": "like a real life heist movie",
+        "s": 85,
+        "h": "Spot on."
+      },
+      {
+        "g": "they used a furniture lift in broad daylight",
+        "s": 80,
+        "h": "Hot: what did that say about it?"
+      },
+      {
+        "g": "a celebrity did it",
+        "s": 50,
+        "h": "Warm: one host had a suspect."
+      },
+      {
+        "g": "they made fun of france",
+        "s": 25,
+        "h": "Right place, but what was the gag?"
+      },
+      {
+        "g": "the mona lisa was jealous",
+        "s": 20,
+        "h": "Different gag."
+      },
+      {
+        "g": "jewels stolen from a museum",
+        "s": 15,
+        "h": "That's just the news. Where's the gag?"
+      },
+      {
+        "g": "a cooking show",
+        "s": 0,
+        "h": "Off the mark."
+      }
+    ],
+    "url": "https://www.realitytea.com/2025/10/30/jimmy-fallon-thinks-jesse-eisenberg-did-louvre-heist/",
+    "source": "Confirmed: Jesse Eisenberg's crown-in-the-bag bit on The Tonight Show (realitytea.com, Oct. 30, 2025). Not yet confirmed: other shows' bits, and that 'too easy, like a heist movie' was the shared angle.",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 2,
+    "rating": "G",
+    "status": "unverified"
+  }
+]

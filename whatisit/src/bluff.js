@@ -45,7 +45,7 @@ function bluffScreen() {
     B.n++;
     const item = nextItem();
     clear(root);
-    root.append(h("span", { class: "eyebrow" }, `Trial D · Round ${B.n} of ${B.cfg.rounds}`), mysteryCard(item));
+    root.append(h("span", { class: "eyebrow" }, `Trial D · Round ${B.n} of ${B.cfg.rounds}`), mysteryCard(item, null, { level: 2 }));
     const area = h("div", { class: "stack" });
     root.append(area);
     area.append(h("p", { class: "muted" }, "Everyone read it. Then each player, in private, writes a fake answer that could pass for the truth."),
@@ -89,7 +89,7 @@ function bluffScreen() {
           h("button", { class: "btn primary", onclick: () => step("vote") }, "I'm " + who)));
         return;
       }
-      host.append(mysteryCard(item), h("p", { class: "label" }, `${who}: which one is real?`),
+      host.append(mysteryCard(item, null, { level: 2 }), h("p", { class: "label" }, `${who}: which one is real?`),
         h("div", { class: "choices" }, opts.map((o, k) => o.by.includes(i)
           ? h("button", { class: "choice", disabled: true }, o.text, h("span", { class: "small muted" }, " (yours)"))
           : h("button", { class: "choice", onclick: () => { votes[i] = k; i++; step("pass"); } }, o.text))));
@@ -107,7 +107,7 @@ function bluffScreen() {
     });
     gained.forEach((g, i) => { B.scores[i] += g; });
     clear(root);
-    root.append(h("span", { class: "eyebrow" }, `Trial D · Round ${B.n} · The truth`), mysteryCard(item), revealCard(item));
+    root.append(h("span", { class: "eyebrow" }, `Trial D · Round ${B.n} · The truth`), mysteryCard(item, null, { level: 3 }), revealCard(item));
     root.append(h("div", { class: "votes" }, opts.map((o, k) => {
       const voters = votes.map((v, i) => (v === k ? B.players[i] : null)).filter(Boolean);
       const authors = o.by.map((b) => (b === "truth" ? "The real answer" : b === "house" ? "Our tempting wrong answer" : "Written by " + B.players[b]));

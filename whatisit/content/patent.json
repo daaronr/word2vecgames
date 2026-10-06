@@ -30,7 +30,59 @@
     "checked": "2026-10-06",
     "fun": 5,
     "difficulty": 2,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "laser pointer",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "shine a laser dot for the cat to chase",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "a light the cat chases",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "flashlight for the cat to chase",
+        "s": 75,
+        "h": "Hot: the spot is smaller and sharper."
+      },
+      {
+        "g": "a cat toy",
+        "s": 40,
+        "h": "Right idea; which toy?"
+      },
+      {
+        "g": "robot mouse toy",
+        "s": 35,
+        "h": "Close, but the owner does the steering."
+      },
+      {
+        "g": "feather wand",
+        "s": 30,
+        "h": "Close, but nothing physical to catch."
+      },
+      {
+        "g": "cat treadmill",
+        "s": 15,
+        "h": "Tempting, but the cat runs free."
+      },
+      {
+        "g": "teaching a cat tricks",
+        "s": 10,
+        "h": "Not training; just running around."
+      },
+      {
+        "g": "cat yoga",
+        "s": 3,
+        "h": "Way off."
+      }
+    ]
   },
   {
     "id": "swinging-on-a-swing",
@@ -62,7 +114,59 @@
     "checked": "2026-10-06",
     "fun": 5,
     "difficulty": 2,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "swinging sideways",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "pull each chain in turn to swing side to side",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "tarzan swinging",
+        "s": 55,
+        "h": "Right nickname; which way do you go?"
+      },
+      {
+        "g": "a new way to swing",
+        "s": 40,
+        "h": "Yes, but what's different about it?"
+      },
+      {
+        "g": "swinging in a circle",
+        "s": 35,
+        "h": "Warmer, but not round and round."
+      },
+      {
+        "g": "twisting the chains to spin",
+        "s": 20,
+        "h": "Unusual, but a different motion."
+      },
+      {
+        "g": "a swing set design",
+        "s": 20,
+        "h": "It's a method, not a structure."
+      },
+      {
+        "g": "pumping your legs to go higher",
+        "s": 15,
+        "h": "The classic method, not the patented one."
+      },
+      {
+        "g": "pushing a kid on a swing",
+        "s": 10,
+        "h": "Nobody pushes in this one."
+      },
+      {
+        "g": "golf swing technique",
+        "s": 3,
+        "h": "Wrong kind of swing."
+      }
+    ]
   },
   {
     "id": "animal-ear-protectors",
@@ -95,7 +199,64 @@
     "checked": "2026-10-06",
     "fun": 4,
     "difficulty": 2,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "keeps a dog's ears out of its food",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "ear tubes for long-eared dogs at dinner",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "snood for dogs while eating",
+        "s": 85,
+        "h": "Spot on, near enough."
+      },
+      {
+        "g": "special bowl for long-eared dogs",
+        "s": 60,
+        "h": "Right problem, but worn on the dog."
+      },
+      {
+        "g": "keeps a dog's ears clean",
+        "s": 55,
+        "h": "Warm: when do they get dirty?"
+      },
+      {
+        "g": "ear covers for dogs",
+        "s": 45,
+        "h": "Right body part; what's the purpose?"
+      },
+      {
+        "g": "dog ear muffs for fireworks",
+        "s": 20,
+        "h": "Tempting, but noise isn't the problem."
+      },
+      {
+        "g": "hood to keep a dog's ears warm",
+        "s": 20,
+        "h": "Right body part, wrong purpose."
+      },
+      {
+        "g": "insect-repellent ear tags for cattle",
+        "s": 10,
+        "h": "Wrong animal, wrong purpose."
+      },
+      {
+        "g": "headphones for dogs",
+        "s": 10,
+        "h": "Wrong purpose."
+      },
+      {
+        "g": "rabbit costume ears",
+        "s": 3,
+        "h": "Way off."
+      }
+    ]
   },
   {
     "id": "animal-toy",
@@ -128,7 +289,59 @@
     "checked": "2026-10-06",
     "fun": 5,
     "difficulty": 2,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "a fake stick",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "a stick-shaped dog toy that floats",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "floating fetch toy",
+        "s": 60,
+        "h": "Warm: think about the shape."
+      },
+      {
+        "g": "chew toy for dogs",
+        "s": 50,
+        "h": "Right idea; what shape is it?"
+      },
+      {
+        "g": "a dog toy",
+        "s": 40,
+        "h": "Right idea; which one?"
+      },
+      {
+        "g": "rubber bone",
+        "s": 40,
+        "h": "Warm, but think of the park."
+      },
+      {
+        "g": "squeaky ball",
+        "s": 20,
+        "h": "A real pet toy, wrong shape."
+      },
+      {
+        "g": "rope toy for tug of war",
+        "s": 20,
+        "h": "A real pet toy, wrong shape."
+      },
+      {
+        "g": "toy for cats",
+        "s": 15,
+        "h": "Wrong animal."
+      },
+      {
+        "g": "stuffed animal",
+        "s": 10,
+        "h": "Too literal about animal."
+      }
+    ]
   },
   {
     "id": "concealing-baldness",
@@ -161,7 +374,64 @@
     "checked": "2026-10-06",
     "fun": 5,
     "difficulty": 1,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "comb over",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "a fancy comb-over in three layers with hairspray",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "styling hair to cover a bald spot",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "a haircut style",
+        "s": 60,
+        "h": "Warm: what's special about it?"
+      },
+      {
+        "g": "hiding a bald spot",
+        "s": 50,
+        "h": "Right goal; how exactly?"
+      },
+      {
+        "g": "using hairspray",
+        "s": 35,
+        "h": "One ingredient; what's the method?"
+      },
+      {
+        "g": "spray-on hair",
+        "s": 20,
+        "h": "Close, but uses only real hair."
+      },
+      {
+        "g": "a clip-on wig",
+        "s": 15,
+        "h": "Tempting, but nothing is added."
+      },
+      {
+        "g": "hair transplant",
+        "s": 15,
+        "h": "Nothing so drastic."
+      },
+      {
+        "g": "hat with hair sewn in",
+        "s": 10,
+        "h": "Nothing worn on top."
+      },
+      {
+        "g": "shaving your head",
+        "s": 5,
+        "h": "The opposite, really."
+      }
+    ]
   },
   {
     "id": "saluting-device",
@@ -194,7 +464,59 @@
     "checked": "2026-10-06",
     "fun": 5,
     "difficulty": 2,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "self-tipping hat",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "a hat that lifts itself when you bow",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "mechanical hat",
+        "s": 70,
+        "h": "Hot: what does it do?"
+      },
+      {
+        "g": "some kind of hat",
+        "s": 40,
+        "h": "Right object; what happens?"
+      },
+      {
+        "g": "advertising hat",
+        "s": 35,
+        "h": "A side use; what's the main job?"
+      },
+      {
+        "g": "robot that waves hello",
+        "s": 30,
+        "h": "Right purpose, wrong device."
+      },
+      {
+        "g": "automatic salute arm",
+        "s": 15,
+        "h": "Tempting, but no arm involved."
+      },
+      {
+        "g": "wind-up toy soldier",
+        "s": 15,
+        "h": "Wind-up, yes; not a toy."
+      },
+      {
+        "g": "polite bicycle bell",
+        "s": 10,
+        "h": "Wrong device."
+      },
+      {
+        "g": "military salute training",
+        "s": 5,
+        "h": "Too literal."
+      }
+    ]
   },
   {
     "id": "waking-from-sleep",
@@ -227,7 +549,64 @@
     "checked": "2026-10-06",
     "fun": 5,
     "difficulty": 2,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "drops corks on your face",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "alarm that drops dangling weights onto the sleeper's face",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "something drops on your face",
+        "s": 85,
+        "h": "Spot on, near enough."
+      },
+      {
+        "g": "feather that tickles your face",
+        "s": 50,
+        "h": "Warm: right target, wrong object."
+      },
+      {
+        "g": "bed that shakes you awake",
+        "s": 40,
+        "h": "Physical, yes; think of what's above."
+      },
+      {
+        "g": "an alarm clock",
+        "s": 35,
+        "h": "Part of it; what does it trigger?"
+      },
+      {
+        "g": "sprinkles water on the pillow",
+        "s": 25,
+        "h": "Close in spirit; nothing wet."
+      },
+      {
+        "g": "tilting bed that dumps you out",
+        "s": 20,
+        "h": "Physical, yes; wrong method."
+      },
+      {
+        "g": "lights up the room",
+        "s": 20,
+        "h": "A side feature; not the main idea."
+      },
+      {
+        "g": "louder alarm bell",
+        "s": 15,
+        "h": "The inventor distrusted bells."
+      },
+      {
+        "g": "a pet rooster",
+        "s": 5,
+        "h": "Way off."
+      }
+    ]
   },
   {
     "id": "pet-display-clothing",
@@ -260,7 +639,59 @@
     "checked": "2026-10-06",
     "fun": 5,
     "difficulty": 3,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "hamster tunnels you wear",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "clear vest with tubes for pet mice to run through",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "vest with pockets for pet mice",
+        "s": 70,
+        "h": "Hot: the pets get more freedom."
+      },
+      {
+        "g": "pet carrier you wear",
+        "s": 45,
+        "h": "Warm: but the pets roam."
+      },
+      {
+        "g": "hamster ball",
+        "s": 35,
+        "h": "Right pets, but you wear it."
+      },
+      {
+        "g": "belt for showing off goldfish",
+        "s": 25,
+        "h": "Close idea, wrong pets."
+      },
+      {
+        "g": "clothes for pets",
+        "s": 15,
+        "h": "Other way round."
+      },
+      {
+        "g": "t-shirt with your pet's photo",
+        "s": 15,
+        "h": "Display, yes, but the real thing."
+      },
+      {
+        "g": "matching outfits for dog and owner",
+        "s": 10,
+        "h": "Wrong idea; much smaller pets."
+      },
+      {
+        "g": "knitted dog sweater",
+        "s": 5,
+        "h": "Way off."
+      }
+    ]
   },
   {
     "id": "centrifugal-birth",
@@ -293,7 +724,59 @@
     "checked": "2026-10-06",
     "fun": 4,
     "difficulty": 1,
-    "rating": "PG"
+    "rating": "PG",
+    "graded": [
+      {
+        "g": "spinning table for giving birth",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "spins the mother so the baby comes out",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "centrifuge for childbirth",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "a delivery table",
+        "s": 50,
+        "h": "Warm: what does it do?"
+      },
+      {
+        "g": "gravity birthing chair",
+        "s": 50,
+        "h": "Warm: right idea, different force."
+      },
+      {
+        "g": "rotating hospital bed",
+        "s": 40,
+        "h": "Warm: why is it turning?"
+      },
+      {
+        "g": "rotating calving pen for cows",
+        "s": 20,
+        "h": "Wrong patient."
+      },
+      {
+        "g": "fertility treatment",
+        "s": 15,
+        "h": "Wrong stage."
+      },
+      {
+        "g": "spinning baby rocker",
+        "s": 10,
+        "h": "Wrong end of the process."
+      },
+      {
+        "g": "salad spinner",
+        "s": 5,
+        "h": "Way off."
+      }
+    ]
   },
   {
     "id": "anti-gravity-illusion",
@@ -326,7 +809,64 @@
     "checked": "2026-10-06",
     "fun": 5,
     "difficulty": 2,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "michael jackson's lean shoes",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "shoes that hook into the floor so you can lean",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "smooth criminal lean",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "special dance shoes",
+        "s": 50,
+        "h": "Warm: what do they do?"
+      },
+      {
+        "g": "a dance move",
+        "s": 45,
+        "h": "Warm: which, and how?"
+      },
+      {
+        "g": "the moonwalk",
+        "s": 45,
+        "h": "Right performer, wrong move."
+      },
+      {
+        "g": "a magic trick",
+        "s": 30,
+        "h": "Right spirit; be more specific."
+      },
+      {
+        "g": "magnetic boots",
+        "s": 25,
+        "h": "Close, but not magnets."
+      },
+      {
+        "g": "levitation with hidden wires",
+        "s": 20,
+        "h": "Tempting, but no wires."
+      },
+      {
+        "g": "tilted room illusion",
+        "s": 15,
+        "h": "Tilted rooms are real; not this."
+      },
+      {
+        "g": "floating bed",
+        "s": 5,
+        "h": "Way off."
+      }
+    ]
   },
   {
     "id": "package-saver",
@@ -359,7 +899,59 @@
     "checked": "2026-10-06",
     "fun": 4,
     "difficulty": 3,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "the little table in a pizza box",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "pizza saver",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "stops the pizza box lid touching the cheese",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "a lid support",
+        "s": 70,
+        "h": "Hot: for which takeaway meal?"
+      },
+      {
+        "g": "a better pizza box",
+        "s": 50,
+        "h": "Warm: what's inside it?"
+      },
+      {
+        "g": "takeaway container",
+        "s": 35,
+        "h": "Close; think smaller."
+      },
+      {
+        "g": "corner protectors for boxes",
+        "s": 25,
+        "h": "Right job, wrong package."
+      },
+      {
+        "g": "packing peanuts",
+        "s": 15,
+        "h": "Wrong package."
+      },
+      {
+        "g": "chip bag clip",
+        "s": 10,
+        "h": "Wrong idea."
+      },
+      {
+        "g": "cup holder",
+        "s": 5,
+        "h": "Way off."
+      }
+    ]
   },
   {
     "id": "floppy-filaments",
@@ -392,7 +984,64 @@
     "checked": "2026-10-06",
     "fun": 4,
     "difficulty": 2,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "koosh ball",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "rubbery stringy ball that's easy to catch",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "ball with floppy strings",
+        "s": 85,
+        "h": "Spot on, near enough."
+      },
+      {
+        "g": "a kind of ball",
+        "s": 50,
+        "h": "Warm: what makes it special?"
+      },
+      {
+        "g": "stress ball",
+        "s": 50,
+        "h": "Warm: but meant for throwing."
+      },
+      {
+        "g": "pom pom",
+        "s": 40,
+        "h": "Close look, wrong material."
+      },
+      {
+        "g": "catching mitt",
+        "s": 30,
+        "h": "Right purpose, wrong side."
+      },
+      {
+        "g": "fishing lure",
+        "s": 15,
+        "h": "Tempting look, wrong purpose."
+      },
+      {
+        "g": "mop head",
+        "s": 10,
+        "h": "Wrong purpose."
+      },
+      {
+        "g": "tennis ball retriever",
+        "s": 10,
+        "h": "Wrong idea."
+      },
+      {
+        "g": "a jellyfish",
+        "s": 3,
+        "h": "Way off."
+      }
+    ]
   },
   {
     "id": "players-are-pieces",
@@ -425,7 +1074,59 @@
     "checked": "2026-10-06",
     "fun": 4,
     "difficulty": 1,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "the game twister",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "hands and feet on colored dots, spinner decides",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "a party game",
+        "s": 40,
+        "h": "Right area; which one?"
+      },
+      {
+        "g": "life-size board game",
+        "s": 40,
+        "h": "Warm, but no board involved."
+      },
+      {
+        "g": "a hopscotch game",
+        "s": 35,
+        "h": "Close, but more tangled."
+      },
+      {
+        "g": "human chess",
+        "s": 25,
+        "h": "Tempting, but people don't move pieces."
+      },
+      {
+        "g": "musical chairs",
+        "s": 15,
+        "h": "Wrong game."
+      },
+      {
+        "g": "leapfrog race",
+        "s": 10,
+        "h": "Wrong game."
+      },
+      {
+        "g": "laser tag",
+        "s": 5,
+        "h": "Way off."
+      },
+      {
+        "g": "pretzel making",
+        "s": 3,
+        "h": "Way off."
+      }
+    ]
   },
   {
     "id": "treating-foodstuffs",
@@ -458,7 +1159,59 @@
     "checked": "2026-10-06",
     "fun": 4,
     "difficulty": 2,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "microwave oven",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "cooking with microwaves",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "radar cooking",
+        "s": 85,
+        "h": "Spot on, near enough."
+      },
+      {
+        "g": "a way of cooking food",
+        "s": 45,
+        "h": "Warm: but how?"
+      },
+      {
+        "g": "electric toaster",
+        "s": 35,
+        "h": "Right room, wrong appliance."
+      },
+      {
+        "g": "irradiating food to kill germs",
+        "s": 35,
+        "h": "Close tech, wrong goal."
+      },
+      {
+        "g": "pasteurizing milk",
+        "s": 25,
+        "h": "Right idea, wrong method."
+      },
+      {
+        "g": "pickling vegetables",
+        "s": 10,
+        "h": "Wrong goal entirely."
+      },
+      {
+        "g": "quick freezing fish",
+        "s": 10,
+        "h": "Wrong goal entirely."
+      },
+      {
+        "g": "tenderizing steak with a mallet",
+        "s": 5,
+        "h": "Way off."
+      }
+    ]
   },
   {
     "id": "display-devices",
@@ -491,6 +1244,58 @@
     "checked": "2026-10-06",
     "fun": 4,
     "difficulty": 3,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "lava lamp",
+        "s": 100,
+        "h": "Spot on."
+      },
+      {
+        "g": "lamp with blobs of wax going up and down",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "glitter lamp",
+        "s": 75,
+        "h": "Hot, but what floats differs."
+      },
+      {
+        "g": "mood light",
+        "s": 55,
+        "h": "Warm: what moves inside?"
+      },
+      {
+        "g": "a fancy lamp",
+        "s": 40,
+        "h": "Warm: what's special about it?"
+      },
+      {
+        "g": "snow globe",
+        "s": 25,
+        "h": "Right shelf ornament, wrong effect."
+      },
+      {
+        "g": "fish tank",
+        "s": 15,
+        "h": "Nice to watch, but nothing lives."
+      },
+      {
+        "g": "shop window turntable",
+        "s": 10,
+        "h": "Wrong idea."
+      },
+      {
+        "g": "led screen",
+        "s": 10,
+        "h": "Too modern."
+      },
+      {
+        "g": "flip scoreboard",
+        "s": 5,
+        "h": "Way off."
+      }
+    ]
   }
 ]

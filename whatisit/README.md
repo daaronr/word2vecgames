@@ -1,9 +1,11 @@
 # What Is It?
 
-A guessing game about cryptic strings. Someone shows a web address, a brand name, a licence plate,
-a patent title or a search phrase; everyone guesses what it really is; the reveal settles it. A judge
-(the room, a free word-vector "robot", or an AI running on the player's own account) decides who was
-closest. Started in this repository next to Word Bocce; self-contained so it can move out.
+A guessing game about cryptic things. Someone shows a web address, a brand name, a licence plate,
+a patent title, a search phrase, a magnified detail of a picture, the start of a paper's title, an odd
+song line, a news story late-night hosts joked about, or a headline that reads two ways; everyone
+guesses what it really is; the reveal settles it. A judge decides who was closest: the room, the
+mystery's answer key (likely guesses scored in advance), a free word-vector "robot", or an AI.
+Started in this repository next to Word Bocce; self-contained so it can move out.
 
 Design notes, costs, prior art and next steps: [DESIGN.md](DESIGN.md).
 
@@ -11,8 +13,8 @@ Design notes, costs, prior art and next steps: [DESIGN.md](DESIGN.md).
 
 | Trial | Mode | Players | What it tests |
 |---|---|---|---|
-| A | Daily five | 1 | An NYT-style daily: free-text guesses scored by the robot judge, clues and "pick from four" at a cost, share grid |
-| B | Party board | 2+ (one screen) | A points board of categories (100/200/300) or tic-tac-toe for two teams |
+| A | Daily five | 1 | An NYT-style daily: free-text guesses scored by the answer key, then the AI or the robot; clues and "pick from four" at a cost; share grid |
+| B | Party board | 2+ (one screen) | A Jeopardy-style points board (unlock order, board control, Daily Double, penalties, Final with wagers), tic-tac-toe or Connect Four for two teams |
 | C | Bring your own | 2+ | The original game: type anything, guess, look it up together, judge; Family-Feud bonus for results 2 and 3 |
 | D | Bluff | 3+ (pass the phone) | Balderdash-style: write fakes, find the truth |
 
@@ -25,13 +27,19 @@ suggest a mystery or a better clue.
   (seeded randomness, the Daily's choice), `core.js` (content, storage, AI sources, shared UI),
   `daily.js`, `party.js`, `byo.js`, `bluff.js`, `app.js` (hub, suggest, settings, notes, boot), `style.css`.
 - `content/*.json` the mysteries (`web`, `brand`, `plate`, `patent`, `search`, `double`,
-  `double-plates`). Each has `prompt`, `ask`, `truth`, `more`, `key` (robot-judge key ideas, most
-  important first), `clues` (vague to strong), `decoys` (tempting wrong answers), `url`, `source`,
-  `checked`, `fun`, `difficulty`, `rating`. Plates add `dmv` (approved/denied); patents add `number`,
-  `year`; search items add `top3`. Items marked `"status": "unverified"` are drafts shown with a flag.
+  `double-plates`, `zoom`, `paper`, `lyric`, `latenight`, `headline`). Each has `prompt`, `ask`,
+  `truth`, `more`, `key` (robot-judge key ideas, most important first), `clues` (vague to strong),
+  `decoys` (tempting wrong answers), `graded` (the answer key: `{g, s, h}` = example guess, score
+  0-100, spoiler-free hint), `url`, `source`, `checked`, `fun`, `difficulty`, `rating`. Plates add
+  `dmv` (approved/denied); patents `number`, `year`; search items `top3`; pictures `image` (an SVG in
+  `content/img/`, inlined by the build), `focus` and `zooms`; papers `full`, `authors`, `journal`,
+  `year`, `field`; lyrics `song`, `year`, `pd`; late-night items `when`, `hosts` (only shows
+  confirmed to have done a bit); headlines `where`. Items marked `"status": "unverified"` are drafts
+  shown with a flag.
 - `site/` build output: `index.html` (the whole game in one file, for Netlify or any static host),
   `artifact.html` (the claude.ai Artifact version), `judge-vectors.bin` (robot-judge word vectors).
-- `tools/build.mjs` builds `site/`; `tools/build_vectors.py` makes `judge-vectors.bin` from
+- `tools/build.mjs` builds `site/`; `tools/vocab.mjs` checks which words the robot knows;
+  `tools/build_vectors.py` makes `judge-vectors.bin` from
   `../web/data-sense` (ConceptNet Numberbatch, CC BY-SA 4.0), reduced to 96 dimensions.
 - `netlify/functions/judge.mjs` the AI judge (`/api/judge`); `netlify/lib/judge-core.mjs` its testable
   logic; `netlify/lib/items.mjs` the answers it may judge (written by the build).
@@ -53,17 +61,29 @@ cd whatisit/site && python3 -m http.server 8000   # play locally at http://local
 ## Hosting on Netlify (with the AI judge)
 
 One-time setup in the Netlify UI:
-1. **Add new project > Import an existing project > GitHub**, pick `daaronr/word2vecgames`.
+1. **Add new project > Import an existing project > GitHub**, pick `daaronr/word2vecgames`, or
+   deploy from a terminal: `cd whatisit && npx netlify-cli deploy --prod`.
 2. Branch: `main` (or this work's branch until it is merged). **Base directory: `whatisit`.**
    Build command and publish directory come from `netlify.toml`.
-3. Deploy. Netlify installs `package.json`, publishes `site/` and deploys the AI judge at
-   `/api/judge`. AI Gateway switches on after the first production deploy and needs a credit-based
-   plan (Free, Personal or Pro); calls are billed to the team's Netlify credits.
-4. **Project configuration > Forms > Enable form detection**, then redeploy, so ratings and
+3. **Give the AI judge a key of your own.** The cheapest: a free Gemini API key from Google AI
+   Studio (aistudio.google.com, "Get API key"; no card needed). In Netlify: **Project configuration >
+   Environment variables > Add a variable**, `GEMINI_API_KEY` = your key, scope Functions, then
+   redeploy. The free tier stops at its daily quota instead of billing you. An `ANTHROPIC_API_KEY` or
+   `OPENAI_API_KEY` works too (set `JUDGE_PROVIDER` if you set more than one).
+   Without your own key the AI judge rests and the game uses the answer keys and the robot.
+4. **Keep Netlify's own AI from spending your credits.** Netlify AI Gateway also injects provider
+   keys, billed to the team's Netlify credits; on the Free plan (300 credits a month for everything,
+   15 per production deploy) running out pauses every project on the team. The function ignores
+   those keys unless you set `JUDGE_USE_NETLIFY_CREDITS=1`. For belt and braces: **Team settings >
+   AI enablement**, switch AI features off or set an AI inference credit limit.
+5. **Project configuration > Forms > Enable form detection**, then redeploy, so ratings and
    suggestions land in the Forms tab.
-5. Optional environment variables: `JUDGE_PROVIDER` (anthropic, openai, gemini), `JUDGE_MODEL`,
-   `JUDGE_DAILY_CAP` (default 300), `SHARE_URL` (link in the Daily's share text). Setting your own
-   `ANTHROPIC_API_KEY` (or OpenAI/Gemini key) makes that provider bill you instead of Netlify.
+6. Optional limits (defaults in brackets): `JUDGE_DAILY_CAP` (200 model calls a day),
+   `JUDGE_MONTHLY_CAP` (3000), `JUDGE_PER_VISITOR` (60 a day), `JUDGE_MODEL`, `JUDGE_OFF=1` to switch
+   the AI off, `SHARE_URL` (link in the Daily's share text).
+
+Each production deploy costs 15 credits, so test locally (`cd whatisit/site && python3 -m http.server`)
+and deploy to production once per batch of changes.
 
 Without the function (any other static host, or a plain file upload) the page still works: the
 word-vector robot judges, and players can bring their own AI in Settings.

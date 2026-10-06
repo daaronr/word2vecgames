@@ -28,7 +28,59 @@
   "fun": 4,
   "difficulty": 2,
   "rating": "PG-13",
-  "kind": "domain"
+  "kind": "domain",
+  "graded": [
+   {
+    "g": "a database of who represents celebrities",
+    "s": 97,
+    "h": "Spot on."
+   },
+   {
+    "g": "find out who a celebrity's agent is",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "a directory of talent agents and managers",
+    "s": 92,
+    "h": "Spot on."
+   },
+   {
+    "g": "hollywood contacts database",
+    "s": 80,
+    "h": "Close; whose contacts?"
+   },
+   {
+    "g": "a talent agency",
+    "s": 60,
+    "h": "Getting there; think bigger than one firm."
+   },
+   {
+    "g": "a celebrity gossip site",
+    "s": 35,
+    "h": "Right world, wrong purpose."
+   },
+   {
+    "g": "find your congressman",
+    "s": 15,
+    "h": "Right reading, wrong world."
+   },
+   {
+    "g": "a gift shop",
+    "s": 5,
+    "h": "Wrong reading of the last part."
+   },
+   {
+    "g": "an adult website",
+    "s": 3,
+    "h": "That's the misreading. Split it differently."
+   },
+   {
+    "g": "a car wash",
+    "s": 1,
+    "h": "Off track."
+   }
+  ]
  },
  {
   "cat": "double",
@@ -60,7 +112,64 @@
   "url": "https://www.experts-exchange.com/",
   "fun": 4,
   "difficulty": 1,
-  "kind": "domain"
+  "kind": "domain",
+  "graded": [
+   {
+    "g": "a tech q&a site",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "experts answering computer questions",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "like stack overflow",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "a tech support site",
+    "s": 75,
+    "h": "Close; how does it work?"
+   },
+   {
+    "g": "a help forum",
+    "s": 70,
+    "h": "Close; what subject, mostly?"
+   },
+   {
+    "g": "a consulting marketplace",
+    "s": 45,
+    "h": "Getting there, but nobody gets hired."
+   },
+   {
+    "g": "a job board for consultants",
+    "s": 15,
+    "h": "Nobody's hiring here."
+   },
+   {
+    "g": "a dating site for professionals",
+    "s": 10,
+    "h": "Not that kind of matchmaking."
+   },
+   {
+    "g": "a currency exchange",
+    "s": 5,
+    "h": "Not about money."
+   },
+   {
+    "g": "an adult website",
+    "s": 3,
+    "h": "That's the misreading. Read it again."
+   },
+   {
+    "g": "a stamp collectors' swap",
+    "s": 3,
+    "h": "Off track."
+   }
+  ]
  },
  {
   "cat": "double",
@@ -92,7 +201,59 @@
   "url": "https://www.google.com/search?q=therapistfinder.com",
   "fun": 4,
   "difficulty": 1,
-  "kind": "domain"
+  "kind": "domain",
+  "graded": [
+   {
+    "g": "find a therapist",
+    "s": 97,
+    "h": "Spot on."
+   },
+   {
+    "g": "a directory of therapists near you",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "counselor search site",
+    "s": 92,
+    "h": "Spot on."
+   },
+   {
+    "g": "a mental health website",
+    "s": 60,
+    "h": "Getting there; what does it help you do?"
+   },
+   {
+    "g": "find a doctor near you",
+    "s": 60,
+    "h": "Getting there; a narrower kind of professional."
+   },
+   {
+    "g": "a physical therapy clinic",
+    "s": 40,
+    "h": "Different specialty, and not one clinic."
+   },
+   {
+    "g": "a crime database",
+    "s": 5,
+    "h": "That's the misreading. Split it later."
+   },
+   {
+    "g": "a true crime podcast",
+    "s": 5,
+    "h": "That's the misreading."
+   },
+   {
+    "g": "a home security company",
+    "s": 5,
+    "h": "Wrong reading."
+   },
+   {
+    "g": "a fishing app",
+    "s": 2,
+    "h": "Off track."
+   }
+  ]
  },
  {
   "cat": "double",
@@ -124,7 +285,59 @@
   "url": "https://www.google.com/search?q=mole+station+native+nursery",
   "fun": 4,
   "difficulty": 2,
-  "kind": "domain"
+  "kind": "domain",
+  "graded": [
+   {
+    "g": "a plant nursery",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "native plant nursery in australia",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "a garden center",
+    "s": 92,
+    "h": "Spot on."
+   },
+   {
+    "g": "a tree farm",
+    "s": 72,
+    "h": "Close cousin; they sell smaller things too."
+   },
+   {
+    "g": "a florist",
+    "s": 50,
+    "h": "Living stock, but not bouquets."
+   },
+   {
+    "g": "an australian farm",
+    "s": 45,
+    "h": "Right country; what do they grow?"
+   },
+   {
+    "g": "a daycare",
+    "s": 15,
+    "h": "Innocent reading, but think greener."
+   },
+   {
+    "g": "mole pest control",
+    "s": 10,
+    "h": "Not about the animal."
+   },
+   {
+    "g": "a railway museum",
+    "s": 5,
+    "h": "Not about trains."
+   },
+   {
+    "g": "a support site for abuse survivors",
+    "s": 3,
+    "h": "That's the misreading. Look for a place name."
+   }
+  ]
  },
  {
   "cat": "double",
@@ -156,7 +369,64 @@
   "url": "https://www.google.com/search?q=powergen+italia",
   "fun": 4,
   "difficulty": 2,
-  "kind": "domain"
+  "kind": "domain",
+  "graded": [
+   {
+    "g": "an italian power company",
+    "s": 97,
+    "h": "Spot on."
+   },
+   {
+    "g": "energy company in italy",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "italian generator maker",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "an electricity company",
+    "s": 85,
+    "h": "Spot on; where is it?"
+   },
+   {
+    "g": "a solar panel installer",
+    "s": 55,
+    "h": "Right industry, too specific."
+   },
+   {
+    "g": "an engineering firm",
+    "s": 50,
+    "h": "Right ballpark; what does it make?"
+   },
+   {
+    "g": "an italian business",
+    "s": 40,
+    "h": "Right country; what industry?"
+   },
+   {
+    "g": "an italian gym chain",
+    "s": 12,
+    "h": "Right country, wrong trade."
+   },
+   {
+    "g": "a men's health clinic",
+    "s": 5,
+    "h": "Wrong reading of the middle."
+   },
+   {
+    "g": "an adult website",
+    "s": 3,
+    "h": "That's the misreading. Find the country."
+   },
+   {
+    "g": "a fashion label",
+    "s": 5,
+    "h": "Off track."
+   }
+  ]
  },
  {
   "cat": "double",
@@ -188,6 +458,58 @@
   "url": "https://www.google.com/search?q=pen+island",
   "fun": 5,
   "difficulty": 1,
-  "kind": "domain"
+  "kind": "domain",
+  "graded": [
+   {
+    "g": "a shop selling custom pens",
+    "s": 97,
+    "h": "Spot on."
+   },
+   {
+    "g": "pen island, they make pens",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "a joke site pretending to sell pens",
+    "s": 97,
+    "h": "Spot on."
+   },
+   {
+    "g": "a stationery store",
+    "s": 85,
+    "h": "Spot on."
+   },
+   {
+    "g": "a prank website",
+    "s": 50,
+    "h": "Possibly; what's its product?"
+   },
+   {
+    "g": "an online store",
+    "s": 40,
+    "h": "Right kind of site; what product?"
+   },
+   {
+    "g": "a calligraphy blog",
+    "s": 40,
+    "h": "Right tool, different kind of site."
+   },
+   {
+    "g": "a tropical island resort",
+    "s": 5,
+    "h": "Too literal: there's no island."
+   },
+   {
+    "g": "an adult website",
+    "s": 3,
+    "h": "That's the misreading. Split it sooner."
+   },
+   {
+    "g": "a penguin sanctuary",
+    "s": 3,
+    "h": "Off track."
+   }
+  ]
  }
 ]

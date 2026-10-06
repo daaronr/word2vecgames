@@ -1,0 +1,571 @@
+[
+ {
+  "id": "headline-crash-blossoms",
+  "cat": "headline",
+  "kind": "headline",
+  "prompt": "Violinist Linked to JAL Crash Blossoms",
+  "where": "Japan Today, 2009",
+  "ask": "What was the story actually about?",
+  "truth": "A violinist's career is flourishing; the story ties her to the 1985 Japan Airlines crash, in which her father died. 'Blossoms' is the verb.",
+  "more": "Readers took 'crash blossoms' as a noun; when an editor in Sapporo, Mike O'Connell, asked online what one was, a poster on the Testy Copy Editors forum proposed the phrase as a name for headlines like this, and Language Log made it stick. The violinist is Diana Yukawa.",
+  "key": ["violinist", "career", "flourishing", "crash", "father"],
+  "clues": [
+   "The story is a profile of a young musician.",
+   "The last word is something she is doing.",
+   "Years after a family loss in an air disaster, her concerts and records are doing very well."
+  ],
+  "decoys": [
+   "A violinist was called as a witness in the official investigation into a Japan Airlines crash.",
+   "Japan Airlines chose a violinist as the face of its cherry blossom season advertising campaign.",
+   "A violinist is suing Japan Airlines after her instrument was crushed in a plane's baggage hold."
+  ],
+  "graded": [
+   {"g": "her career is blossoming after the jal crash", "s": 95, "h": "Spot on."},
+   {"g": "violinist doing well, her dad died in the crash", "s": 95, "h": "Spot on."},
+   {"g": "blossoms is a verb, her career is growing", "s": 88, "h": "Spot on."},
+   {"g": "a musician's career is taking off", "s": 75, "h": "Right idea; what ties her to the airline?"},
+   {"g": "violinist connected to a plane crash", "s": 50, "h": "Half there: what is she doing now?"},
+   {"g": "a violinist survived a plane crash", "s": 35, "h": "Right person, wrong link to the crash."},
+   {"g": "airline starts a music festival", "s": 15, "h": "Right airline, wrong story."},
+   {"g": "violinist blamed for causing the crash", "s": 10, "h": "Too literal a reading of 'linked'."},
+   {"g": "flowers that grow at a crash site", "s": 4, "h": "That's the misreading: try the last word again."},
+   {"g": "a new kind of cherry tree", "s": 2, "h": "Off track: who is the story about?"}
+  ],
+  "rating": "G",
+  "fun": 5,
+  "difficulty": 2,
+  "url": "https://www.npr.org/sections/talk/2009/10/word_nerds_analyze_crash_bloss_1.html",
+  "source": "NPR, 'Word Nerds Analyze Crash Blossoms' (October 2009); T. Campbell, 'Crash Blossoms' (Substack); Wikipedia, 'Diana Yukawa' (checked via search results; the pages themselves could not be fetched)",
+  "checked": "2026-10-06"
+ },
+ {
+  "id": "headline-mcdonalds-fries",
+  "cat": "headline",
+  "kind": "headline",
+  "prompt": "McDonald's Fries the Holy Grail for Potato Farmers",
+  "where": "News wire story, September 2009, run by Fox News and others",
+  "ask": "What was the story actually about?",
+  "truth": "Getting a new potato variety accepted for McDonald's french fries is the dream of potato growers and breeders. 'Fries' is a noun, and the verb 'are' has been dropped.",
+  "more": "McDonald's buys more than 3 billion pounds of potatoes a year, so its approval decides whether a new variety pays off. Without the 'are', readers picture the chain deep-frying the Holy Grail, and the headline became a stock example of a crash blossom.",
+  "key": ["potato", "fries", "farmers", "variety", "burger"],
+  "clues": [
+   "It's an agriculture business story.",
+   "Growers and plant breeders are all chasing one very big customer.",
+   "Read the third word as a noun and put 'are' after it."
+  ],
+  "decoys": [
+   "McDonald's is cutting its potato orders, wiping out the main market many potato farmers relied on.",
+   "McDonald's has set up a fund to help struggling potato farmers switch to disease-resistant crops.",
+   "McDonald's has refused to buy genetically modified potatoes, angering farmers who planted them."
+  ],
+  "graded": [
+   {"g": "every potato farmer wants to supply mcdonalds fries", "s": 95, "h": "Spot on."},
+   {"g": "getting your potato into mcdonald's fries is the dream", "s": 95, "h": "Spot on."},
+   {"g": "mcdonalds fries are the ultimate prize for farmers", "s": 90, "h": "Spot on."},
+   {"g": "new potato variety for french fries", "s": 70, "h": "Close: whose fries matter most?"},
+   {"g": "mcdonalds buys loads of potatoes", "s": 60, "h": "Right area: what do the farmers want?"},
+   {"g": "mcdonalds is bad news for potato farmers", "s": 20, "h": "Wrong mood: read 'fries' differently."},
+   {"g": "potato farmers protest against mcdonalds", "s": 15, "h": "Wrong: the farmers are keen."},
+   {"g": "mcdonalds deep fried the holy grail", "s": 3, "h": "That's the misreading."},
+   {"g": "monty python happy meal toys", "s": 3, "h": "Funny, but think about the farmers."},
+   {"g": "indiana jones movie tie-in", "s": 2, "h": "Off track: it's a farming story."}
+  ],
+  "rating": "G",
+  "fun": 4,
+  "difficulty": 1,
+  "url": "https://www.foxnews.com/story/mcdonalds-fries-the-holy-grail-for-potato-farmers",
+  "source": "Fox News copy of the September 2009 wire story; Spudman, 'McDonald's Fries the Holy Grail for Potato Farmers' (September 23, 2009); NBC News copy (checked via search results)",
+  "checked": "2026-10-06"
+ },
+ {
+  "id": "headline-squad-dog-bite",
+  "cat": "headline",
+  "kind": "headline",
+  "prompt": "Squad Helps Dog Bite Victim",
+  "where": "Title of Columbia Journalism Review's collection 'Squad Helps Dog Bite Victim' (1980)",
+  "ask": "What was the story actually about?",
+  "truth": "An emergency rescue squad gave first aid to a person who had been bitten by a dog. 'Dog-bite victim' is one phrase.",
+  "more": "Without the hyphen, the squad seems to be helping a dog bite someone. CJR's 'Lower case' column reprinted bloopers like this one, and this headline gave its title to the column's 1980 book, 'Squad Helps Dog Bite Victim, and Other Flubs from the Nation's Press.'",
+  "key": ["rescue", "bitten", "dog", "aid"],
+  "clues": [
+   "It's a small local news item about an emergency call.",
+   "Imagine a hyphen somewhere in the headline.",
+   "Someone was hurt by an animal, and a crew patched them up."
+  ],
+  "decoys": [
+   "A police K-9 team helped officers stop a fleeing suspect, whose leg the dog bit.",
+   "Animal control officers caught a stray dog that had bitten several people in a city park.",
+   "A school football squad raised money for a teammate's dog after it was bitten by a snake."
+  ],
+  "graded": [
+   {"g": "rescue team helped someone a dog bit", "s": 95, "h": "Spot on."},
+   {"g": "paramedics treat a dog bite", "s": 92, "h": "Spot on."},
+   {"g": "police helped a dog bite victim", "s": 85, "h": "Spot on."},
+   {"g": "someone got bitten by a dog", "s": 70, "h": "Right victim; who came to help?"},
+   {"g": "police dog bites a suspect", "s": 20, "h": "Tempting, but the dog isn't on the team."},
+   {"g": "a dog got hurt", "s": 15, "h": "Wrong victim."},
+   {"g": "the squad helped the dog bite someone", "s": 5, "h": "That's the misreading: find the hyphen."},
+   {"g": "a football team adopts a dog", "s": 5, "h": "Off track: it's an emergency."},
+   {"g": "a new chew toy", "s": 0, "h": "Off track."}
+  ],
+  "rating": "G",
+  "fun": 4,
+  "difficulty": 1,
+  "url": "https://www.goodreads.com/work/quotes/733744",
+  "source": "Goodreads entry for 'Squad Helps Dog Bite Victim, and Other Flubs from the Nation's Press'; search results describing CJR's two 1980s anthologies of ambiguous headlines",
+  "checked": "2026-10-06"
+ },
+ {
+  "id": "headline-red-tape-bridge",
+  "cat": "headline",
+  "kind": "headline",
+  "prompt": "Red Tape Holds Up New Bridge",
+  "where": "Title of Columbia Journalism Review's second collection, 'Red Tape Holds Up New Bridge' (1987)",
+  "ask": "What was the story actually about?",
+  "truth": "Bureaucratic paperwork and permits are delaying construction of a new bridge.",
+  "more": "Read literally, strips of red tape are all that keep the bridge standing. It named CJR's 1987 follow-up book of newspaper flubs, and the same five words ran again in 2022 over a story in McKenzie River Reflections, a weekly paper in Oregon.",
+  "key": ["bureaucracy", "delay", "bridge", "paperwork", "permits"],
+  "clues": [
+   "It's a story about a construction project.",
+   "The color is a figure of speech.",
+   "Forms, approvals and officials are slowing everything down."
+  ],
+  "decoys": [
+   "A new bridge has been closed to traffic because inspectors found cracks in its support cables.",
+   "The opening of a new bridge was postponed so the mayor could cut a ribbon at a formal ceremony.",
+   "Protesters tied red ribbons along a new bridge to oppose plans for a toll on drivers."
+  ],
+  "graded": [
+   {"g": "bureaucracy is delaying the new bridge", "s": 95, "h": "Spot on."},
+   {"g": "paperwork holdup on bridge construction", "s": 95, "h": "Spot on."},
+   {"g": "waiting on permits to build a bridge", "s": 90, "h": "Spot on."},
+   {"g": "new bridge delayed", "s": 75, "h": "Right outcome; what's causing it?"},
+   {"g": "government problems with a bridge", "s": 55, "h": "Right area; be more specific."},
+   {"g": "ribbon cutting at the bridge opening", "s": 20, "h": "Tempting, but there's no opening yet."},
+   {"g": "bridge closed for repairs", "s": 20, "h": "Wrong cause."},
+   {"g": "a bridge held together with tape", "s": 5, "h": "That's the misreading."},
+   {"g": "a bridge painted red", "s": 3, "h": "Off track: the color is a metaphor."}
+  ],
+  "rating": "G",
+  "fun": 3,
+  "difficulty": 1,
+  "url": "https://mckenzieriverreflectionsnewspaper.com/story/2022/03/31/news/red-tape-holds-up-new-bridge/4474.html",
+  "source": "Search results describing CJR's two 1980s anthologies ('Squad Helps Dog Bite Victim' and 'Red Tape Holds Up New Bridge'); McKenzie River Reflections story of March 31, 2022 under the same headline",
+  "checked": "2026-10-06"
+ },
+ {
+  "id": "headline-british-left-waffles",
+  "cat": "headline",
+  "kind": "headline",
+  "prompt": "British Left Waffles on Falklands",
+  "where": "Said to date from the 1982 Falklands War; no paper or date has been traced",
+  "ask": "What was the story actually about?",
+  "truth": "Britain's political left was wavering, unable to decide whether to back the 1982 war with Argentina over the Falkland Islands.",
+  "more": "Read another way, British troops left breakfast waffles on the islands. It is one of the most quoted ambiguous headlines, yet the accounts found give no paper or date (one reader's letter to A.Word.A.Day recalls it from 'a now-forgotten American newspaper'), so it may well be apocryphal.",
+  "key": ["wavering", "left", "indecisive", "war", "islands"],
+  "clues": [
+   "It's political news from 1982.",
+   "The first two words are one group: a side of politics.",
+   "To waffle is to talk around a question without settling on an answer."
+  ],
+  "decoys": [
+   "Britain's Labour Party demanded an immediate ceasefire and peace talks over the Falkland Islands.",
+   "British troops left behind tons of unused rations when they pulled out of the Falkland Islands.",
+   "Left-wing British newspapers refused to print government statements about the Falklands fighting."
+  ],
+  "graded": [
+   {"g": "the british left couldn't make up its mind about the war", "s": 95, "h": "Spot on."},
+   {"g": "labour party indecisive on the falklands", "s": 95, "h": "Spot on."},
+   {"g": "left-wingers keep changing their position", "s": 85, "h": "Spot on."},
+   {"g": "labour opposes the falklands war", "s": 55, "h": "Right group, but they weren't that firm."},
+   {"g": "british politics over the falklands", "s": 50, "h": "Right area; which side, doing what?"},
+   {"g": "argentina invades the falklands", "s": 25, "h": "Right war; who is the headline about?"},
+   {"g": "britain left the falklands", "s": 15, "h": "Read 'left' another way."},
+   {"g": "british soldiers left waffles behind", "s": 5, "h": "That's the misreading."},
+   {"g": "a breakfast shortage on the islands", "s": 2, "h": "Off track: it's politics."}
+  ],
+  "rating": "G",
+  "fun": 5,
+  "difficulty": 2,
+  "url": "https://wordsmith.org/awad/awadmail1023.html",
+  "source": "A.Word.A.Day, AWADmail issue 1023 (reader Paul Kleyman's recollection; checked via search results). No primary printing found.",
+  "checked": "2026-10-06"
+ },
+ {
+  "id": "headline-kids-snacks",
+  "cat": "headline",
+  "kind": "headline",
+  "prompt": "Kids Make Nutritious Snacks",
+  "where": "Classic of grammar textbooks and headline-blooper lists; no paper or date attached",
+  "ask": "What was the story actually about?",
+  "truth": "Children prepared healthy snacks, for example in a cooking class. 'Make' means cook or put together.",
+  "more": "Read the other way, children are good to eat. It turns up in grammar exercises and lists of ambiguous headlines, but the lists found don't name the paper that printed it.",
+  "key": ["children", "snacks", "healthy", "cooking"],
+  "clues": [
+   "It's the kind of item a school newsletter might run.",
+   "The young people are the ones doing something.",
+   "Picture an after-school class, aprons on, fruit and yogurt on the counter."
+  ],
+  "decoys": [
+   "A survey found that children now eat more snacks than full meals during the school day.",
+   "A school replaced the candy in its vending machines with fruit after a campaign by parents.",
+   "Doctors say growing children need snacks between meals to keep up their energy at school."
+  ],
+  "graded": [
+   {"g": "children cooking healthy snacks", "s": 95, "h": "Spot on."},
+   {"g": "kids prepare healthy food in class", "s": 92, "h": "Spot on."},
+   {"g": "a cooking class for kids", "s": 80, "h": "Close; what did they turn out?"},
+   {"g": "healthy snacks for children", "s": 55, "h": "Right food, but who's doing the work?"},
+   {"g": "school lunches get healthier", "s": 35, "h": "Right area, wrong story."},
+   {"g": "a new candy bar for kids", "s": 10, "h": "Wrong: the snacks are good for you."},
+   {"g": "kids are nutritious to eat", "s": 5, "h": "That's the misreading."},
+   {"g": "cannibals", "s": 2, "h": "That's the misreading, and then some."}
+  ],
+  "rating": "PG",
+  "fun": 4,
+  "difficulty": 1,
+  "url": "https://darkwing.uoregon.edu/~tpayne/UEG/UEG-exercises-ch7.pdf",
+  "source": "Found via search on lists of ambiguous headlines used in grammar teaching (University of Oregon 'Understanding English Grammar' exercises and similar); no original printing found",
+  "checked": "2026-10-06"
+ },
+ {
+  "id": "headline-seven-foot-doctors",
+  "cat": "headline",
+  "kind": "headline",
+  "prompt": "Hospitals Are Sued by 7 Foot Doctors",
+  "where": "Classic of headline-blooper lists; no paper or date attached",
+  "ask": "What was the story actually about?",
+  "truth": "Seven podiatrists, doctors who treat feet, filed lawsuits against hospitals.",
+  "more": "With a digit and no hyphen, the doctors become seven feet tall. Grammar teachers use it to show how headlines drop the little words that settle meaning; the lists that quote it don't name the paper.",
+  "key": ["foot", "doctors", "seven", "lawsuit"],
+  "clues": [
+   "It's a legal story about medical staff.",
+   "The number tells you how many, and says nothing about height.",
+   "Their specialty starts at the ankle and goes down."
+  ],
+  "decoys": [
+   "Seven hospitals were sued by a group of doctors who say they were dismissed unfairly.",
+   "Patients have sued seven hospitals over long waits in their emergency rooms.",
+   "Seven surgeons sued their hospitals over cuts to their operating-room time."
+  ],
+  "graded": [
+   {"g": "seven podiatrists sued hospitals", "s": 98, "h": "Spot on."},
+   {"g": "7 foot specialists file a lawsuit", "s": 95, "h": "Spot on."},
+   {"g": "doctors who treat feet are suing", "s": 85, "h": "Spot on."},
+   {"g": "seven doctors sued the hospitals", "s": 70, "h": "Right count; what kind of doctors?"},
+   {"g": "doctors suing hospitals", "s": 55, "h": "Right idea; be more specific."},
+   {"g": "malpractice lawsuit against hospitals", "s": 30, "h": "Check who's doing the suing."},
+   {"g": "very tall doctors sue hospitals", "s": 5, "h": "That's the misreading."},
+   {"g": "basketball players become doctors", "s": 0, "h": "Off track."}
+  ],
+  "rating": "G",
+  "fun": 4,
+  "difficulty": 1,
+  "url": "https://darkwing.uoregon.edu/~tpayne/UEG/UEG-exercises-ch7.pdf",
+  "source": "Found via search on lists of ambiguous headlines used in language teaching (University of Oregon 'Understanding English Grammar' exercises and similar); no original printing found",
+  "checked": "2026-10-06"
+ },
+ {
+  "id": "headline-iraqi-head",
+  "cat": "headline",
+  "kind": "headline",
+  "prompt": "Iraqi Head Seeks Arms",
+  "where": "Classic of headline-blooper lists; no paper or date attached",
+  "ask": "What was the story actually about?",
+  "truth": "Iraq's leader is trying to buy weapons.",
+  "more": "'Head' for leader and 'arms' for weapons are both standard headline shorthand; together they summon a lonely head looking for limbs. It circulates on blooper lists without a named paper or date.",
+  "key": ["weapons", "leader", "buy"],
+  "clues": [
+   "It's a foreign-affairs story.",
+   "'Head' is a job title here.",
+   "He wants tanks, guns and missiles."
+  ],
+  "decoys": [
+   "Iraq's leader appealed for international aid after floods in the south of the country.",
+   "Iraq's head of state asked Western governments for talks on lifting trade sanctions.",
+   "Iraq's leader called on neighboring countries to help disarm militias near the border."
+  ],
+  "graded": [
+   {"g": "iraq's leader wants weapons", "s": 98, "h": "Spot on."},
+   {"g": "iraqi president trying to buy arms", "s": 95, "h": "Spot on."},
+   {"g": "saddam looking for guns", "s": 88, "h": "Spot on."},
+   {"g": "iraq arms deal", "s": 75, "h": "Close: who is asking?"},
+   {"g": "iraq at war", "s": 30, "h": "Right country, too vague."},
+   {"g": "prosthetic arms for iraq", "s": 15, "h": "Wrong kind of arms."},
+   {"g": "iraqi leader wants a hug", "s": 8, "h": "Read 'arms' another way."},
+   {"g": "a head looking for a body", "s": 5, "h": "That's the misreading."},
+   {"g": "baghdad restaurant hires a head chef", "s": 3, "h": "Off track."}
+  ],
+  "rating": "PG",
+  "fun": 4,
+  "difficulty": 1,
+  "url": "https://forums.nicoclub.com/actual-newspaper-headlines-t93746.html",
+  "source": "Found via search in a forum list titled 'Actual Newspaper Headlines'; no original printing found",
+  "checked": "2026-10-06"
+ },
+ {
+  "id": "headline-violin-case",
+  "cat": "headline",
+  "kind": "headline",
+  "prompt": "Drunk Gets Nine Months in Violin Case",
+  "where": "Classic of headline-blooper lists; no paper or date attached",
+  "ask": "What was the story actually about?",
+  "truth": "A drunk man was sentenced to nine months in jail in a court case that involved a violin.",
+  "more": "Read the other way, his sentence is nine months shut inside a violin case. It appears on many lists of ambiguous headlines, but none of the ones found give the paper, the date or what happened to the violin.",
+  "key": ["sentence", "jail", "drunk", "court", "violin"],
+  "clues": [
+   "It's a court report.",
+   "The nine months are a punishment.",
+   "The instrument was evidence; the case was the trial."
+  ],
+  "decoys": [
+   "A drunk man was jailed for nine months after hiding stolen cash inside a violin case.",
+   "A violinist who played drunk at a concert was suspended from the orchestra for nine months.",
+   "A drunk man who smashed a street musician's violin was banned from the city center for nine months."
+  ],
+  "graded": [
+   {"g": "drunk got nine months jail in a court case about a violin", "s": 95, "h": "Spot on."},
+   {"g": "drunk man jailed, the case involved a violin", "s": 95, "h": "Spot on."},
+   {"g": "a drunk was sentenced over a violin", "s": 90, "h": "Spot on."},
+   {"g": "a drunk got nine months in prison", "s": 75, "h": "Right sentence; what was the case about?"},
+   {"g": "someone stole a violin", "s": 50, "h": "Right object; who, and what happened next?"},
+   {"g": "a drunk violinist got suspended", "s": 20, "h": "Wrong kind of case."},
+   {"g": "drunk locked in a violin case for nine months", "s": 5, "h": "That's the misreading."},
+   {"g": "a baby born in a violin case", "s": 2, "h": "Off track: nine months of what?"}
+  ],
+  "rating": "G",
+  "fun": 5,
+  "difficulty": 1,
+  "url": "https://www.cs.toronto.edu/~krueger/csc165h/lectures/headlines.html",
+  "source": "Found via search on a University of Toronto course page of ambiguous headlines ('Linguistic humor, Headlines'); no original printing found",
+  "checked": "2026-10-06"
+ },
+ {
+  "id": "headline-teacher-strikes",
+  "cat": "headline",
+  "kind": "headline",
+  "prompt": "Teacher Strikes Idle Kids",
+  "where": "Classic of headline-blooper lists; no paper or date attached",
+  "ask": "What was the story actually about?",
+  "truth": "A teachers' strike has closed classes and left children with nothing to do. 'Teacher strikes' is the subject and 'idle' is the verb.",
+  "more": "Read the other way, a teacher hits lazy children. It sits on lists of ambiguous headlines used to show how headlines drop words; the lists don't name the paper.",
+  "key": ["strike", "teachers", "children", "idle", "school"],
+  "clues": [
+   "It's a story about schools.",
+   "'Idle' is something that happens to the kids.",
+   "Picket lines went up outside the school, so classes stopped."
+  ],
+  "decoys": [
+   "A teacher was suspended after hitting pupils who refused to do their classwork.",
+   "Teachers say children are growing lazier because of the hours they spend on screens.",
+   "A school district started a program to keep children busy during the long summer break."
+  ],
+  "graded": [
+   {"g": "a teachers' strike leaves kids idle", "s": 98, "h": "Spot on."},
+   {"g": "teachers on strike so kids have no school", "s": 95, "h": "Spot on."},
+   {"g": "walkout closes the schools", "s": 85, "h": "Spot on."},
+   {"g": "teachers on strike", "s": 75, "h": "Right event; what happens to the kids?"},
+   {"g": "kids bored with no school", "s": 60, "h": "Right result; why is there no school?"},
+   {"g": "kids skip class", "s": 25, "h": "Close-ish, but it isn't their choice."},
+   {"g": "teacher punishes students", "s": 10, "h": "Read 'strikes' another way."},
+   {"g": "teacher hits lazy kids", "s": 5, "h": "That's the misreading."},
+   {"g": "lightning hits a school", "s": 2, "h": "Off track."}
+  ],
+  "rating": "G",
+  "fun": 3,
+  "difficulty": 2,
+  "url": "https://www.cs.toronto.edu/~krueger/csc165h/lectures/headlines.html",
+  "source": "Found via search on a University of Toronto course page of ambiguous headlines ('Linguistic humor, Headlines'); no original printing found",
+  "checked": "2026-10-06"
+ },
+ {
+  "id": "headline-stolen-painting",
+  "cat": "headline",
+  "kind": "headline",
+  "prompt": "Stolen Painting Found by Tree",
+  "where": "Quoted on headline-blooper lists; no paper or date attached",
+  "ask": "What was the story actually about?",
+  "truth": "A stolen painting was recovered lying near a tree. 'By' means beside.",
+  "more": "Read the other way, a tree solved an art theft. It is quoted on ambiguous-headline lists without a named paper, and no original printing turned up in our searches.",
+  "key": ["painting", "stolen", "found", "near", "tree"],
+  "clues": [
+   "It's about an art theft.",
+   "The little word 'by' can do two different jobs.",
+   "Someone came across it on the ground outdoors, at the foot of a trunk."
+  ],
+  "decoys": [
+   "A painting of a tree, stolen from a museum last year, has been recovered by police.",
+   "A stolen painting turned up at an auction house after a dealer recognized it in a catalog.",
+   "A stolen painting was found in the home of a collector who said he had bought it in good faith."
+  ],
+  "graded": [
+   {"g": "the painting was found next to a tree", "s": 95, "h": "Spot on."},
+   {"g": "stolen art turned up beside a tree", "s": 95, "h": "Spot on."},
+   {"g": "police recover stolen painting outdoors", "s": 70, "h": "Close: where exactly?"},
+   {"g": "stolen painting recovered", "s": 60, "h": "Right event; where was it?"},
+   {"g": "art thief caught", "s": 30, "h": "Right crime; the story is about the art."},
+   {"g": "a painting of a tree was stolen", "s": 20, "h": "Wrong picture."},
+   {"g": "a tree discovered the stolen painting", "s": 5, "h": "That's the misreading."},
+   {"g": "family tree research", "s": 2, "h": "Off track."}
+  ],
+  "rating": "G",
+  "fun": 3,
+  "difficulty": 2,
+  "url": "https://www.cs.toronto.edu/~krueger/csc165h/lectures/headlines.html",
+  "source": "Known from lists of ambiguous headlines; no documentation found in searches (this headline not confirmed on the linked page)",
+  "checked": "2026-10-06",
+  "status": "unverified"
+ },
+ {
+  "id": "headline-eye-drops",
+  "cat": "headline",
+  "kind": "headline",
+  "prompt": "Eye Drops Off Shelf",
+  "where": "Quoted on headline-blooper lists; no paper or date attached",
+  "ask": "What was the story actually about?",
+  "truth": "A brand of eye drops has been taken off store shelves, as in a product recall.",
+  "more": "Read the other way, an eye falls off a shelf. It is quoted on blooper lists without a paper or date, and no original printing turned up in our searches.",
+  "key": ["recall", "medicine", "eye", "drops", "shelves"],
+  "clues": [
+   "It's consumer health news.",
+   "The first two words are one product.",
+   "Stores pulled it after a safety warning."
+  ],
+  "decoys": [
+   "A popular brand of eye drops goes on sale without a prescription for the first time.",
+   "Pharmacies report empty shelves after a rush on eye drops during a bad allergy season.",
+   "An eye clinic was closed after inspectors found expired medicine on its shelves."
+  ],
+  "graded": [
+   {"g": "eye drops recalled", "s": 95, "h": "Spot on."},
+   {"g": "eye drops pulled from stores", "s": 95, "h": "Spot on."},
+   {"g": "a medicine was taken off sale", "s": 75, "h": "Right event; which product?"},
+   {"g": "eye drop shortage", "s": 40, "h": "Right product, wrong reason they're gone."},
+   {"g": "new eye drops on sale", "s": 20, "h": "Right product, wrong direction."},
+   {"g": "an eyeball fell off a shelf", "s": 5, "h": "That's the misreading."},
+   {"g": "a glass eye rolled off a shelf", "s": 5, "h": "That's the misreading."},
+   {"g": "a shelf collapsed in a store", "s": 3, "h": "Off track."}
+  ],
+  "rating": "G",
+  "fun": 4,
+  "difficulty": 1,
+  "url": "https://www.cs.toronto.edu/~krueger/csc165h/lectures/headlines.html",
+  "source": "Known from lists of ambiguous headlines; no documentation found in searches (this headline not confirmed on the linked page)",
+  "checked": "2026-10-06",
+  "status": "unverified"
+ },
+ {
+  "id": "headline-milk-powder",
+  "cat": "headline",
+  "kind": "headline",
+  "prompt": "Milk Drinkers Are Turning to Powder",
+  "where": "Quoted on headline-blooper lists; no paper or date attached",
+  "ask": "What was the story actually about?",
+  "truth": "People who drink milk are switching to powdered milk.",
+  "more": "Read the other way, milk drinkers are crumbling into dust. It is quoted on blooper lists without a paper or date, and no original printing turned up in our searches.",
+  "key": ["powdered", "milk", "switching", "drinkers"],
+  "clues": [
+   "It's a story about shopping habits.",
+   "'Turning to' here means 'taking up'.",
+   "Add water and stir."
+  ],
+  "decoys": [
+   "Milk drinkers are switching from dairy milk to oat and almond drinks.",
+   "Doctors warn that heavy milk drinkers may still get brittle bones in old age.",
+   "Dairy farmers are drying unsold milk into powder because demand has fallen."
+  ],
+  "graded": [
+   {"g": "people switching to powdered milk", "s": 98, "h": "Spot on."},
+   {"g": "milk drinkers buy dried milk now", "s": 95, "h": "Spot on."},
+   {"g": "more people buying milk powder", "s": 85, "h": "Spot on."},
+   {"g": "milk drinkers change what they buy", "s": 55, "h": "Right idea; switching to what?"},
+   {"g": "people switching to oat milk", "s": 30, "h": "Right kind of change, wrong product."},
+   {"g": "milk gives you weak bones", "s": 10, "h": "Off track: it's about shopping."},
+   {"g": "milk drinkers crumble into dust", "s": 5, "h": "That's the misreading."},
+   {"g": "people turning into ghosts", "s": 2, "h": "Off track."}
+  ],
+  "rating": "G",
+  "fun": 4,
+  "difficulty": 1,
+  "url": "https://www.cs.toronto.edu/~krueger/csc165h/lectures/headlines.html",
+  "source": "Known from lists of ambiguous headlines; no documentation found in searches (this headline not confirmed on the linked page)",
+  "checked": "2026-10-06",
+  "status": "unverified"
+ },
+ {
+  "id": "headline-grandmother-hole-in-one",
+  "cat": "headline",
+  "kind": "headline",
+  "prompt": "Grandmother of Eight Makes Hole in One",
+  "where": "Quoted on headline-blooper lists; no paper or date attached",
+  "ask": "What was the story actually about?",
+  "truth": "A woman with eight grandchildren hit a hole in one at golf: her tee shot went straight into the cup.",
+  "more": "Read the other way, she put a hole in one of her eight grandchildren. It is quoted on blooper lists without a paper or date, and no original printing turned up in our searches.",
+  "key": ["golf", "grandmother", "ace", "shot"],
+  "clues": [
+   "It's a small local sports item.",
+   "The number just describes her family.",
+   "One swing from the tee, and the ball dropped straight into the cup."
+  ],
+  "decoys": [
+   "A grandmother of eight won her bowling league by rolling a perfect game of 300.",
+   "A grandmother of eight dug the first hole at the groundbreaking for a new community garden.",
+   "A grandmother of eight sank the winning basket in a charity basketball match."
+  ],
+  "graded": [
+   {"g": "grandma got a hole in one at golf", "s": 98, "h": "Spot on."},
+   {"g": "she aced a golf hole", "s": 95, "h": "Spot on."},
+   {"g": "a grandmother hit a great golf shot", "s": 80, "h": "Close; how great?"},
+   {"g": "older woman wins a golf tournament", "s": 55, "h": "Right sport; the story is one stroke."},
+   {"g": "grandmother wins at bowling", "s": 25, "h": "Right kind of feat, wrong sport."},
+   {"g": "grandma digs a hole in her garden", "s": 10, "h": "Off track: it's sport."},
+   {"g": "grandma pokes a hole in a grandchild", "s": 5, "h": "That's the misreading."},
+   {"g": "grandmother knits a sweater", "s": 2, "h": "Off track."}
+  ],
+  "rating": "PG",
+  "fun": 4,
+  "difficulty": 1,
+  "url": "https://www.cs.toronto.edu/~krueger/csc165h/lectures/headlines.html",
+  "source": "Known from lists of ambiguous headlines; no documentation found in searches (this headline not confirmed on the linked page)",
+  "checked": "2026-10-06",
+  "status": "unverified"
+ },
+ {
+  "id": "headline-dropouts-halved",
+  "cat": "headline",
+  "kind": "headline",
+  "prompt": "Local High School Dropouts Cut in Half",
+  "where": "Quoted on headline-blooper lists; no paper or date attached",
+  "ask": "What was the story actually about?",
+  "truth": "The number of students dropping out of the local high school has fallen by half.",
+  "more": "Read the other way, a stage magician has been busy at the school. It is quoted on blooper lists without a paper or date, and no original printing turned up in our searches.",
+  "key": ["dropouts", "halved", "students", "decline", "school"],
+  "clues": [
+   "It's an education statistics story.",
+   "The school is pleased with the news.",
+   "Count the ones who quit last year and this year: 50 percent fewer."
+  ],
+  "decoys": [
+   "Half of the local high school's dropouts have come back to finish their diplomas.",
+   "The local high school is cutting the budget of its program that helps dropouts return.",
+   "The local high school has halved its class sizes by hiring more teachers."
+  ],
+  "graded": [
+   {"g": "dropout rate halved", "s": 98, "h": "Spot on."},
+   {"g": "half as many kids are dropping out", "s": 98, "h": "Spot on."},
+   {"g": "fewer students dropping out", "s": 80, "h": "Right direction; by how much?"},
+   {"g": "school improves graduation rates", "s": 65, "h": "Close; look at the other end."},
+   {"g": "half the dropouts came back", "s": 35, "h": "Right fraction, wrong change."},
+   {"g": "school cuts its dropout program", "s": 20, "h": "Wrong thing being cut."},
+   {"g": "magic show at the high school", "s": 5, "h": "That's the misreading, more or less."},
+   {"g": "students sawn in half", "s": 3, "h": "That's the misreading."}
+  ],
+  "rating": "PG",
+  "fun": 3,
+  "difficulty": 1,
+  "url": "https://www.cs.toronto.edu/~krueger/csc165h/lectures/headlines.html",
+  "source": "Known from lists of ambiguous headlines; no documentation found in searches (this headline not confirmed on the linked page)",
+  "checked": "2026-10-06",
+  "status": "unverified"
+ }
+]

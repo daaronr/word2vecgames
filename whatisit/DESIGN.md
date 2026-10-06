@@ -28,8 +28,8 @@ rate-this-version form after each session.
 
 | Trial | For | Core loop | What we learn |
 |---|---|---|---|
-| A. Daily five | 1 player, 5 minutes | Five mysteries a day, one per category. Type guesses; the robot judge shows how warm each is (0-100). Up to 4 guesses, 3 clues (each cuts the points), "pick from four" as a fallback, a DMV side bet on plates, a share grid. After the reveal, "ask the AI judge" for a second opinion. | Is a solo daily fun? Is the robot judge fair enough? Do players prefer typing or picking? |
-| B. Party board | 2+ in a room or on a call, one screen | A points board (categories x 100/200/300) or tic-tac-toe for two teams. Guesses typed on a passed-round device, or on paper. Robot, AI, or the room judges; a "funniest guess" bonus. | Which board? Does judging feel fair or fiddly? |
+| A. Daily five | 1 player, 5 minutes | Five mysteries a day from five of the ten everyday categories (a seeded draw per day). Type guesses; the judge shows how warm each is (0-100): answer key first, then the AI judge, then the robot. Up to 4 guesses, 3 clues (each cuts the points), "pick from four" as a fallback, a DMV side bet on plates, a share grid. After the reveal, "ask the AI judge" for a second opinion. | Is a solo daily fun? Is the robot judge fair enough? Do players prefer typing or picking? |
+| B. Party board | 2+ in a room or on a call, one screen | A Jeopardy-style points board (3 rows of 100-300 or 5 rows of 200-1,000), tic-tac-toe or Connect Four for two teams. Points-board options: lower values in a column unlock higher ones (the default; on TV any square may be picked), whoever takes a square picks next, one hidden Daily Double (the picker answers alone for a wager), way-off guesses lose the value, and a Final mystery with wagers. Connect Four: the picking team chooses a column (each column is a category) and whichever team guesses closer drops its disc there. Guesses typed on a passed-round device, or on paper. Free judge, AI, or the room judges; a "funniest guess" bonus. | Which board? Do the Jeopardy rules add tension or just length? Does judging feel fair or fiddly? |
 | C. Bring your own | 2+ | The original game: type any word, phrase or address; guess; search together via Google/DuckDuckGo/Bing/Wikipedia links; type what you found; judge. Optional Family-Feud bonus for results 2 and 3. | Is the free-form version more fun than curated items? |
 | D. Bluff | 3+, pass the phone | Balderdash with real mysteries: everyone writes a believable fake, the truth and one of our decoys are mixed in, everyone votes. | Is fooling friends more fun than guessing? |
 
@@ -166,17 +166,60 @@ What that means:
 | Chrome's built-in Gemini Nano (Prompt API) | Desktop Chrome, about 22 GB free disk | Nobody | Free but desktop-only and a big download |
 | A ChatGPT app (Apps SDK) or a Claude connector (MCP app) | An account on that platform | Probably the player's plan *(inferred)* | Distribution inside the chat apps; more work |
 
-Recommendation (updated after the test above): run a cheap model ourselves, behind limits, so
-players need nothing. `netlify/functions/judge.mjs` does this through Netlify AI Gateway: Netlify
-supplies the provider keys and bills the calls to the team's Netlify credits (Free includes 300
-credits a month for everything; when credits run out a Free site pauses, so watch usage). The
-function only judges this game's own answers (looked up by id), allows 20 requests a minute per
-visitor, stops after `JUDGE_DAILY_CAP` calls a day (default 300) and caches repeat questions.
-Default model: Claude Haiku 4.5, the one tested; switch with `JUDGE_PROVIDER` / `JUDGE_MODEL` to
-Gemini Flash-Lite or GPT-5 nano for roughly a tenth of the cost (check the exact model names in
-Netlify's AI Gateway list; those two were not tested here). A per-guess call costs about 0.09¢
-with Haiku and about 0.01¢ with GPT-5 nano ($0.05 / $0.40 per million tokens). Bring-your-own AI
-stays available in Settings.
+### What happened in the first week: the AI judge "ran out of credit"
+
+The first deployment ran the AI judge through Netlify AI Gateway, which bills model calls to the
+team's Netlify credits. On the Free plan those 300 credits a month pay for everything: each
+production deploy costs 15 credits, AI calls cost 180 credits per dollar of model usage, and
+bandwidth, requests and form submissions draw on the same pool. When the pool is empty, every
+project on the team is paused ("Site not available") until the next month, and AI Gateway calls
+stop. A dozen deploys alone use 180 credits, so a few days of testing can empty it. Calls were also
+made per guess in the Daily (up to 20 per player per day), and judge-mode results were cached by
+exact prompt, so the cache rarely hit.
+
+### The fix: pay for as few calls as possible, and never from Netlify credits by default
+
+1. **Answer keys (zero runtime cost).** Every mystery now carries `graded`: about ten likely guesses,
+   scored in advance with a spoiler-free hint, written offline once. A guess that restates one of
+   them (same content words, or a word-vector match of 0.85+) takes that score instantly, in the
+   browser and again on the server, with no model call. Other guesses are nudged toward the
+   nearest graded ones. Measured on the 217 hand-scored test guesses (which the key writers never saw):
+
+   | Judge | Right winner | Rank agreement | Correlation | Mean error | Wrong scored warm | AI calls |
+   |---|---|---|---|---|---|---|
+   | Robot (word vectors) | 27/31 | 0.81 | 0.78 | 18 | 13 of 74 | 0 |
+   | Robot + answer key | 31/31 | 0.90 | 0.91 | 12 | 1 of 74 | 0 |
+   | Claude Haiku 4.5 | 31/31 | 0.95 | 0.96 | 8 | 4 of 74 | 217 |
+
+   The answer key alone settles 78 of the 217 guesses (36%) with an average error of about 5 points
+   against the human scores. Caveat: the gold scores and the keys were both written with Claude, so
+   real players' ratings are the real test.
+2. **Shared cache by meaning, not by prompt.** One guess at a curated mystery is cached under its
+   normalized wording ("A laser pointer!" = "laser pointers"), shared by all players.
+3. **The AI only for what's left,** with hard limits in `netlify/functions/judge.mjs`: 200 calls a day
+   and 3,000 a month for the whole site, 60 a day per visitor, 20 requests a minute per visitor.
+   When a limit is reached, or the provider says the money or quota ran out, the function answers
+   "resting" and the game carries on with the answer key and the robot.
+4. **Netlify credits only on purpose.** The function uses the first provider key you set yourself
+   and ignores Netlify's gateway keys unless `JUDGE_USE_NETLIFY_CREDITS=1`. The recommended key is
+   a free Gemini API key from Google AI Studio (no card): Gemini 3.1 Flash-Lite and 2.5 Flash-Lite
+   are in the free tier, which allows on the order of a thousand requests a day per project (check
+   the live quota in AI Studio) and simply stops when used up, so it cannot bill anyone. Google may
+   use free-tier inputs to improve its models; the inputs here are game guesses. For more volume,
+   switch the same key to paid tier 1 with a budget alert: Flash-Lite costs about $0.25/$1.50 per
+   million tokens, roughly 0.02¢ a guess.
+5. **Party play still uses the AI per round,** unless every guess is already in the answer key.
+   A 9-square game is at most 9 calls.
+
+Cost at scale with this design: if a third of guesses hit the key and the cache catches most
+repeats of popular guesses, 10,000 Daily players at about 8 guesses each is roughly 30,000-50,000
+calls a day: free up to the Gemini quota, then about $6-10 a day on Flash-Lite paid. That is the
+point to add a supporter tier or ads (section 6), or to keep the Daily on the free judge and reserve
+the AI for party play and supporters. Two more levers if needed: grow the answer keys from the
+cache (re-scored offline) so hits rise over time, and run a small sentence-embedding model in the
+browser for the robot.
+
+Bring-your-own AI stays available in Settings for anyone who wants AI verdicts on every guess.
 
 ## 6. Making money
 
@@ -259,24 +302,45 @@ Atlantic), Wordle (bought), Name Drop (built in-house).
 
 ## 10. Content so far
 
-167 mysteries: 62 vanity plates (CA DMV file), 41 brands, 25 web addresses (including the user's
-`kafka.com`), 15 patents (each checked against its text), 12 search phrases (including "Bring your
-own balls": the top result was a pool players' forum thread about bringing their own balls), 12
-Double takes.
+236 mysteries in eleven categories, each with an answer key:
+- **Everyday categories:** 62 vanity plates (CA DMV file), 41 brands, 25 web addresses (including
+  `kafka.com`), 15 patents (each checked against its text), 12 search phrases, 12 Double takes (PG-13).
+- **New, October 2026** (from the first round of feedback):
+  - *Up close* (15): a picture seen through a magnifying glass; each clue zooms out. Pictures are
+    Microsoft's Fluent Emoji (MIT licence). A launch version wants our own macro photographs.
+  - *Paper titles* (15): the part of a real paper's title before the colon ("Gorillas in our midst");
+    guess the field and what it's about.
+  - *Odd lyrics* (15): a strange line out of context; say what it means in the song. Public-domain
+    songs only (traditional, or published before 1931), since publishers license and police lyrics.
+    Modern pop lyrics would be funnier, but need a licence (LyricFind or Musixmatch) or a much
+    stricter fair-use review.
+  - *What's the deal with...?* (9): a news story that at least two late-night shows did bits on;
+    guess the comic angle. No partisan politics, deaths or jokes about people's bodies.
+  - *Headline, what?* (15): "crash blossoms", real headlines with an accidental second reading;
+    say what the story was about. Five are marked as unconfirmed.
 
-Checking was limited: the research helpers' web access was blocked for most sites and the session's
-search budget ran out. So 40 brands and 5 double-take addresses are **drafts not yet re-checked
-online** (the game marks them), several web items were confirmed only through their GitHub
-projects, and the web list leans technical. Swaps worth checking: hasthelargehadroncolliderdestroyedtheworldyet.com,
-instantrimshot.com, findtheinvisiblecow.com, endless.horse, milliondollarhomepage.com,
-hampsterdance.com, spacejam.com/1996, doesthedogdie.com, windows93.net, nissan.com, lingscars.com.
+Checking was limited: the research helpers could search but most source pages were blocked, so
+facts were confirmed from search-result summaries. Drafts are marked in the game. Still to verify:
+40 brands, 5 double-take addresses, 5 headlines, 1 late-night story. Web swaps worth checking:
+hasthelargehadroncolliderdestroyedtheworldyet.com, instantrimshot.com, findtheinvisiblecow.com,
+endless.horse, milliondollarhomepage.com, hampsterdance.com, spacejam.com/1996, doesthedogdie.com,
+windows93.net, nissan.com, lingscars.com.
+
+More categories in the same spirit (explain what a cryptic phrase really means), not built yet:
+- **Shop talk:** jargon out of context ("86 the salmon", "dead cat bounce", "yak shaving",
+  "souls on board"): guess what it means and which job says it.
+- **Lost in translation:** a film's title in another country, translated back ("The Incredible
+  Journey in a Crazy Airplane" is *Airplane!* in Germany): name the film.
+- **Nicknamed buildings:** the Gherkin, the Walkie-Talkie, the Cheesegrater: which city, and why.
+- **Museum labels:** a strange object's catalogue description; what was it for?
+- **Place-name stories:** Truth or Consequences, New Mexico; Boring, Oregon: how did it get the name?
 
 ## 11. Decide after the trials
 
 1. Which version (or combination) to build on, from the ratings.
 2. Which categories players rate highest (plates are the early favourite).
-3. Whether the robot judge is good enough for a daily, or whether to try in-browser sentence
-   embeddings.
+3. Whether the free judge (answer key plus robot) is good enough for the daily, so the AI is only
+   needed for party play; whether to try in-browser sentence embeddings.
 4. Typed guesses or multiple choice in the daily.
 5. Online rooms for remote play (reuse Word Bocce's PeerJS code).
 6. A name, and whether to keep it in this repo or move it out.

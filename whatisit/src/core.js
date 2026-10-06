@@ -99,8 +99,13 @@ const CATS = {
   patent: { label: "Patent office", short: "Patents", kind: "patent" },
   search: { label: "Top result", short: "Top result", kind: "phrase" },
   double: { label: "Double take", short: "Double take", kind: "domain", pg13: true },
+  zoom: { label: "Up close", short: "Up close", kind: "image" },
+  paper: { label: "Paper titles", short: "Papers", kind: "paper" },
+  lyric: { label: "Odd lyrics", short: "Lyrics", kind: "lyric" },
+  latenight: { label: "What's the deal with…?", short: "The deal", kind: "news" },
+  headline: { label: "Headline, what?", short: "Headlines", kind: "headline" },
 };
-const CAT_ORDER = ["web", "brand", "plate", "patent", "search", "double"];
+const CAT_ORDER = ["web", "brand", "plate", "patent", "search", "zoom", "paper", "lyric", "latenight", "headline", "double"];
 
 const CONTENT = (() => {
   const all = JSON.parse(document.getElementById("wii-content").textContent);
@@ -121,7 +126,8 @@ function catsAvailable() {
   return CAT_ORDER.filter((c) => pool(c).length > 0);
 }
 function kindLabel(item) {
-  return { domain: "a web address", brand: "a brand name", plate: "a California vanity plate", patent: "a US patent title", phrase: "a search phrase" }[item.kind] || "";
+  const label = J.KIND_LABEL[item.kind] || "";
+  return item.song ? `${label} ("${item.song}")` : label;
 }
 function looksLikeDomain(text) {
   return /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(\/\S*)?$/i.test(String(text).trim());
@@ -180,8 +186,9 @@ function loadRobot() {
   }
   return spacePromise;
 }
+/** The free judge: the item's answer key, then word-vector closeness. */
 function robotScore(guess, item) {
-  return J.scoreGuess(SPACE, guess, item);
+  return J.scoreItem(SPACE, guess, item);
 }
 
 // ---------- AI judge ----------
@@ -193,6 +200,7 @@ const MODELS = [
 // The site's own AI judge (netlify/functions/judge.mjs): free for players, paid by the site.
 // null = not tried yet, true = working, false = unavailable (not deployed, or today's cap is used up).
 let SITE_OK = null;
+let SITE_NOTE = "";
 async function siteJudge(body) {
   if (!CONFIG.judgeApi || SITE_OK === false) throw new Error("The site's AI judge isn't available here.");
   let res;
@@ -203,7 +211,12 @@ async function siteJudge(body) {
   }
   const out = await res.json().catch(() => ({}));
   if (!res.ok) {
-    if (res.status === 404 || res.status === 503 || res.status === 405) SITE_OK = false;
+    // 503: switched off, out of credit or over the site's cap. Stop asking for this visit.
+    if ([404, 405, 501, 503].includes(res.status)) {
+      SITE_OK = false;
+      SITE_NOTE = out.error || "";
+    }
+    if (res.status === 429 && out.reason === "visitor") SITE_OK = false;
     throw new Error(out.error || "The AI judge couldn't answer (" + res.status + ").");
   }
   SITE_OK = true;
@@ -341,7 +354,29 @@ function catLine(item, extra) {
     extra || null);
 }
 
-function habitat(item) {
+/** Magnifier view of an image item: [size %, position x %, position y %] for a zoom level. */
+function lensView(item, level) {
+  const zooms = item.zooms || [10, 5, 2.5, 1];
+  const z = zooms[Math.min(level || 0, zooms.length - 1)];
+  const [fx, fy] = item.focus || [0.5, 0.5];
+  const pos = (f) => {
+    if (z <= 1) return 50;
+    const left = Math.max(0, Math.min(1 - 1 / z, f - 0.5 / z));
+    return (100 * left * z) / (z - 1);
+  };
+  return { size: z * 100 + "%", x: pos(fx) + "%", y: pos(fy) + "%", z };
+}
+/** Point every magnifier inside `root` at a new zoom level (after a clue). */
+function zoomTo(root, item, level) {
+  root.querySelectorAll(".lens").forEach((el) => {
+    const v = lensView(item, level);
+    el.style.backgroundSize = v.size;
+    el.style.backgroundPosition = `${v.x} ${v.y}`;
+    el.dataset.z = v.z;
+  });
+}
+
+function habitat(item, level = 0) {
   const p = item.prompt;
   if (item.kind === "domain") {
     const m = String(p).match(/^(https?:\/\/)?(.*)$/i);
@@ -371,26 +406,68 @@ function habitat(item) {
       h("div", { class: "awning" }),
       h("div", { class: "board" }, h("div", { class: "name" }, p), h("div", { class: "est" }, "Open for business")));
   }
+  if (item.kind === "image") {
+    const v = lensView(item, level);
+    return h("div", { class: "lens-wrap" },
+      h("div", { class: "lens", role: "img", "aria-label": "A magnified detail of a picture", "data-z": v.z,
+        style: { backgroundImage: `url("${item.src || ""}")`, backgroundSize: v.size, backgroundPosition: `${v.x} ${v.y}` } }),
+      h("span", { class: "handle", "aria-hidden": "true" }));
+  }
+  if (item.kind === "paper") {
+    return h("div", { class: "paper" },
+      h("div", { class: "jhd" }, h("span", {}, "Journal of ", h("span", { class: "redact" }, "Something")), h("span", { class: "tabular" }, "Vol. ", item.year ? String(item.year).slice(0, 2) + "··" : "··")),
+      h("div", { class: "ptitle" }, p, h("span", { class: "rest", "aria-label": "rest of the title hidden" }, ": …")),
+      h("div", { class: "authors" }, h("span", { class: "redact" }, "A. Author"), ", ", h("span", { class: "redact" }, "B. Author")),
+      h("div", { class: "lines", "aria-hidden": "true" }, h("i"), h("i"), h("i"), h("i")));
+  }
+  if (item.kind === "lyric") {
+    return h("div", { class: "lyric" }, h("div", { class: "staff", "aria-hidden": "true" }), h("p", { class: "line" }, "“", p, "”"));
+  }
+  if (item.kind === "news") {
+    return h("div", { class: "tv" },
+      h("div", { class: "screen" },
+        h("div", { class: "desk", "aria-hidden": "true" }),
+        h("div", { class: "chyron" }, h("span", { class: "tag" }, "Tonight"), h("span", { class: "story" }, p))));
+  }
+  if (item.kind === "headline") {
+    return h("div", { class: "news" },
+      h("div", { class: "mast" }, "The Daily Ledger"),
+      h("div", { class: "dateline" }, h("span", {}, "Late edition"), h("span", {}, "Price 25¢")),
+      h("div", { class: "head" }, p),
+      h("div", { class: "cols", "aria-hidden": "true" }, h("i"), h("i"), h("i"), h("i"), h("i"), h("i")));
+  }
   return h("div", { class: "searchbox" }, svgIcon("search"), h("span", { class: "q" }, p, h("span", { class: "caret" })));
 }
 
-function mysteryCard(item, extra) {
-  return h("div", { class: "mystery" }, catLine(item, extra), habitat(item), h("p", { class: "ask" }, item.ask || "What is it?"));
+/** The mystery as players see it. opts.level: clues shown so far (zooms an image out). */
+function mysteryCard(item, extra, opts = {}) {
+  return h("div", { class: "mystery" }, catLine(item, extra), habitat(item, opts.level || 0), h("p", { class: "ask" }, item.ask || "What is it?"));
 }
 
+const REVEAL_HEAD = { phrase: "The top result", paper: "The paper", lyric: "What it means", news: "The joke", headline: "What it meant", image: "What it is" };
+const LINK_TEXT = { plate: "The DMV dataset", patent: "Read the patent", phrase: "Search it yourself", paper: "Read the paper", lyric: "About the song", news: "See a host's take", headline: "Where it's documented", image: "The picture's source" };
+
 function revealCard(item, opts = {}) {
-  const parts = [h("span", { class: "eyebrow" }, item.kind === "phrase" ? "The top result" : "What it is")];
+  const parts = [h("span", { class: "eyebrow" }, REVEAL_HEAD[item.kind] || "What it is")];
+  if (item.kind === "image" && item.src) parts.push(h("img", { class: "reveal-img", src: item.src, alt: item.truth }));
   parts.push(h("p", { class: "truth" }, item.truth));
   if (item.kind === "plate" && item.dmv) {
     parts.push(h("span", { class: "stamp " + (item.dmv === "approved" ? "ok" : "no") }, item.dmv === "approved" ? "Approved" : "Denied"));
   }
+  if (item.kind === "paper" && item.full) {
+    parts.push(h("p", { class: "cite" }, h("i", {}, item.full), ". ", [item.authors, item.journal, item.year].filter(Boolean).join(", "), "."));
+  }
+  if (item.kind === "lyric" && item.song) parts.push(h("p", { class: "cite" }, "From ", h("i", {}, item.song), item.year ? ` (${item.year})` : "", "."));
+  if (item.kind === "news" && item.hosts && item.hosts.length) parts.push(h("p", { class: "cite" }, (item.when ? item.when + ". " : "") + "Bits from " + item.hosts.join(", ") + "."));
+  if (item.kind === "headline" && item.where) parts.push(h("p", { class: "cite" }, item.where));
   if (item.more) parts.push(h("p", { class: "more" }, item.more));
   if (item.top3 && item.top3.length) {
     parts.push(h("div", { class: "results" }, item.top3.map((r, i) =>
       h("div", { class: "r" }, h("div", { class: "small muted" }, "#" + (i + 1)), h("div", {}, r.title), h("div", { class: "d" }, r.domain)))));
   }
   const links = [];
-  if (item.url) links.push(h("a", { href: item.url, target: "_blank", rel: "noopener noreferrer" }, item.kind === "plate" ? "The DMV dataset" : item.kind === "patent" ? "Read the patent" : item.kind === "phrase" ? "Search it yourself" : "See it for yourself"));
+  if (item.url) links.push(h("a", { href: item.url, target: "_blank", rel: "noopener noreferrer" }, LINK_TEXT[item.kind] || "See it for yourself"));
+  if (item.credit) links.push(h("span", { class: "small muted" }, item.credit));
   if (item.status === "unverified") links.push(h("span", { class: "chip" }, "Draft: not yet re-checked online"));
   else if (item.checked) links.push(h("span", { class: "small muted" }, "Checked " + item.checked + (item.number ? " \u00b7 " + item.number : "")));
   if (links.length) parts.push(h("div", { class: "row small" }, links));
@@ -554,7 +631,7 @@ function collectPrivately(host, players, opts) {
       };
       input.addEventListener("keydown", (e) => { if (e.key === "Enter") submit(); });
       host.append(h("div", { class: "stack" },
-        opts.item ? mysteryCard(opts.item) : null,
+        opts.item ? mysteryCard(opts.item, null, { level: opts.level }) : null,
         h("div", { class: "field" }, h("label", { for: "private-" + i }, `${who}: ${opts.prompt || "your guess"}`), input),
         err,
         h("div", { class: "row" },
@@ -566,21 +643,29 @@ function collectPrivately(host, players, opts) {
   });
 }
 
-/** Judge a set of guesses. Shows controls inside `host`; calls onWinner(indexes, details). */
-function judgePanel(host, { round, item, players, guesses, mode, defaultJudge, onAward }) {
+/**
+ * Judge a set of guesses. Shows controls inside `host`; calls onAward(winners, funniest, details).
+ * opts.threshold: everyone scoring at least this is marked right (Daily Double, Final); otherwise the
+ * top score wins. opts.penalty: also ask who was way off (they lose points; details.penalized).
+ */
+function judgePanel(host, { round, item, players, guesses, mode, defaultJudge, onAward, threshold, penalty, pickLabel }) {
   const typed = guesses && guesses.some((g) => g);
   const picked = new Set();
+  const off = new Set();
   let funniest = null;
   let details = { judge: "room" };
   const box = h("div", { class: "stack" });
   const pickRow = h("div", { class: "pick", role: "group", "aria-label": "Winner" });
+  const offRow = h("div", { class: "pick off", role: "group", "aria-label": "Way off" });
   const funRow = h("div", { class: "pick", role: "group", "aria-label": "Funniest guess" });
   const paintPicks = () => {
     pickRow.querySelectorAll("button").forEach((b, i) => b.setAttribute("aria-pressed", String(picked.has(i))));
+    offRow.querySelectorAll("button").forEach((b, i) => b.setAttribute("aria-pressed", String(off.has(i))));
     funRow.querySelectorAll("button").forEach((b, i) => b.setAttribute("aria-pressed", String(funniest === i)));
   };
   players.forEach((p, i) => {
-    pickRow.append(h("button", { type: "button", onclick: () => { picked.has(i) ? picked.delete(i) : picked.add(i); paintPicks(); } }, p));
+    pickRow.append(h("button", { type: "button", onclick: () => { picked.has(i) ? picked.delete(i) : (picked.add(i), off.delete(i)); paintPicks(); } }, p));
+    offRow.append(h("button", { type: "button", onclick: () => { off.has(i) ? off.delete(i) : (off.add(i), picked.delete(i)); paintPicks(); } }, p));
     funRow.append(h("button", { type: "button", onclick: () => { funniest = funniest === i ? null : i; paintPicks(); } }, p));
   });
   const results = h("div", { class: "guesslog" });
@@ -597,20 +682,38 @@ function judgePanel(host, { round, item, players, guesses, mode, defaultJudge, o
     }
     results.prepend(h("p", { class: "small muted" }, label));
     picked.clear();
+    off.clear();
     const top = order.length ? (scores[order[0]] ? scores[order[0]].score : 0) : 0;
-    order.forEach((i) => { if (scores[i] && scores[i].score === top && top > 0) picked.add(i); });
+    order.forEach((i) => {
+      const sc = scores[i] ? scores[i].score : 0;
+      if (threshold != null ? sc >= threshold : sc === top && top > 0) picked.add(i);
+      if (penalty && sc < 25) off.add(i);
+    });
     paintPicks();
+  };
+  // The free judge: answer key first, then word vectors. Returns how many guesses the key covered.
+  const freeScores = async () => {
+    const sp = await loadRobot();
+    if (!sp) return null;
+    const scores = guesses.map((g) => {
+      if (!g) return null;
+      const r = round.custom ? J.scoreAgainst(SPACE, g, round.target) : robotScore(g, item);
+      return { score: r.score, why: r.by === "key" ? r.hint : "", byKey: r.by === "key" };
+    });
+    return scores;
   };
   const robotBtn = h("button", { class: "btn small", onclick: async () => {
     robotBtn.disabled = true;
-    const sp = await loadRobot();
+    const scores = await freeScores();
     robotBtn.disabled = false;
-    if (!sp) { toast("The robot judge couldn't load its word list."); return; }
-    const scores = guesses.map((g) => (g ? (round.custom ? J.scoreAgainst(SPACE, g, round.target) : robotScore(g, item)) : null));
+    if (!scores) { toast("The robot judge couldn't load its word list."); return; }
     details = { judge: "robot", scores: scores.map((s) => (s ? s.score : null)) };
-    showScores(scores, "Robot judge: word-vector closeness to the answer's key ideas.");
-  } }, "Robot judge");
+    showScores(scores, "Free judge: the mystery's answer key where a guess matches it, word-vector closeness otherwise.");
+  } }, "Free judge");
+  let auto = false; // set while the AI judge runs by default rather than by a tap
   const aiBtn = h("button", { class: "btn small", onclick: async () => {
+    const wasAuto = auto;
+    auto = false;
     aiBtn.disabled = true;
     const old = aiBtn.textContent;
     aiBtn.textContent = "Judging…";
@@ -625,27 +728,42 @@ function judgePanel(host, { round, item, players, guesses, mode, defaultJudge, o
       if (out.funniest != null) { funniest = idx[out.funniest]; paintPicks(); }
     } catch (e) {
       if (e.message !== "cancelled") toast(e.message);
+      if (wasAuto) robotBtn.click();
     } finally {
       aiBtn.disabled = false;
       aiBtn.textContent = old;
     }
   } }, "AI judge");
 
-  box.append(h("p", { class: "label" }, typed ? "Who was closest?" : "Who was closest? Read your guesses out, then tap the winner."));
+  const ask = pickLabel || (threshold != null ? `Who got it? (${threshold} or more counts)` : "Who was closest?");
+  box.append(h("p", { class: "label" }, typed ? ask : ask + " Read your guesses out, then tap names."));
   if (typed) box.append(h("div", { class: "row" }, robotBtn, aiBtn, h("span", { class: "small muted" }, "or just tap a name")));
-  box.append(results, pickRow,
-    h("p", { class: "label" }, "Funniest guess (bonus, optional)"), funRow,
-    h("div", { class: "row" }, h("button", { class: "btn primary", onclick: () => {
-      details.winners = [...picked];
-      details.funniest = funniest;
-      if (details.judge !== "room" && typed) {
-        Store.send("judge", { id: item && item.id, prompt: round.prompt, truth: round.truth, mode, guesses, judge: details.judge, scores: details.scores, winners: details.winners });
-      }
-      onAward([...picked], funniest, details);
-    } }, "Award and continue")));
+  box.append(results, pickRow);
+  if (penalty) box.append(h("p", { class: "label" }, "Way off? (they lose the value)"), offRow);
+  if (threshold == null) box.append(h("p", { class: "label" }, "Funniest guess (bonus, optional)"), funRow);
+  box.append(h("div", { class: "row" }, h("button", { class: "btn primary", onclick: () => {
+    details.winners = [...picked];
+    details.penalized = [...off];
+    details.funniest = funniest;
+    if (details.judge !== "room" && typed) {
+      Store.send("judge", { id: item && item.id, prompt: round.prompt, truth: round.truth, mode, guesses, judge: details.judge, scores: details.scores, winners: details.winners });
+    }
+    onAward([...picked], funniest, details);
+  } }, "Award and continue")));
   host.append(box);
-  if (typed && defaultJudge === "robot") robotBtn.click();
-  if (typed && defaultJudge === "ai") aiBtn.click();
+  if (!typed) return;
+  // AI by default, unless the answer key already covers every guess (then it costs nothing).
+  // Pasting into a chatbot is never started automatically: without a built-in AI, the free judge runs.
+  const aiAuto = () => { if (aiSource() === "paste") robotBtn.click(); else { auto = true; aiBtn.click(); } };
+  if (defaultJudge === "ai" && !round.custom) {
+    freeScores().then((scores) => {
+      if (scores && scores.every((s, i) => !guesses[i] || (s && s.byKey))) {
+        details = { judge: "robot", scores: scores.map((s) => (s ? s.score : null)) };
+        showScores(scores, "Answer key: every guess matched one scored in advance.");
+      } else aiAuto();
+    });
+  } else if (defaultJudge === "ai") aiAuto();
+  else if (defaultJudge === "robot") robotBtn.click();
 }
 
 function timerEl(seconds, onEnd) {

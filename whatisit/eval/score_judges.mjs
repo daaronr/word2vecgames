@@ -17,7 +17,7 @@ const require = createRequire(import.meta.url);
 const J = require(join(ROOT, "src", "judge.js"));
 
 const items = new Map();
-for (const f of readdirSync(join(ROOT, "content"))) for (const it of JSON.parse(readFileSync(join(ROOT, "content", f), "utf8"))) items.set(it.id, it);
+for (const f of readdirSync(join(ROOT, "content")).filter((f) => f.endsWith(".json"))) for (const it of JSON.parse(readFileSync(join(ROOT, "content", f), "utf8"))) items.set(it.id, it);
 const evalSet = JSON.parse(readFileSync(join(HERE, "judge-eval.json"), "utf8")).rounds;
 
 // ---------- judges ----------
@@ -25,6 +25,12 @@ const judges = {};
 const buf = readFileSync(join(ROOT, "site", "judge-vectors.bin"));
 const space = new J.Space(buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength));
 judges.robot = Object.fromEntries(evalSet.map((r) => [r.id, r.guesses.map((g) => J.scoreGuess(space, g.text, items.get(r.id)).score)]));
+// The free judge as the game runs it: answer key first (graded guesses written without seeing this file).
+judges["robot+answer-key"] = Object.fromEntries(evalSet.map((r) => [r.id, r.guesses.map((g) => J.scoreItem(space, g.text, items.get(r.id)).score)]));
+let keyHits = 0;
+let keyTotal = 0;
+for (const r of evalSet) for (const g of r.guesses) { keyTotal++; if (J.scoreItem(space, g.text, items.get(r.id)).by === "key") keyHits++; }
+console.log(`answer key settles ${keyHits} of ${keyTotal} guesses outright (no AI call needed)`);
 
 const resDir = join(HERE, "results");
 if (existsSync(resDir)) {

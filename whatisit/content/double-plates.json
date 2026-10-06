@@ -30,7 +30,59 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 2,
-  "rating": "PG-13"
+  "rating": "PG-13",
+  "graded": [
+   {
+    "g": "alta-holic, addicted to skiing at alta",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "obsessed with skiing at alta in utah",
+    "s": 97,
+    "h": "Spot on."
+   },
+   {
+    "g": "loves skiing",
+    "s": 85,
+    "h": "Spot on; where, though?"
+   },
+   {
+    "g": "a skier",
+    "s": 75,
+    "h": "Close; how much do they love it?"
+   },
+   {
+    "g": "a mountain lover",
+    "s": 55,
+    "h": "Getting there; what do they do there?"
+   },
+   {
+    "g": "addicted to something",
+    "s": 45,
+    "h": "Right; addicted to what?"
+   },
+   {
+    "g": "an alcoholic",
+    "s": 20,
+    "h": "Right suffix, wrong habit."
+   },
+   {
+    "g": "sings alto in a choir",
+    "s": 8,
+    "h": "Wrong reading of the start."
+   },
+   {
+    "g": "calling other drivers a rude name",
+    "s": 3,
+    "h": "That's what the reviewer saw."
+   },
+   {
+    "g": "an altar boy",
+    "s": 3,
+    "h": "Off track."
+   }
+  ]
  },
  {
   "id": "plate-rx4play",
@@ -63,7 +115,59 @@
   "checked": "2026-10-06",
   "fun": 5,
   "difficulty": 2,
-  "rating": "PG-13"
+  "rating": "PG-13",
+  "graded": [
+   {
+    "g": "a pharmacist's fun car",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "pharmacist who likes to play",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "the owner works at a pharmacy",
+    "s": 88,
+    "h": "Spot on."
+   },
+   {
+    "g": "a doctor's weekend car",
+    "s": 70,
+    "h": "Close; different medical job."
+   },
+   {
+    "g": "the family's fun car",
+    "s": 55,
+    "h": "Half right; what about the RX?"
+   },
+   {
+    "g": "a nurse",
+    "s": 50,
+    "h": "Medical, but a different job."
+   },
+   {
+    "g": "a mazda rx kept for fun",
+    "s": 30,
+    "h": "Fun, yes; RX means something else."
+   },
+   {
+    "g": "sports physiotherapist",
+    "s": 30,
+    "h": "Health job, wrong one."
+   },
+   {
+    "g": "a video game store",
+    "s": 8,
+    "h": "Wrong reading of the start."
+   },
+   {
+    "g": "a prescription for foreplay",
+    "s": 3,
+    "h": "That's what the reviewer saw."
+   }
+  ]
  },
  {
   "id": "plate-nyomouf",
@@ -96,7 +200,59 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 2,
-  "rating": "PG-13"
+  "rating": "PG-13",
+  "graded": [
+   {
+    "g": "a dental hygienist, in your mouth",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "cleans teeth for a living",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "a dentist",
+    "s": 85,
+    "h": "Spot on."
+   },
+   {
+    "g": "an orthodontist",
+    "s": 80,
+    "h": "Right field, slightly different job."
+   },
+   {
+    "g": "in your mouth",
+    "s": 65,
+    "h": "Right reading; whose job is that?"
+   },
+   {
+    "g": "a speech therapist",
+    "s": 40,
+    "h": "Right body part, wrong job."
+   },
+   {
+    "g": "a food critic",
+    "s": 12,
+    "h": "Wrong job."
+   },
+   {
+    "g": "a new york chef",
+    "s": 10,
+    "h": "Wrong reading of the start."
+   },
+   {
+    "g": "something dirty",
+    "s": 3,
+    "h": "That's what the reviewer saw."
+   },
+   {
+    "g": "a yankees fan",
+    "s": 3,
+    "h": "Off track."
+   }
+  ]
  },
  {
   "id": "plate-im-topls",
@@ -129,7 +285,64 @@
   "checked": "2026-10-06",
   "fun": 5,
   "difficulty": 1,
-  "rating": "PG-13"
+  "rating": "PG-13",
+  "graded": [
+   {
+    "g": "my car is a convertible",
+    "s": 97,
+    "h": "Spot on."
+   },
+   {
+    "g": "the roof comes off",
+    "s": 92,
+    "h": "Spot on."
+   },
+   {
+    "g": "topless as in no roof",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "a jeep with the top off",
+    "s": 85,
+    "h": "Spot on."
+   },
+   {
+    "g": "a car with a sunroof",
+    "s": 62,
+    "h": "Close; even more than that."
+   },
+   {
+    "g": "loves summer driving",
+    "s": 50,
+    "h": "Getting there; what's special about the ride?"
+   },
+   {
+    "g": "something about the car",
+    "s": 35,
+    "h": "Right subject; what about it?"
+   },
+   {
+    "g": "the driver is topless",
+    "s": 5,
+    "h": "That's what the reviewer saw."
+   },
+   {
+    "g": "a spinning top collector",
+    "s": 5,
+    "h": "Wrong reading."
+   },
+   {
+    "g": "at the top of a mountain",
+    "s": 5,
+    "h": "Wrong reading."
+   },
+   {
+    "g": "a bartender",
+    "s": 3,
+    "h": "Off track."
+   }
+  ]
  },
  {
   "id": "plate-musknkl",
@@ -162,7 +375,64 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 3,
-  "rating": "PG-13"
+  "rating": "PG-13",
+  "graded": [
+   {
+    "g": "plays on a hockey team called the moose knuckles",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "moose knuckles, a beer league hockey team",
+    "s": 97,
+    "h": "Spot on."
+   },
+   {
+    "g": "a hockey team name",
+    "s": 85,
+    "h": "Spot on."
+   },
+   {
+    "g": "an ice hockey fan",
+    "s": 68,
+    "h": "Close; more involved than a fan."
+   },
+   {
+    "g": "a rec league sports team",
+    "s": 62,
+    "h": "Getting there; which sport?"
+   },
+   {
+    "g": "plays on a team",
+    "s": 55,
+    "h": "Getting there; which sport, which name?"
+   },
+   {
+    "g": "a boxing gym",
+    "s": 20,
+    "h": "A sport, but the wrong one."
+   },
+   {
+    "g": "a canadian wildlife guide",
+    "s": 10,
+    "h": "Not about wildlife."
+   },
+   {
+    "g": "a cologne brand",
+    "s": 5,
+    "h": "Wrong reading."
+   },
+   {
+    "g": "an elon musk fan",
+    "s": 3,
+    "h": "Wrong reading of the start."
+   },
+   {
+    "g": "a rude anatomy joke",
+    "s": 3,
+    "h": "That's what the reviewer saw."
+   }
+  ]
  },
  {
   "id": "plate-pntr8rs",
@@ -195,6 +465,58 @@
   "checked": "2026-10-06",
   "fun": 4,
   "difficulty": 3,
-  "rating": "PG-13"
+  "rating": "PG-13",
+  "graded": [
+   {
+    "g": "my motorhome is a safari panther",
+    "s": 97,
+    "h": "Spot on."
+   },
+   {
+    "g": "panther trailers",
+    "s": 92,
+    "h": "Spot on."
+   },
+   {
+    "g": "a travel trailer brand",
+    "s": 75,
+    "h": "Close; which one?"
+   },
+   {
+    "g": "an rv owner",
+    "s": 70,
+    "h": "Close; which model?"
+   },
+   {
+    "g": "a camper van",
+    "s": 68,
+    "h": "Close; what's it called?"
+   },
+   {
+    "g": "a truck that tows trailers",
+    "s": 45,
+    "h": "Getting there; it's the vehicle itself."
+   },
+   {
+    "g": "a carolina panthers fan",
+    "s": 20,
+    "h": "Right cat, wrong meaning."
+   },
+   {
+    "g": "a painter's van",
+    "s": 10,
+    "h": "Wrong reading of the start."
+   },
+   {
+    "g": "a pirate party bus",
+    "s": 5,
+    "h": "Off track."
+   },
+   {
+    "g": "panty raiders",
+    "s": 3,
+    "h": "That's what the reviewer saw."
+   }
+  ]
  }
 ]

@@ -34,31 +34,34 @@ function shell() {
 }
 
 // ---------- hub ----------
-function hubScreen() {
+function hubScreen(opts = {}) {
   const root = h("div", { class: "stack" });
-  const sample = (() => {
+  const sample = CONTENT.find((it) => it.id === opts.itemId) || (() => {
     const p = CONTENT.filter((it) => allowed(it) && it.fun >= 4);
     return p.length ? p[RAND.int(p.length)] : CONTENT[0];
   })();
   const tryBox = h("div", { class: "stack" });
   const paintTry = (item) => {
     clear(tryBox);
-    tryBox.append(mysteryCard(item), h("div", { class: "row" },
-      h("button", { class: "btn primary", onclick: (e) => { e.currentTarget.parentElement.replaceWith(revealCard(item)); } }, "Show me what it is"),
+    let level = 0;
+    const card = mysteryCard(item);
+    tryBox.append(card, h("div", { class: "row" },
+      item.kind === "image" ? h("button", { class: "btn", onclick: (e) => { level++; zoomTo(card, item, level); if (level >= 3) e.currentTarget.disabled = true; } }, "Zoom out") : null,
+      h("button", { class: "btn primary", onclick: (e) => { zoomTo(card, item, 99); e.currentTarget.parentElement.replaceWith(revealCard(item)); } }, "Show me what it is"),
       h("button", { class: "btn ghost", onclick: () => { const p = CONTENT.filter(allowed); paintTry(p[RAND.int(p.length)]); } }, "Another one")));
   };
   paintTry(sample);
 
   const trials = [
-    ["A", "daily", "Daily five", "Solo, about five minutes. Five mysteries a day, one per category. Type a guess and the robot judge tells you how warm you are. Clues cost points.", "1 player"],
-    ["B", "party", "Party board", "Pick a square from a board of categories; everyone guesses; the closest guess takes it. Points board or tic-tac-toe.", "2+ players or teams, one screen"],
+    ["A", "daily", "Daily five", "Solo, about five minutes. Five mysteries a day from five categories. Type a guess and the judge tells you how warm you are. Clues cost points.", "1 player"],
+    ["B", "party", "Party board", "Pick a square; everyone guesses; the closest guess takes it. A Jeopardy-style points board, tic-tac-toe or Connect Four.", "2+ players or teams, one screen"],
     ["C", "byo", "Bring your own", "The original game. Someone types any word, phrase or web address; everyone guesses; you look it up together and judge.", "2+ players, a search engine"],
     ["D", "bluff", "Bluff", "Everyone writes a fake answer that sounds true. Find the real one, fool your friends.", "3+ players, pass the phone"],
   ];
   root.append(
     h("section", { class: "hero" },
       h("h1", {}, "Guess what it really is", h("span", { class: "q" }, ".")),
-      h("p", { class: "lede" }, "Web addresses, brand names, licence plates and patent titles that aren't what they seem. Four early versions to try, rate and argue about.")),
+      h("p", { class: "lede" }, "Web addresses, brand names, licence plates, patent titles, close-up pictures, paper titles, song lines and headlines that aren't what they seem. Four early versions to try, rate and argue about.")),
     h("section", { class: "panel" }, h("p", { class: "eyebrow", style: { marginBottom: "10px" } }, "Quick one"), tryBox),
     h("section", { class: "stack-sm" }, h("h2", { style: { fontSize: "var(--step-1)" } }, "The trial versions"),
       h("div", { class: "trials" }, trials.map(([tag, screen, name, desc, who]) => h("article", { class: "trial" },
@@ -148,9 +151,9 @@ function settingsScreen() {
     h("div", { class: "stack-sm" }, h("span", { class: "eyebrow" }, "Settings"), h("h2", {}, "Judges and content")),
     h("section", { class: "panel stack" },
       h("h3", {}, "AI judge"),
-      h("p", { class: "muted" }, "The AI judge reads every guess like a person would. On the website it is free for players; you can also run it on your own AI account. The word-vector robot is the offline fallback."),
+      h("p", { class: "muted" }, "Every mystery has an answer key of likely guesses scored in advance; a guess that matches one is scored for free. New guesses go to an AI judge, which reads them like a person would. On the website it is free for players, within daily limits; you can also run it on your own AI account. The word-vector robot is the offline fallback."),
       h("ul", { class: "small", style: { margin: 0, paddingLeft: "1.2em", display: "grid", gap: "4px" } },
-        CONFIG.judgeApi ? h("li", {}, h("b", {}, "The game's AI judge: "), siteJudgeUsable() ? "free for players; a small model run by the site." : "not available right now.") : null,
+        CONFIG.judgeApi ? h("li", {}, h("b", {}, "The game's AI judge: "), siteJudgeUsable() ? "free for players; a small model run by the site, within daily limits." : "resting right now" + (SITE_NOTE ? ": " + SITE_NOTE : ".")) : null,
         h("li", {}, h("b", {}, "Claude, on your own plan: "), RT.sample ? "available here." : "works when this page is opened inside claude.ai."),
         CONFIG.env !== "artifact" ? h("li", {}, h("b", {}, "Your Anthropic API key: "), SETTINGS.apiKey ? "saved in this browser." : "add one below. It stays in this browser and goes only to Anthropic.") : null,
         h("li", {}, h("b", {}, "Paste into a chatbot: "), "always works. Copy the prompt into ChatGPT, Claude or Gemini and paste the reply back.")),
@@ -183,33 +186,43 @@ function notesScreen() {
     h("section", { class: "panel prose" },
       h("p", {}, "Four versions of one idea: someone shows a cryptic string, everyone guesses what it really is, and the reveal settles it. Please play at least two, then rate each one."),
       h("ul", {},
-        h("li", {}, h("b", {}, "A. Daily five: "), "is a solo, NYT-style daily fun on its own? Is the robot judge fair enough, and do clues and the side bets help?"),
-        h("li", {}, h("b", {}, "B. Party board: "), "does a board of categories make a good evening? Points board or tic-tac-toe?"),
+        h("li", {}, h("b", {}, "A. Daily five: "), "is a solo, NYT-style daily fun on its own? Does the judge feel fair, and do clues and the side bets help?"),
+        h("li", {}, h("b", {}, "B. Party board: "), "does a board of categories make a good evening? Points board (with or without the Jeopardy rules), tic-tac-toe or Connect Four?"),
         h("li", {}, h("b", {}, "C. Bring your own: "), "the original. Is it more fun with your own mysteries and live searching?"),
         h("li", {}, h("b", {}, "D. Bluff: "), "is writing fakes more fun than guessing the truth?")),
       h("p", {}, "After each mystery you can rate how fun it was. Those ratings are how we'll pick which mysteries and categories to keep.")),
     h("section", { class: "panel prose" },
       h("h3", {}, "Judging"),
-      h("p", {}, "The robot judge compares your words with each answer's key ideas using ConceptNet Numberbatch word vectors (the same word map as Word Bocce). It is free and instant but literal. The AI judge reads guesses like a person and also picks the funniest; it runs on your own AI account. Compare them in the Daily after each reveal.")),
+      h("p", {}, "Each mystery has an answer key: about ten likely guesses, scored in advance with hints. A guess that says the same thing as one of them gets that score at no cost. Other guesses go to the AI judge (a small model the site pays for, within limits, or your own AI account), which reads them like a person and also picks the funniest. When no AI is available, the robot judge compares your words with the answer's key ideas and the nearest answer-key guesses, using ConceptNet Numberbatch word vectors (the same word map as Word Bocce).")),
     h("section", { class: "panel prose" },
       h("h3", {}, "Where the mysteries come from"),
       h("ul", {},
         h("li", {}, "Licence plates: real applications to the California DMV, 2015–16, with each owner's explanation and the reviewer's notes, from Noah Veltman's public-records dataset (github.com/veltman/ca-license-plates)."),
         h("li", {}, "Patents: checked against the patent text on Google Patents."),
         h("li", {}, "Web addresses, brands and top results: checked in October 2026. Sites change; tell us if one is out of date."),
-        h("li", {}, "Some brand and “double take” items are marked as not yet re-checked online; treat them as drafts."))),
+        h("li", {}, "Paper titles, song lines and headlines: checked through web searches in October 2026. Songs are all public domain (traditional, or published before 1931)."),
+        h("li", {}, "Late-night bits: news stories that at least two shows joked about; the joke is paraphrased."),
+        h("li", {}, "Close-up pictures: Microsoft's Fluent Emoji (MIT licence)."),
+        h("li", {}, "Items marked “Draft: not yet re-checked online” are drafts; treat them with care and tell us if one is wrong."))),
     h("section", { class: "panel prose small" },
       h("h3", {}, "Credits"),
-      h("p", {}, "Word vectors: ConceptNet Numberbatch 19.08 by Robyn Speer, Joshua Chin and Catherine Havasi, CC BY-SA 4.0. API-key judge: Anthropic TypeScript SDK (MIT). Built in the word2vecgames repository alongside Word Bocce.")));
+      h("p", {}, "Word vectors: ConceptNet Numberbatch 19.08 by Robyn Speer, Joshua Chin and Catherine Havasi, CC BY-SA 4.0. Pictures: Fluent Emoji by Microsoft, MIT licence. API-key judge: Anthropic TypeScript SDK (MIT). Built in the word2vecgames repository alongside Word Bocce.")));
   return root;
 }
 
 // ---------- boot ----------
 (function boot() {
   shell();
-  const start = (location.hash || "").replace("#", "");
-  go(SCREENS[start] ? start : "hub");
-  window.addEventListener("hashchange", () => { const k = location.hash.replace("#", ""); if (SCREENS[k] && k !== current) go(k); });
+  // #daily, #party... open a screen; #try=<id> opens the home page on that mystery.
+  const route = () => {
+    const k = (location.hash || "").replace("#", "");
+    const one = k.match(/^try=(.+)$/);
+    if (one) go("hub", () => hubScreen({ itemId: decodeURIComponent(one[1]) }));
+    else if (SCREENS[k] && k !== current) go(k);
+  };
+  route();
+  if (!$("#main").firstChild) go("hub");
+  window.addEventListener("hashchange", route);
   if (window.claude && typeof window.claude.use === "function") {
     window.claude.use("sample").then((s) => { RT.sample = s; if (current === "settings") go("settings"); }).catch(() => {});
     window.claude.use("db").then((d) => { RT.db = d; }).catch(() => {});

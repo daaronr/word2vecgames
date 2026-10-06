@@ -1,0 +1,616 @@
+[
+  {
+    "id": "lyric-yankee-doodle-macaroni",
+    "cat": "lyric",
+    "kind": "lyric",
+    "prompt": "Stuck a feather in his cap and called it macaroni",
+    "song": "Yankee Doodle",
+    "year": "1770s",
+    "pd": true,
+    "ask": "What does this line mean in the song?",
+    "truth": "Macaroni was 1700s slang for a showy, over-fashionable dandy: the joke is that a country bumpkin thinks one feather in his hat makes him the height of style.",
+    "more": "Young British men back from the Grand Tour of Europe in the 1760s wore towering powdered wigs and tight, bright clothes and were nicknamed macaronis. British soldiers sang the song to mock colonial Americans as hicks; the Americans later took it up as their own.",
+    "key": ["dandy", "fashionable", "stylish", "feather", "mock"],
+    "clues": [
+      "British soldiers sang this song to tease American colonists.",
+      "In 1770s London, the word was slang for a certain kind of young man.",
+      "Think powdered wigs, tight bright coats and giant shoe buckles."
+    ],
+    "decoys": [
+      "Macaroni is the name he gives his pony after riding into town: the joke is a farm boy naming his horse after a foreign food.",
+      "Macaroni was army slang for an officer's plume, so the line mocks a raw recruit who promotes himself with a feather.",
+      "Pasta was a rare imported luxury, so the line mocks a poor farmer who pretends a cheap feather is worth a costly treat."
+    ],
+    "url": "https://en.wikipedia.org/wiki/Yankee_Doodle",
+    "source": "https://www.atlasobscura.com/articles/the-macaroni-in-yankee-doodle-is-not-what-you-think",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 2,
+    "rating": "G",
+    "graded": [
+      {"g": "macaroni meant a fancy dandy", "s": 95, "h": "Spot on."},
+      {"g": "slang for a guy who's way too into fashion", "s": 95, "h": "Spot on."},
+      {"g": "he thinks a feather makes him stylish", "s": 85, "h": "Yes; the last word carries that meaning."},
+      {"g": "a fancy hat style", "s": 55, "h": "Close: think about the person wearing it."},
+      {"g": "making fun of americans as hicks", "s": 50, "h": "Right target; what does the word mean?"},
+      {"g": "italian slang for something", "s": 30, "h": "Slang, yes; whose slang, and for what?"},
+      {"g": "a type of feather", "s": 15, "h": "The feather is only the prop."},
+      {"g": "the name of his pony", "s": 10, "h": "Tempting, but the pony has no name."},
+      {"g": "pasta", "s": 5, "h": "Too literal."},
+      {"g": "a secret spy password", "s": 3, "h": "Off the wall."}
+    ]
+  },
+  {
+    "id": "lyric-pop-goes-the-weasel-eagle",
+    "cat": "lyric",
+    "kind": "lyric",
+    "prompt": "Up and down the City Road, in and out the Eagle",
+    "song": "Pop Goes the Weasel",
+    "year": "1850s",
+    "pd": true,
+    "ask": "What does this line mean in the song?",
+    "truth": "The Eagle was a well-known pub and music hall on London's City Road: the singer keeps going in and out of it, and that's where his money goes.",
+    "more": "'Pop' was slang for pawn, so a popular story says he pawned his 'weasel' (a tailor's iron, or a coat in rhyming slang) for drink money, but nobody has shown what the weasel was, and that rhyming slang isn't recorded until the 1930s. A newer Eagle pub, opened in 1901 near the old site, has the rhyme painted on its front.",
+    "key": ["pub", "tavern", "drinking", "spending", "money"],
+    "clues": [
+      "It's a London verse of Pop Goes the Weasel, sung by 1856.",
+      "The next line is: that's the way the money goes.",
+      "This Eagle never flew: it poured pints and put on shows."
+    ],
+    "decoys": [
+      "The Eagle was a horse-drawn omnibus on London's City Road: the singer rides it back and forth all day with nowhere to go.",
+      "The Eagle was a pawnbroker's shop on London's City Road: the singer keeps pawning his things there and buying them back.",
+      "The Eagle was a step in the 1850s dance craze: partners weave in and out of each other's arms as the tune plays."
+    ],
+    "url": "https://en.wikipedia.org/wiki/Pop_Goes_the_Weasel",
+    "source": "https://en.wikipedia.org/wiki/City_Road; https://www.phrases.org.uk/meanings/pop-goes-the-weasel.html",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 3,
+    "rating": "G",
+    "graded": [
+      {"g": "the eagle was a pub", "s": 90, "h": "Spot on."},
+      {"g": "going in and out of a london pub spending his money", "s": 100, "h": "Spot on."},
+      {"g": "bar hopping", "s": 75, "h": "Close: it's one place, again and again."},
+      {"g": "a theater or music hall", "s": 70, "h": "Partly: it was more than that."},
+      {"g": "spending all his money", "s": 55, "h": "Yes, but where does it go?"},
+      {"g": "walking around london", "s": 35, "h": "Right city; where does he keep going?"},
+      {"g": "pawning his stuff", "s": 30, "h": "That's a theory about the next line."},
+      {"g": "a pawnbroker's shop", "s": 20, "h": "Tempting; the Eagle sold something else."},
+      {"g": "a bus route", "s": 10, "h": "Nobody's riding anywhere."},
+      {"g": "a bird flying up and down the street", "s": 5, "h": "Too literal."},
+      {"g": "a football team", "s": 2, "h": "Off the wall."}
+    ]
+  },
+  {
+    "id": "lyric-twelve-days-calling-birds",
+    "cat": "lyric",
+    "kind": "lyric",
+    "prompt": "My true love gave to me four calling birds",
+    "song": "The Twelve Days of Christmas",
+    "year": 1780,
+    "pd": true,
+    "ask": "What does this line mean in the song?",
+    "truth": "They are blackbirds: the oldest printed version, from 1780, gives 'four colly birds', colly being an old word for coal-black, and 'calling' replaced it much later.",
+    "more": "Frederic Austin's 1909 arrangement, which set the tune now sung, made 'four calling birds' standard. 'Calling' didn't overtake 'colly' in print until about the 1970s.",
+    "key": ["black", "birds", "coal", "dark"],
+    "clues": [
+      "The song was first printed in a London children's book in 1780.",
+      "The 1780 text uses a different word that sounds a little like 'calling'.",
+      "Twenty-four of the same bird went into a nursery-rhyme pie."
+    ],
+    "decoys": [
+      "They are canaries: caged songbirds were a costly gift in the 1700s, prized because their calls filled the house.",
+      "They are carrier pigeons: the true love sends them so the singer can call back with messages of her own.",
+      "They are parrots: in the earliest version they are 'talking birds', taught to call out the lover's name."
+    ],
+    "url": "https://en.wikipedia.org/wiki/The_Twelve_Days_of_Christmas_(song)",
+    "source": "https://unireadinghistory.com/2019/12/16/twelve-days-of-christmas-four-calling-birds/",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 2,
+    "rating": "G",
+    "graded": [
+      {"g": "blackbirds", "s": 95, "h": "Spot on."},
+      {"g": "originally colly birds meaning black birds", "s": 100, "h": "Spot on."},
+      {"g": "colly birds", "s": 75, "h": "Right word; what kind of bird?"},
+      {"g": "crows or ravens", "s": 55, "h": "Right color, wrong bird."},
+      {"g": "a misheard older word", "s": 45, "h": "Right idea; which word, which bird?"},
+      {"g": "songbirds that sing to you", "s": 15, "h": "Too literal."},
+      {"g": "parrots that can talk", "s": 10, "h": "Tempting, but nobody's talking."},
+      {"g": "carrier pigeons", "s": 10, "h": "No messages here."},
+      {"g": "a secret code for the four gospels", "s": 5, "h": "Think simpler: just a bird."},
+      {"g": "phone calls", "s": 0, "h": "Off the wall."}
+    ]
+  },
+  {
+    "id": "lyric-god-rest-ye-merry",
+    "cat": "lyric",
+    "kind": "lyric",
+    "prompt": "God rest ye merry, gentlemen, let nothing you dismay",
+    "song": "God Rest Ye Merry, Gentlemen",
+    "year": "1700s",
+    "pd": true,
+    "ask": "What does this line mean in the song?",
+    "truth": "'God keep you merry, gentlemen': 'rest' here meant keep or make, so it wishes the listeners peace and happiness, and the comma belongs after 'merry'.",
+    "more": "Shakespeare uses 'rest you merry' as a friendly greeting in Romeo and Juliet in the 1590s. That sense of 'rest' survives today only in 'rest assured', so most people now hear a blessing on some merry gentlemen.",
+    "key": ["keep", "happy", "merry", "blessing", "wish"],
+    "clues": [
+      "It's one of the oldest carols still sung at Christmas.",
+      "Shakespeare's characters use a version of the phrase as a greeting.",
+      "The verb works the way it does in 'rest assured'."
+    ],
+    "decoys": [
+      "It asks God to give eternal rest to cheerful men who have died, like a prayer said over a grave at Christmas.",
+      "It tells tipsy partygoers to go and sleep off their Christmas drinking so that nothing troubles them in the morning.",
+      "It greets the 'merry gentlemen', a band of carol singers, and wishes them a peaceful night after their rounds."
+    ],
+    "url": "https://en.wikipedia.org/wiki/God_Rest_Ye_Merry,_Gentlemen",
+    "source": "https://www.phrases.org.uk/meanings/god-rest-you-merry-gentlemen.html; https://wordorigins.org/big-list-entries/merry-god-rest-you-merry",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 2,
+    "rating": "G",
+    "graded": [
+      {"g": "may god keep you happy, gentlemen", "s": 100, "h": "Spot on."},
+      {"g": "god keep you merry", "s": 95, "h": "Spot on."},
+      {"g": "god give you peace and joy", "s": 85, "h": "Yes; that's the wish."},
+      {"g": "a christmas greeting", "s": 45, "h": "Right area; what exactly is wished?"},
+      {"g": "the comma is in a different place", "s": 45, "h": "True; so what does it mean?"},
+      {"g": "the gentlemen are already merry", "s": 25, "h": "Close words, wrong grammar."},
+      {"g": "telling cheerful men to rest", "s": 15, "h": "That's the misreading the tune invites."},
+      {"g": "rest in peace, happy men", "s": 10, "h": "Nobody has died."},
+      {"g": "drunk men should go to bed", "s": 10, "h": "No sleeping involved."},
+      {"g": "a pirate toast", "s": 0, "h": "Off the wall."}
+    ]
+  },
+  {
+    "id": "lyric-good-king-wenceslas-stephen",
+    "cat": "lyric",
+    "kind": "lyric",
+    "prompt": "Good King Wenceslas looked out on the Feast of Stephen",
+    "song": "Good King Wenceslas",
+    "year": 1853,
+    "pd": true,
+    "ask": "What does this line mean in the song?",
+    "truth": "The Feast of Stephen is St. Stephen's Day, December 26: the king looks out of his window on the day after Christmas.",
+    "more": "Listeners who picture a banquet wonder why he then carries meat, wine and pine logs out into the snow for a poor man. John Mason Neale wrote the words in 1853 about Wenceslaus, a 10th-century duke of Bohemia.",
+    "key": ["december", "saint", "holiday", "christmas", "boxing"],
+    "clues": [
+      "The carol was written in England in 1853.",
+      "This feast is on the church calendar, and no table is set.",
+      "In Britain the same date is called Boxing Day."
+    ],
+    "decoys": [
+      "He gazes down on a royal banquet held for Stephen, a nobleman who is the guest of honor at his court that night.",
+      "The Feast of Stephen is New Year's Eve, when kings traditionally handed out food and firewood to the poor.",
+      "It's a village harvest festival named for the local saint, held each year at the end of autumn."
+    ],
+    "url": "https://en.wikipedia.org/wiki/Good_King_Wenceslas",
+    "source": "https://www.mentalfloss.com/holidays/christmas/quick-10-10-archaic-christmas-carol-words-explained",
+    "checked": "2026-10-06",
+    "fun": 3,
+    "difficulty": 2,
+    "rating": "G",
+    "graded": [
+      {"g": "st stephen's day, december 26", "s": 100, "h": "Spot on."},
+      {"g": "the day after christmas", "s": 95, "h": "Spot on."},
+      {"g": "boxing day", "s": 95, "h": "Spot on."},
+      {"g": "a saint's feast day", "s": 65, "h": "Right kind of day; which date?"},
+      {"g": "christmas day", "s": 60, "h": "Very close; off by one."},
+      {"g": "a church holiday in winter", "s": 55, "h": "Right area; pin down the date."},
+      {"g": "new year's eve", "s": 30, "h": "Right season, wrong date."},
+      {"g": "a big dinner party", "s": 10, "h": "Too literal."},
+      {"g": "a banquet for a guy named stephen", "s": 10, "h": "Too literal: no table is set."},
+      {"g": "a jousting tournament", "s": 0, "h": "Off the wall."}
+    ]
+  },
+  {
+    "id": "lyric-waltzing-matilda",
+    "cat": "lyric",
+    "kind": "lyric",
+    "prompt": "Who'll come a-waltzing Matilda with me?",
+    "song": "Waltzing Matilda",
+    "year": 1895,
+    "pd": true,
+    "ask": "What does this line mean in the song?",
+    "truth": "Who'll come tramping the roads with me? 'Waltzing' was Australian slang for traveling on foot, and 'Matilda' was the swag, the blanket roll of belongings carried on the back.",
+    "more": "Banjo Paterson wrote the words in 1895, probably with the 1894 shearers' strike in mind. In the song a swagman steals a sheep, and when the landowner and three troopers come, he leaps into the billabong rather than be taken alive.",
+    "key": ["walking", "bundle", "travel", "blanket", "wander"],
+    "clues": [
+      "It's Australia's best-known bush ballad, from 1895.",
+      "Nobody dances, and no woman called Matilda appears.",
+      "A drifter's blanket roll gets a woman's name."
+    ],
+    "decoys": [
+      "Who will dance a waltz with me tonight? Matilda is the girl the swagman left behind, and he still dreams of her.",
+      "Who'll come drinking with me? 'Waltzing Matilda' was bush slang for passing a bottle of rum around the campfire.",
+      "Who'll come droving with me? Matilda is the swagman's old horse, and waltzing meant riding behind a mob of sheep."
+    ],
+    "url": "https://en.wikipedia.org/wiki/Waltzing_Matilda",
+    "source": "https://www.library.gov.au/documenting-federation/national-identity",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 2,
+    "rating": "G",
+    "graded": [
+      {"g": "walking the outback with your bedroll on your back", "s": 100, "h": "Spot on."},
+      {"g": "wandering on foot carrying your stuff", "s": 90, "h": "Spot on."},
+      {"g": "living as a tramp on the road", "s": 70, "h": "Right life; what do the words mean?"},
+      {"g": "matilda is his bag", "s": 60, "h": "Half right; what's the waltzing?"},
+      {"g": "waltzing means walking", "s": 60, "h": "Half right; who is Matilda?"},
+      {"g": "stealing a sheep", "s": 25, "h": "That happens later in the song."},
+      {"g": "drinking with your mates", "s": 10, "h": "No drinks here."},
+      {"g": "dancing with a girl named matilda", "s": 5, "h": "Too literal."},
+      {"g": "a kangaroo boxing match", "s": 0, "h": "Off the wall."}
+    ]
+  },
+  {
+    "id": "lyric-clementine-herring-boxes",
+    "cat": "lyric",
+    "kind": "lyric",
+    "prompt": "Herring boxes, without topses, sandals were for Clementine",
+    "song": "Oh My Darling, Clementine",
+    "year": 1884,
+    "pd": true,
+    "ask": "What does this line mean in the song?",
+    "truth": "Her feet were so huge that she wore open wooden fish crates, herring boxes with the tops off, as sandals.",
+    "more": "The line before is 'Light she was and like a fairy, and her shoes were number nine.' Percy Montrose's 1884 song poses as a sad ballad about a miner's daughter who drowns, but it's a parody that keeps mocking its heroine.",
+    "key": ["huge", "foot", "shoes", "boxes", "big"],
+    "clues": [
+      "It's from Oh My Darling, Clementine, an 1884 comic song.",
+      "The line just before mentions her shoe size.",
+      "No shoe in any store would fit her."
+    ],
+    "decoys": [
+      "Her father packed fish for a living, and she sold his empty herring boxes to buy herself a pair of sandals.",
+      "She was so poor that she wove her sandals from the straw lining of the herring boxes at the mining camp.",
+      "Herring boxes were cheap wooden clogs worn by miners' daughters, named after the fish crates they looked like."
+    ],
+    "url": "https://en.wikipedia.org/wiki/Oh_My_Darling,_Clementine",
+    "source": "https://www.singing-bell.com/oh-my-darling-clementine-printable-lyrics-pdf/",
+    "checked": "2026-10-06",
+    "fun": 5,
+    "difficulty": 2,
+    "rating": "G",
+    "graded": [
+      {"g": "her feet were so big she wore fish boxes as shoes", "s": 100, "h": "Spot on."},
+      {"g": "she had huge feet", "s": 90, "h": "Spot on."},
+      {"g": "she wore boxes as shoes", "s": 70, "h": "Right footwear; why did she?"},
+      {"g": "her shoes were really ugly", "s": 35, "h": "Close; what was the real problem?"},
+      {"g": "she was too poor to buy shoes", "s": 30, "h": "Plausible, but the joke is elsewhere."},
+      {"g": "nonsense words to fit the rhyme", "s": 25, "h": "Silly, yes, but it means something."},
+      {"g": "she smelled like fish", "s": 15, "h": "Wrong sense; look lower down."},
+      {"g": "her dad was a fisherman", "s": 10, "h": "He worked somewhere else."},
+      {"g": "a greek sandal style", "s": 5, "h": "Off target."},
+      {"g": "pirate treasure chests", "s": 0, "h": "Off the wall."}
+    ]
+  },
+  {
+    "id": "lyric-jingle-bells-bobtail",
+    "cat": "lyric",
+    "kind": "lyric",
+    "prompt": "Bells on bobtail ring, making spirits bright",
+    "song": "Jingle Bells",
+    "year": 1857,
+    "pd": true,
+    "ask": "What does this line mean in the song?",
+    "truth": "The bells hang on the horse pulling the sleigh, a bobtail: a horse whose tail has been cut short, or docked.",
+    "more": "Docking kept a horse's tail from tangling in the reins, which suited sleigh racing. James Lord Pierpont first published the song in 1857 as 'One Horse Open Sleigh'; a later verse ends with the sleigh in a snowbank: 'we got upsot.'",
+    "key": ["horse", "tail", "docked", "short", "harness"],
+    "clues": [
+      "It was first published in 1857 as 'One Horse Open Sleigh.'",
+      "The ringing comes from whatever is pulling the sleigh.",
+      "Its back end had been trimmed short."
+    ],
+    "decoys": [
+      "Bob is the sleigh's driver, and the bells hang from the long tails of the winter coat he wears for the ride.",
+      "A bobtail was the short wooden pole at the back of a sleigh, where the set of sleigh bells was hung.",
+      "Bobtail is an old name for a bobsled: the bells are fixed to its back runners so they ring as it slides downhill."
+    ],
+    "url": "https://en.wikipedia.org/wiki/Jingle_Bells",
+    "source": "https://horsenetwork.com/2021/12/the-hidden-history-of-jingle-bells",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 2,
+    "rating": "G",
+    "graded": [
+      {"g": "the horse has a short docked tail", "s": 100, "h": "Spot on."},
+      {"g": "a horse with a cut tail", "s": 95, "h": "Spot on."},
+      {"g": "bells on the horse", "s": 70, "h": "Right animal; what about its tail?"},
+      {"g": "an animal with a short tail", "s": 60, "h": "Right tail; which animal?"},
+      {"g": "reindeer harness bells", "s": 40, "h": "Right idea, wrong animal."},
+      {"g": "bells on the back of the sleigh", "s": 25, "h": "Close; look at what pulls it."},
+      {"g": "a bobsled", "s": 15, "h": "Tempting, but no."},
+      {"g": "a guy named bob", "s": 5, "h": "Too literal."},
+      {"g": "cheerful ghosts", "s": 3, "h": "Too literal."},
+      {"g": "christmas tree ornaments", "s": 3, "h": "Off target."}
+    ]
+  },
+  {
+    "id": "lyric-humpty-dumpty-riddle",
+    "cat": "lyric",
+    "kind": "lyric",
+    "prompt": "Humpty Dumpty sat on a wall, Humpty Dumpty had a great fall",
+    "song": "Humpty Dumpty",
+    "year": 1797,
+    "pd": true,
+    "ask": "What does this line mean in the song?",
+    "truth": "It's a riddle, and the answer is an egg: that's why nobody can put him back together. The rhyme itself never says what he is.",
+    "more": "The earliest known printing, from 1797, ends 'Fourscore men and fourscore more could not make Humpty Dumpty where he was before.' Popular stories that he was a cannon at the siege of Colchester or King Richard III have no solid evidence behind them.",
+    "key": ["egg", "riddle", "broken", "fragile"],
+    "clues": [
+      "The rhyme was first printed in 1797.",
+      "It began as a guessing game, and the answer was never written down.",
+      "Once broken, you can scramble it but never fix it."
+    ],
+    "decoys": [
+      "Humpty Dumpty was a huge cannon on a town wall in the English Civil War, knocked down by enemy fire and never repaired.",
+      "Humpty Dumpty was a nickname for a hunchbacked king who fell from power and whose army could not restore him.",
+      "Humpty Dumpty was slang for a fat drunkard who tumbled off a garden wall and couldn't be hauled back up."
+    ],
+    "url": "https://en.wikipedia.org/wiki/Humpty_Dumpty",
+    "source": "https://en.wikipedia.org/wiki/Humpty_Dumpty; https://blogs.loc.gov/folklife/2024/03/humpty-dumpty-metafolklore-riddles-and-yolks/",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 1,
+    "rating": "G",
+    "graded": [
+      {"g": "he's an egg", "s": 95, "h": "Spot on."},
+      {"g": "a riddle where the answer is an egg", "s": 100, "h": "Spot on."},
+      {"g": "something fragile that can't be fixed once broken", "s": 65, "h": "Right idea; what exactly is it?"},
+      {"g": "it's a riddle", "s": 45, "h": "Right form; what's the answer?"},
+      {"g": "a broken vase", "s": 35, "h": "Breakable, yes, but the wrong thing."},
+      {"g": "a cannon in the civil war", "s": 15, "h": "A popular story with no evidence."},
+      {"g": "a fat man falling off a wall", "s": 15, "h": "Too literal."},
+      {"g": "king richard the third", "s": 10, "h": "A popular story with no evidence."},
+      {"g": "the stock market crash", "s": 3, "h": "Off target."},
+      {"g": "a ufo crash", "s": 0, "h": "Off the wall."}
+    ]
+  },
+  {
+    "id": "lyric-sixpence-blackbird-pie",
+    "cat": "lyric",
+    "kind": "lyric",
+    "prompt": "Four and twenty blackbirds baked in a pie",
+    "song": "Sing a Song of Sixpence",
+    "year": "1740s",
+    "pd": true,
+    "ask": "What does this line mean in the song?",
+    "truth": "Twenty-four live birds hidden under a pie crust, a real banquet trick: when the pie was cut open the birds flew out, which is why the next line says they began to sing.",
+    "more": "An Italian cookbook published in English in 1598, the Epulario, explains the method: bake the crust hollow, then slip live birds in through a hole in the bottom. Other banquet pies hid live frogs or rabbits.",
+    "key": ["alive", "birds", "trick", "surprise", "banquet", "fly"],
+    "clues": [
+      "Read on: when the pie was opened, the birds began to sing.",
+      "A cookbook printed in English in 1598 explains how to make it.",
+      "The crust was baked empty, and the filling went in still breathing."
+    ],
+    "decoys": [
+      "Blackbirds were a cheap everyday meat, so a pie of two dozen was an ordinary family supper in a hard winter.",
+      "The two dozen blackbirds stand for the 24 hours of the day, and the pie crust is the sky that closes over them.",
+      "It's a coded story of 24 pirates hidden in a ship's hold, who jump out to ambush the crew when it is opened."
+    ],
+    "url": "https://en.wikipedia.org/wiki/Sing_a_Song_of_Sixpence",
+    "source": "https://theworld.org/stories/2015/07/16/medieval-cookbooks-actually-had-recipes-four-and-twenty-blackbirds-baked-pie",
+    "checked": "2026-10-06",
+    "fun": 5,
+    "difficulty": 2,
+    "rating": "G",
+    "graded": [
+      {"g": "live birds in a pie that fly out as a party trick", "s": 100, "h": "Spot on."},
+      {"g": "the birds were alive and flew out when cut", "s": 95, "h": "Spot on."},
+      {"g": "a surprise pie at a medieval feast", "s": 70, "h": "Right setting; what made it surprising?"},
+      {"g": "a magic trick", "s": 55, "h": "Close; how was it done?"},
+      {"g": "a fancy dish for the king", "s": 40, "h": "Right table; what's special about it?"},
+      {"g": "people really ate blackbird pie", "s": 20, "h": "Real dish, but not for eating."},
+      {"g": "24 hours in a day", "s": 10, "h": "A popular theory; think more literally."},
+      {"g": "pirates hiding on a ship", "s": 5, "h": "Off target."},
+      {"g": "a rock band", "s": 0, "h": "Off the wall."}
+    ]
+  },
+  {
+    "id": "lyric-deck-the-halls-troll",
+    "cat": "lyric",
+    "kind": "lyric",
+    "prompt": "Troll the ancient Yuletide carol",
+    "song": "Deck the Halls",
+    "year": 1862,
+    "pd": true,
+    "ask": "What does this line mean in the song?",
+    "truth": "Sing the old Christmas song loudly and merrily: 'troll' was an old verb meaning to sing in a full, rolling voice.",
+    "more": "The Oxford English Dictionary records that sense of 'troll' from the 1500s, long before internet trolls. The English words were written in the 1860s for an old Welsh tune.",
+    "key": ["sing", "loudly", "chant", "carol", "cheerfully"],
+    "clues": [
+      "It's from Deck the Halls.",
+      "Here the word is a verb, and a musical one.",
+      "Think of belting out a tune at a party."
+    ],
+    "decoys": [
+      "Drag the old Yule log in from the woods: 'troll' meant to haul something heavy along the ground.",
+      "Mock the stuffy old carols with silly new words: 'troll' meant to tease, much as it does online.",
+      "Go door to door fishing for tips: 'troll' meant to trail a line, so carolers trolled for coins."
+    ],
+    "url": "https://en.wikipedia.org/wiki/Deck_the_Halls",
+    "source": "https://www.mentalfloss.com/holidays/christmas/quick-10-10-archaic-christmas-carol-words-explained",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 1,
+    "rating": "G",
+    "graded": [
+      {"g": "sing it loudly", "s": 95, "h": "Spot on."},
+      {"g": "sing the old christmas song merrily", "s": 100, "h": "Spot on."},
+      {"g": "chant the carol", "s": 85, "h": "Yes; add some gusto."},
+      {"g": "sing it as a round", "s": 70, "h": "Close; it's more about the sound."},
+      {"g": "play the carol on an instrument", "s": 40, "h": "Right area, wrong kind of music-making."},
+      {"g": "celebrate christmas", "s": 30, "h": "Right season; what's the action?"},
+      {"g": "make fun of old carols", "s": 10, "h": "That's the modern meaning."},
+      {"g": "drag in the yule log", "s": 10, "h": "Wrong job."},
+      {"g": "a troll from a fairy tale", "s": 3, "h": "Too literal."},
+      {"g": "fishing", "s": 3, "h": "Off target."}
+    ]
+  },
+  {
+    "id": "lyric-ring-around-the-rosie",
+    "cat": "lyric",
+    "kind": "lyric",
+    "prompt": "Ring around the rosie, a pocket full of posies, ashes, ashes, we all fall down",
+    "song": "Ring Around the Rosie",
+    "year": 1881,
+    "pd": true,
+    "ask": "What does this line mean in the song?",
+    "truth": "It's the end of a children's circle game: everyone holds hands, skips round, and drops to the ground on the last line. Folklorists find no evidence that it is about the plague.",
+    "more": "The popular story that it describes the 1665 Great Plague (a rosy rash, posies against the smell, sneezing, death) first appears in print in 1961. The rhyme itself isn't recorded until 1881, and folklorists Iona and Peter Opie were not convinced by the plague reading.",
+    "key": ["game", "dance", "circle", "fall", "children", "play"],
+    "clues": [
+      "The rhyme was first printed, in a British version, in 1881.",
+      "Folklorists say its famous dark meaning was invented in the 20th century.",
+      "Watch what the children do when they reach this line."
+    ],
+    "decoys": [
+      "It describes the Great Plague of 1665: a rosy rash, flowers carried against the stench, sneezing, and then everyone falls dead.",
+      "It recalls the Great Fire of London in 1666, with the ashes of burned houses and families fleeing the flames.",
+      "It comes from May Day dances where girls tossed flower petals and curtsied low to the May Queen at the end."
+    ],
+    "url": "https://blogs.loc.gov/folklife/2014/07/ring-around-the-rosie-metafolklore-rhyme-and-reason/",
+    "source": "https://blogs.loc.gov/folklife/2014/07/ring-around-the-rosie-metafolklore-rhyme-and-reason/; https://www.phrases.org.uk/meanings/ring-a-ring-of-roses.html",
+    "checked": "2026-10-06",
+    "fun": 5,
+    "difficulty": 2,
+    "rating": "G",
+    "graded": [
+      {"g": "just a kids game where everyone falls down", "s": 95, "h": "Spot on."},
+      {"g": "a circle dance and you all drop at the end", "s": 100, "h": "Spot on."},
+      {"g": "nonsense for a playground game", "s": 85, "h": "Yes; the line is a cue."},
+      {"g": "a nursery rhyme with no hidden meaning", "s": 70, "h": "Mostly; what does the line make happen?"},
+      {"g": "kids being silly", "s": 55, "h": "Close; what are they doing?"},
+      {"g": "a dance at a wedding", "s": 35, "h": "Right activity, wrong occasion."},
+      {"g": "the black plague", "s": 10, "h": "The famous story; evidence says no."},
+      {"g": "people dying of plague", "s": 10, "h": "The famous story; evidence says no."},
+      {"g": "the great fire of london", "s": 10, "h": "Tempting, but no."},
+      {"g": "a tax protest", "s": 0, "h": "Off the wall."}
+    ]
+  },
+  {
+    "id": "lyric-silent-night-yon",
+    "cat": "lyric",
+    "kind": "lyric",
+    "prompt": "Round yon virgin, mother and child",
+    "song": "Silent Night",
+    "year": 1818,
+    "pd": true,
+    "ask": "What does this line mean in the song?",
+    "truth": "All is calm and bright around that virgin mother and her child over there: 'round' means around, and 'yon' means yonder.",
+    "more": "Plenty of children hear it as 'Round John Virgin', as if he were a guest at the manger. The carol was first sung in German, as 'Stille Nacht', in 1818; the usual English words are an 1859 translation.",
+    "key": ["virgin", "mother", "baby", "calm", "surrounding"],
+    "clues": [
+      "It's from Silent Night, first sung in Austria in 1818.",
+      "Two of the words are old shortenings.",
+      "Read it straight after 'All is calm, all is bright.'"
+    ],
+    "decoys": [
+      "Round John Virgin is one of the shepherds, a stout old man who comes down from the hills to visit the baby.",
+      "'Round' means a round song: the angels sing a round to the mother and child, one voice after another.",
+      "Yon was the name of the village inn, where the young mother and her child spent the night in the stable."
+    ],
+    "url": "https://en.wikipedia.org/wiki/Silent_Night",
+    "source": "https://www.mentalfloss.com/holidays/christmas/quick-10-10-archaic-christmas-carol-words-explained",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 1,
+    "rating": "G",
+    "graded": [
+      {"g": "around that virgin over there, mary and the baby", "s": 100, "h": "Spot on."},
+      {"g": "all is calm around mary and jesus", "s": 95, "h": "Spot on."},
+      {"g": "around the virgin mary", "s": 85, "h": "Yes; there's a child, too."},
+      {"g": "about mary and baby jesus", "s": 60, "h": "Right people; read the line before."},
+      {"g": "yon means yonder", "s": 55, "h": "Right word; now the whole line."},
+      {"g": "the three wise men arriving", "s": 15, "h": "Wrong visitors."},
+      {"g": "a round sung by angels", "s": 15, "h": "Wrong kind of round."},
+      {"g": "round john virgin, a shepherd", "s": 5, "h": "That's the famous mishearing."},
+      {"g": "a chubby guy named john", "s": 3, "h": "Too literal."},
+      {"g": "a christmas cookie", "s": 0, "h": "Off the wall."}
+    ]
+  },
+  {
+    "id": "lyric-frere-jacques-bells",
+    "cat": "lyric",
+    "kind": "lyric",
+    "prompt": "Are you sleeping, Brother John? Morning bells are ringing",
+    "song": "Frère Jacques",
+    "year": "c. 1780",
+    "pd": true,
+    "ask": "What does this line mean in the song?",
+    "truth": "Brother John is a friar who has overslept and is being told to get up and ring the bells for early-morning prayers himself; in the French original the bells aren't ringing yet.",
+    "more": "The French line 'Sonnez les matines' means 'Ring the bells for matins', the monastery prayers held in the small hours. The English words keep the rhythm but flip the meaning, so the bells are already ringing and John has merely slept in.",
+    "key": ["ring", "monk", "bells", "prayers", "sleep"],
+    "clues": [
+      "It's the English version of Frère Jacques, a French round.",
+      "In French, the third line gives an order.",
+      "John has a job to do in the bell tower."
+    ],
+    "decoys": [
+      "John is a lazy schoolboy, and the morning bells of the village church are calling him to his lessons.",
+      "John has died in the night, and the morning bells are tolling for his funeral as his brothers sing over him.",
+      "John is a farm boy who has slept past dawn, and the cowbells mean the herd has gone out without him."
+    ],
+    "url": "https://en.wikipedia.org/wiki/Fr%C3%A8re_Jacques",
+    "source": "https://mentalfloss.com/posts/frere-jacques-meaning-origins",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 2,
+    "rating": "G",
+    "graded": [
+      {"g": "a monk who overslept and is supposed to ring the bells", "s": 100, "h": "Spot on."},
+      {"g": "he's meant to ring the bells himself", "s": 90, "h": "Spot on."},
+      {"g": "in french he has to ring them, they aren't ringing", "s": 100, "h": "Spot on."},
+      {"g": "a monk who slept in", "s": 65, "h": "Right person; what's his job?"},
+      {"g": "waking up for church", "s": 45, "h": "Right setting; who does what?"},
+      {"g": "it's a mistranslation", "s": 45, "h": "True; what does the original say?"},
+      {"g": "an alarm clock going off", "s": 15, "h": "Too literal: who makes the noise?"},
+      {"g": "a lazy kid late for school", "s": 10, "h": "Wrong person, wrong place."},
+      {"g": "a funeral", "s": 5, "h": "Nobody has died."},
+      {"g": "a fire drill", "s": 0, "h": "Off the wall."}
+    ]
+  },
+  {
+    "id": "lyric-take-me-out-never-get-back",
+    "cat": "lyric",
+    "kind": "lyric",
+    "prompt": "I don't care if I never get back",
+    "song": "Take Me Out to the Ball Game",
+    "year": 1908,
+    "pd": true,
+    "ask": "What does this line mean in the song?",
+    "truth": "A baseball-mad young woman, Katie Casey, is so happy at the ballpark that she doesn't care if she never goes home.",
+    "more": "Jack Norworth's 1908 verses, now rarely sung, tell how her beau asked her out to a show and she said no, take me to the game instead. Norworth got the idea from a sign for a ball game he saw on the subway.",
+    "key": ["stay", "baseball", "forever", "leave", "home"],
+    "clues": [
+      "The song is from 1908 and is still sung at ballparks.",
+      "The singer is a young woman in a verse most people have forgotten.",
+      "She'd happily sit in the bleachers till the end of time."
+    ],
+    "decoys": [
+      "She doesn't care if her team never gets back to first place: win or lose, she'll keep cheering them on.",
+      "It's a batter who doesn't care if he never gets back to home plate, as long as the crowd cheers his hit.",
+      "She doesn't care if she never gets her ticket money back, because a day at the game is worth every cent."
+    ],
+    "url": "https://en.wikipedia.org/wiki/Take_Me_Out_to_the_Ball_Game",
+    "source": "https://www.wgbh.org/lifestyle/2019-06-06/take-me-out-to-the-ball-game-could-have-been-a-feminist-anthem",
+    "checked": "2026-10-06",
+    "fun": 3,
+    "difficulty": 1,
+    "rating": "G",
+    "graded": [
+      {"g": "she loves baseball so much she never wants to leave", "s": 100, "h": "Spot on."},
+      {"g": "happy to stay at the ballgame forever", "s": 95, "h": "Spot on."},
+      {"g": "doesn't want to go home", "s": 85, "h": "Yes; and where is she?"},
+      {"g": "a girl obsessed with baseball", "s": 55, "h": "Right person; what's she saying?"},
+      {"g": "a baseball fan", "s": 45, "h": "Right person; what's the feeling?"},
+      {"g": "running away from home", "s": 35, "h": "Right about home; why stay away?"},
+      {"g": "never getting money back on tickets", "s": 15, "h": "Tempting, but no refunds involved."},
+      {"g": "a runner not getting back to base", "s": 15, "h": "Too literal: think about the stands."},
+      {"g": "a soldier going off to war", "s": 5, "h": "Off target."},
+      {"g": "a bad back", "s": 0, "h": "Off the wall."}
+    ]
+  }
+]

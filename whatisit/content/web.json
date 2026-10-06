@@ -27,7 +27,59 @@
     "checked": "2026-10-06",
     "fun": 3,
     "difficulty": 3,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "a marketing agency",
+        "s": 92,
+        "h": "Spot on."
+      },
+      {
+        "g": "pr and marketing firm in orlando",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "ad agency run by a couple named kafka",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "kafka media, some kind of media company",
+        "s": 50,
+        "h": "Right name; what do they actually do?"
+      },
+      {
+        "g": "a web design company",
+        "s": 50,
+        "h": "A service for businesses, different specialty."
+      },
+      {
+        "g": "a consulting firm",
+        "s": 42,
+        "h": "Right kind of client, vaguer service."
+      },
+      {
+        "g": "a small family business",
+        "s": 35,
+        "h": "True of the owners; what do they sell?"
+      },
+      {
+        "g": "apache kafka data streaming software",
+        "s": 8,
+        "h": "That's the famous namesake, not this site."
+      },
+      {
+        "g": "a franz kafka fan site",
+        "s": 5,
+        "h": "Too literal: nothing to do with the writer."
+      },
+      {
+        "g": "a pest control company",
+        "s": 3,
+        "h": "Off track."
+      }
+    ]
   },
   {
     "id": "eelslap",
@@ -57,7 +109,59 @@
     "checked": "2026-10-06",
     "fun": 4,
     "difficulty": 1,
-    "rating": "PG"
+    "rating": "PG",
+    "graded": [
+      {
+        "g": "move the mouse, a guy gets slapped by an eel",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "an eel slaps a man in the face",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "you slap someone with an eel",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "a game where you hit people with a fish",
+        "s": 75,
+        "h": "Right action; be more specific about the fish."
+      },
+      {
+        "g": "a silly pointless flash toy",
+        "s": 45,
+        "h": "Right genre; what actually happens?"
+      },
+      {
+        "g": "a funny eel video",
+        "s": 45,
+        "h": "Getting there, but you're in control."
+      },
+      {
+        "g": "a slap bracelet shop",
+        "s": 10,
+        "h": "Wrong kind of slap."
+      },
+      {
+        "g": "a seafood store that sells eels",
+        "s": 5,
+        "h": "Nobody's buying anything here."
+      },
+      {
+        "g": "electric eel facts",
+        "s": 5,
+        "h": "Not educational."
+      },
+      {
+        "g": "a recipe for jellied eels",
+        "s": 2,
+        "h": "Off track."
+      }
+    ]
   },
   {
     "id": "thisissand",
@@ -88,7 +192,59 @@
     "checked": "2026-10-06",
     "fun": 3,
     "difficulty": 1,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "you make sand art",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "pour colored sand to make layered pictures",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "digital version of those sand art bottles",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "a falling sand game",
+        "s": 72,
+        "h": "Close: what do you end up with?"
+      },
+      {
+        "g": "a drawing app",
+        "s": 50,
+        "h": "Creative, but you don't use a brush."
+      },
+      {
+        "g": "a relaxing art toy",
+        "s": 55,
+        "h": "Right genre; what's the material?"
+      },
+      {
+        "g": "write your name in the sand",
+        "s": 30,
+        "h": "Similar medium, different activity."
+      },
+      {
+        "g": "an hourglass timer",
+        "s": 15,
+        "h": "Grains fall, but nothing is timed."
+      },
+      {
+        "g": "how much sand to order for your patio",
+        "s": 5,
+        "h": "No shopping here."
+      },
+      {
+        "g": "a dune fan site",
+        "s": 3,
+        "h": "Off track."
+      }
+    ]
   },
   {
     "id": "koalas-to-the-max",
@@ -119,7 +275,59 @@
     "checked": "2026-10-06",
     "fun": 5,
     "difficulty": 2,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "circles split when you hover until you see koalas",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "mouse over dots to reveal a hidden picture",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "a koala image made of circles that break apart",
+        "s": 92,
+        "h": "Spot on."
+      },
+      {
+        "g": "a picture of koalas made of dots",
+        "s": 60,
+        "h": "Right picture; what do you do to it?"
+      },
+      {
+        "g": "a mouse toy with a reveal at the end",
+        "s": 55,
+        "h": "Right idea; what gets revealed, and how?"
+      },
+      {
+        "g": "a pixel art game",
+        "s": 40,
+        "h": "Right look; what's the trick?"
+      },
+      {
+        "g": "feed a koala until it gets huge",
+        "s": 15,
+        "h": "A toy, but nothing gets fed."
+      },
+      {
+        "g": "a koala zoo webcam",
+        "s": 5,
+        "h": "No live animals here."
+      },
+      {
+        "g": "plant trees for koalas",
+        "s": 5,
+        "h": "No charity here."
+      },
+      {
+        "g": "an australian rugby team",
+        "s": 2,
+        "h": "Off track."
+      }
+    ]
   },
   {
     "id": "zombo",
@@ -150,7 +358,59 @@
     "checked": "2026-10-06",
     "fun": 5,
     "difficulty": 2,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "welcome to zombocom, anything is possible",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "a parody of flash intros that goes nowhere",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "a voice welcomes you, then nothing happens",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "a loading screen that never ends",
+        "s": 70,
+        "h": "Close; you're forgetting the sound."
+      },
+      {
+        "g": "an old internet joke site",
+        "s": 50,
+        "h": "Right era; what happens there?"
+      },
+      {
+        "g": "a pointless 90s website",
+        "s": 50,
+        "h": "Right era; what do you hear?"
+      },
+      {
+        "g": "a zombie survival game",
+        "s": 5,
+        "h": "Too literal: no undead here."
+      },
+      {
+        "g": "zombie movie rankings",
+        "s": 5,
+        "h": "Too literal."
+      },
+      {
+        "g": "zombie makeup tutorial",
+        "s": 3,
+        "h": "Too literal."
+      },
+      {
+        "g": "a crypto exchange",
+        "s": 2,
+        "h": "Off track."
+      }
+    ]
   },
   {
     "id": "is-it-christmas",
@@ -180,7 +440,59 @@
     "checked": "2026-10-06",
     "fun": 4,
     "difficulty": 1,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "says no unless it's christmas day",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "a yes or no on whether today is christmas",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "a page that tells you if it's christmas",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "it just says no",
+        "s": 75,
+        "h": "Nearly: does it ever change?"
+      },
+      {
+        "g": "a christmas countdown",
+        "s": 35,
+        "h": "Right occasion; nothing gets counted."
+      },
+      {
+        "g": "a one-joke website",
+        "s": 35,
+        "h": "True; what's on the page?"
+      },
+      {
+        "g": "a calendar",
+        "s": 25,
+        "h": "Too broad; it has one job."
+      },
+      {
+        "g": "santa tracker",
+        "s": 12,
+        "h": "Right occasion, nothing to track."
+      },
+      {
+        "g": "christmas gift ideas",
+        "s": 8,
+        "h": "Right occasion, no shopping."
+      },
+      {
+        "g": "a recipe for eggnog",
+        "s": 3,
+        "h": "Off track."
+      }
+    ]
   },
   {
     "id": "cornify",
@@ -211,7 +523,59 @@
     "checked": "2026-10-06",
     "fun": 4,
     "difficulty": 2,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "click and unicorns and rainbows appear",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "adds unicorns to any web page",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "a button that sprinkles unicorn pictures",
+        "s": 92,
+        "h": "Spot on."
+      },
+      {
+        "g": "glitter effects for websites",
+        "s": 55,
+        "h": "Getting there; what exactly appears?"
+      },
+      {
+        "g": "a unicorn fan site",
+        "s": 40,
+        "h": "Right creature; what does it do?"
+      },
+      {
+        "g": "a photo filter app",
+        "s": 25,
+        "h": "Decorative, but not for photos."
+      },
+      {
+        "g": "turn your face into corn on the cob",
+        "s": 10,
+        "h": "Silly, but no corn appears."
+      },
+      {
+        "g": "a corn seed supplier",
+        "s": 3,
+        "h": "Too literal: nothing to do with farming."
+      },
+      {
+        "g": "a button that decorates web pages",
+        "s": 70,
+        "h": "Close; decorates with what?"
+      },
+      {
+        "g": "a cornhole league",
+        "s": 2,
+        "h": "Off track."
+      }
+    ]
   },
   {
     "id": "camelcamelcamel",
@@ -242,7 +606,59 @@
     "checked": "2026-10-06",
     "fun": 4,
     "difficulty": 2,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "amazon price tracker",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "tracks prices and tells you when things get cheaper",
+        "s": 92,
+        "h": "Spot on."
+      },
+      {
+        "g": "charts of amazon price history",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "a price comparison site",
+        "s": 62,
+        "h": "Close; think change over time, not stores."
+      },
+      {
+        "g": "a deals website",
+        "s": 50,
+        "h": "Right area; what does it tell you?"
+      },
+      {
+        "g": "something to do with amazon",
+        "s": 40,
+        "h": "Right store; what does the site do?"
+      },
+      {
+        "g": "a camelcase style guide for programmers",
+        "s": 8,
+        "h": "Clever reading, but not for coders."
+      },
+      {
+        "g": "camel treks in the desert",
+        "s": 3,
+        "h": "Too literal: no animals."
+      },
+      {
+        "g": "a camel rescue charity",
+        "s": 3,
+        "h": "Too literal."
+      },
+      {
+        "g": "a cigarette brand",
+        "s": 5,
+        "h": "Off track."
+      }
+    ]
   },
   {
     "id": "window-swap",
@@ -273,7 +689,59 @@
     "checked": "2026-10-06",
     "fun": 4,
     "difficulty": 2,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "watch the view from other people's windows",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "see out of strangers' windows around the world",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "window views from around the world",
+        "s": 92,
+        "h": "Spot on."
+      },
+      {
+        "g": "live webcams of cities",
+        "s": 55,
+        "h": "Getting there, but whose glass are you behind?"
+      },
+      {
+        "g": "virtual travel",
+        "s": 45,
+        "h": "Sort of; how do you get there?"
+      },
+      {
+        "g": "a calming site for a break",
+        "s": 35,
+        "h": "True; what do you look at?"
+      },
+      {
+        "g": "a home swap holiday site",
+        "s": 10,
+        "h": "Nobody's swapping homes."
+      },
+      {
+        "g": "window replacement company",
+        "s": 3,
+        "h": "Too literal: no glazing for sale."
+      },
+      {
+        "g": "trading used doors and windows",
+        "s": 3,
+        "h": "Too literal."
+      },
+      {
+        "g": "windows software downloads",
+        "s": 5,
+        "h": "Not the operating system."
+      }
+    ]
   },
   {
     "id": "radio-garden",
@@ -304,7 +772,64 @@
     "checked": "2026-10-06",
     "fun": 5,
     "difficulty": 2,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "click a globe to hear live radio from anywhere",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "world radio map",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "stream radio stations from other countries",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "an online radio station",
+        "s": 50,
+        "h": "Right medium; there's more than one."
+      },
+      {
+        "g": "a map of radio stations",
+        "s": 82,
+        "h": "Close; what can you do with it?"
+      },
+      {
+        "g": "google earth",
+        "s": 35,
+        "h": "Right navigation; what do you get?"
+      },
+      {
+        "g": "a podcast app",
+        "s": 30,
+        "h": "Audio, yes, but not on demand."
+      },
+      {
+        "g": "a ham radio forum",
+        "s": 25,
+        "h": "Right medium, wrong crowd."
+      },
+      {
+        "g": "a gardening call-in show",
+        "s": 8,
+        "h": "Too literal: no gardening."
+      },
+      {
+        "g": "music that helps plants grow",
+        "s": 5,
+        "h": "Too literal."
+      },
+      {
+        "g": "a seed catalog",
+        "s": 2,
+        "h": "Off track."
+      }
+    ]
   },
   {
     "id": "neverssl",
@@ -335,7 +860,64 @@
     "checked": "2026-10-06",
     "fun": 3,
     "difficulty": 3,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "a page that makes hotel wifi login pop up",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "forces the captive portal on public wifi",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "an http-only site for when cafe wifi won't load",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "a site to test your internet connection",
+        "s": 55,
+        "h": "Getting there; when exactly would you need it?"
+      },
+      {
+        "g": "an unencrypted website",
+        "s": 50,
+        "h": "True; why would anyone want that?"
+      },
+      {
+        "g": "a site to check if your ssl certificate works",
+        "s": 20,
+        "h": "Wrong job: it doesn't check anything."
+      },
+      {
+        "g": "a wifi troubleshooting tool",
+        "s": 75,
+        "h": "Close; for which situation exactly?"
+      },
+      {
+        "g": "a vpn service",
+        "s": 15,
+        "h": "Network tool, different job."
+      },
+      {
+        "g": "a list of insecure websites",
+        "s": 15,
+        "h": "It's one site, and a useful one."
+      },
+      {
+        "g": "a blog against encryption",
+        "s": 8,
+        "h": "Too literal: it has a practical use."
+      },
+      {
+        "g": "a pizza delivery site",
+        "s": 1,
+        "h": "Off track."
+      }
+    ]
   },
   {
     "id": "icanhazip",
@@ -365,7 +947,59 @@
     "checked": "2026-10-06",
     "fun": 3,
     "difficulty": 3,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "shows your ip address",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "prints your public ip as plain text",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "what's my ip",
+        "s": 92,
+        "h": "Spot on."
+      },
+      {
+        "g": "a network tool for sysadmins",
+        "s": 55,
+        "h": "Right audience; what does it tell you?"
+      },
+      {
+        "g": "shows your location",
+        "s": 45,
+        "h": "Something about you, but more technical."
+      },
+      {
+        "g": "an internet speed test",
+        "s": 40,
+        "h": "Right kind of tool, wrong measurement."
+      },
+      {
+        "g": "a lolcats meme site",
+        "s": 8,
+        "h": "Right meme for the name, wrong site."
+      },
+      {
+        "g": "a cat photo site",
+        "s": 5,
+        "h": "Too literal: no cats."
+      },
+      {
+        "g": "a file zipping tool",
+        "s": 5,
+        "h": "Wrong reading of the name."
+      },
+      {
+        "g": "hazardous waste lookup",
+        "s": 3,
+        "h": "Off track."
+      }
+    ]
   },
   {
     "id": "bongo-cat",
@@ -396,7 +1030,59 @@
     "checked": "2026-10-06",
     "fun": 4,
     "difficulty": 1,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "type and a cat plays bongos",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "a cartoon cat drums along when you press keys",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "bongo cat meme you play with your keyboard",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "the bongo cat meme",
+        "s": 65,
+        "h": "Right meme; what do you do?"
+      },
+      {
+        "g": "a keyboard drum machine",
+        "s": 60,
+        "h": "Getting there; who's playing?"
+      },
+      {
+        "g": "a cat playing piano",
+        "s": 45,
+        "h": "Right animal, wrong instrument."
+      },
+      {
+        "g": "cat meows when you type",
+        "s": 45,
+        "h": "Right setup; the sound is different."
+      },
+      {
+        "g": "bongo drum lessons",
+        "s": 12,
+        "h": "Too literal: no teacher here."
+      },
+      {
+        "g": "facts about bongo antelopes",
+        "s": 5,
+        "h": "Wrong kind of bongo."
+      },
+      {
+        "g": "cat adoption",
+        "s": 3,
+        "h": "Off track."
+      }
+    ]
   },
   {
     "id": "http-cat",
@@ -427,7 +1113,64 @@
     "checked": "2026-10-06",
     "fun": 4,
     "difficulty": 2,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "cat pictures for http status codes",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "a cat photo for every error code like 404",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "cats explaining web errors",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "a funny cat 404 page",
+        "s": 75,
+        "h": "Close: it covers more than one."
+      },
+      {
+        "g": "a guide to http for developers",
+        "s": 45,
+        "h": "Right topic, but more playful."
+      },
+      {
+        "g": "cute error pages for programmers",
+        "s": 70,
+        "h": "Close; who stars in them?"
+      },
+      {
+        "g": "cat memes",
+        "s": 25,
+        "h": "Right animal; what are they for?"
+      },
+      {
+        "g": "a site for cat lovers",
+        "s": 20,
+        "h": "Right animal, wrong audience."
+      },
+      {
+        "g": "cat adoption listings",
+        "s": 5,
+        "h": "No adoptions here."
+      },
+      {
+        "g": "a cat cafe webcam",
+        "s": 5,
+        "h": "No live animals."
+      },
+      {
+        "g": "a hat shop",
+        "s": 2,
+        "h": "Off track."
+      }
+    ]
   },
   {
     "id": "dog-ceo",
@@ -458,7 +1201,59 @@
     "checked": "2026-10-06",
     "fun": 4,
     "difficulty": 3,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "random dog pictures api",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "get dog photos by breed for your code",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "gives developers random pictures of dogs",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "a website of dog photos",
+        "s": 60,
+        "h": "Getting there; who's it built for?"
+      },
+      {
+        "g": "a random image generator",
+        "s": 50,
+        "h": "Right idea; of what?"
+      },
+      {
+        "g": "dog breed encyclopedia",
+        "s": 40,
+        "h": "Right on breeds, but it's not for reading."
+      },
+      {
+        "g": "a startup with a dog as ceo",
+        "s": 10,
+        "h": "Too literal: no chief executive."
+      },
+      {
+        "g": "dog walkers for busy executives",
+        "s": 5,
+        "h": "Too literal."
+      },
+      {
+        "g": "a dogecoin site",
+        "s": 5,
+        "h": "Wrong kind of doge."
+      },
+      {
+        "g": "leadership coaching",
+        "s": 3,
+        "h": "Off track."
+      }
+    ]
   },
   {
     "id": "wttr-in",
@@ -489,7 +1284,64 @@
     "checked": "2026-10-06",
     "fun": 3,
     "difficulty": 3,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "weather in the terminal",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "text weather forecast you can curl",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "ascii art weather report",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "a weather website",
+        "s": 70,
+        "h": "Right subject; how do programmers use it?"
+      },
+      {
+        "g": "a forecast for programmers",
+        "s": 75,
+        "h": "Close; how do they get it?"
+      },
+      {
+        "g": "a command line tool",
+        "s": 40,
+        "h": "Right setting; what does it tell you?"
+      },
+      {
+        "g": "a url shortener",
+        "s": 10,
+        "h": "Short name, different purpose."
+      },
+      {
+        "g": "a word game with no vowels",
+        "s": 10,
+        "h": "Right about missing letters, wrong site."
+      },
+      {
+        "g": "a twitter clone",
+        "s": 5,
+        "h": "Not social media."
+      },
+      {
+        "g": "water levels in indian rivers",
+        "s": 5,
+        "h": "Wrong reading of the name."
+      },
+      {
+        "g": "a writers' workshop",
+        "s": 3,
+        "h": "Off track."
+      }
+    ]
   },
   {
     "id": "party-parrot",
@@ -520,7 +1372,59 @@
     "checked": "2026-10-06",
     "fun": 4,
     "difficulty": 2,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "party parrot gifs for slack",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "a collection of dancing parrot emojis",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "animated parrot memes",
+        "s": 88,
+        "h": "Spot on."
+      },
+      {
+        "g": "custom slack emoji",
+        "s": 55,
+        "h": "Right purpose; what's in them?"
+      },
+      {
+        "g": "a gif gallery",
+        "s": 55,
+        "h": "Right format; which star?"
+      },
+      {
+        "g": "a meme site",
+        "s": 40,
+        "h": "Right corner of the internet; be specific."
+      },
+      {
+        "g": "a fan club for talking parrots",
+        "s": 10,
+        "h": "Too literal: no members or robes."
+      },
+      {
+        "g": "a pet shop for parrots",
+        "s": 5,
+        "h": "Too literal."
+      },
+      {
+        "g": "parrots for kids' birthday parties",
+        "s": 5,
+        "h": "Too literal."
+      },
+      {
+        "g": "a party supply store",
+        "s": 3,
+        "h": "Off track."
+      }
+    ]
   },
   {
     "id": "this-word-does-not-exist",
@@ -551,7 +1455,64 @@
     "checked": "2026-10-06",
     "fun": 4,
     "difficulty": 2,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "ai generated fake words with definitions",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "made-up words with definitions",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "a dictionary of words a computer invented",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "a fake dictionary",
+        "s": 78,
+        "h": "Close: who writes it?"
+      },
+      {
+        "g": "a word of the day site",
+        "s": 40,
+        "h": "Right format; where do the words come from?"
+      },
+      {
+        "g": "a random word generator",
+        "s": 45,
+        "h": "Getting there, but the words are special."
+      },
+      {
+        "g": "a game where you guess the real definition",
+        "s": 30,
+        "h": "Similar spirit, but nothing to guess."
+      },
+      {
+        "g": "words with no english equivalent",
+        "s": 15,
+        "h": "Not from another language."
+      },
+      {
+        "g": "obsolete words nobody uses anymore",
+        "s": 15,
+        "h": "Not about forgotten words."
+      },
+      {
+        "g": "a broken 404 page",
+        "s": 5,
+        "h": "Too literal: the page works."
+      },
+      {
+        "g": "a spelling bee practice site",
+        "s": 5,
+        "h": "Off track."
+      }
+    ]
   },
   {
     "id": "a-dark-room",
@@ -582,7 +1543,59 @@
     "checked": "2026-10-06",
     "fun": 4,
     "difficulty": 2,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "a text based browser game",
+        "s": 88,
+        "h": "Spot on."
+      },
+      {
+        "g": "a minimalist text adventure where you light a fire",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "an idle game that starts with stoking a fire",
+        "s": 92,
+        "h": "Spot on."
+      },
+      {
+        "g": "an interactive story",
+        "s": 65,
+        "h": "Close; there's more to do than read."
+      },
+      {
+        "g": "a video game",
+        "s": 50,
+        "h": "Right; what kind?"
+      },
+      {
+        "g": "a horror game in the dark",
+        "s": 40,
+        "h": "A game, but with few pictures."
+      },
+      {
+        "g": "an escape room booking site",
+        "s": 10,
+        "h": "Too literal: no real room."
+      },
+      {
+        "g": "darkroom photography guide",
+        "s": 5,
+        "h": "Too literal."
+      },
+      {
+        "g": "a sleep sounds app",
+        "s": 5,
+        "h": "Off track."
+      },
+      {
+        "g": "a goth nightclub",
+        "s": 2,
+        "h": "Off track."
+      }
+    ]
   },
   {
     "id": "blender-org",
@@ -613,7 +1626,59 @@
     "checked": "2026-10-06",
     "fun": 3,
     "difficulty": 2,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "3d modeling software",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "free open source 3d animation program",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "blender, the 3d software",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "a video game engine",
+        "s": 50,
+        "h": "Close neighbor in the same world."
+      },
+      {
+        "g": "video editing software",
+        "s": 50,
+        "h": "It can, but that's not the main job."
+      },
+      {
+        "g": "a photoshop alternative",
+        "s": 40,
+        "h": "Creative tool, different craft."
+      },
+      {
+        "g": "free software",
+        "s": 40,
+        "h": "True; what's it for?"
+      },
+      {
+        "g": "kitchen blenders",
+        "s": 3,
+        "h": "Too literal: nothing for the kitchen."
+      },
+      {
+        "g": "smoothie recipes",
+        "s": 3,
+        "h": "Too literal."
+      },
+      {
+        "g": "custom coffee blends",
+        "s": 3,
+        "h": "Off track."
+      }
+    ]
   },
   {
     "id": "python-org",
@@ -644,7 +1709,64 @@
     "checked": "2026-10-06",
     "fun": 3,
     "difficulty": 1,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "python programming language",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "the official site of the python coding language",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "a programming language named after a snake",
+        "s": 85,
+        "h": "Right thing; wrong origin story."
+      },
+      {
+        "g": "a site for coders",
+        "s": 65,
+        "h": "Close; what exactly lives there?"
+      },
+      {
+        "g": "a coding tutorial site",
+        "s": 60,
+        "h": "Getting there; it's more official than that."
+      },
+      {
+        "g": "some kind of software",
+        "s": 40,
+        "h": "Right area; be more specific."
+      },
+      {
+        "g": "a monty python fan site",
+        "s": 15,
+        "h": "Right namesake, wrong site."
+      },
+      {
+        "g": "a snake rescue",
+        "s": 3,
+        "h": "Too literal: no reptiles."
+      },
+      {
+        "g": "python hunting in florida",
+        "s": 3,
+        "h": "Too literal."
+      },
+      {
+        "g": "reptile pet supplies",
+        "s": 3,
+        "h": "Too literal."
+      },
+      {
+        "g": "a yoga studio",
+        "s": 1,
+        "h": "Off track."
+      }
+    ]
   },
   {
     "id": "pi-hole",
@@ -675,7 +1797,59 @@
     "checked": "2026-10-06",
     "fun": 4,
     "difficulty": 3,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "network-wide ad blocker",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "ad blocking on a raspberry pi",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "blocks ads on every device in your house",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "a browser ad blocker extension",
+        "s": 75,
+        "h": "Close; it works beyond one browser."
+      },
+      {
+        "g": "a firewall",
+        "s": 55,
+        "h": "Getting there; it filters something specific."
+      },
+      {
+        "g": "raspberry pi software",
+        "s": 45,
+        "h": "Right hardware; what does it do?"
+      },
+      {
+        "g": "a vpn",
+        "s": 30,
+        "h": "Same toolbox, different job."
+      },
+      {
+        "g": "a club for memorizing pi",
+        "s": 5,
+        "h": "Too literal."
+      },
+      {
+        "g": "a pie bakery",
+        "s": 3,
+        "h": "Too literal."
+      },
+      {
+        "g": "black holes explained for kids",
+        "s": 5,
+        "h": "Off track."
+      }
+    ]
   },
   {
     "id": "jellyfin",
@@ -706,7 +1880,59 @@
     "checked": "2026-10-06",
     "fun": 3,
     "difficulty": 3,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "self hosted media server",
+        "s": 95,
+        "h": "Spot on."
+      },
+      {
+        "g": "free plex alternative",
+        "s": 90,
+        "h": "Spot on."
+      },
+      {
+        "g": "stream your own movies to your tv",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "a media player",
+        "s": 55,
+        "h": "Getting there; it does more than play."
+      },
+      {
+        "g": "a streaming service like netflix",
+        "s": 50,
+        "h": "Getting there, but whose films?"
+      },
+      {
+        "g": "file sharing software",
+        "s": 40,
+        "h": "Close neighbor; what kind of files?"
+      },
+      {
+        "g": "jellyfish aquarium guide",
+        "s": 3,
+        "h": "Too literal: no sea creatures."
+      },
+      {
+        "g": "jellyfish sting warnings",
+        "s": 3,
+        "h": "Too literal."
+      },
+      {
+        "g": "a gummy candy shop",
+        "s": 3,
+        "h": "Off track."
+      },
+      {
+        "g": "a scuba fin shop",
+        "s": 2,
+        "h": "Off track."
+      }
+    ]
   },
   {
     "id": "octoprint",
@@ -737,7 +1963,59 @@
     "checked": "2026-10-06",
     "fun": 3,
     "difficulty": 3,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "web interface for 3d printers",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "control your 3d printer from a browser",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "3d printing software",
+        "s": 85,
+        "h": "Spot on."
+      },
+      {
+        "g": "a 3d printer maker",
+        "s": 55,
+        "h": "Right machine; they don't sell it."
+      },
+      {
+        "g": "a printer driver",
+        "s": 45,
+        "h": "Getting there; which kind of printer?"
+      },
+      {
+        "g": "home automation software",
+        "s": 40,
+        "h": "Right idea; one specific machine."
+      },
+      {
+        "g": "a print shop",
+        "s": 10,
+        "h": "Nothing to buy here."
+      },
+      {
+        "g": "an octopus webcam",
+        "s": 3,
+        "h": "Too literal: no sea creatures."
+      },
+      {
+        "g": "how octopuses squirt ink",
+        "s": 3,
+        "h": "Too literal."
+      },
+      {
+        "g": "a game about an octopus",
+        "s": 2,
+        "h": "Off track."
+      }
+    ]
   },
   {
     "id": "handbrake",
@@ -768,6 +2046,58 @@
     "checked": "2026-10-06",
     "fun": 2,
     "difficulty": 3,
-    "rating": "G"
+    "rating": "G",
+    "graded": [
+      {
+        "g": "video converter",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "free software that converts videos for your phone",
+        "s": 98,
+        "h": "Spot on."
+      },
+      {
+        "g": "a video transcoder",
+        "s": 97,
+        "h": "Spot on."
+      },
+      {
+        "g": "a dvd ripper",
+        "s": 75,
+        "h": "Close; it's more general than discs."
+      },
+      {
+        "g": "video editing software",
+        "s": 55,
+        "h": "Getting there; it doesn't cut or edit."
+      },
+      {
+        "g": "a media player like vlc",
+        "s": 45,
+        "h": "Right media, different job."
+      },
+      {
+        "g": "a french driving school",
+        "s": 5,
+        "h": "Too literal: no cars."
+      },
+      {
+        "g": "brake pads for french cars",
+        "s": 3,
+        "h": "Too literal."
+      },
+      {
+        "g": "a road safety campaign",
+        "s": 3,
+        "h": "Too literal."
+      },
+      {
+        "g": "a bike shop",
+        "s": 2,
+        "h": "Off track."
+      }
+    ]
   }
 ]

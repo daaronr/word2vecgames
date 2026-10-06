@@ -27,7 +27,59 @@
   "checked": "2026-10-06",
   "fun": 5,
   "difficulty": 1,
-  "rating": "PG"
+  "rating": "PG",
+  "graded": [
+   {
+    "g": "canned water",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "still or sparkling water in tall cans",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "bottled water",
+    "s": 85,
+    "h": "Right product, different container."
+   },
+   {
+    "g": "energy drink",
+    "s": 45,
+    "h": "Right shelf, but nothing in it energizes."
+   },
+   {
+    "g": "a drinks company",
+    "s": 40,
+    "h": "Right area; be more specific."
+   },
+   {
+    "g": "tallboy beer",
+    "s": 35,
+    "h": "Looks the part, but no alcohol."
+   },
+   {
+    "g": "heavy metal band merch",
+    "s": 10,
+    "h": "That's the styling, not the product."
+   },
+   {
+    "g": "hot sauce",
+    "s": 10,
+    "h": "Wrong shelf, and far milder."
+   },
+   {
+    "g": "drain cleaner",
+    "s": 5,
+    "h": "Too literal: it's completely harmless."
+   },
+   {
+    "g": "funeral services",
+    "s": 2,
+    "h": "Too literal: nobody dies."
+   }
+  ]
  },
  {
   "id": "kewpie",
@@ -58,7 +110,59 @@
   "fun": 5,
   "difficulty": 2,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "japanese mayo",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "mayonnaise in a squeeze bottle",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "salad dressing",
+    "s": 65,
+    "h": "Part of the range, not the star."
+   },
+   {
+    "g": "sauces and condiments",
+    "s": 60,
+    "h": "Right shelf; name the famous one."
+   },
+   {
+    "g": "ketchup brand",
+    "s": 50,
+    "h": "Right shelf, wrong condiment."
+   },
+   {
+    "g": "japanese food products",
+    "s": 35,
+    "h": "Right country; much too vague."
+   },
+   {
+    "g": "rice crackers",
+    "s": 15,
+    "h": "Right country, wrong product."
+   },
+   {
+    "g": "kewpie dolls",
+    "s": 10,
+    "h": "Too literal: the doll is only a mascot."
+   },
+   {
+    "g": "baby formula",
+    "s": 10,
+    "h": "The baby on the label isn't the customer."
+   },
+   {
+    "g": "valentine's cards",
+    "s": 3,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "pocari-sweat",
@@ -89,7 +193,59 @@
   "fun": 5,
   "difficulty": 2,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "sports drink",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "electrolyte drink like gatorade",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "japanese soft drink",
+    "s": 55,
+    "h": "Right idea; what is it for?"
+   },
+   {
+    "g": "flavored water",
+    "s": 50,
+    "h": "Close; there's a reason people reach for it."
+   },
+   {
+    "g": "energy drink",
+    "s": 50,
+    "h": "Close shelf, but no caffeine buzz."
+   },
+   {
+    "g": "some kind of drink",
+    "s": 40,
+    "h": "Right area; what kind?"
+   },
+   {
+    "g": "gym clothes",
+    "s": 15,
+    "h": "Right activity, wrong product."
+   },
+   {
+    "g": "deodorant spray",
+    "s": 10,
+    "h": "Too literal: you don't wear it."
+   },
+   {
+    "g": "bottled sweat",
+    "s": 5,
+    "h": "Too literal: there's none inside."
+   },
+   {
+    "g": "pokemon cards",
+    "s": 2,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "georgia-jp",
@@ -120,7 +276,59 @@
   "fun": 5,
   "difficulty": 3,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "canned coffee",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "coca-cola's coffee in japanese vending machines",
+    "s": 100,
+    "h": "Spot on."
+   },
+   {
+    "g": "iced coffee in a can",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "coffee brand",
+    "s": 80,
+    "h": "Hot: what form does it come in?"
+   },
+   {
+    "g": "a coca-cola brand",
+    "s": 45,
+    "h": "Right company; which product?"
+   },
+   {
+    "g": "bottled peach tea",
+    "s": 35,
+    "h": "Right shelf, wrong flavor."
+   },
+   {
+    "g": "georgian wine",
+    "s": 15,
+    "h": "Too literal about the name."
+   },
+   {
+    "g": "georgia peaches",
+    "s": 8,
+    "h": "Wrong product; the name is a nod."
+   },
+   {
+    "g": "trips to georgia",
+    "s": 5,
+    "h": "Too literal about the place."
+   },
+   {
+    "g": "japanese cigarettes",
+    "s": 5,
+    "h": "Wrong product entirely."
+   }
+  ]
  },
  {
   "id": "pigeon",
@@ -150,7 +358,59 @@
   "fun": 4,
   "difficulty": 3,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "baby bottles",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "bottles, teats and pacifiers for babies",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "baby products",
+    "s": 75,
+    "h": "Hot: which ones especially?"
+   },
+   {
+    "g": "baby pacifiers",
+    "s": 70,
+    "h": "Hot: part of the range, not the star."
+   },
+   {
+    "g": "baby formula",
+    "s": 55,
+    "h": "Right customer, wrong part of mealtime."
+   },
+   {
+    "g": "baby diapers",
+    "s": 45,
+    "h": "Right customer, wrong end."
+   },
+   {
+    "g": "toys for toddlers",
+    "s": 30,
+    "h": "Right age group, wrong product."
+   },
+   {
+    "g": "bird seed",
+    "s": 5,
+    "h": "Too literal: no birds involved."
+   },
+   {
+    "g": "pigeon racing supplies",
+    "s": 5,
+    "h": "Too literal: no birds involved."
+   },
+   {
+    "g": "courier service",
+    "s": 5,
+    "h": "Wrong idea entirely."
+   }
+  ]
  },
  {
   "id": "toto",
@@ -181,7 +441,59 @@
   "fun": 4,
   "difficulty": 2,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "fancy toilets",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "japanese toilets with heated seats and bidets",
+    "s": 100,
+    "h": "Spot on."
+   },
+   {
+    "g": "bidet seats",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "bathroom fixtures",
+    "s": 80,
+    "h": "Hot: name the best-known one."
+   },
+   {
+    "g": "plumbing supplies",
+    "s": 55,
+    "h": "Right trade; be more specific."
+   },
+   {
+    "g": "kitchen sinks",
+    "s": 45,
+    "h": "Right kind of fitting, wrong room."
+   },
+   {
+    "g": "ceramics company",
+    "s": 40,
+    "h": "Right material; which product?"
+   },
+   {
+    "g": "dog food",
+    "s": 5,
+    "h": "Too literal: forget Dorothy's dog."
+   },
+   {
+    "g": "toto band merch",
+    "s": 5,
+    "h": "Wrong Toto entirely."
+   },
+   {
+    "g": "lottery tickets",
+    "s": 5,
+    "h": "Different Toto altogether."
+   }
+  ]
  },
  {
   "id": "zojirushi",
@@ -212,7 +524,59 @@
   "fun": 3,
   "difficulty": 3,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "rice cookers",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "thermos flasks and rice cookers",
+    "s": 100,
+    "h": "Spot on."
+   },
+   {
+    "g": "electric kettles",
+    "s": 80,
+    "h": "Hot: part of the range."
+   },
+   {
+    "g": "kitchen appliances",
+    "s": 60,
+    "h": "Right room; which ones?"
+   },
+   {
+    "g": "japanese cookware",
+    "s": 45,
+    "h": "Right room; be more specific."
+   },
+   {
+    "g": "pots and pans",
+    "s": 35,
+    "h": "Right room, wrong kind of gear."
+   },
+   {
+    "g": "instant miso soup",
+    "s": 15,
+    "h": "Right country, wrong product."
+   },
+   {
+    "g": "elephant toys",
+    "s": 8,
+    "h": "The animal is only on the logo."
+   },
+   {
+    "g": "name stamps",
+    "s": 5,
+    "h": "Wrong idea entirely."
+   },
+   {
+    "g": "zoo tickets",
+    "s": 3,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "cuckoo",
@@ -243,7 +607,59 @@
   "fun": 5,
   "difficulty": 3,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "rice cookers",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "korean pressure rice cookers that talk",
+    "s": 100,
+    "h": "Spot on."
+   },
+   {
+    "g": "pressure cookers",
+    "s": 70,
+    "h": "Hot: what does it usually cook?"
+   },
+   {
+    "g": "slow cooker",
+    "s": 65,
+    "h": "Close kind of gadget."
+   },
+   {
+    "g": "kitchen appliances",
+    "s": 60,
+    "h": "Right room; which one is famous?"
+   },
+   {
+    "g": "water purifiers",
+    "s": 50,
+    "h": "A sideline; the star is different."
+   },
+   {
+    "g": "korean cosmetics",
+    "s": 15,
+    "h": "Right country, wrong product."
+   },
+   {
+    "g": "cuckoo clocks",
+    "s": 10,
+    "h": "Too literal: no bird pops out."
+   },
+   {
+    "g": "alarm clocks",
+    "s": 8,
+    "h": "Wrong kind of gadget."
+   },
+   {
+    "g": "bird feeders",
+    "s": 5,
+    "h": "Too literal: no birds involved."
+   }
+  ]
  },
  {
   "id": "gentle-monster",
@@ -273,7 +689,59 @@
   "fun": 4,
   "difficulty": 3,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "designer sunglasses",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "fancy korean eyewear",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "glasses frames",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "contact lenses",
+    "s": 50,
+    "h": "Right part of the body, different product."
+   },
+   {
+    "g": "fashion accessories",
+    "s": 45,
+    "h": "Right area; be more specific."
+   },
+   {
+    "g": "luxury fashion brand",
+    "s": 40,
+    "h": "Right area; which item?"
+   },
+   {
+    "g": "streetwear clothing",
+    "s": 25,
+    "h": "Fashion, but not clothing."
+   },
+   {
+    "g": "art gallery",
+    "s": 15,
+    "h": "Its stores look like one, but no."
+   },
+   {
+    "g": "monster plush toys",
+    "s": 5,
+    "h": "Too literal: no monsters for sale."
+   },
+   {
+    "g": "energy drinks",
+    "s": 5,
+    "h": "Different monster entirely."
+   }
+  ]
  },
  {
   "id": "bambu-lab",
@@ -303,7 +771,59 @@
   "fun": 4,
   "difficulty": 3,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "3d printers",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "desktop 3d printers and filament",
+    "s": 100,
+    "h": "Spot on."
+   },
+   {
+    "g": "printer filament",
+    "s": 65,
+    "h": "Part of it; think of the machine."
+   },
+   {
+    "g": "cnc machines",
+    "s": 55,
+    "h": "Close cousin, but it adds instead of cuts."
+   },
+   {
+    "g": "gadgets for makers",
+    "s": 50,
+    "h": "Right crowd; which machine?"
+   },
+   {
+    "g": "inkjet printers",
+    "s": 45,
+    "h": "Close kind of machine, but not paper."
+   },
+   {
+    "g": "camera drones",
+    "s": 20,
+    "h": "Right founders' background, wrong product."
+   },
+   {
+    "g": "lab equipment",
+    "s": 15,
+    "h": "No lab coats needed."
+   },
+   {
+    "g": "bamboo toothbrushes",
+    "s": 5,
+    "h": "Too literal: no bamboo involved."
+   },
+   {
+    "g": "panda food",
+    "s": 2,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "pop-mart",
@@ -334,7 +854,59 @@
   "fun": 4,
   "difficulty": 2,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "labubu dolls",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "blind box collectible figures",
+    "s": 100,
+    "h": "Spot on."
+   },
+   {
+    "g": "vinyl figures like funko pops",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "collectible stuff",
+    "s": 70,
+    "h": "Hot: what kind exactly?"
+   },
+   {
+    "g": "toys for kids",
+    "s": 55,
+    "h": "Warm: adults queue for these too."
+   },
+   {
+    "g": "trading cards",
+    "s": 40,
+    "h": "Right collector buzz, wrong format."
+   },
+   {
+    "g": "convenience store",
+    "s": 10,
+    "h": "Too literal: not a corner shop."
+   },
+   {
+    "g": "pop music merch",
+    "s": 10,
+    "h": "Too literal about pop."
+   },
+   {
+    "g": "popcorn machines",
+    "s": 5,
+    "h": "Wrong idea entirely."
+   },
+   {
+    "g": "fizzy soda",
+    "s": 3,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "boat",
@@ -365,7 +937,59 @@
   "fun": 4,
   "difficulty": 3,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "wireless earbuds",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "headphones and speakers from india",
+    "s": 100,
+    "h": "Spot on."
+   },
+   {
+    "g": "bluetooth speakers",
+    "s": 85,
+    "h": "Spot on, among others."
+   },
+   {
+    "g": "cheap smartwatches",
+    "s": 65,
+    "h": "Part of the range, not the core."
+   },
+   {
+    "g": "consumer electronics",
+    "s": 50,
+    "h": "Right area; which kind?"
+   },
+   {
+    "g": "mobile phones",
+    "s": 40,
+    "h": "Electronics, but not that gadget."
+   },
+   {
+    "g": "music streaming",
+    "s": 35,
+    "h": "Right activity, wrong product."
+   },
+   {
+    "g": "boat rentals",
+    "s": 5,
+    "h": "Too literal: stays on dry land."
+   },
+   {
+    "g": "kerala houseboat holidays",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "cricket bats",
+    "s": 5,
+    "h": "Right fans, wrong product."
+   }
+  ]
  },
  {
   "id": "sleepy-owl",
@@ -395,7 +1019,59 @@
   "fun": 4,
   "difficulty": 3,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "cold brew coffee",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "instant coffee",
+    "s": 95,
+    "h": "Spot on, among others."
+   },
+   {
+    "g": "indian coffee brand",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "masala chai",
+    "s": 45,
+    "h": "Close, but a different cup."
+   },
+   {
+    "g": "a drinks brand",
+    "s": 40,
+    "h": "Right area; which one?"
+   },
+   {
+    "g": "energy drinks",
+    "s": 35,
+    "h": "Right goal, wrong drink."
+   },
+   {
+    "g": "sleep aids",
+    "s": 10,
+    "h": "Too literal: quite the opposite."
+   },
+   {
+    "g": "mattresses online",
+    "s": 5,
+    "h": "Too literal: not for bedtime."
+   },
+   {
+    "g": "night lights",
+    "s": 5,
+    "h": "Too literal about the night."
+   },
+   {
+    "g": "owl plush toys",
+    "s": 5,
+    "h": "Too literal."
+   }
+  ]
  },
  {
   "id": "postman",
@@ -426,7 +1102,64 @@
   "fun": 3,
   "difficulty": 3,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "api testing tool",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "software for developers to test apis",
+    "s": 100,
+    "h": "Spot on."
+   },
+   {
+    "g": "http client for programmers",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "developer tools",
+    "s": 70,
+    "h": "Hot: which job does it do?"
+   },
+   {
+    "g": "browser extension",
+    "s": 35,
+    "h": "How it began; what does it do?"
+   },
+   {
+    "g": "business software",
+    "s": 35,
+    "h": "Right area; much more specific."
+   },
+   {
+    "g": "email marketing software",
+    "s": 30,
+    "h": "Software, yes, but not mail."
+   },
+   {
+    "g": "messaging app",
+    "s": 25,
+    "h": "Wrong customers; think more technical."
+   },
+   {
+    "g": "courier delivery",
+    "s": 10,
+    "h": "Too literal: no parcels."
+   },
+   {
+    "g": "postal uniforms",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "local newspaper",
+    "s": 3,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "moonpig",
@@ -457,7 +1190,59 @@
   "fun": 5,
   "difficulty": 2,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "greeting cards",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "personalized birthday cards you order online",
+    "s": 100,
+    "h": "Spot on."
+   },
+   {
+    "g": "photo postcards",
+    "s": 70,
+    "h": "Close; think of special occasions."
+   },
+   {
+    "g": "online gifts",
+    "s": 60,
+    "h": "Warm: what's the main thing?"
+   },
+   {
+    "g": "flower delivery",
+    "s": 50,
+    "h": "A sideline; the main thing is different."
+   },
+   {
+    "g": "stationery shop",
+    "s": 45,
+    "h": "Right area; be more specific."
+   },
+   {
+    "g": "pork pies",
+    "s": 5,
+    "h": "Too literal: no pigs."
+   },
+   {
+    "g": "moon pie snacks",
+    "s": 5,
+    "h": "Sounds alike, wrong product."
+   },
+   {
+    "g": "kids' night lights",
+    "s": 5,
+    "h": "Wrong idea."
+   },
+   {
+    "g": "space tourism",
+    "s": 2,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "marmite",
@@ -488,7 +1273,59 @@
   "fun": 4,
   "difficulty": 1,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "yeast extract spread",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "salty brown stuff on toast",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "basically vegemite",
+    "s": 90,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "some kind of spread",
+    "s": 55,
+    "h": "Right idea; which kind?"
+   },
+   {
+    "g": "strawberry jam",
+    "s": 35,
+    "h": "Right use, wrong taste."
+   },
+   {
+    "g": "gravy granules",
+    "s": 35,
+    "h": "Right taste family, wrong use."
+   },
+   {
+    "g": "orange marmalade",
+    "s": 30,
+    "h": "Sounds alike, but a different taste."
+   },
+   {
+    "g": "british beer",
+    "s": 20,
+    "h": "Linked to it, but you don't drink it."
+   },
+   {
+    "g": "french cooking pots",
+    "s": 10,
+    "h": "That's the name's origin, not the product."
+   },
+   {
+    "g": "furniture polish",
+    "s": 3,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "huel",
@@ -519,7 +1356,59 @@
   "fun": 3,
   "difficulty": 2,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "meal replacement shakes",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "powdered complete food",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "diet shakes like slimfast",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "protein powder",
+    "s": 65,
+    "h": "Close, but it's meant to be lunch."
+   },
+   {
+    "g": "healthy smoothies",
+    "s": 50,
+    "h": "Warm, but more filling."
+   },
+   {
+    "g": "energy bars",
+    "s": 45,
+    "h": "Part of the range, not the star."
+   },
+   {
+    "g": "health food",
+    "s": 40,
+    "h": "Right area; be more specific."
+   },
+   {
+    "g": "biofuel for cars",
+    "s": 10,
+    "h": "Too literal about fuel."
+   },
+   {
+    "g": "fitness tracking app",
+    "s": 10,
+    "h": "Right crowd, wrong product."
+   },
+   {
+    "g": "hair gel",
+    "s": 2,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "toast",
@@ -550,7 +1439,59 @@
   "fun": 5,
   "difficulty": 3,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "restaurant point of sale",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "tablets waiters use to take orders and payments",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "restaurant software",
+    "s": 85,
+    "h": "Spot on."
+   },
+   {
+    "g": "card payment terminals",
+    "s": 70,
+    "h": "Hot: who are the customers?"
+   },
+   {
+    "g": "food delivery app",
+    "s": 35,
+    "h": "Right industry, wrong side of it."
+   },
+   {
+    "g": "business software",
+    "s": 35,
+    "h": "Right area; much more specific."
+   },
+   {
+    "g": "online bank",
+    "s": 25,
+    "h": "Money's involved, but not banking."
+   },
+   {
+    "g": "toasters and sandwich presses",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "wedding speeches",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "cybersecurity firm",
+    "s": 5,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "lemonade",
@@ -581,7 +1522,59 @@
   "fun": 5,
   "difficulty": 3,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "insurance app",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "renters and pet insurance on your phone",
+    "s": 100,
+    "h": "Spot on."
+   },
+   {
+    "g": "pet insurance",
+    "s": 90,
+    "h": "Spot on, among others."
+   },
+   {
+    "g": "home security",
+    "s": 40,
+    "h": "Right worry, wrong product."
+   },
+   {
+    "g": "fintech app",
+    "s": 40,
+    "h": "Right area; which financial product?"
+   },
+   {
+    "g": "investing app",
+    "s": 35,
+    "h": "Right area, wrong product."
+   },
+   {
+    "g": "online bank",
+    "s": 30,
+    "h": "Money, yes, but not banking."
+   },
+   {
+    "g": "lemonade drinks",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "lemon cleaning spray",
+    "s": 5,
+    "h": "Too literal about lemons."
+   },
+   {
+    "g": "beyonce album merch",
+    "s": 3,
+    "h": "Wrong Lemonade entirely."
+   }
+  ]
  },
  {
   "id": "valve",
@@ -612,7 +1605,59 @@
   "fun": 4,
   "difficulty": 2,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "video game company",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "steam, the pc game store",
+    "s": 100,
+    "h": "Spot on."
+   },
+   {
+    "g": "makes half-life and portal",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "handheld gaming pc",
+    "s": 70,
+    "h": "Part of it; there's a bigger business."
+   },
+   {
+    "g": "computer hardware",
+    "s": 35,
+    "h": "Partly; the main business is different."
+   },
+   {
+    "g": "software company",
+    "s": 35,
+    "h": "Right area; be more specific."
+   },
+   {
+    "g": "plumbing valves",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "heart valves",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "guitar amps",
+    "s": 5,
+    "h": "Wrong valve entirely."
+   },
+   {
+    "g": "fashion brand",
+    "s": 2,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "snowflake",
@@ -643,7 +1688,59 @@
   "fun": 3,
   "difficulty": 3,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "cloud data warehouse",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "data analytics software",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "database software",
+    "s": 85,
+    "h": "Spot on."
+   },
+   {
+    "g": "cloud computing",
+    "s": 60,
+    "h": "Warm: what do businesses keep there?"
+   },
+   {
+    "g": "cloud storage like dropbox",
+    "s": 50,
+    "h": "Warm, but not for files."
+   },
+   {
+    "g": "business software",
+    "s": 40,
+    "h": "Right customers; be more specific."
+   },
+   {
+    "g": "snow machines",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "christmas decorations",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "shaved ice",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "dating app",
+    "s": 2,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "roku",
@@ -674,7 +1771,59 @@
   "fun": 3,
   "difficulty": 2,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "tv streaming stick",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "box that puts netflix on your tv",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "smart tvs",
+    "s": 80,
+    "h": "Hot: part of the range."
+   },
+   {
+    "g": "cable tv provider",
+    "s": 45,
+    "h": "Right screen, different way in."
+   },
+   {
+    "g": "netflix competitor",
+    "s": 40,
+    "h": "Warm: it helps you watch that."
+   },
+   {
+    "g": "video game console",
+    "s": 40,
+    "h": "Right room, wrong device."
+   },
+   {
+    "g": "japanese knives",
+    "s": 5,
+    "h": "Too literal about the name."
+   },
+   {
+    "g": "sushi kits",
+    "s": 5,
+    "h": "Too literal about the name."
+   },
+   {
+    "g": "climbing shoes",
+    "s": 5,
+    "h": "Wrong idea entirely."
+   },
+   {
+    "g": "tax software",
+    "s": 2,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "bombas",
@@ -705,7 +1854,59 @@
   "fun": 3,
   "difficulty": 2,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "comfy socks",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "socks that donate a pair for each one sold",
+    "s": 100,
+    "h": "Spot on."
+   },
+   {
+    "g": "boxers and briefs",
+    "s": 70,
+    "h": "Part of the range, not the star."
+   },
+   {
+    "g": "toms-style shoes",
+    "s": 50,
+    "h": "Same giving model, different item."
+   },
+   {
+    "g": "some kind of clothing",
+    "s": 45,
+    "h": "Right area; which item?"
+   },
+   {
+    "g": "a charity",
+    "s": 25,
+    "h": "That's the giving side; what do you buy?"
+   },
+   {
+    "g": "bath bombs",
+    "s": 5,
+    "h": "Sounds alike, wrong product."
+   },
+   {
+    "g": "fireworks shop",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "paella pans",
+    "s": 5,
+    "h": "Wrong idea entirely."
+   },
+   {
+    "g": "water pumps",
+    "s": 3,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "who-gives-a-crap",
@@ -736,7 +1937,59 @@
   "fun": 4,
   "difficulty": 1,
   "rating": "PG",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "toilet paper",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "eco toilet roll delivered in bulk",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "paper towels and tissues",
+    "s": 65,
+    "h": "Part of the range, not the star."
+   },
+   {
+    "g": "household products",
+    "s": 40,
+    "h": "Right area; be more specific."
+   },
+   {
+    "g": "eco toilets",
+    "s": 40,
+    "h": "Right room, but not the fixture."
+   },
+   {
+    "g": "a charity",
+    "s": 25,
+    "h": "That's where profits go; what's sold?"
+   },
+   {
+    "g": "bamboo straws",
+    "s": 20,
+    "h": "Right material, wrong product."
+   },
+   {
+    "g": "dog poo bags",
+    "s": 15,
+    "h": "Right theme, wrong product."
+   },
+   {
+    "g": "slogan t-shirts",
+    "s": 8,
+    "h": "Too literal about the attitude."
+   },
+   {
+    "g": "car insurance",
+    "s": 2,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "koala",
@@ -767,7 +2020,59 @@
   "fun": 4,
   "difficulty": 2,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "mattress in a box",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "online mattresses and sofas",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "sofa company",
+    "s": 75,
+    "h": "Part of the range, not the star."
+   },
+   {
+    "g": "furniture store",
+    "s": 55,
+    "h": "Right area; which piece is famous?"
+   },
+   {
+    "g": "pillows and bedding",
+    "s": 55,
+    "h": "Right room, wrong item."
+   },
+   {
+    "g": "sleep app",
+    "s": 25,
+    "h": "Right activity, wrong product."
+   },
+   {
+    "g": "eucalyptus hand cream",
+    "s": 10,
+    "h": "Too literal about the animal."
+   },
+   {
+    "g": "toy koalas",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "baby carriers",
+    "s": 5,
+    "h": "Wrong idea entirely."
+   },
+   {
+    "g": "australian tours",
+    "s": 5,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "icebreaker",
@@ -798,7 +2103,59 @@
   "fun": 4,
   "difficulty": 3,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "merino wool clothing",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "wool base layers for hiking",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "outdoor clothing",
+    "s": 70,
+    "h": "Hot: which material?"
+   },
+   {
+    "g": "thermal underwear",
+    "s": 65,
+    "h": "Hot: which material?"
+   },
+   {
+    "g": "warm sweaters",
+    "s": 55,
+    "h": "Warm: part of it; what material?"
+   },
+   {
+    "g": "sheep farming",
+    "s": 25,
+    "h": "Right animal, wrong business."
+   },
+   {
+    "g": "party games",
+    "s": 10,
+    "h": "Too literal."
+   },
+   {
+    "g": "ice scrapers",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "breath mints",
+    "s": 5,
+    "h": "Different Ice Breakers entirely."
+   },
+   {
+    "g": "arctic cruises",
+    "s": 5,
+    "h": "Too literal."
+   }
+  ]
  },
  {
   "id": "kobo",
@@ -828,7 +2185,59 @@
   "fun": 4,
   "difficulty": 2,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "ebook readers",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "e-reader like a kindle",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "ebooks and audiobooks",
+    "s": 85,
+    "h": "Spot on, near enough."
+   },
+   {
+    "g": "cheap tablets",
+    "s": 55,
+    "h": "Close, but a more specialized gadget."
+   },
+   {
+    "g": "audiobook app",
+    "s": 55,
+    "h": "Part of it; the main item differs."
+   },
+   {
+    "g": "book shop",
+    "s": 50,
+    "h": "Warm: right content, different format."
+   },
+   {
+    "g": "board games",
+    "s": 10,
+    "h": "Wrong kind of entertainment."
+   },
+   {
+    "g": "martial arts gear",
+    "s": 5,
+    "h": "Wrong idea entirely."
+   },
+   {
+    "g": "kombucha drinks",
+    "s": 5,
+    "h": "Sounds close, wrong product."
+   },
+   {
+    "g": "japanese snacks",
+    "s": 5,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "stradivarius",
@@ -859,7 +2268,64 @@
   "fun": 5,
   "difficulty": 2,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "women's clothing",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "cheap fashion like zara",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "clothes shop",
+    "s": 85,
+    "h": "Spot on."
+   },
+   {
+    "g": "luxury fashion",
+    "s": 60,
+    "h": "Right area, wrong price point."
+   },
+   {
+    "g": "shoes and handbags",
+    "s": 50,
+    "h": "Part of it; the main line differs."
+   },
+   {
+    "g": "costume jewelry",
+    "s": 40,
+    "h": "Part of it; the main line differs."
+   },
+   {
+    "g": "makeup and cosmetics",
+    "s": 30,
+    "h": "Right shoppers, wrong product."
+   },
+   {
+    "g": "expensive violins",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "music lessons",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "antique insurance",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "italian restaurant",
+    "s": 3,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "camper",
@@ -889,7 +2355,59 @@
   "fun": 4,
   "difficulty": 2,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "spanish shoes",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "quirky spanish shoes with mismatched pairs",
+    "s": 100,
+    "h": "Spot on."
+   },
+   {
+    "g": "casual sneakers",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "hiking boots",
+    "s": 65,
+    "h": "Hot, but not for hiking."
+   },
+   {
+    "g": "fashion brand",
+    "s": 45,
+    "h": "Right area; which item?"
+   },
+   {
+    "g": "colorful socks",
+    "s": 35,
+    "h": "Right body part, wrong item."
+   },
+   {
+    "g": "outdoor gear",
+    "s": 15,
+    "h": "Too literal about the name."
+   },
+   {
+    "g": "campervan rental",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "camping tents",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "holiday campsites",
+    "s": 5,
+    "h": "Too literal."
+   }
+  ]
  },
  {
   "id": "freitag",
@@ -920,7 +2438,59 @@
   "fun": 5,
   "difficulty": 3,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "bags made from truck tarps",
+    "s": 100,
+    "h": "Spot on."
+   },
+   {
+    "g": "recycled messenger bags",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "swiss backpacks",
+    "s": 80,
+    "h": "Hot: what are they made from?"
+   },
+   {
+    "g": "travel luggage",
+    "s": 60,
+    "h": "Warm: think more everyday."
+   },
+   {
+    "g": "upcycled products",
+    "s": 50,
+    "h": "Warm: which product?"
+   },
+   {
+    "g": "truck tarpaulins",
+    "s": 30,
+    "h": "That's the material; what's made?"
+   },
+   {
+    "g": "swiss watches",
+    "s": 10,
+    "h": "Right country, wrong product."
+   },
+   {
+    "g": "friday deals",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "weekend bakery",
+    "s": 5,
+    "h": "Too literal about the day."
+   },
+   {
+    "g": "wall calendars",
+    "s": 5,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "zweifel",
@@ -951,7 +2521,59 @@
   "fun": 4,
   "difficulty": 3,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "potato chips",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "swiss crisps",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "salty snacks",
+    "s": 70,
+    "h": "Hot: which one exactly?"
+   },
+   {
+    "g": "salted pretzels",
+    "s": 45,
+    "h": "Right aisle, wrong product."
+   },
+   {
+    "g": "savory crackers",
+    "s": 40,
+    "h": "Right aisle, wrong product."
+   },
+   {
+    "g": "swiss chocolate",
+    "s": 25,
+    "h": "Right country, wrong treat."
+   },
+   {
+    "g": "apple juice",
+    "s": 20,
+    "h": "Family history, not today's product."
+   },
+   {
+    "g": "cheese fondue",
+    "s": 15,
+    "h": "Right country, wrong food."
+   },
+   {
+    "g": "fact checking",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "philosophy books",
+    "s": 3,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "caran-dache",
@@ -982,7 +2604,59 @@
   "fun": 4,
   "difficulty": 3,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "colored pencils",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "swiss pencils and pens for artists",
+    "s": 100,
+    "h": "Spot on."
+   },
+   {
+    "g": "art supplies",
+    "s": 80,
+    "h": "Hot: which item exactly?"
+   },
+   {
+    "g": "fountain pens",
+    "s": 75,
+    "h": "Part of it; the famous one differs."
+   },
+   {
+    "g": "wax crayons",
+    "s": 65,
+    "h": "Hot, but you sharpen these."
+   },
+   {
+    "g": "office stationery",
+    "s": 55,
+    "h": "Warm; which item?"
+   },
+   {
+    "g": "swiss watches",
+    "s": 10,
+    "h": "Right country, wrong product."
+   },
+   {
+    "g": "caramel sweets",
+    "s": 5,
+    "h": "Sounds tasty, but no."
+   },
+   {
+    "g": "car alarms",
+    "s": 5,
+    "h": "Too literal about car."
+   },
+   {
+    "g": "french perfume",
+    "s": 3,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "almdudler",
@@ -1013,7 +2687,59 @@
   "fun": 4,
   "difficulty": 3,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "herbal soda",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "austrian soft drink made with alpine herbs",
+    "s": 100,
+    "h": "Spot on."
+   },
+   {
+    "g": "austrian lemonade",
+    "s": 80,
+    "h": "Hot: what gives it its taste?"
+   },
+   {
+    "g": "soft drink",
+    "s": 75,
+    "h": "Hot: what's in it?"
+   },
+   {
+    "g": "herbal liqueur",
+    "s": 45,
+    "h": "Right taste, wrong strength."
+   },
+   {
+    "g": "herbal tea",
+    "s": 45,
+    "h": "Right taste, wrong kind."
+   },
+   {
+    "g": "cold beer",
+    "s": 30,
+    "h": "Right occasion, but no alcohol."
+   },
+   {
+    "g": "yodeling lessons",
+    "s": 8,
+    "h": "That's the name's story, not the product."
+   },
+   {
+    "g": "alpine horns",
+    "s": 5,
+    "h": "Too literal about the mountains."
+   },
+   {
+    "g": "cowbell souvenirs",
+    "s": 5,
+    "h": "Wrong idea entirely."
+   }
+  ]
  },
  {
   "id": "doppelmayr",
@@ -1044,7 +2770,59 @@
   "fun": 4,
   "difficulty": 3,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "ski lifts",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "cable cars and gondolas",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "chair lifts",
+    "s": 92,
+    "h": "Spot on."
+   },
+   {
+    "g": "elevators for buildings",
+    "s": 45,
+    "h": "Moves people up, but not in buildings."
+   },
+   {
+    "g": "public transport",
+    "s": 45,
+    "h": "Partly; think how it travels."
+   },
+   {
+    "g": "ski equipment",
+    "s": 40,
+    "h": "Right slopes, wrong product."
+   },
+   {
+    "g": "mountain trains",
+    "s": 40,
+    "h": "Moves people, but not on rails."
+   },
+   {
+    "g": "double buggies",
+    "s": 5,
+    "h": "Too literal about double."
+   },
+   {
+    "g": "double glazing",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "austrian beer",
+    "s": 3,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "kipling",
@@ -1075,7 +2853,59 @@
   "fun": 4,
   "difficulty": 2,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "nylon handbags",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "bags with a little monkey keychain",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "school backpacks",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "luggage brand",
+    "s": 80,
+    "h": "Hot: part of it; think everyday."
+   },
+   {
+    "g": "wallets and purses",
+    "s": 60,
+    "h": "Close; think bigger."
+   },
+   {
+    "g": "fashion accessories",
+    "s": 45,
+    "h": "Right area; which item?"
+   },
+   {
+    "g": "toy monkeys",
+    "s": 25,
+    "h": "That's only the add-on."
+   },
+   {
+    "g": "jungle book editions",
+    "s": 10,
+    "h": "Too literal about the author."
+   },
+   {
+    "g": "mr kipling cakes",
+    "s": 5,
+    "h": "Different Kipling entirely."
+   },
+   {
+    "g": "safari trips",
+    "s": 5,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "flying-tiger",
@@ -1106,7 +2936,59 @@
   "fun": 4,
   "difficulty": 2,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "cheap colorful knick-knacks",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "danish shop full of cheap gadgets and party stuff",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "variety store",
+    "s": 85,
+    "h": "Spot on."
+   },
+   {
+    "g": "gift shop",
+    "s": 75,
+    "h": "Hot: think about the price tags."
+   },
+   {
+    "g": "toy shop",
+    "s": 50,
+    "h": "Part of it; the range is wider."
+   },
+   {
+    "g": "home decor store",
+    "s": 50,
+    "h": "Part of it; the range is wider."
+   },
+   {
+    "g": "kites and lanterns",
+    "s": 20,
+    "h": "Might be on a shelf; think wider."
+   },
+   {
+    "g": "budget airline",
+    "s": 10,
+    "h": "Too literal."
+   },
+   {
+    "g": "tiger balm",
+    "s": 5,
+    "h": "Wrong tiger entirely."
+   },
+   {
+    "g": "a zoo",
+    "s": 3,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "tchibo",
@@ -1137,7 +3019,59 @@
   "fun": 4,
   "difficulty": 3,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "german coffee",
+    "s": 85,
+    "h": "Spot on; there's a twist too."
+   },
+   {
+    "g": "coffee shops that also sell random weekly stuff",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "coffee and household goods",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "kitchenware shop",
+    "s": 50,
+    "h": "Part of it; the main product differs."
+   },
+   {
+    "g": "loose leaf tea",
+    "s": 45,
+    "h": "Right cup, wrong drink."
+   },
+   {
+    "g": "department store",
+    "s": 40,
+    "h": "Partly; what's the main product?"
+   },
+   {
+    "g": "mail order catalog",
+    "s": 30,
+    "h": "How it began; what's sold?"
+   },
+   {
+    "g": "german chocolate",
+    "s": 25,
+    "h": "Right sort of treat, wrong one."
+   },
+   {
+    "g": "bavarian sausages",
+    "s": 5,
+    "h": "Wrong idea entirely."
+   },
+   {
+    "g": "cartoon stickers",
+    "s": 5,
+    "h": "Sounds cute, but no."
+   }
+  ]
  },
  {
   "id": "melitta",
@@ -1168,7 +3102,59 @@
   "fun": 4,
   "difficulty": 3,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "coffee filters",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "paper filters and pour-over coffee makers",
+    "s": 100,
+    "h": "Spot on."
+   },
+   {
+    "g": "filter coffee gear",
+    "s": 90,
+    "h": "Spot on."
+   },
+   {
+    "g": "coffee machines",
+    "s": 80,
+    "h": "Hot: think of its simplest product."
+   },
+   {
+    "g": "ground coffee",
+    "s": 70,
+    "h": "Hot: think about how you brew it."
+   },
+   {
+    "g": "tea bags",
+    "s": 40,
+    "h": "Close idea, wrong drink."
+   },
+   {
+    "g": "kitchen paper towels",
+    "s": 40,
+    "h": "Right material, wrong use."
+   },
+   {
+    "g": "honey and beeswax",
+    "s": 5,
+    "h": "Sounds like it, but no."
+   },
+   {
+    "g": "greek yogurt",
+    "s": 5,
+    "h": "Wrong idea entirely."
+   },
+   {
+    "g": "skin care",
+    "s": 3,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "picnic",
@@ -1199,7 +3185,59 @@
   "fun": 4,
   "difficulty": 3,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "grocery delivery",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "online supermarket with electric vans",
+    "s": 100,
+    "h": "Spot on."
+   },
+   {
+    "g": "a supermarket",
+    "s": 70,
+    "h": "Hot, but you never go in."
+   },
+   {
+    "g": "food delivery app",
+    "s": 55,
+    "h": "Warm: not restaurant meals."
+   },
+   {
+    "g": "meal kits",
+    "s": 45,
+    "h": "Warm: think of the whole weekly shop."
+   },
+   {
+    "g": "electric vans",
+    "s": 30,
+    "h": "That's how, not what."
+   },
+   {
+    "g": "office lunch catering",
+    "s": 25,
+    "h": "Too narrow, and not for offices."
+   },
+   {
+    "g": "picnic hampers",
+    "s": 10,
+    "h": "Too literal."
+   },
+   {
+    "g": "park cafe",
+    "s": 10,
+    "h": "Too literal."
+   },
+   {
+    "g": "dating app",
+    "s": 2,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "guarana-antarctica",
@@ -1230,7 +3268,64 @@
   "fun": 4,
   "difficulty": 2,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "guarana soda",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "brazilian fizzy drink made from an amazon berry",
+    "s": 100,
+    "h": "Spot on."
+   },
+   {
+    "g": "brazilian soft drink",
+    "s": 75,
+    "h": "Hot: what's in it?"
+   },
+   {
+    "g": "energy drink",
+    "s": 55,
+    "h": "Warm: right kick, wrong kind."
+   },
+   {
+    "g": "some kind of drink",
+    "s": 40,
+    "h": "Right area; what kind?"
+   },
+   {
+    "g": "brazilian beer",
+    "s": 30,
+    "h": "Right fridge, but no alcohol."
+   },
+   {
+    "g": "acai bowls",
+    "s": 25,
+    "h": "Right region, wrong product."
+   },
+   {
+    "g": "ice cream",
+    "s": 15,
+    "h": "Too literal about the ice."
+   },
+   {
+    "g": "polar cruises",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "winter jackets",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "penguin toys",
+    "s": 2,
+    "h": "Way off."
+   }
+  ]
  },
  {
   "id": "jarritos",
@@ -1261,6 +3356,58 @@
   "fun": 3,
   "difficulty": 2,
   "rating": "G",
-  "status": "unverified"
+  "status": "unverified",
+  "graded": [
+   {
+    "g": "mexican soda",
+    "s": 95,
+    "h": "Spot on."
+   },
+   {
+    "g": "fruit sodas in glass bottles",
+    "s": 98,
+    "h": "Spot on."
+   },
+   {
+    "g": "soft drinks",
+    "s": 75,
+    "h": "Hot: which country, what kind?"
+   },
+   {
+    "g": "mexican coca-cola",
+    "s": 70,
+    "h": "Close, but not cola."
+   },
+   {
+    "g": "agua fresca",
+    "s": 60,
+    "h": "Close; this one's fizzy."
+   },
+   {
+    "g": "tequila brand",
+    "s": 30,
+    "h": "Right country, but no alcohol."
+   },
+   {
+    "g": "jarred salsa",
+    "s": 10,
+    "h": "Right country, wrong product."
+   },
+   {
+    "g": "clay pots",
+    "s": 10,
+    "h": "Too literal about the name."
+   },
+   {
+    "g": "mason jars",
+    "s": 5,
+    "h": "Too literal."
+   },
+   {
+    "g": "party piñatas",
+    "s": 3,
+    "h": "Way off."
+   }
+  ]
  }
 ]

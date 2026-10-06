@@ -230,10 +230,89 @@
     return { ...main, trap };
   }
 
+  // ---------- answer keys ----------
+  // Items carry `graded`: example guesses scored in advance, [{g: guess, s: score, h: hint}]. A guess
+  // that says the same thing as one of them takes its score and hint, so no AI call is needed; a
+  // guess near some of them is nudged toward their scores.
+  const NEG = new Set(["not", "no", "nor", "never", "isn't", "aren't", "don't", "doesn't", "wasn't"]);
+  const negated = (text) => tokenize(text).some((w) => NEG.has(w));
+
+  /** A guess reduced to its content words, for exact matching (answer keys, caches). */
+  function normGuess(text) {
+    return tokenize(text).filter((w) => NEG.has(w) || !STOP.has(w)).map(stem).join(" ");
+  }
+
+  /** How closely two short texts say the same thing, 0-1: each word's best match, both ways. */
+  function textSim(space, a, b) {
+    const wa = contentWords(a, 10);
+    const wb = contentWords(b, 10);
+    if (!wa.length || !wb.length) return 0;
+    const side = (x, y) => x.reduce((s, w) => s + Math.max(...y.map((v) => wordSim(space, w, v))), 0) / x.length;
+    const p = side(wa, wb);
+    const r = side(wb, wa);
+    const f = p + r > 0 ? (2 * p * r) / (p + r) : 0;
+    return negated(a) === negated(b) ? f : f / 2;
+  }
+
+  /** Answer-key entries ranked by closeness to a guess: [{entry, sim, exact}], best first. */
+  function keyMatches(space, guess, graded) {
+    if (!graded || !graded.length) return [];
+    const n = normGuess(guess);
+    if (!n) return [];
+    return graded
+      .map((e) => (normGuess(e.g) === n ? { entry: e, sim: 1, exact: true } : { entry: e, sim: textSim(space, guess, e.g), exact: false }))
+      .sort((x, y) => y.sim - x.sim);
+  }
+
+  // At SAME or above, a guess counts as a restatement of the graded one. On the hand-scored test
+  // guesses (eval/), such matches land within about 5 points of the human score on average.
+  const SAME = 0.85;
+  // Below NEAR, graded guesses say nothing about this one.
+  const NEAR = 0.55;
+
+  /**
+   * Score a guess against an item using its answer key, falling back to the robot judge.
+   * Returns the robot's result plus {score, by: "key" | "robot", hint?, keySim?}.
+   */
+  function scoreItem(space, guess, item) {
+    const robot = scoreGuess(space, guess, item);
+    const ranked = keyMatches(space, guess, item.graded);
+    const top = ranked[0];
+    if (!top) return { ...robot, by: "robot" };
+    if (top.exact || top.sim >= SAME) {
+      return { ...robot, score: top.entry.s, hint: top.entry.h || "", by: "key", keySim: top.sim, trap: top.entry.s < 45 ? robot.trap : null };
+    }
+    let num = 0;
+    let den = 0;
+    for (const m of ranked.slice(0, 3)) {
+      const w = Math.max(0, m.sim - NEAR) ** 2;
+      num += w * m.entry.s;
+      den += w;
+    }
+    if (!den) return { ...robot, by: "robot", keySim: top.sim };
+    const alpha = 0.8 * Math.min(1, (top.sim - NEAR) / (SAME - NEAR));
+    const score = Math.round(alpha * (num / den) + (1 - alpha) * robot.score);
+    return { ...robot, score, by: "robot", keySim: top.sim };
+  }
+
   /** Key ideas for a typed-in answer (Bring your own mode). */
   function keysFromText(text) {
     return contentWords(text, 6);
   }
+
+  /** How each kind of mystery is described to players and to the AI judge. */
+  const KIND_LABEL = {
+    domain: "a web address",
+    brand: "a brand name",
+    plate: "a California vanity plate",
+    patent: "a US patent title",
+    phrase: "a search phrase",
+    image: "a picture seen through a magnifying glass (players saw only a magnified detail)",
+    paper: "the start of an academic paper's title",
+    lyric: "a line from a song",
+    news: "a news story late-night TV hosts joked about",
+    headline: "a newspaper headline that reads two ways",
+  };
 
   function warmth(score) {
     if (score >= 85) return { label: "Spot on", level: 5 };
@@ -367,7 +446,7 @@
 
   const api = {
     Space, loadSpace, tokenize, contentWords, stem, variants, wordSim, scoreAgainst, scoreGuess,
-    keysFromText, warmth, judgePrompt, parseJudgeReply, scorePrompt, parseScoreReply, JUDGE_SCHEMA, LO, HI,
+    normGuess, textSim, keyMatches, scoreItem, SAME, NEAR, KIND_LABEL, keysFromText, warmth, judgePrompt, parseJudgeReply, scorePrompt, parseScoreReply, JUDGE_SCHEMA, LO, HI,
   };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.WhatJudge = api;
