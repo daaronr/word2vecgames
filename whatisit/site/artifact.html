@@ -1234,16 +1234,38 @@ function seg(options, current, onPick) {
   return wrap;
 }
 
+/** Toggle buttons; any number can be on. onChange gets the list of values that are on. */
+function multiSeg(options, onChange) {
+  const on = new Set();
+  const wrap = h("div", { class: "seg", role: "group" });
+  for (const [value, label] of options) {
+    wrap.append(h("button", { type: "button", "aria-pressed": "false", onclick: (e) => {
+      on.has(value) ? on.delete(value) : on.add(value);
+      e.currentTarget.setAttribute("aria-pressed", String(on.has(value)));
+      onChange([...on]);
+    } }, label));
+  }
+  return wrap;
+}
+
+// Why a mystery was (or wasn't) fun. Difficulty is asked separately: something can be just right
+// and still dull, or hard and still a delight.
+const FUN_TAGS = [
+  ["surprise", "Surprising reveal"], ["laugh", "Made me laugh"], ["learned", "Learned something"],
+  ["name", "Clever name"], ["clues", "Good clues"], ["argue", "Fun to argue about"],
+  ["flat", "Answer fell flat"], ["obscure", "Too obscure"], ["unfair", "Felt unfair"], ["confusing", "Confusing question"],
+];
+
 /** "How fun was that one?" for an item. The element has .flush() to save any unsaved rating. */
 function funRating(item, mode, extra = {}) {
   const key = "r" + Date.now().toString(36) + RAND.int(1e9).toString(36);
-  const rec = Object.assign({ id: item.id || null, prompt: item.prompt, cat: item.cat || "byo", mode, fun: 0, feel: "", note: "" }, extra);
+  const rec = Object.assign({ id: item.id || null, prompt: item.prompt, cat: item.cat || "byo", mode, fun: 0, tags: [], feel: "", note: "" }, extra);
   let lastSent = "";
   let timer = null;
   const status = h("span", { class: "small muted" });
   const flush = async () => {
     clearTimeout(timer);
-    if (!rec.fun && !rec.feel && !rec.note) return;
+    if (!rec.fun && !rec.tags.length && !rec.feel && !rec.note) return;
     const sig = JSON.stringify(rec);
     if (sig === lastSent) return;
     lastSent = sig;
@@ -1254,7 +1276,10 @@ function funRating(item, mode, extra = {}) {
   const el = h("div", { class: "rate" },
     h("div", { class: "spread" }, h("span", { class: "label" }, "How fun was that one?"), status),
     stars((n) => { rec.fun = n; later(); }, 0, "How fun"),
-    seg([["easy", "Too easy"], ["right", "Just right"], ["hard", "Too hard"]], "", (v) => { rec.feel = v; later(); }),
+    h("span", { class: "small muted" }, "What made it that way? Pick any."),
+    multiSeg(FUN_TAGS, (v) => { rec.tags = v; later(); }),
+    h("span", { class: "small muted" }, "Difficulty"),
+    seg([["easy", "Too easy"], ["right", "About right"], ["hard", "Too hard"]], "", (v) => { rec.feel = v; later(); }),
     note,
     item.id ? h("button", { class: "btn ghost small", style: { justifySelf: "start" }, onclick: () => { flush(); suggestScreen({ clueFor: item }); } }, "Suggest a better clue") : null);
   el.flush = flush;
