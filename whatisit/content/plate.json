@@ -1,0 +1,2044 @@
+[
+ {
+  "id": "plate-nvw3n17",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "NVW3N17",
+  "raw": "NVW3N17",
+  "ask": "What did the owner say it means?",
+  "truth": "It spells LINEMAN upside down. The owner is a journeyman electrical lineman.",
+  "more": "The DMV reviewer spotted it too: \"Lineman spelled upside down and backwards.\"",
+  "key": [
+   "upside",
+   "electrician",
+   "power",
+   "line"
+  ],
+  "clues": [
+   "It's about the owner's job.",
+   "Try reading it another way round.",
+   "Turn your phone upside down."
+  ],
+  "decoys": [
+   "A car-show entry number",
+   "The owner's lucky numbers and initials",
+   "A video game cheat code"
+  ],
+  "dmv": "approved",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 5,
+  "difficulty": 3,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-yoga911",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "YOGA911",
+  "raw": "YOGA911",
+  "ask": "What did the owner say it means?",
+  "truth": "The owner is a yoga teacher, advertising help for anyone having a yoga emergency.",
+  "more": "The reviewer checked whether 911 implied an emergency vehicle, then let it through.",
+  "key": [
+   "yoga",
+   "teacher",
+   "emergency",
+   "help"
+  ],
+  "clues": [
+   "It's an advert for the owner's work.",
+   "Who do you call in a crisis?",
+   "Stretch."
+  ],
+  "decoys": [
+   "A Porsche 911 owned by a yoga fan",
+   "A yoga studio whose phone number ends in 911",
+   "Someone hurt in a yoga class"
+  ],
+  "dmv": "approved",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 1,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-chp-noo",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "CHP NOO",
+  "raw": "CHP NOO",
+  "ask": "What did the owner say it means?",
+  "truth": "A plea against rock chips: \"Chip, no!\" The owner wants to protect the paint.",
+  "more": "The DMV read CHP as the California Highway Patrol.",
+  "key": [
+   "chip",
+   "paint",
+   "rock",
+   "scratch"
+  ],
+  "clues": [
+   "It's about looking after the car.",
+   "Read CHP as a word, not initials.",
+   "Tiny stones flying off the road."
+  ],
+  "decoys": [
+   "A message to the Highway Patrol: \"Nope\"",
+   "A retired highway patrol officer's car",
+   "A fish-and-chip van"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-mnt-chp",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "MNT CHP",
+  "raw": "MNT CHP",
+  "ask": "What did the owner say it means?",
+  "truth": "Mint chip ice cream, the owner's favourite flavour.",
+  "more": "Denied: the reviewer saw CHP, the California Highway Patrol.",
+  "key": [
+   "mint",
+   "ice",
+   "cream",
+   "chocolate"
+  ],
+  "clues": [
+   "It's food.",
+   "Cold and green.",
+   "An ice cream flavour."
+  ],
+  "decoys": [
+   "A mountain highway patrol unit",
+   "A chopper motorcycle in mint condition",
+   "A computer chip maker"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-oink-b8",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "OINK B8",
+  "raw": "OINK B8",
+  "ask": "What did the owner say it means?",
+  "truth": "The owner runs a corn farm and sells organic pig feed.",
+  "more": "The reviewer worried that \"pig bait\" meant baiting police officers.",
+  "key": [
+   "pig",
+   "feed",
+   "farm",
+   "corn"
+  ],
+  "clues": [
+   "It's for a small business.",
+   "Farm animals are involved.",
+   "What do pigs eat?"
+  ],
+  "decoys": [
+   "A barbecue restaurant's van",
+   "A pig-racing team's car number",
+   "A fishing-bait shop"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-g-pigheartr",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "G PIG♥R",
+  "raw": "G PIG$R",
+  "ask": "What did the owner say it means?",
+  "truth": "Guinea pig lover: the owner rescues guinea pigs.",
+  "more": "The heart is one of California's plate symbols. The reviewer read it as \"G pig lover\", with G for gangster.",
+  "key": [
+   "guinea",
+   "pig",
+   "rescue",
+   "pet"
+  ],
+  "clues": [
+   "It's about animals.",
+   "Small, furry, and they squeak.",
+   "G is the start of a two-word animal."
+  ],
+  "decoys": [
+   "A barbecue fan who loves pork",
+   "A grandmother who collects pig figurines",
+   "A fan of a cartoon pig"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-knku-out",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "KNKU OUT",
+  "raw": "KNKU OUT",
+  "ask": "What did the owner say it means?",
+  "truth": "The owner is a doctor who puts people to sleep: an anaesthetist.",
+  "more": "The reviewer read \"knock you out\" as a threat.",
+  "key": [
+   "doctor",
+   "sleep",
+   "surgery",
+   "anesthesia"
+  ],
+  "clues": [
+   "It's about the owner's job.",
+   "Hospitals.",
+   "Count backwards from ten."
+  ],
+  "decoys": [
+   "A boxer's victory slogan",
+   "A kickboxing gym's van",
+   "A demolition company"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 5,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-isu-nuke",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "ISU NUKE",
+  "raw": "ISU NUKE",
+  "ask": "What did the owner say it means?",
+  "truth": "A nuclear engineering student at Idaho State University.",
+  "more": "Denied: NUKE is on the DMV's list of unacceptable words.",
+  "key": [
+   "nuclear",
+   "engineering",
+   "student",
+   "university"
+  ],
+  "clues": [
+   "It's about the owner's studies.",
+   "ISU is a school.",
+   "Reactors."
+  ],
+  "decoys": [
+   "A fan of a band called Nuke",
+   "A microwave repair business",
+   "An anti-war protester"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 3,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-plce-box",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "PLCE BOX",
+  "raw": "PLCE BOX",
+  "ask": "What did the owner say it means?",
+  "truth": "The TARDIS, the police-box time machine from Doctor Who.",
+  "more": "The reviewer pulled it over \"box\" and noted the owner drives a VW station wagon.",
+  "key": [
+   "time",
+   "machine",
+   "police",
+   "television"
+  ],
+  "clues": [
+   "It's a TV reference.",
+   "British science fiction.",
+   "Bigger on the inside."
+  ],
+  "decoys": [
+   "A retired police officer's car",
+   "A storage-unit company",
+   "A boxing club for police officers"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-xpctopm",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "XPCTOPM",
+  "raw": "XPCTOPM",
+  "ask": "What did the owner say it means?",
+  "truth": "\"Expecto Patronum\", the protective spell from Harry Potter.",
+  "more": "The reviewer read it as \"expect opium\".",
+  "key": [
+   "spell",
+   "magic",
+   "wizard",
+   "wand"
+  ],
+  "clues": [
+   "It's from a book series.",
+   "A school for wizards.",
+   "Wave a wand and shout it."
+  ],
+  "decoys": [
+   "An expectant father's countdown",
+   "An export company",
+   "An optometrist's slogan"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-ipa-lot",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "IPA LOT",
+  "raw": "IPA LOT",
+  "ask": "What did the owner say it means?",
+  "truth": "The owner likes hoppy beer, the India pale ale kind.",
+  "more": "The reviewer read it as \"I pee a lot\".",
+  "key": [
+   "beer",
+   "ale",
+   "hops",
+   "brewing"
+  ],
+  "clues": [
+   "It's about a drink.",
+   "Craft breweries.",
+   "Read IPA as three letters."
+  ],
+  "decoys": [
+   "A parking-lot attendant",
+   "A phonetics teacher (the IPA alphabet)",
+   "An iPad reseller"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 5,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-highhvy",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "HIGHHVY",
+  "raw": "HIGHHVY",
+  "ask": "What did the owner say it means?",
+  "truth": "A tennis term for a ball hit with lots of topspin.",
+  "more": "Denied: the reviewer flagged HIGH.",
+  "key": [
+   "tennis",
+   "spin",
+   "ball",
+   "shot"
+  ],
+  "clues": [
+   "It's a sport.",
+   "Rackets.",
+   "Spin on the ball."
+  ],
+  "decoys": [
+   "A heavy-metal fan",
+   "A truck that sits high and heavy",
+   "A weightlifter's motto"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 3,
+  "difficulty": 3,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-8brainz",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "8BRAINZ",
+  "raw": "8BRAINZ",
+  "ask": "What did the owner say it means?",
+  "truth": "\"Ate brains\": the owner's zombie joke.",
+  "more": "Denied over BRAINS, which the reviewer noted is slang for head.",
+  "key": [
+   "zombie",
+   "brains",
+   "eat",
+   "undead"
+  ],
+  "clues": [
+   "It's a joke about a movie monster.",
+   "Read the number aloud.",
+   "Shambling, hungry, undead."
+  ],
+  "decoys": [
+   "A neuroscientist's lab car",
+   "A quiz champion",
+   "A smart-car fan"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 1,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-ftl-spd",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "FTL SPD",
+  "raw": "FTL SPD",
+  "ask": "What did the owner say it means?",
+  "truth": "Faster-than-light speed, from science fiction.",
+  "more": "The reviewer read it as \"fatal speed\".",
+  "key": [
+   "light",
+   "speed",
+   "faster",
+   "space"
+  ],
+  "clues": [
+   "It's about space travel.",
+   "Star Trek's warp drive.",
+   "Three letters for \"faster than\"."
+  ],
+  "decoys": [
+   "A Fort Lauderdale police car",
+   "A full-time speed racer",
+   "A traffic-ticket lawyer"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-doh-nuts",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "DOH NUTS",
+  "raw": "DOH NUTS",
+  "ask": "What did the owner say it means?",
+  "truth": "Doughnuts, inspired by Homer Simpson's \"D'oh!\"",
+  "more": "The reviewer flagged NUTS and approved it anyway.",
+  "key": [
+   "doughnut",
+   "cartoon",
+   "pastry",
+   "homer"
+  ],
+  "clues": [
+   "It's a cartoon reference.",
+   "A yellow family from Springfield.",
+   "Pink frosting with sprinkles."
+  ],
+  "decoys": [
+   "A peanut farmer",
+   "A doctor who studies nuts",
+   "A frustrated mechanic"
+  ],
+  "dmv": "approved",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 1,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-n8r-h8r",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "N8R H8R",
+  "raw": "N8R H8R",
+  "ask": "What did the owner say it means?",
+  "truth": "\"Nader hater\": Ralph Nader called the owner's model of car \"unsafe at any speed\".",
+  "more": "Nader's 1965 book went after the Chevrolet Corvair. Denied for HATER.",
+  "key": [
+   "safety",
+   "car",
+   "critic",
+   "book"
+  ],
+  "clues": [
+   "It's about a famous critic.",
+   "A 1965 book about car safety.",
+   "He also ran for president."
+  ],
+  "decoys": [
+   "A navigator who hates maps",
+   "Someone who hates nature",
+   "A feud with the neighbours"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-hkyheartmom",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "HKY♥MOM",
+  "raw": "HKY$MOM",
+  "ask": "What did the owner say it means?",
+  "truth": "Hockey mom.",
+  "more": "The reviewer worried it looked like \"hickey\". Approved.",
+  "key": [
+   "hockey",
+   "mom",
+   "mother",
+   "ice"
+  ],
+  "clues": [
+   "It's about a family role.",
+   "Ice rinks at 6 a.m.",
+   "Pucks."
+  ],
+  "decoys": [
+   "A mother who loves Kentucky",
+   "A hiking mom",
+   "A grandmother who knits"
+  ],
+  "dmv": "approved",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 3,
+  "difficulty": 1,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-goatnut",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "GOATNUT",
+  "raw": "GOATNUT",
+  "ask": "What did the owner say it means?",
+  "truth": "The owner keeps a goat herd called Nutty for Goats.",
+  "more": "The reviewer read GOAT as \"greatest of all time\" and flagged NUT.",
+  "key": [
+   "goat",
+   "herd",
+   "farm",
+   "animal"
+  ],
+  "clues": [
+   "It's about animals.",
+   "They will eat almost anything.",
+   "They bleat."
+  ],
+  "decoys": [
+   "A sports fan crowning the greatest player",
+   "A pistachio farmer",
+   "A goat-cheese maker"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-cat-75",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "CAT 75",
+  "raw": "CAT 75",
+  "ask": "What did the owner say it means?",
+  "truth": "The owner loves cats and Paris. 75 is the number of Paris's French département.",
+  "more": "Denied for CAT.",
+  "key": [
+   "cat",
+   "city",
+   "love"
+  ],
+  "clues": [
+   "Two loves on one plate.",
+   "French postcodes.",
+   "The city of light."
+  ],
+  "decoys": [
+   "A 1975 Caterpillar tractor",
+   "A cat that lived to 75 in cat years",
+   "A Category 5 storm chaser"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-pewxpew",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "PEWXPEW",
+  "raw": "PEWXPEW",
+  "ask": "What did the owner say it means?",
+  "truth": "The sound of laser guns in Star Wars.",
+  "more": "Denied.",
+  "key": [
+   "laser",
+   "sound",
+   "space",
+   "gun"
+  ],
+  "clues": [
+   "It's a film reference.",
+   "Read it aloud.",
+   "Blasters."
+  ],
+  "decoys": [
+   "A church pew maker",
+   "A pewter collector",
+   "An apology for a bad smell"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-tr8r-h8r",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "TR8R H8R",
+  "raw": "TR8R H8R",
+  "ask": "What did the owner say it means?",
+  "truth": "\"Traitor hater\", a stormtrooper's line from Star Wars: The Force Awakens. The owner added: \"You can Google it.\"",
+  "more": "Denied for HATER.",
+  "key": [
+   "traitor",
+   "soldier",
+   "film",
+   "space"
+  ],
+  "clues": [
+   "It's a movie quote.",
+   "Said by a soldier in white armour.",
+   "Read each 8 as \"ate\"."
+  ],
+  "decoys": [
+   "Someone who hates tractors",
+   "A trader who hates the stock market",
+   "A caravan hater"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-sit-lord",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "SIT LORD",
+  "raw": "SIT LORD",
+  "ask": "What did the owner say it means?",
+  "truth": "Sith Lord, the title of Star Wars' dark-side villains.",
+  "more": "The reviewer worried it told the Lord to sit, then allowed it as a Star Wars reference.",
+  "key": [
+   "villain",
+   "film",
+   "dark",
+   "space"
+  ],
+  "clues": [
+   "It's a movie reference.",
+   "Red lightsabers.",
+   "Add an H."
+  ],
+  "decoys": [
+   "A dog trainer's favourite command",
+   "A lazy landlord",
+   "A church usher"
+  ],
+  "dmv": "approved",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-c8h18-x",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "C8H18 X",
+  "raw": "C8H18 X",
+  "ask": "What did the owner say it means?",
+  "truth": "The chemical formula of octane, as in petrol.",
+  "more": "The reviewer flagged 18 as a possible gang number, then approved it.",
+  "key": [
+   "chemical",
+   "octane",
+   "fuel",
+   "petrol"
+  ],
+  "clues": [
+   "Science.",
+   "It's a molecule.",
+   "Look for it at the pump."
+  ],
+  "decoys": [
+   "A 2018 Corvette model code",
+   "A cello maker's serial number",
+   "Map coordinates for a treasure"
+  ],
+  "dmv": "approved",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-notgasi",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "NOTGASI",
+  "raw": "NOTGASI",
+  "ask": "What did the owner say it means?",
+  "truth": "It's an electric car: it doesn't use gas.",
+  "more": "The reviewer read it as \"not gassy\". Approved.",
+  "key": [
+   "electric",
+   "car",
+   "battery",
+   "fuel"
+  ],
+  "clues": [
+   "It's about the car itself.",
+   "Plug it in.",
+   "No fill-ups."
+  ],
+  "decoys": [
+   "A promise after a bean dinner",
+   "A Japanese name",
+   "A gas station owner's joke"
+  ],
+  "dmv": "approved",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 1,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-copnope",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "COPNOPE",
+  "raw": "COPNOPE",
+  "ask": "What did the owner say it means?",
+  "truth": "The car is a retired police cruiser, and the owner wants everyone to know they are not a cop.",
+  "more": "Denied for COP. NOTACOP was already banned.",
+  "key": [
+   "police",
+   "retired",
+   "car",
+   "former"
+  ],
+  "clues": [
+   "It's about the car's past life.",
+   "A Crown Victoria.",
+   "Don't pull over for this one."
+  ],
+  "decoys": [
+   "A protester against the police",
+   "A Copenhagen fan",
+   "A copy shop owner"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-kicroxx",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "KICROXX",
+  "raw": "KICROXX",
+  "ask": "What did the owner say it means?",
+  "truth": "The owner is a marathon runner who often kicks rocks.",
+  "more": "Denied: the reviewer knew \"kick rocks\" means \"go away\".",
+  "key": [
+   "running",
+   "marathon",
+   "runner",
+   "race"
+  ],
+  "clues": [
+   "It's about a hobby.",
+   "26.2 miles.",
+   "Feet and pavement."
+  ],
+  "decoys": [
+   "A geologist",
+   "A rock band fan",
+   "A landscaper"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 3,
+  "difficulty": 3,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-ur-salty",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "UR SALTY",
+  "raw": "UR SALTY",
+  "ask": "What did the owner say it means?",
+  "truth": "\"The opposite of you're sweet.\"",
+  "more": "Denied: plates aimed at \"you\" can read as hostile.",
+  "key": [
+   "salty",
+   "sweet",
+   "opposite",
+   "taste"
+  ],
+  "clues": [
+   "It's a teasing compliment.",
+   "Taste.",
+   "The opposite of sugary."
+  ],
+  "decoys": [
+   "A retired sailor",
+   "A pretzel company",
+   "A margarita fan"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 3,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-blk-moly",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "BLK MOLY",
+  "raw": "BLK MOLY",
+  "ask": "What did the owner say it means?",
+  "truth": "The owner's favourite tropical fish, the black molly.",
+  "more": "The reviewer knew \"black molly\" is also old slang for amphetamines.",
+  "key": [
+   "fish",
+   "tropical",
+   "aquarium",
+   "black"
+  ],
+  "clues": [
+   "It's an animal.",
+   "It lives in a tank.",
+   "Small, dark, freshwater."
+  ],
+  "decoys": [
+   "A black Labrador called Molly",
+   "A mechanic's grease (moly lube)",
+   "A goth band"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-e999058",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "E999058",
+  "raw": "E999058",
+  "ask": "What did the owner say it means?",
+  "truth": "The licence plate of Engine 51 from the 1970s TV show Emergency!",
+  "more": "Denied as a look-alike of an ordinary plate.",
+  "key": [
+   "fire",
+   "truck",
+   "television",
+   "engine"
+  ],
+  "clues": [
+   "It's a TV reference.",
+   "The 1970s.",
+   "Sirens and ladders."
+  ],
+  "decoys": [
+   "The owner's old military ID",
+   "An emergency hotline number",
+   "A Mercedes E-Class model code"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 3,
+  "difficulty": 3,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-62n-4o8",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "62N 4O8",
+  "raw": "62N 4O8",
+  "ask": "What did the owner say it means?",
+  "truth": "The plate on Maxwell Smart's yellow Citroën 2CV in season 4 of the TV comedy Get Smart.",
+  "more": "Denied: the reviewer saw 408, a San Jose area code.",
+  "key": [
+   "spy",
+   "television",
+   "comedy",
+   "car"
+  ],
+  "clues": [
+   "It's a TV reference.",
+   "A bumbling secret agent.",
+   "A shoe phone."
+  ],
+  "decoys": [
+   "The owner's house number and zip code",
+   "A 1962 Nissan model",
+   "A lottery ticket"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 3,
+  "difficulty": 3,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-br8knex",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "BR8KNEX",
+  "raw": "BR8KNEX",
+  "ask": "What did the owner say it means?",
+  "truth": "The owner is an ex-break-dancer.",
+  "more": "The reviewer read it as \"break necks\".",
+  "key": [
+   "dance",
+   "dancer",
+   "former",
+   "street"
+  ],
+  "clues": [
+   "It's about a past hobby.",
+   "Spinning on your head.",
+   "EX means former."
+  ],
+  "decoys": [
+   "A chiropractor",
+   "A wrestler",
+   "A brake repair shop"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-lmboetr",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "LMBOETR",
+  "raw": "LMBOETR",
+  "ask": "What did the owner say it means?",
+  "truth": "Lake Mathews boater: the owner takes a boat out on Lake Mathews.",
+  "more": "The reviewer read it as \"Lambo eater\".",
+  "key": [
+   "boat",
+   "lake",
+   "boating",
+   "water"
+  ],
+  "clues": [
+   "It's about a hobby.",
+   "Water.",
+   "LM is a place name."
+  ],
+  "decoys": [
+   "A car that beats Lamborghinis",
+   "A chef who cooks lamb",
+   "A limbo dancer"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-myroo8u",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "MYROO8U",
+  "raw": "MYROO8U",
+  "ask": "What did the owner say it means?",
+  "truth": "\"My Subaru is hungry\": my 'Roo ate you.",
+  "more": "Denied over U.",
+  "key": [
+   "car",
+   "hungry",
+   "eat",
+   "brand"
+  ],
+  "clues": [
+   "It's about the car.",
+   "ROO is short for a car brand.",
+   "A Japanese car with stars on the badge."
+  ],
+  "decoys": [
+   "A kangaroo rescue volunteer",
+   "A Rubik's cube fan",
+   "An Australian pub"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-puritto",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "PURITTO",
+  "raw": "PURITTO",
+  "ask": "What did the owner say it means?",
+  "truth": "A \"puritto\": a cat's purr plus a burrito. A cat wrapped up snug.",
+  "more": "The reviewer summed it up as \"cat wrapped up\". Approved.",
+  "key": [
+   "cat",
+   "wrapped",
+   "blanket",
+   "food"
+  ],
+  "clues": [
+   "It's about a pet.",
+   "A made-up word.",
+   "Mexican food plus a happy sound."
+  ],
+  "decoys": [
+   "A Puerto Rican food truck",
+   "A water purifier company",
+   "A pure-bred dog breeder"
+  ],
+  "dmv": "approved",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 5,
+  "difficulty": 3,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-pin-movr",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "PIN MOVR",
+  "raw": "PIN MOVR",
+  "ask": "What did the owner say it means?",
+  "truth": "The van hauls the owner's pinball machines.",
+  "more": "The reviewer wondered if PIN meant needles. Approved.",
+  "key": [
+   "pinball",
+   "machine",
+   "game",
+   "arcade"
+  ],
+  "clues": [
+   "It's about what the vehicle carries.",
+   "Arcades.",
+   "Flippers and a silver ball."
+  ],
+  "decoys": [
+   "A bowling alley's van",
+   "A sewing-pin supplier",
+   "A removals company"
+  ],
+  "dmv": "approved",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 3,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-poo-mny",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "POO MNY",
+  "raw": "POO MNY",
+  "ask": "What did the owner say it means?",
+  "truth": "The owner is a plumbing contractor. That's how they make their money.",
+  "more": "Denied.",
+  "key": [
+   "plumbing",
+   "plumber",
+   "pipes",
+   "money"
+  ],
+  "clues": [
+   "It's about the owner's job.",
+   "Pipes.",
+   "Toilets are a big part of it."
+  ],
+  "decoys": [
+   "A pet-waste pickup service",
+   "A Winnie-the-Pooh collector",
+   "A fertiliser seller"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-trktwrk",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "TRKTWRK",
+  "raw": "TRKTWRK",
+  "ask": "What did the owner say it means?",
+  "truth": "Truck to work: it's the owner's work truck.",
+  "more": "The reviewer read it as \"twerk\".",
+  "key": [
+   "truck",
+   "work",
+   "job",
+   "commute"
+  ],
+  "clues": [
+   "It's about what the vehicle is for.",
+   "Monday to Friday.",
+   "Read it as three words."
+  ],
+  "decoys": [
+   "A dance instructor",
+   "A trucking network",
+   "A tractor workshop"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-ctcrzy",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "CTCRZY",
+  "raw": "CTCRZY",
+  "ask": "What did the owner say it means?",
+  "truth": "Cat crazy: the owner loves cats.",
+  "more": "Denied for CRAZY.",
+  "key": [
+   "cat",
+   "crazy",
+   "love",
+   "pet"
+  ],
+  "clues": [
+   "It's about a pet.",
+   "Whiskers.",
+   "Fill in the missing vowels."
+  ],
+  "decoys": [
+   "A Connecticut fan",
+   "A crazy city driver",
+   "A catering company"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 3,
+  "difficulty": 1,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-exloser",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "EXLOSER",
+  "raw": "EXLOSER",
+  "ask": "What did the owner say it means?",
+  "truth": "No longer a loser.",
+  "more": "Approved, though the reviewer noted some may find LOSER offensive.",
+  "key": [
+   "former",
+   "loser",
+   "winner"
+  ],
+  "clues": [
+   "It's a personal statement.",
+   "A comeback story.",
+   "EX means former."
+  ],
+  "decoys": [
+   "A weight-loss coach",
+   "A former laser technician",
+   "A lottery player who finally won"
+  ],
+  "dmv": "approved",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 3,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-evil-vet",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "EVIL VET",
+  "raw": "EVIL VET",
+  "ask": "What did the owner say it means?",
+  "truth": "An evil-looking Corvette, or 'Vette.",
+  "more": "The reviewer wondered about an evil veterinarian. Approved.",
+  "key": [
+   "car",
+   "evil",
+   "mean",
+   "sports"
+  ],
+  "clues": [
+   "It's about the car.",
+   "VET is short for a model.",
+   "An American sports car."
+  ],
+  "decoys": [
+   "A veterinarian with a dark sense of humour",
+   "A war veteran's motorbike",
+   "A horror-film fan"
+  ],
+  "dmv": "approved",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-m6-rockt",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "M6 ROCKT",
+  "raw": "M6 ROCKT",
+  "ask": "What did the owner say it means?",
+  "truth": "The owner drives a BMW M6 and works on rocket engines.",
+  "more": "The reviewer worried that ROCKET meant a weapon.",
+  "key": [
+   "rocket",
+   "engine",
+   "car",
+   "engineer"
+  ],
+  "clues": [
+   "It's about the car and the job.",
+   "M6 is a car model.",
+   "Aerospace."
+  ],
+  "decoys": [
+   "A motorway speed demon",
+   "A fireworks seller",
+   "A video gamer"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 3,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-14-mpg",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "14 MPG",
+  "raw": "14 MPG",
+  "ask": "What did the owner say it means?",
+  "truth": "The classic car's fuel economy: 14 miles per gallon.",
+  "more": "Denied: the reviewer flagged 14 as a gang number.",
+  "key": [
+   "fuel",
+   "mileage",
+   "classic",
+   "gallon"
+  ],
+  "clues": [
+   "It's about the car.",
+   "Ask how often it stops at the pump.",
+   "Miles per gallon."
+  ],
+  "decoys": [
+   "The owner's 14th marathon",
+   "A 2014 Mustang GT",
+   "A radio station frequency"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 1,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-og-frog",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "OG FROG",
+  "raw": "OG FROG",
+  "ask": "What did the owner say it means?",
+  "truth": "The owner has always liked frogs: the original frog lover.",
+  "more": "Denied: the reviewer read OG as \"original gangster\".",
+  "key": [
+   "frog",
+   "original",
+   "love",
+   "animal"
+  ],
+  "clues": [
+   "It's about an animal.",
+   "Ribbit.",
+   "OG means original."
+  ],
+  "decoys": [
+   "A gangster nicknamed Frog",
+   "A French chef",
+   "A scuba diver"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 1,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-8o5-og",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "8O5 OG",
+  "raw": "8O5 OG",
+  "ask": "What did the owner say it means?",
+  "truth": "805 is the owner's area code. OG stands for orange grower.",
+  "more": "Denied for OG and the area code.",
+  "key": [
+   "orange",
+   "grower",
+   "farm",
+   "citrus"
+  ],
+  "clues": [
+   "It's about the owner's work.",
+   "805 is a phone area code.",
+   "Citrus."
+  ],
+  "decoys": [
+   "A gangster from Santa Barbara",
+   "An original gamer",
+   "A Warriors basketball fan"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-ca-conc",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "CA CONC",
+  "raw": "CA CONC",
+  "ask": "What did the owner say it means?",
+  "truth": "California Concrete, the owner's business.",
+  "more": "The reviewer considered \"conceal and carry\", then approved it.",
+  "key": [
+   "concrete",
+   "construction",
+   "cement",
+   "business"
+  ],
+  "clues": [
+   "It's a business.",
+   "Construction.",
+   "Sidewalks and driveways."
+  ],
+  "decoys": [
+   "A concealed-carry permit holder",
+   "A California concert promoter",
+   "A conch shell collector"
+  ],
+  "dmv": "approved",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 3,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-jiayouu",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "JIAYOUU",
+  "raw": "JIAYOUU",
+  "ask": "What did the owner say it means?",
+  "truth": "Jiāyóu, Chinese for \"add oil\": a cheer that means \"keep going!\"",
+  "more": "The owner wrote \"Chinese for put oil in\". The same word was denied in 2008. Approved this time.",
+  "key": [
+   "cheer",
+   "oil",
+   "encourage",
+   "language"
+  ],
+  "clues": [
+   "It's a foreign phrase.",
+   "Shouted at sports games in China.",
+   "Literally about refuelling."
+  ],
+  "decoys": [
+   "A jiu-jitsu fan",
+   "A dog called Jia",
+   "A Chinese restaurant"
+  ],
+  "dmv": "approved",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-voetsek",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "VOETSEK",
+  "raw": "VOETSEK",
+  "ask": "What did the owner say it means?",
+  "truth": "\"Get lost\" in Afrikaans.",
+  "more": "Denied as hostile.",
+  "key": [
+   "away",
+   "lost",
+   "leave",
+   "language"
+  ],
+  "clues": [
+   "It's a foreign word.",
+   "South Africa.",
+   "A rude way to say go away."
+  ],
+  "decoys": [
+   "A Dutch football club",
+   "A sock brand",
+   "A podiatrist (voet means foot)"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 3,
+  "difficulty": 3,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-mishuga",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "MISHUGA",
+  "raw": "MISHUGA",
+  "ask": "What did the owner say it means?",
+  "truth": "\"A little crazy\", in Yiddish.",
+  "more": "Approved, though the reviewer noted some may take offence.",
+  "key": [
+   "crazy",
+   "silly",
+   "yiddish"
+  ],
+  "clues": [
+   "It's a foreign word.",
+   "Heard in New York delis.",
+   "Nuts."
+  ],
+  "decoys": [
+   "A sugar-free bakery",
+   "A Japanese name",
+   "A mission statement"
+  ],
+  "dmv": "approved",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 3,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-idrivu",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "IDRIVU",
+  "raw": "IDRIVU",
+  "ask": "What did the owner say it means?",
+  "truth": "The owner drives for Uber and Lyft.",
+  "more": "The reviewer flagged U as possibly hostile, then approved it.",
+  "key": [
+   "driver",
+   "taxi",
+   "ride",
+   "passenger"
+  ],
+  "clues": [
+   "It's about the owner's job.",
+   "Apps.",
+   "Five stars, please."
+  ],
+  "decoys": [
+   "A driving instructor",
+   "A golf pro (\"I drive\")",
+   "A celebrity chauffeur"
+  ],
+  "dmv": "approved",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 3,
+  "difficulty": 1,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-cuswim",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "CUSWIM",
+  "raw": "CUSWIM",
+  "ask": "What did the owner say it means?",
+  "truth": "The owner swam and dived for the University of Colorado (CU).",
+  "more": "The reviewer read it as \"see you swim\". Approved.",
+  "key": [
+   "swimming",
+   "university",
+   "college",
+   "diving"
+  ],
+  "clues": [
+   "It's about sport.",
+   "CU is a university.",
+   "Pools and diving boards."
+  ],
+  "decoys": [
+   "A swim coach saying goodbye",
+   "A copper (Cu) swimming pool",
+   "A cruise ship lifeguard"
+  ],
+  "dmv": "approved",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 3,
+  "difficulty": 3,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-woopigg",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "WOOPIGG",
+  "raw": "WOOPIGG",
+  "ask": "What did the owner say it means?",
+  "truth": "A University of Arkansas Razorbacks fan: \"Woo Pig Sooie!\"",
+  "more": "Denied: the reviewer noted that PIG can be a slur against police.",
+  "key": [
+   "university",
+   "fan",
+   "football",
+   "cheer"
+  ],
+  "clues": [
+   "It's about a sports team.",
+   "A cheer from the South.",
+   "Razorbacks."
+  ],
+  "decoys": [
+   "A pig farmer",
+   "A barbecue lover",
+   "A pig-roast caterer"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-pigsfly",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "PIGSFLY",
+  "raw": "PIGSFLY",
+  "ask": "What did the owner say it means?",
+  "truth": "The name of the owner's house: When Pigs Fly.",
+  "more": "Denied: PIG can be a slur against police.",
+  "key": [
+   "house",
+   "home",
+   "name",
+   "impossible"
+  ],
+  "clues": [
+   "It's a name, but not a person's.",
+   "Where they live.",
+   "Something that will never happen."
+  ],
+  "decoys": [
+   "A pilot who raises pigs",
+   "An airline joke",
+   "A hot-air balloon company"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-h84by4z",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "H84BY4Z",
+  "raw": "H84BY4Z",
+  "ask": "What did the owner say it means?",
+  "truth": "\"I hate 4x4s\", put on a four-wheel-drive truck as satire.",
+  "more": "Denied for HATE.",
+  "key": [
+   "truck",
+   "hate",
+   "joke",
+   "drive"
+  ],
+  "clues": [
+   "It's a joke about the vehicle itself.",
+   "Read H8 as a verb.",
+   "Off-road vehicles."
+  ],
+  "decoys": [
+   "A hot-air balloon licence",
+   "Someone who hates bicycles",
+   "A birth date and initials"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-braaap7",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "BRAAAP7",
+  "raw": "BRAAAP7",
+  "ask": "What did the owner say it means?",
+  "truth": "The sound the owner's dirt bike makes, plus a favourite number.",
+  "more": "Denied: the reviewer found BRAP listed as the sound of a gunshot.",
+  "key": [
+   "motorcycle",
+   "sound",
+   "dirt",
+   "bike"
+  ],
+  "clues": [
+   "It's about a vehicle.",
+   "Read it aloud.",
+   "Two wheels, off-road, loud."
+  ],
+  "decoys": [
+   "A rapper's name",
+   "A lingerie shop",
+   "A baby's first word"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-gtta-poo",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "GTTA POO",
+  "raw": "GTTA POO",
+  "ask": "What did the owner say it means?",
+  "truth": "\"Gotta Play Outside Often\": the owner goes off-roading.",
+  "more": "Denied: the reviewer flagged POO as obscene.",
+  "key": [
+   "outside",
+   "play",
+   "outdoors",
+   "mud"
+  ],
+  "clues": [
+   "It's about a hobby.",
+   "POO is an acronym.",
+   "Mud, trails, four-wheel drive."
+  ],
+  "decoys": [
+   "A dog walker's reminder",
+   "A potty-training parent",
+   "A pool cleaner"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 5,
+  "difficulty": 3,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-13heartgram",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "13♥GRAM",
+  "raw": "13$GRAM",
+  "ask": "What did the owner say it means?",
+  "truth": "Thirteen grandchildren love their grandma.",
+  "more": "Denied: the reviewer read 13 as a gang number.",
+  "key": [
+   "grandmother",
+   "grandchild",
+   "love",
+   "family"
+  ],
+  "clues": [
+   "It's about family.",
+   "Count the generations.",
+   "Grandma."
+  ],
+  "decoys": [
+   "A 13-gram gold chain",
+   "Instagram for 13-year-olds",
+   "A baker's dozen of cookies"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-byte-me2",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "BYTE ME2",
+  "raw": "BYTE ME2",
+  "ask": "What did the owner say it means?",
+  "truth": "\"Byte me two\": it matches the plate on the owner's spouse's car.",
+  "more": "The reviewer read it as \"bite me too\". Approved.",
+  "key": [
+   "computer",
+   "byte",
+   "spouse",
+   "matching"
+  ],
+  "clues": [
+   "It's one half of a pair.",
+   "Computers measure memory in these.",
+   "His and hers."
+  ],
+  "decoys": [
+   "A dentist's second car",
+   "A vampire fan",
+   "A mosquito-control truck"
+  ],
+  "dmv": "approved",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-mgadeth",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "MGADETH",
+  "raw": "MGADETH",
+  "ask": "What did the owner say it means?",
+  "truth": "Megadeth, the owner's favourite heavy-metal band.",
+  "more": "The reviewer pulled it for DEATH, while noting it is a band.",
+  "key": [
+   "band",
+   "metal",
+   "music",
+   "heavy"
+  ],
+  "clues": [
+   "It's about music.",
+   "Loud guitars.",
+   "Thrash metal, 1980s."
+  ],
+  "decoys": [
+   "A mega-sized debt",
+   "A life insurance salesman",
+   "A video game fan"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 3,
+  "difficulty": 1,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-aaarsnl",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "AAARSNL",
+  "raw": "AAARSNL",
+  "ask": "What did the owner say it means?",
+  "truth": "Arsenal, the London football (soccer) club.",
+  "more": "The reviewer wrote: \"Arsenal: weapons? But also a soccer team.\" Denied.",
+  "key": [
+   "soccer",
+   "football",
+   "club",
+   "team"
+  ],
+  "clues": [
+   "It's about sport.",
+   "London.",
+   "The Gunners."
+  ],
+  "decoys": [
+   "A gun collector",
+   "A weapons dealer",
+   "An arson investigator"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 3,
+  "difficulty": 1,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-olaf-13",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "OLAF 13",
+  "raw": "OLAF 13",
+  "ask": "What did the owner say it means?",
+  "truth": "Olaf, the snowman from Disney's Frozen (2013).",
+  "more": "Denied: 13 read as a gang number, and there was no 2013 car on record.",
+  "key": [
+   "snow",
+   "film",
+   "cartoon",
+   "frozen"
+  ],
+  "clues": [
+   "It's a movie reference.",
+   "Cold.",
+   "He likes warm hugs."
+  ],
+  "decoys": [
+   "A Norwegian man's 13th car",
+   "A Viking re-enactor",
+   "A footballer's shirt number"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 1,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-hla-slo",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "HLA SLO",
+  "raw": "HLA SLO",
+  "ask": "What did the owner say it means?",
+  "truth": "\"Hella slow\": the owner drives a very slow car.",
+  "more": "Denied.",
+  "key": [
+   "slow",
+   "car",
+   "speed"
+  ],
+  "clues": [
+   "It's about the car.",
+   "Northern California slang.",
+   "The opposite of fast."
+  ],
+  "decoys": [
+   "A Hello Kitty fan from San Luis Obispo",
+   "A hula dancer",
+   "A slow-flow yoga teacher"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 3,
+  "difficulty": 2,
+  "rating": "PG"
+ },
+ {
+  "id": "plate-ih8pri-s",
+  "cat": "plate",
+  "kind": "plate",
+  "prompt": "IH8PRI S",
+  "raw": "IH8PRI S",
+  "ask": "What did the owner say it means?",
+  "truth": "\"I hate Prius\", with a smiley face on the application.",
+  "more": "Denied for HATE.",
+  "key": [
+   "hybrid",
+   "car",
+   "hate",
+   "electric"
+  ],
+  "clues": [
+   "It's about other drivers.",
+   "A car model.",
+   "A hybrid that's everywhere in California."
+  ],
+  "decoys": [
+   "I hate prices",
+   "I hate priests",
+   "I ate a pie"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "PG"
+ }
+]

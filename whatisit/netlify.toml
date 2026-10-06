@@ -1,0 +1,10 @@
+# For a Netlify site connected to this repository, set the site's base directory to "whatisit".
+# (The current trial site was created by uploading site/index.html on its own.)
+[build]
+  command = "node tools/build.mjs"
+  publish = "site"
+
+[[headers]]
+  for = "/judge-vectors.bin"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"

@@ -1,0 +1,193 @@
+[
+ {
+  "id": "who-represents",
+  "cat": "double",
+  "prompt": "whorepresents.com",
+  "ask": "What is this website?",
+  "truth": "Who Represents, a subscription database of the agents, managers and lawyers who represent celebrities and athletes; still live.",
+  "more": "In business since 2001. Subscribers include agencies, management companies, PR and law firms such as CAA and WME; there are phone apps too.",
+  "key": [
+   "agents",
+   "celebrities",
+   "database",
+   "contacts"
+  ],
+  "clues": [
+   "It's a paid service used in show business.",
+   "Big talent agencies such as CAA and WME subscribe.",
+   "Split the name into three words and it becomes a question."
+  ],
+  "decoys": [
+   "A civic lookup site that tells you which member of Congress represents your home address.",
+   "A sports site listing which athletes will represent each country at the next Olympics.",
+   "A union directory showing which local chapter represents each trade in a city."
+  ],
+  "url": "https://www.whorepresents.com/",
+  "source": "https://www.whorepresents.com/help/faq",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "PG-13",
+  "kind": "domain"
+ },
+ {
+  "cat": "double",
+  "ask": "What is this website?",
+  "rating": "PG-13",
+  "status": "unverified",
+  "source": "Widely reported example; current status not re-checked",
+  "checked": "",
+  "id": "experts-exchange",
+  "prompt": "expertsexchange.com",
+  "truth": "Experts Exchange, a question-and-answer site where technology professionals help each other.",
+  "more": "It later moved to experts-exchange.com, with a hyphen. Read it again without one.",
+  "key": [
+   "experts",
+   "questions",
+   "answers",
+   "technology"
+  ],
+  "clues": [
+   "It's a help site.",
+   "People with know-how answer other people's problems.",
+   "Computers and software, mostly."
+  ],
+  "decoys": [
+   "A dating site for professionals",
+   "A currency exchange run by economists",
+   "A job board for consultants"
+  ],
+  "url": "https://www.experts-exchange.com/",
+  "fun": 4,
+  "difficulty": 1,
+  "kind": "domain"
+ },
+ {
+  "cat": "double",
+  "ask": "What is this website?",
+  "rating": "PG-13",
+  "status": "unverified",
+  "source": "Widely reported example; current status not re-checked",
+  "checked": "",
+  "id": "therapist-finder",
+  "prompt": "therapistfinder.com",
+  "truth": "Therapist Finder: a directory for finding a therapist near you.",
+  "more": "One of the classic examples of a web address that reads very differently once the spaces are gone.",
+  "key": [
+   "therapist",
+   "directory",
+   "find",
+   "counselling"
+  ],
+  "clues": [
+   "It helps you find a professional.",
+   "Mental health.",
+   "Split it after the seventh letter, not the third."
+  ],
+  "decoys": [
+   "A true-crime podcast",
+   "A police database of offenders",
+   "A home-security company"
+  ],
+  "url": "https://www.google.com/search?q=therapistfinder.com",
+  "fun": 4,
+  "difficulty": 1,
+  "kind": "domain"
+ },
+ {
+  "cat": "double",
+  "ask": "What is this website?",
+  "rating": "PG-13",
+  "status": "unverified",
+  "source": "Widely reported example; current status not re-checked",
+  "checked": "",
+  "id": "mole-station-nursery",
+  "prompt": "molestationnursery.com",
+  "truth": "Mole Station Native Nursery, a plant nursery in Australia.",
+  "more": "Mole Station is a place name. The nursery's address became a standard example of why spacing matters.",
+  "key": [
+   "plants",
+   "nursery",
+   "garden",
+   "native"
+  ],
+  "clues": [
+   "It sells living things.",
+   "Gardeners shop here.",
+   "Mole Station is a place."
+  ],
+  "decoys": [
+   "A childcare centre",
+   "A pest-control firm that traps moles",
+   "A railway museum"
+  ],
+  "url": "https://www.google.com/search?q=mole+station+native+nursery",
+  "fun": 4,
+  "difficulty": 2,
+  "kind": "domain"
+ },
+ {
+  "cat": "double",
+  "ask": "What is this website?",
+  "rating": "PG-13",
+  "status": "unverified",
+  "source": "Widely reported example; current status not re-checked",
+  "checked": "",
+  "id": "powergen-italia",
+  "prompt": "powergenitalia.com",
+  "truth": "Powergen Italia, an Italian company in the power-generation business.",
+  "more": "Power, gen, Italia. Domain names have no spaces, and that is the whole joke.",
+  "key": [
+   "power",
+   "electricity",
+   "generator",
+   "energy"
+  ],
+  "clues": [
+   "It's a company.",
+   "Electricity.",
+   "Find the country hiding at the end."
+  ],
+  "decoys": [
+   "A men's health clinic",
+   "An Italian gym chain",
+   "A fashion label"
+  ],
+  "url": "https://www.google.com/search?q=powergen+italia",
+  "fun": 4,
+  "difficulty": 2,
+  "kind": "domain"
+ },
+ {
+  "cat": "double",
+  "ask": "What is this website?",
+  "rating": "PG-13",
+  "status": "unverified",
+  "source": "Widely reported example; current status not re-checked",
+  "checked": "",
+  "id": "pen-island",
+  "prompt": "penisland.net",
+  "truth": "Pen Island, a website that said it sold custom-made pens. Many suspect it was a joke all along.",
+  "more": "It became one of the most-shared examples of an unlucky web address.",
+  "key": [
+   "pen",
+   "pens",
+   "shop",
+   "writing"
+  ],
+  "clues": [
+   "It's a shop.",
+   "You write with what it sells.",
+   "Split it after the third letter."
+  ],
+  "decoys": [
+   "A tropical island resort",
+   "A prison on an island",
+   "A penguin sanctuary"
+  ],
+  "url": "https://www.google.com/search?q=pen+island",
+  "fun": 5,
+  "difficulty": 1,
+  "kind": "domain"
+ }
+]

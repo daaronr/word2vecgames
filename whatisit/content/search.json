@@ -1,0 +1,534 @@
+[
+ {
+  "id": "bring-your-own-balls",
+  "cat": "search",
+  "prompt": "Bring your own balls",
+  "ask": "What comes up first when you search this?",
+  "truth": "A thread on the AzBilliards forum where pool players debate taking their own set of balls to the pool hall.",
+  "more": "All ten results came from that one forum. Some players called house sets dirty or worn; others said leagues should use one set for everyone.",
+  "key": [
+   "pool",
+   "billiards",
+   "forum",
+   "hall"
+  ],
+  "clues": [
+   "Every one of the top results comes from the same website.",
+   "It's a message board where hobbyists argue about their gear.",
+   "The balls in question are numbered one to fifteen."
+  ],
+  "decoys": [
+   "A bowling alley's league rules page telling members to bring their own balls and shoes on league night.",
+   "A golf driving range's price list, with a discount for players who bring their own buckets of range balls.",
+   "A dodgeball league's sign-up page asking every team to supply its own set of regulation foam balls."
+  ],
+  "url": "https://duckduckgo.com/?q=Bring+your+own+balls",
+  "source": "https://forums.azbilliards.com/threads/bring-your-own-pool-balls-byopb.576910/",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "PG",
+  "top3": [
+   {
+    "title": "Bring Your Own Pool Balls - BYOPB?",
+    "domain": "forums.azbilliards.com"
+   },
+   {
+    "title": "Bringing your own pool balls",
+    "domain": "forums.azbilliards.com"
+   },
+   {
+    "title": "Bring Your Own Pool Balls - BYOPB?",
+    "domain": "forums.azbilliards.com"
+   }
+  ]
+ },
+ {
+  "id": "whos-on-first",
+  "cat": "search",
+  "prompt": "Who's on first",
+  "ask": "What comes up first when you search this?",
+  "truth": "Baseball-Reference's wiki page on 'Who's on First?', Abbott and Costello's comedy routine about a team with confusing player names.",
+  "more": "The first baseman is named Who. A gold record of the routine went into the Baseball Hall of Fame in 1956, where a video of it plays on a loop.",
+  "key": [
+   "comedy",
+   "sketch",
+   "baseball",
+   "routine"
+  ],
+  "clues": [
+   "The top result sits on a site best known for sports statistics.",
+   "It dates back to vaudeville in the 1930s.",
+   "Two comedians, one ballpark, and players whose names sound like questions."
+  ],
+  "decoys": [
+   "A baseball rules page explaining the batting order and who is allowed to lead off each inning.",
+   "A grammar site's page on when to write 'who's' and when to write 'whose', with quiz questions.",
+   "An etiquette column on who should make the first move on a date, with readers' letters."
+  ],
+  "url": "https://duckduckgo.com/?q=Who%27s+on+first",
+  "source": "https://www.baseball-reference.com/bullpen/Who%27s_on_First%3F",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 1,
+  "rating": "G",
+  "top3": [
+   {
+    "title": "Who's on First?",
+    "domain": "baseball-reference.com"
+   },
+   {
+    "title": "Who’s On First?",
+    "domain": "goodreads.com"
+   },
+   {
+    "title": "Who's on First?",
+    "domain": "abookandahug.com"
+   }
+  ]
+ },
+ {
+  "id": "dramatic-chipmunk",
+  "cat": "search",
+  "prompt": "Dramatic chipmunk",
+  "ask": "What comes up first when you search this?",
+  "truth": "Wikipedia's page on a five-second 2007 viral clip: a prairie dog turns its head as the camera zooms in, with dramatic music.",
+  "more": "The footage came from a Japanese TV variety show, and the music from the score of Young Frankenstein. People magazine listed it among 2007's wildest YouTube stars.",
+  "key": [
+   "video",
+   "prairie",
+   "dog",
+   "viral"
+  ],
+  "clues": [
+   "It lasts about five seconds.",
+   "It spread across YouTube in 2007.",
+   "The animal in it is a different rodent from the one in the title."
+  ],
+  "decoys": [
+   "Wikipedia's page on the 2007 film in which three singing chipmunks become pop stars and drive their manager mad.",
+   "A nature blog's slow-motion video of a chipmunk stuffing its cheeks with seeds before winter sets in.",
+   "A drama school's page about its mascot, a costumed chipmunk that appears in every end-of-term show."
+  ],
+  "url": "https://duckduckgo.com/?q=Dramatic+chipmunk",
+  "source": "https://en.wikipedia.org/wiki/Dramatic_Chipmunk",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "G",
+  "top3": [
+   {
+    "title": "Dramatic Chipmunk",
+    "domain": "en.wikipedia.org"
+   },
+   {
+    "title": "dramatic chipmunk",
+    "domain": "knowyourmeme.com"
+   },
+   {
+    "title": "UnAnything Wiki",
+    "domain": "unanything.fandom.com"
+   }
+  ]
+ },
+ {
+  "id": "sea-monkeys",
+  "cat": "search",
+  "prompt": "Sea monkeys",
+  "ask": "What comes up first when you search this?",
+  "truth": "Wikipedia's article on Sea-Monkeys, brine shrimp sold since 1962 as novelty pets in kits, long advertised in comic books.",
+  "more": "Harold von Braunhut developed them in 1957. They come as dormant eggs in a packet and hatch once poured into water.",
+  "key": [
+   "shrimp",
+   "pets",
+   "kit",
+   "salt"
+  ],
+  "clues": [
+   "They have been sold since the early 1960s.",
+   "They start out as a packet of powder.",
+   "They are tiny crustaceans."
+  ],
+  "decoys": [
+   "Wikipedia's article on proboscis monkeys, which swim between the mangrove islands of Borneo.",
+   "A kids' cartoon about a crew of monkeys who run a theme park at the bottom of the ocean.",
+   "A surf brand named after the monkeys on its logo, selling board shorts and wetsuits."
+  ],
+  "url": "https://duckduckgo.com/?q=Sea+monkeys",
+  "source": "https://en.wikipedia.org/wiki/Sea-Monkeys",
+  "checked": "2026-10-06",
+  "fun": 3,
+  "difficulty": 1,
+  "rating": "G",
+  "top3": [
+   {
+    "title": "Sea-Monkeys",
+    "domain": "en.wikipedia.org"
+   },
+   {
+    "title": "Sea monkey (SciiFii)",
+    "domain": "ideas.fandom.com"
+   },
+   {
+    "title": "What are Sea-Monkeys?",
+    "domain": "livescience.com"
+   }
+  ]
+ },
+ {
+  "id": "kettle-war",
+  "cat": "search",
+  "prompt": "Kettle war",
+  "ask": "What comes up first when you search this?",
+  "truth": "Wikipedia's article on a 1784 Habsburg-Dutch standoff over the Scheldt river, named because the only shot fired hit a soup kettle.",
+  "more": "A lone Dutch warship, the Dolfijn, fired once at the imperial flagship, whose captain surrendered. The Dutch kept control of the river but paid compensation.",
+  "key": [
+   "standoff",
+   "soup",
+   "shot",
+   "ship",
+   "history"
+  ],
+  "clues": [
+   "It happened in 1784.",
+   "The Dutch and the Holy Roman Emperor fell out over a river.",
+   "Only one shot was fired, and it hit something used for cooking."
+  ],
+  "decoys": [
+   "A consumer site's report on appliance brands slashing prices on electric kettles ahead of the holiday sales.",
+   "A camping forum's long-running contest over whose stove can bring a litre of water to the boil fastest.",
+   "A tea company's ad campaign pitting old stovetop kettles against electric ones in blind taste tests."
+  ],
+  "url": "https://duckduckgo.com/?q=Kettle+war",
+  "source": "https://en.wikipedia.org/wiki/Kettle_War",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "G",
+  "top3": [
+   {
+    "title": "Kettle War",
+    "domain": "en.wikipedia.org"
+   },
+   {
+    "title": "The Kettle War",
+    "domain": "amusingplanet.com"
+   },
+   {
+    "title": "The Kettle War",
+    "domain": "amusingplanet.com"
+   }
+  ]
+ },
+ {
+  "id": "puppy-chow",
+  "cat": "search",
+  "prompt": "Puppy chow",
+  "ask": "What comes up first when you search this?",
+  "truth": "Wikipedia's article on puppy chow, a Midwestern snack of Chex cereal coated in chocolate, peanut butter and powdered sugar.",
+  "more": "It also goes by Muddy Buddies. Ralston Purina once owned both Chex cereal and Puppy Chow dog food, which may explain the name.",
+  "key": [
+   "snack",
+   "chocolate",
+   "cereal",
+   "peanut",
+   "sugar"
+  ],
+  "clues": [
+   "Some people call it monkey munch or reindeer chow.",
+   "It gets tossed in powdered sugar at the end.",
+   "Start with a box of breakfast cereal."
+  ],
+  "decoys": [
+   "Purina's product page for a dry dog food made for growing puppies, with a feeding chart by weight.",
+   "A vet clinic's guide to how much and how often to feed a new puppy in its first year.",
+   "A pet bakery's menu of birthday cakes and peanut butter biscuits made for dogs."
+  ],
+  "url": "https://duckduckgo.com/?q=Puppy+chow",
+  "source": "https://en.wikipedia.org/wiki/Puppy_chow_(snack)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "G",
+  "top3": [
+   {
+    "title": "Puppy chow (snack)",
+    "domain": "en.wikipedia.org"
+   },
+   {
+    "title": "What Actually Is Puppy Chow And Why Is It Called That?",
+    "domain": "tastingtable.com"
+   },
+   {
+    "title": "Puppy Chow (cereal snack)",
+    "domain": "barrypopik.com"
+   }
+  ]
+ },
+ {
+  "id": "banana-republic",
+  "cat": "search",
+  "prompt": "Banana republic",
+  "ask": "What comes up first when you search this?",
+  "truth": "Wikipedia's article on Banana Republic, the clothing chain owned by Gap Inc., founded in 1978 as a safari and travel outfitter.",
+  "more": "The political term came first: O. Henry coined it in 1904 for Central American states. Gap bought the two-store safari company in 1983.",
+  "key": [
+   "clothing",
+   "store",
+   "fashion",
+   "retailer"
+  ],
+  "clues": [
+   "It has been around since 1978.",
+   "It started out selling safari and travel clothes by catalog.",
+   "It shares a parent company with Old Navy."
+  ],
+  "decoys": [
+   "Wikipedia's article on the political term for an unstable country whose economy is run for fruit exporters.",
+   "A trade group's page on Ecuador's banana plantations, with export figures and shipping routes.",
+   "A strategy video game in which players run a small tropical island nation and its banana trade."
+  ],
+  "url": "https://duckduckgo.com/?q=Banana+republic",
+  "source": "https://en.wikipedia.org/wiki/Banana_Republic",
+  "checked": "2026-10-06",
+  "fun": 3,
+  "difficulty": 2,
+  "rating": "G",
+  "top3": [
+   {
+    "title": "Banana Republic",
+    "domain": "en.wikipedia.org"
+   },
+   {
+    "title": "Banana Republic",
+    "domain": "barrypopik.com"
+   },
+   {
+    "title": "What Is A Banana Republic? Understanding The Concept And Its Implications",
+    "domain": "blog.kamer.nl"
+   }
+  ]
+ },
+ {
+  "id": "wilhelm-scream",
+  "cat": "search",
+  "prompt": "Wilhelm scream",
+  "ask": "What comes up first when you search this?",
+  "truth": "Wikipedia's article on the Wilhelm scream, a stock sound effect of a man's scream, reused in many films since 1951.",
+  "more": "It is named after Private Wilhelm in a 1953 Western. Sound designer Ben Burtt revived it for Star Wars in 1977 and kept slipping it into films.",
+  "key": [
+   "sound",
+   "effect",
+   "movie",
+   "yell"
+  ],
+  "clues": [
+   "You have probably heard it without knowing its name.",
+   "It was first recorded for a 1951 film.",
+   "Sound editors slip it in as an in-joke when a character falls or gets shot."
+  ],
+  "decoys": [
+   "A German horror film about a haunted castle where the ghost of a count screams every night.",
+   "A roller coaster at a German theme park, named for the screams on its long first drop.",
+   "A Berlin punk band named after the drummer's grandfather, known for very loud live shows."
+  ],
+  "url": "https://duckduckgo.com/?q=Wilhelm+scream",
+  "source": "https://en.wikipedia.org/wiki/Wilhelm_scream",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "PG",
+  "top3": [
+   {
+    "title": "Wilhelm scream",
+    "domain": "en.wikipedia.org"
+   },
+   {
+    "title": "Wilhelm Scream",
+    "domain": "knowyourmeme.com"
+   },
+   {
+    "title": "wilhelm scream",
+    "domain": "knowyourmeme.com"
+   }
+  ]
+ },
+ {
+  "id": "neutral-milk-hotel",
+  "cat": "search",
+  "prompt": "Neutral milk hotel",
+  "ask": "What comes up first when you search this?",
+  "truth": "Wikipedia's article on Neutral Milk Hotel, Jeff Mangum's indie rock band from Louisiana, known for 'In the Aeroplane Over the Sea'.",
+  "more": "The band used horns, accordion and a musical saw. It went quiet in 1998, reunited for a 2013 to 2015 tour, then stopped again.",
+  "key": [
+   "band",
+   "music",
+   "rock",
+   "album"
+  ],
+  "clues": [
+   "It has no rooms and serves no milk.",
+   "It started in Ruston, Louisiana.",
+   "Critics rank one of its albums among the best of the 1990s."
+  ],
+  "decoys": [
+   "A farm-stay hotel in Vermont whose rooms come with fresh milk from its own dairy herd.",
+   "A plant-based milk brand sold in hotel minibars, made from oats with no added flavour.",
+   "An architecture blog post on a white, minimalist hotel lobby designed to feel calm and neutral."
+  ],
+  "url": "https://duckduckgo.com/?q=Neutral+milk+hotel",
+  "source": "https://en.wikipedia.org/wiki/Neutral_Milk_Hotel",
+  "checked": "2026-10-06",
+  "fun": 3,
+  "difficulty": 2,
+  "rating": "G",
+  "top3": [
+   {
+    "title": "Neutral Milk Hotel",
+    "domain": "en.wikipedia.org"
+   },
+   {
+    "title": "Neutral Milk Hotel",
+    "domain": "roughtrade.com"
+   },
+   {
+    "title": "Neutral Milk Hotel",
+    "domain": "ukutabs.com"
+   }
+  ]
+ },
+ {
+  "id": "up-goer-five",
+  "cat": "search",
+  "prompt": "Up goer five",
+  "ask": "What comes up first when you search this?",
+  "truth": "xkcd comic #1133, a labeled diagram of the Saturn V moon rocket that uses only the thousand most common English words.",
+  "more": "'Rocket' isn't among those words, hence 'up goer'. Even 'thousand' is out, so the comic says 'ten hundred'.",
+  "key": [
+   "comic",
+   "rocket",
+   "diagram",
+   "words",
+   "space"
+  ],
+  "clues": [
+   "It's a drawing covered in labels.",
+   "Every label sticks to very simple words.",
+   "The thing in the drawing took astronauts to the Moon."
+  ],
+  "decoys": [
+   "A lift-the-flap picture book for five-year-olds explaining how elevators carry people up and down.",
+   "A fitness app's five-step plan for climbing more stairs each day, with weekly goals.",
+   "A board game in which five players race paper rockets up a spiral track to the Moon."
+  ],
+  "url": "https://duckduckgo.com/?q=Up+goer+five",
+  "source": "https://xkcd.com/1133/",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "G",
+  "top3": [
+   {
+    "title": "Up Goer Five",
+    "domain": "xkcd.com"
+   },
+   {
+    "title": "Xkcd Up Goer Five",
+    "domain": "mirrorcache-us-east.opensuse.org"
+   },
+   {
+    "title": "Xkcd Up Goer Five",
+    "domain": "linode.nexstar.tv"
+   }
+  ]
+ },
+ {
+  "id": "immaculate-reception",
+  "cat": "search",
+  "prompt": "Immaculate reception",
+  "ask": "What comes up first when you search this?",
+  "truth": "Wikipedia's article on a 1972 NFL playoff play: Steelers fullback Franco Harris scooped up a deflected pass and scored.",
+  "more": "The name puns on the Immaculate Conception. Fans still argue over whether the catch was legal; NFL Films picked it as the greatest play of all time.",
+  "key": [
+   "football",
+   "catch",
+   "touchdown",
+   "play",
+   "playoff"
+  ],
+  "clues": [
+   "It happened two days before Christmas, 1972.",
+   "Pittsburgh trailed with 22 seconds left.",
+   "The ball bounced off someone before a fullback grabbed it near the turf."
+  ],
+  "decoys": [
+   "A church page about the feast of the Immaculate Conception, celebrated each year on December 8.",
+   "A wedding venue's page praising its spotless banquet hall and white-glove service for receptions.",
+   "A phone carrier's ad promising perfect signal reception in every room of the house."
+  ],
+  "url": "https://duckduckgo.com/?q=Immaculate+reception",
+  "source": "https://en.wikipedia.org/wiki/Immaculate_Reception",
+  "checked": "2026-10-06",
+  "fun": 3,
+  "difficulty": 2,
+  "rating": "G",
+  "top3": [
+   {
+    "title": "Immaculate Reception",
+    "domain": "en.wikipedia.org"
+   },
+   {
+    "title": "a play steelers fans will remember forever",
+    "domain": "steelers.com"
+   },
+   {
+    "title": "The Immaculate Reception",
+    "domain": "profootballhof.com"
+   }
+  ]
+ },
+ {
+  "id": "drop-bears",
+  "cat": "search",
+  "prompt": "Drop bears",
+  "ask": "What comes up first when you search this?",
+  "truth": "Wikipedia's article on drop bears, an Australian tall tale about vicious koalas that drop from trees onto people's heads.",
+  "more": "Locals tell the story to scare tourists. The Australian Museum even gives the beast a joke scientific name, Thylarctos plummetus.",
+  "key": [
+   "myth",
+   "bear",
+   "hoax",
+   "joke"
+  ],
+  "clues": [
+   "You won't find one in any zoo.",
+   "Locals describe them to visitors with a straight face.",
+   "They supposedly wait in the treetops for someone to walk underneath."
+  ],
+  "decoys": [
+   "A national park's safety page on what to do when a black bear climbs down from a tree.",
+   "An investing site's explainer on bear markets and what to do when share prices drop.",
+   "A candy maker's page for sour gummy bears shaped like falling raindrops."
+  ],
+  "url": "https://duckduckgo.com/?q=Drop+bears",
+  "source": "https://en.wikipedia.org/wiki/Drop_bear",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "G",
+  "top3": [
+   {
+    "title": "Drop bear",
+    "domain": "en.wikipedia.org"
+   },
+   {
+    "title": "Unveiling the Mystery of Drop Bears: Myths, Facts, and Fascination",
+    "domain": "homologaead.univille.br"
+   },
+   {
+    "title": "Drop Bears",
+    "domain": "rodeo-stampede.fandom.com"
+   }
+  ]
+ }
+]

@@ -63,12 +63,18 @@ jack's **rank** among the ball's nearest words (rank 1 = "bacio").
   serves the game.
 - `archive/` — superseded UI, docs and deploy configs. Don't edit; don't
   resurrect without reason.
+- `whatisit/` — "What Is It?", a separate guessing-game prototype (guess what a web
+  address, brand, licence plate or patent really is). Self-contained, so it can move out:
+  see `whatisit/README.md` and `whatisit/DESIGN.md`. Its robot judge reuses the
+  `web/data-sense` vectors via `whatisit/tools/build_vectors.py`; rebuild `whatisit/site/`
+  with `node whatisit/tools/build.mjs` after editing `whatisit/src` or `whatisit/content`.
 
 ## Commands
 
 ```bash
 node tests/engine.test.js                 # engine checks against the real vectors
 node tests/tokens.test.js                 # tokenizer and quiz checks
+node whatisit/tests/whatisit.test.js      # What Is It? content and judge checks
 cd web && python3 -m http.server 8000     # play locally
 uvicorn word_bocce_mvp_fastapi:app --reload
 ```

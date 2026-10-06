@@ -1,0 +1,1266 @@
+[
+ {
+  "id": "liquid-death",
+  "cat": "brand",
+  "prompt": "Liquid Death",
+  "ask": "What are they selling?",
+  "truth": "Still and sparkling mountain water in tallboy aluminium cans, plus flavoured sparkling waters and iced teas.",
+  "more": "Founder Mike Cessario got the idea at the 2009 Vans Warped Tour, after seeing people there drink water out of Monster Energy cans.",
+  "key": [
+   "water",
+   "canned",
+   "drink",
+   "tea"
+  ],
+  "clues": [
+   "It's a drink, sold chilled in supermarkets and convenience stores.",
+   "The cans are styled like heavy-metal band merch, and it was first marketed to punk and metal fans.",
+   "The original version has no sugar and no flavour, and you can get it still or sparkling."
+  ],
+  "decoys": [
+   "A heavy-duty drain cleaner in skull-printed bottles that dissolves hair and grease clogs.",
+   "Extra-hot chilli sauces in bottles with skull labels, rated by how much they hurt.",
+   "Insect killer sprays and slug pellets for gardeners, in black-and-green packaging."
+  ],
+  "url": "https://liquiddeath.com",
+  "source": "https://en.wikipedia.org/wiki/Liquid_Death",
+  "checked": "2026-10-06",
+  "fun": 5,
+  "difficulty": 1,
+  "rating": "PG"
+ },
+ {
+  "id": "kewpie",
+  "cat": "brand",
+  "prompt": "Kewpie",
+  "ask": "What are they selling?",
+  "truth": "Mayonnaise made with egg yolks, sold in a soft squeeze bottle, plus salad dressings and sauces.",
+  "more": "Toichiro Nakashima launched it in Japan in 1925, naming it after the Kewpie, a cupid-like cartoon baby that was popular at the time.",
+  "key": [
+   "mayonnaise",
+   "sauce",
+   "egg",
+   "dressing"
+  ],
+  "clues": [
+   "You eat it, but almost never on its own.",
+   "It comes in a soft see-through bottle, and plenty of chefs outside Japan swear by it.",
+   "It's egg yolks and vinegar whipped with oil, and it goes in sandwiches and potato salad."
+  ],
+  "decoys": [
+   "Collectible baby dolls with big eyes and a curl of hair, sold in gift shops.",
+   "Baby formula and teething biscuits, sold in pharmacies across Japan.",
+   "Rice crackers and seaweed snacks in individually wrapped packs."
+  ],
+  "url": "https://www.kewpie.com/en/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 5,
+  "difficulty": 2,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "pocari-sweat",
+  "cat": "brand",
+  "prompt": "Pocari Sweat",
+  "ask": "What are they selling?",
+  "truth": "A lightly sweet, non-fizzy sports drink with added salts, sold in blue-and-white cans, bottles and powder sachets.",
+  "more": "Otsuka launched it in Japan in 1980. Despite the name, there is no sweat in it; it is meant for drinking after you've sweated.",
+  "key": [
+   "drink",
+   "sports",
+   "salt",
+   "bottle"
+  ],
+  "clues": [
+   "It's something you drink.",
+   "It's in nearly every vending machine in Japan, in a blue-and-white can.",
+   "People reach for it after sport or on hot days, because it has added salts and sugar."
+  ],
+  "decoys": [
+   "Antiperspirant sprays and sweat pads for athletes, sold in Japanese pharmacies.",
+   "Moisture-wicking gym shirts and headbands for runners and tennis players.",
+   "A cloudy coconut-water drink with fruit pulp, sold in clear plastic bottles."
+  ],
+  "url": "https://www.otsuka.co.jp/en/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 5,
+  "difficulty": 2,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "georgia-jp",
+  "cat": "brand",
+  "prompt": "Georgia",
+  "ask": "What are they selling?",
+  "truth": "Coca-Cola's canned and bottled coffee drinks, sold hot or cold in Japanese vending machines and convenience stores.",
+  "more": "Launched in 1975 and named after the US state of Georgia, home of Coca-Cola's headquarters in Atlanta.",
+  "key": [
+   "coffee",
+   "canned",
+   "drink",
+   "vending"
+  ],
+  "clues": [
+   "It's a drink from one of the world's biggest soft-drink companies.",
+   "You'll mostly find it in Japan, in vending machines that can serve it hot.",
+   "It comes black, sweet or milky, and office workers grab it for a morning boost."
+  ],
+  "decoys": [
+   "Peach jam and pecan pralines from a family farm in the American South.",
+   "Package holidays to Tbilisi and the Black Sea coast, sold by a Japanese travel agency.",
+   "Sweet peach-flavoured iced tea in plastic bottles, sold across Japan."
+  ],
+  "url": "https://www.georgia.jp/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 5,
+  "difficulty": 3,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "pigeon",
+  "cat": "brand",
+  "prompt": "Pigeon",
+  "ask": "What are they selling?",
+  "truth": "Baby bottles, teats and dummies, plus other feeding and skincare products for babies and new mothers.",
+  "more": "The Japanese company picked the pigeon as its name and logo as a symbol of peace and love.",
+  "key": [
+   "baby",
+   "bottle",
+   "feeding"
+  ],
+  "clues": [
+   "Its customers are very small.",
+   "It's a Japanese company whose products fill pharmacy shelves across Asia.",
+   "Its best-known product has a soft nipple-shaped tip and measuring lines on the side."
+  ],
+  "decoys": [
+   "Birdseed, nesting boxes and racing supplies for pigeon fanciers.",
+   "Spikes and netting that keep birds off window ledges and roofs.",
+   "A bicycle courier service delivering letters and parcels across Tokyo."
+  ],
+  "url": "https://www.pigeon.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "toto",
+  "cat": "brand",
+  "prompt": "Toto",
+  "ask": "What are they selling?",
+  "truth": "Toilets, including heated Washlet seats with built-in bidet sprays, plus sinks, taps and bathroom fittings.",
+  "more": "The name comes from Toyo Toki, 'Oriental Ceramics', the company's name when it was founded in Japan in 1917.",
+  "key": [
+   "toilet",
+   "bathroom",
+   "seat",
+   "sink"
+  ],
+  "clues": [
+   "Most people use one of its products several times a day.",
+   "It's Japanese, and its fanciest products come with a remote control.",
+   "Its heated seats spray warm water, and some lids lift by themselves when you walk in."
+  ],
+  "decoys": [
+   "Dog food and leads, named after Dorothy's terrier in The Wizard of Oz.",
+   "Canvas tote bags and backpacks printed with Japanese city maps.",
+   "Licensed T-shirts and vinyl reissues for a 1980s American rock band."
+  ],
+  "url": "https://www.toto.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "zojirushi",
+  "cat": "brand",
+  "prompt": "Zojirushi",
+  "ask": "What are they selling?",
+  "truth": "Vacuum flasks, rice cookers, electric kettles, hot-water dispensers and bread machines.",
+  "more": "Zojirushi means 'elephant mark', and its logo is an elephant. The company started in Osaka in 1918, making glass liners for vacuum flasks.",
+  "key": [
+   "rice",
+   "cooker",
+   "kettle",
+   "bottle"
+  ],
+  "clues": [
+   "It's for the kitchen.",
+   "It's a Japanese company over 100 years old, with an animal in its logo.",
+   "Its products keep tea hot all day and cook rice on a timer."
+  ],
+  "decoys": [
+   "Hand-carved name seals used to sign documents, sold in Japanese stationery shops.",
+   "Zips and buttons for clothing factories, made in Osaka.",
+   "Instant miso soup and dried seaweed, sold in supermarkets across Japan."
+  ],
+  "url": "https://www.zojirushi.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 3,
+  "difficulty": 3,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "cuckoo",
+  "cat": "brand",
+  "prompt": "Cuckoo",
+  "ask": "What are they selling?",
+  "truth": "Electric rice cookers, many with pressure cooking and spoken announcements, plus water purifiers and other home appliances.",
+  "more": "South Korea's best-known rice cooker brand. Founded in 1978, it spent years making rice cookers sold under other companies' names before launching Cuckoo.",
+  "key": [
+   "rice",
+   "cooker",
+   "kitchen",
+   "appliance"
+  ],
+  "clues": [
+   "It's a kitchen appliance.",
+   "It's a South Korean brand found on kitchen counters across Asia.",
+   "It cooks Korea's everyday grain under pressure, then announces in a cheerful voice that it's done."
+  ],
+  "decoys": [
+   "Hand-carved wooden clocks with a little bird that pops out on the hour.",
+   "Birdhouses and bird feeders for gardens, made from recycled plastic.",
+   "Novelty alarm clocks that wake you with birdsong and a flashing light."
+  ],
+  "url": "https://www.cuckoo.co.kr/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 5,
+  "difficulty": 3,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "gentle-monster",
+  "cat": "brand",
+  "prompt": "Gentle Monster",
+  "ask": "What are they selling?",
+  "truth": "Designer sunglasses and optical frames, sold in shops built like art installations.",
+  "more": "Founded in Seoul in 2011, it's known for flagship stores filled with giant robots and moving sculptures.",
+  "key": [
+   "sunglasses",
+   "glasses",
+   "frames"
+  ],
+  "clues": [
+   "It's something you wear.",
+   "It's a South Korean brand worn by K-pop stars and film actors.",
+   "You wear them on your face, especially on bright days."
+  ],
+  "decoys": [
+   "Soft plush monster toys designed to help toddlers fall asleep.",
+   "Mild sauces and snacks for children who don't like spicy food.",
+   "Costume masks and props for theatre productions and Halloween."
+  ],
+  "url": "https://www.gentlemonster.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "bambu-lab",
+  "cat": "brand",
+  "prompt": "Bambu Lab",
+  "ask": "What are they selling?",
+  "truth": "Desktop 3D printers for hobbyists and small businesses, plus the plastic filament they print with.",
+  "more": "Founded in Shenzhen in 2020 by engineers who previously worked at drone maker DJI.",
+  "key": [
+   "printer",
+   "printing",
+   "plastic"
+  ],
+  "clues": [
+   "It's a machine that fits on a desk.",
+   "Its products build things up one thin layer at a time.",
+   "Feed it a spool of plastic and a computer file, and hours later you have a model."
+  ],
+  "decoys": [
+   "Bamboo chopping boards, cutlery and toothbrushes, sold as plastic-free swaps.",
+   "Science kits for children, with microscopes, test tubes and safety goggles.",
+   "Bamboo-fibre socks and underwear, sold online in multipacks."
+  ],
+  "url": "https://bambulab.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "pop-mart",
+  "cat": "brand",
+  "prompt": "Pop Mart",
+  "ask": "What are they selling?",
+  "truth": "Collectible designer toys and figures, often sold in sealed blind boxes, including the Labubu monster dolls.",
+  "more": "Wang Ning founded it in Beijing in 2010. Labubu, created by artist Kasing Lung, set off queues and resale frenzies worldwide in 2025.",
+  "key": [
+   "toys",
+   "figures",
+   "collectibles",
+   "dolls"
+  ],
+  "clues": [
+   "Children buy them, but so do plenty of adults.",
+   "You don't know which one you've got until you open the box.",
+   "Its toothy, rabbit-eared monster dolls caused queues around the world in 2025."
+  ],
+  "decoys": [
+   "A chain of 24-hour convenience stores selling snacks and drinks in Chinese cities.",
+   "Popcorn makers and candy-floss machines for parties and cinemas.",
+   "Pop music CDs and concert merchandise sold in shopping-mall kiosks."
+  ],
+  "url": "https://www.popmart.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "boat",
+  "cat": "brand",
+  "prompt": "boAt",
+  "ask": "What are they selling?",
+  "truth": "Wireless earbuds, headphones, portable speakers and smartwatches, sold mostly in India.",
+  "more": "Aman Gupta and Sameer Mehta founded it in 2016. Its fans call themselves boAtheads.",
+  "key": [
+   "headphones",
+   "speaker",
+   "audio",
+   "watch"
+  ],
+  "clues": [
+   "It's consumer electronics.",
+   "It's one of India's biggest brands in its category, popular with young cricket fans.",
+   "You put them in your ears, or wear them over your head."
+  ],
+  "decoys": [
+   "Inflatable dinghies and kayaks for weekend trips on lakes and rivers.",
+   "Houseboat holidays on the Kerala backwaters, booked online.",
+   "Life jackets and waterproof bags for monsoon-season travel."
+  ],
+  "url": "https://www.boat-lifestyle.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "sleepy-owl",
+  "cat": "brand",
+  "prompt": "Sleepy Owl",
+  "ask": "What are they selling?",
+  "truth": "Coffee for home: cold-brew packs, instant coffee and ready-to-drink cans, sold across India.",
+  "more": "Three school friends from Delhi started it in 2016, beginning with cold-brew coffee bags you steep overnight.",
+  "key": [
+   "coffee",
+   "brew",
+   "drink"
+  ],
+  "clues": [
+   "It's something you drink.",
+   "It's an Indian brand, sold online and in supermarkets.",
+   "It's meant to wake you up; some packs steep in water overnight in the fridge."
+  ],
+  "decoys": [
+   "Blackout curtains, eye masks and night lights for children's bedrooms.",
+   "Bedtime storybooks and plush owl toys for toddlers.",
+   "Mattresses and pillows sold online, delivered rolled up in a box."
+  ],
+  "url": "https://sleepyowl.co/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "postman",
+  "cat": "brand",
+  "prompt": "Postman",
+  "ask": "What are they selling?",
+  "truth": "Software that developers use to design, test and document APIs, the connections that let programs talk to each other.",
+  "more": "Abhinav Asthana started it in 2012 as a side project in Bangalore, first released as a Chrome browser extension.",
+  "key": [
+   "software",
+   "programming",
+   "testing",
+   "developer"
+  ],
+  "clues": [
+   "It's software for businesses.",
+   "Most of its users are programmers.",
+   "It sends requests to other programs and checks the replies that come back."
+  ],
+  "decoys": [
+   "Same-day courier deliveries of letters, parcels and documents across Indian cities, booked through an app.",
+   "Uniforms, leather satchels and sturdy bicycles for postal workers, sold to national mail services.",
+   "Email newsletter software that small businesses and bloggers use to write, schedule and send campaigns."
+  ],
+  "url": "https://www.postman.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 3,
+  "difficulty": 3,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "moonpig",
+  "cat": "brand",
+  "prompt": "Moonpig",
+  "ask": "What are they selling?",
+  "truth": "Personalised greeting cards, ordered online and posted for you, plus gifts and flowers.",
+  "more": "Moonpig was founder Nick Jenkins's nickname at school. He launched the website in 2000.",
+  "key": [
+   "card",
+   "greeting",
+   "birthday",
+   "gift"
+  ],
+  "clues": [
+   "It's something you send.",
+   "Business peaks around birthdays, anniversaries and Mother's Day.",
+   "You can put a photo on the front and a joke inside, and they post it for you."
+  ],
+  "decoys": [
+   "Marshmallow-filled chocolate cakes sold in individual wrappers.",
+   "Pork pies and sausages from free-range pigs in Somerset.",
+   "Glow-in-the-dark night lights and plush toys for children's bedrooms."
+  ],
+  "url": "https://www.moonpig.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 5,
+  "difficulty": 2,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "marmite",
+  "cat": "brand",
+  "prompt": "Marmite",
+  "ask": "What are they selling?",
+  "truth": "A dark, sticky, salty spread made from yeast extract, a by-product of beer brewing, usually eaten on toast.",
+  "more": "It's named after the French earthenware cooking pot, a marmite, pictured on the jar's label.",
+  "key": [
+   "spread",
+   "yeast",
+   "toast",
+   "jar"
+  ],
+  "clues": [
+   "It's a food.",
+   "It comes in a squat dark jar, and its own adverts say you either love it or hate it.",
+   "You spread it thinly on buttered toast; it's made from leftovers of brewing."
+  ],
+  "decoys": [
+   "Marmalade made from bitter Seville oranges, sold in glass jars.",
+   "Cast-iron cooking pots and casserole dishes made in France, sold in a range of colours.",
+   "Chocolate hazelnut spread sold in glass jars, usually eaten on toast or pancakes at breakfast."
+  ],
+  "url": "https://www.marmite.co.uk/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 4,
+  "difficulty": 1,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "huel",
+  "cat": "brand",
+  "prompt": "Huel",
+  "ask": "What are they selling?",
+  "truth": "Powdered and bottled meal shakes, instant hot meals and snack bars, designed to replace a full meal.",
+  "more": "The name is a blend of 'human' and 'fuel'. Julian Hearn founded it in England in 2015.",
+  "key": [
+   "shake",
+   "meal",
+   "powder",
+   "food"
+  ],
+  "clues": [
+   "It's food, of a sort.",
+   "Plenty of customers have it at their desks instead of lunch.",
+   "You shake the powder with water in a bottle and drink your meal."
+  ],
+  "decoys": [
+   "Biofuel for cars and vans, made from used cooking oil.",
+   "Smokeless fuel, kindling and firelighters for wood-burning stoves, delivered to your door in bags.",
+   "A tracking app that logs what you eat and how far you run."
+  ],
+  "url": "https://huel.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 3,
+  "difficulty": 2,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "toast",
+  "cat": "brand",
+  "prompt": "Toast",
+  "ask": "What are they selling?",
+  "truth": "Restaurant point-of-sale systems: card terminals, ordering tablets, and software for kitchens, payroll and online orders.",
+  "more": "Founded in Boston in 2011. Its founders first built a mobile payments app before switching to restaurant tills.",
+  "key": [
+   "restaurant",
+   "software",
+   "payments",
+   "till"
+  ],
+  "clues": [
+   "Its customers are businesses, not the public.",
+   "Most of its customers serve food.",
+   "Your waiter might use one of its handheld devices to take your order and your card."
+  ],
+  "decoys": [
+   "Pop-up toasters and sandwich presses for home kitchens.",
+   "Sliced sourdough and bagels delivered to cafés every morning.",
+   "Speeches and toasts written to order for weddings and retirements."
+  ],
+  "url": "https://pos.toasttab.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 5,
+  "difficulty": 3,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "lemonade",
+  "cat": "brand",
+  "prompt": "Lemonade",
+  "ask": "What are they selling?",
+  "truth": "Insurance for renters, homeowners, pets, cars and lives, bought and claimed through an app.",
+  "more": "It's named after the saying 'when life gives you lemons, make lemonade'. Founded in New York in 2015.",
+  "key": [
+   "insurance",
+   "app",
+   "home",
+   "pets"
+  ],
+  "clues": [
+   "It's a financial product.",
+   "You buy it on your phone and hope you never need it.",
+   "If your flat floods or your dog needs surgery, you file a claim with it."
+  ],
+  "decoys": [
+   "Organic sparkling lemonade in glass bottles, sold to cafés and delis.",
+   "Lemon-scented cleaning sprays and washing-up liquid.",
+   "Kits for children to run their own lemonade stand."
+  ],
+  "url": "https://www.lemonade.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 5,
+  "difficulty": 3,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "valve",
+  "cat": "brand",
+  "prompt": "Valve",
+  "ask": "What are they selling?",
+  "truth": "Video games such as Half-Life and Portal, the Steam online game store, and the Steam Deck handheld gaming PC.",
+  "more": "Gabe Newell and Mike Harrington, both former Microsoft employees, founded it in 1996.",
+  "key": [
+   "games",
+   "video",
+   "store",
+   "computer"
+  ],
+  "clues": [
+   "It's entertainment.",
+   "Most of its customers play on a computer.",
+   "It runs the biggest online shop for PC games."
+  ],
+  "decoys": [
+   "Industrial pipe valves and fittings for oil refineries and water plants.",
+   "Radiator valves and smart thermostats that let you control your home heating from a phone app.",
+   "Guitar amplifiers and effects pedals built with old-fashioned vacuum tubes for a warm sound."
+  ],
+  "url": "https://www.valvesoftware.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "snowflake",
+  "cat": "brand",
+  "prompt": "Snowflake",
+  "ask": "What are they selling?",
+  "truth": "Cloud software that lets companies store, combine and analyse large amounts of data, charged by how much they use.",
+  "more": "Its 2020 stock-market debut was the largest software IPO ever at the time.",
+  "key": [
+   "data",
+   "software",
+   "cloud",
+   "database"
+  ],
+  "clues": [
+   "Its customers are companies, not people.",
+   "It runs on other companies' cloud computers.",
+   "Businesses pour their sales and customer records into it and ask questions in SQL."
+  ],
+  "decoys": [
+   "Snow-making machines that ski resorts and indoor slopes use to cover their runs when the weather is warm.",
+   "Christmas decorations, paper cut-outs and fake snow that shops use to dress their windows in winter.",
+   "Shaved-ice desserts with fruit syrups, sold from carts and kiosks at summer fairs and beaches."
+  ],
+  "url": "https://www.snowflake.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 3,
+  "difficulty": 3,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "roku",
+  "cat": "brand",
+  "prompt": "Roku",
+  "ask": "What are they selling?",
+  "truth": "Streaming sticks and boxes, TVs, and the software that puts Netflix and other apps on your television.",
+  "more": "Roku means 'six' in Japanese; it was founder Anthony Wood's sixth company.",
+  "key": [
+   "streaming",
+   "television",
+   "box",
+   "tv"
+  ],
+  "clues": [
+   "It's electronics for the living room.",
+   "It's an American company with a Japanese name.",
+   "Plug its stick into your TV and you can watch Netflix and YouTube."
+  ],
+  "decoys": [
+   "Japanese kitchen knives forged from layered steel, sold with whetstones and wooden storage blocks.",
+   "Climbing shoes, chalk bags and crash pads for bouldering gyms and outdoor climbers.",
+   "Sushi kits with rice, nori and a bamboo rolling mat."
+  ],
+  "url": "https://www.roku.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 3,
+  "difficulty": 2,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "bombas",
+  "cat": "brand",
+  "prompt": "Bombas",
+  "ask": "What are they selling?",
+  "truth": "Socks, plus underwear, T-shirts and slippers; for each item sold, it donates one to homeless shelters.",
+  "more": "Bombas comes from the Latin for bumblebee, chosen because bees work together for the good of the hive.",
+  "key": [
+   "socks",
+   "underwear",
+   "clothing",
+   "slippers"
+  ],
+  "clues": [
+   "It's something you wear.",
+   "For everything you buy, it gives one away to a homeless shelter.",
+   "Its best-sellers go on your feet, inside your shoes."
+  ],
+  "decoys": [
+   "Fizzing bath bombs in fruity scents, sold in gift boxes.",
+   "Water pumps and pressure washers for farms and gardens.",
+   "Spanish-style cast-iron pans and gas burners for cooking paella outdoors for big groups."
+  ],
+  "url": "https://bombas.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 3,
+  "difficulty": 2,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "who-gives-a-crap",
+  "cat": "brand",
+  "prompt": "Who Gives A Crap",
+  "ask": "What are they selling?",
+  "truth": "Toilet paper made from recycled paper or bamboo, plus tissues and kitchen rolls, delivered in bulk boxes.",
+  "more": "It gives half its profits to charities that build toilets. A co-founder once live-streamed himself sitting on a toilet until pre-orders hit their target.",
+  "key": [
+   "toilet",
+   "paper",
+   "tissue",
+   "bamboo"
+  ],
+  "clues": [
+   "It's a household essential.",
+   "Half its profits go to building toilets in places that lack them.",
+   "Every home keeps rolls of it in the bathroom."
+  ],
+  "decoys": [
+   "Novelty mugs and T-shirts printed with cheeky slogans, sold online.",
+   "Bagged garden manure and compost made from farm waste, delivered to gardeners by subscription.",
+   "Dog-poo bags and pooper scoopers made from plant-based plastic."
+  ],
+  "url": "https://www.whogivesacrap.org/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 4,
+  "difficulty": 1,
+  "rating": "PG",
+  "status": "unverified"
+ },
+ {
+  "id": "koala",
+  "cat": "brand",
+  "prompt": "Koala",
+  "ask": "What are they selling?",
+  "truth": "Mattresses, sofas and bed frames, sold online and delivered in boxes.",
+  "more": "Founded in Sydney in 2015, it donates part of its revenue to wildlife conservation.",
+  "key": [
+   "mattress",
+   "sofa",
+   "bed",
+   "furniture"
+  ],
+  "clues": [
+   "It's furniture.",
+   "It's an Australian company that sells online and delivers in a box.",
+   "You sleep on its best-known product."
+  ],
+  "decoys": [
+   "Eucalyptus-scented hand cream and lip balm made in Australia.",
+   "Cuddly toy koalas and kangaroos sold at airport gift shops.",
+   "Baby carriers and slings for carrying toddlers on your back."
+  ],
+  "url": "https://au.koala.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "icebreaker",
+  "cat": "brand",
+  "prompt": "Icebreaker",
+  "ask": "What are they selling?",
+  "truth": "Outdoor clothing made from merino wool: base layers, socks, T-shirts and jumpers.",
+  "more": "Jeremy Moon founded it in Wellington in 1995, after a sheep farmer showed him a merino T-shirt.",
+  "key": [
+   "clothing",
+   "wool",
+   "socks",
+   "shirt"
+  ],
+  "clues": [
+   "It's something you wear.",
+   "It's a New Zealand brand, sold in outdoor shops.",
+   "Its clothes are made from the fleece of fine-wool sheep, worn next to the skin."
+  ],
+  "decoys": [
+   "Party games and conversation cards for meeting new people.",
+   "Ice scrapers and de-icer spray for car windscreens.",
+   "Expedition cruises to Antarctica on a reinforced ship."
+  ],
+  "url": "https://www.icebreaker.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "kobo",
+  "cat": "brand",
+  "prompt": "Kobo",
+  "ask": "What are they selling?",
+  "truth": "E-readers and the e-books and audiobooks to read and play on them.",
+  "more": "Kobo is an anagram of 'book'. The Toronto company has been owned by Japan's Rakuten since 2012.",
+  "key": [
+   "book",
+   "reader",
+   "tablet"
+  ],
+  "clues": [
+   "It's electronics.",
+   "It's a Canadian company owned by a Japanese one.",
+   "Its screen looks like paper, and you can carry thousands of novels on it."
+  ],
+  "decoys": [
+   "Martial-arts uniforms and belts for karate and judo clubs.",
+   "Fermented tea drinks in glass bottles, brewed in Toronto.",
+   "Board games and puzzles for families, sold in Canadian toy shops."
+  ],
+  "url": "https://www.kobo.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "stradivarius",
+  "cat": "brand",
+  "prompt": "Stradivarius",
+  "ask": "What are they selling?",
+  "truth": "Women's clothing, shoes and accessories in high-street shops, owned by the same group as Zara.",
+  "more": "Founded in Barcelona in 1994 and bought by Inditex, Zara's parent company, in 1999.",
+  "key": [
+   "clothing",
+   "fashion",
+   "shoes",
+   "woman"
+  ],
+  "clues": [
+   "It's something you wear.",
+   "It's a Spanish chain with shops in shopping centres around the world.",
+   "It sells dresses, jeans and jackets to young women, from the owners of Zara."
+  ],
+  "decoys": [
+   "Handmade violins and cellos for orchestras, plus restoration of old instruments.",
+   "Classical concert tickets and music lessons in Italian cities.",
+   "Insurance for valuable antiques and musical instruments."
+  ],
+  "url": "https://www.stradivarius.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 5,
+  "difficulty": 2,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "camper",
+  "cat": "brand",
+  "prompt": "Camper",
+  "ask": "What are they selling?",
+  "truth": "Shoes and trainers designed in Mallorca, known for quirky styles such as pairs with mismatched left and right shoes.",
+  "more": "Camper means 'peasant' in Mallorcan Catalan. The founding family has made shoes on the island since 1877.",
+  "key": [
+   "shoes",
+   "trainers",
+   "footwear"
+  ],
+  "clues": [
+   "It's something you wear.",
+   "It's from a Spanish island, with shops around the world.",
+   "You wear them on your feet, and some pairs deliberately don't match."
+  ],
+  "decoys": [
+   "Campervans and caravans for hire, with pickup at Palma airport and unlimited mileage around the island.",
+   "Tents, sleeping bags and camping stoves for festivals, sold in outdoor shops across Spain.",
+   "Holiday campsites with pools, mobile homes and kids' clubs along Spain's Mediterranean coast."
+  ],
+  "url": "https://www.camper.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "freitag",
+  "cat": "brand",
+  "prompt": "Freitag",
+  "ask": "What are they selling?",
+  "truth": "Bags and backpacks sewn from used lorry tarpaulins, seatbelts and bike inner tubes, so each one is unique.",
+  "more": "Brothers Markus and Daniel Freitag made their first bag in Zurich in 1993. Freitag is German for Friday, and also their surname.",
+  "key": [
+   "bag",
+   "backpack",
+   "truck",
+   "recycled"
+  ],
+  "clues": [
+   "It's something you carry.",
+   "It's a Swiss brand; no two of its products look the same.",
+   "Its products start life as the waterproof covers on the sides of lorries."
+  ],
+  "decoys": [
+   "Free luggage tags and name labels, paid for by adverts on the back.",
+   "A bakery chain whose sourdough loaves and pastries are baked and sold only on Fridays.",
+   "Recycled car tyres turned into doormats, sandals and garden planters by a Swiss workshop."
+  ],
+  "url": "https://www.freitag.ch/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 5,
+  "difficulty": 3,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "zweifel",
+  "cat": "brand",
+  "prompt": "Zweifel",
+  "ask": "What are they selling?",
+  "truth": "Potato crisps and other salty snacks; it's the best-selling crisp brand in Switzerland.",
+  "more": "Zweifel is German for 'doubt' and the founding family's surname. The family pressed apple juice before switching to crisps in 1958.",
+  "key": [
+   "crisps",
+   "chips",
+   "potato",
+   "snack"
+  ],
+  "clues": [
+   "It's a food.",
+   "It's Swiss, and comes in bags in every supermarket there.",
+   "Thin fried potato slices, in flavours like paprika."
+  ],
+  "decoys": [
+   "Puzzle books and brain-teasers for German-speaking readers.",
+   "A fact-checking service for Swiss newspapers and broadcasters.",
+   "Cheese fondue sets with pots, burners and long forks."
+  ],
+  "url": "https://www.zweifel.ch/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "caran-dache",
+  "cat": "brand",
+  "prompt": "Caran d'Ache",
+  "ask": "What are they selling?",
+  "truth": "Coloured pencils, pens and art supplies made in Geneva, plus luxury fountain pens.",
+  "more": "The name comes from 'karandash', Russian for pencil, the pen name of a French cartoonist.",
+  "key": [
+   "pencil",
+   "pen",
+   "art",
+   "color"
+  ],
+  "clues": [
+   "It's for school or the studio.",
+   "It's a Swiss company, and its products come in red metal tins.",
+   "Artists and children colour with its products, which you sharpen."
+  ],
+  "decoys": [
+   "A French patisserie chain selling caramel tarts and macarons.",
+   "Silk scarves and leather wallets from a Paris fashion house.",
+   "Car alarms and steering locks made in Lyon."
+  ],
+  "url": "https://www.carandache.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "almdudler",
+  "cat": "brand",
+  "prompt": "Almdudler",
+  "ask": "What are they selling?",
+  "truth": "A fizzy Austrian soft drink flavoured with alpine herb extracts, sold in bottles showing a couple in traditional dress.",
+  "more": "The name comes from the dialect phrase 'auf der Alm dudeln', to yodel on a mountain pasture. It was launched in 1957.",
+  "key": [
+   "lemonade",
+   "soda",
+   "herbs",
+   "drink"
+  ],
+  "clues": [
+   "It's something you drink.",
+   "It's Austrian, and families order it in restaurants there.",
+   "It's sparkling, sweet and flavoured with mountain herbs."
+  ],
+  "decoys": [
+   "Hand-carved alpine horns, plus yodelling lessons and folk-music workshops for tourists visiting the Alps.",
+   "Cowbells, leather dog collars and other traditional souvenirs, made by hand in the Tyrol.",
+   "Mountain-hut stays and guided hiking tours in the Austrian Alps, with meals and luggage transfer included."
+  ],
+  "url": "https://www.almdudler.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "doppelmayr",
+  "cat": "brand",
+  "prompt": "Doppelmayr",
+  "ask": "What are they selling?",
+  "truth": "Ski lifts, gondolas and cable cars, including city cable cars used as public transport.",
+  "more": "Founded in 1893 in Wolfurt, Austria, it built La Paz's cable car network, the largest urban one in the world.",
+  "key": [
+   "lift",
+   "cable",
+   "gondola",
+   "ski"
+  ],
+  "clues": [
+   "Its customers are resorts and cities, not individuals.",
+   "It's an Austrian company whose products carry millions of people a day.",
+   "Its cabins hang from a steel rope and climb up mountains."
+  ],
+  "decoys": [
+   "Twin pushchairs and double buggies for parents of twins.",
+   "Double-glazed windows and doors for alpine chalets.",
+   "Two-person kayaks and tandem bicycles for hire."
+  ],
+  "url": "https://www.doppelmayr.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "kipling",
+  "cat": "brand",
+  "prompt": "Kipling",
+  "ask": "What are they selling?",
+  "truth": "Crinkly nylon handbags, backpacks and luggage, each sold with a small furry monkey keyring.",
+  "more": "Founded in Antwerp in 1987 and named after Rudyard Kipling, author of The Jungle Book. Each monkey has a tag with a staff member's name.",
+  "key": [
+   "bag",
+   "backpack",
+   "handbag",
+   "luggage"
+  ],
+  "clues": [
+   "It's something you carry.",
+   "It's a Belgian brand sold in department stores worldwide.",
+   "Each of its products comes with a little furry monkey attached."
+  ],
+  "decoys": [
+   "Individually wrapped cakes and fruit pies, sold in supermarkets.",
+   "Illustrated editions of The Jungle Book and other classic stories.",
+   "Safari holidays to India's tiger reserves, booked from Europe."
+  ],
+  "url": "https://www.kipling.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "flying-tiger",
+  "cat": "brand",
+  "prompt": "Flying Tiger Copenhagen",
+  "ask": "What are they selling?",
+  "truth": "Shops full of cheap, colourful homeware, toys, stationery, party supplies and craft materials.",
+  "more": "Its first shop opened in 1995, selling everything for 10 kroner; 'tiger' sounds like 'tier', Danish slang for a ten-kroner coin.",
+  "key": [
+   "shop",
+   "toys",
+   "gifts",
+   "cheap"
+  ],
+  "clues": [
+   "It's a shop.",
+   "It's a Danish chain with branches on shopping streets across Europe.",
+   "Its shelves are full of cheap, colourful household bits and party supplies."
+  ],
+  "decoys": [
+   "Budget flights from Copenhagen to Asia on an airline with a tiger logo.",
+   "Scenic helicopter tours over Copenhagen harbour.",
+   "Tiger-striped kites and paper lanterns for festivals."
+  ],
+  "url": "https://flyingtiger.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "tchibo",
+  "cat": "brand",
+  "prompt": "Tchibo",
+  "ask": "What are they selling?",
+  "truth": "Coffee, plus a range of clothes, kitchenware and gadgets that changes every week.",
+  "more": "Founded in Hamburg in 1949. The name joins co-founder Carl Tchilinghiryan's surname with 'Bohne', German for bean.",
+  "key": [
+   "coffee",
+   "clothes",
+   "kitchen",
+   "shop"
+  ],
+  "clues": [
+   "It's a German chain found on most high streets there.",
+   "It started out selling a single product by mail order.",
+   "Its main product is roasted beans, but every week it also sells a new set of non-food items."
+  ],
+  "decoys": [
+   "Sausages and pretzels from a chain of Bavarian butchers.",
+   "Cute Japanese-style cartoon stickers and plush toys.",
+   "Ceramic tiles and bathroom fittings for German builders."
+  ],
+  "url": "https://www.tchibo.de/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "melitta",
+  "cat": "brand",
+  "prompt": "Melitta",
+  "ask": "What are they selling?",
+  "truth": "Paper coffee filters, filter holders, coffee machines and ground coffee.",
+  "more": "Named after Melitta Bentz, a Dresden housewife who patented the paper coffee filter in 1908, first using blotting paper from her son's schoolbook.",
+  "key": [
+   "coffee",
+   "filter",
+   "paper",
+   "machine"
+  ],
+  "clues": [
+   "It's for the kitchen.",
+   "It's a German company named after a woman, founded in Dresden.",
+   "Its best-known product is a paper cone that holds ground beans while hot water drips through."
+  ],
+  "decoys": [
+   "Honey, beeswax candles and lip balm from German beekeepers.",
+   "Greek yoghurt and feta cheese sold in German supermarkets.",
+   "Embroidered tablecloths and napkins made in Saxony."
+  ],
+  "url": "https://www.melitta.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "picnic",
+  "cat": "brand",
+  "prompt": "Picnic",
+  "ask": "What are they selling?",
+  "truth": "An online supermarket that delivers groceries in small electric vans on fixed routes, with free delivery.",
+  "more": "Founded in the Netherlands in 2015, it now also delivers in Germany and France.",
+  "key": [
+   "groceries",
+   "delivery",
+   "supermarket",
+   "van"
+  ],
+  "clues": [
+   "It's a shop, of a kind.",
+   "You order on an app, and it's Dutch.",
+   "Its little electric vans bring your weekly food shop to the door."
+  ],
+  "decoys": [
+   "Wicker hampers, blankets and cool bags for eating outdoors.",
+   "Ready-made sandwich platters and salad boxes, delivered to offices for team lunches.",
+   "Park cafés and kiosks in Amsterdam's Vondelpark, selling coffee, ice cream and sandwiches."
+  ],
+  "url": "https://picnic.app/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "guarana-antarctica",
+  "cat": "brand",
+  "prompt": "Guaraná Antarctica",
+  "ask": "What are they selling?",
+  "truth": "A fizzy soft drink flavoured with guaraná, a red Amazon berry; Brazil's favourite soda after cola.",
+  "more": "It has been made since 1921 by the Antarctica company, which got its name from producing ice.",
+  "key": [
+   "soda",
+   "drink",
+   "berry",
+   "fruit"
+  ],
+  "clues": [
+   "It's something you drink.",
+   "It's Brazilian, and Brazilians abroad go looking for it.",
+   "It's a fizzy drink in a green can, flavoured with a caffeine-rich Amazon fruit."
+  ],
+  "decoys": [
+   "Polar expedition cruises from Ushuaia, booked through a Brazilian travel agency.",
+   "Ice cream and frozen açaí bowls sold in São Paulo.",
+   "Thermal jackets and sleeping bags for extreme cold."
+  ],
+  "url": "https://www.guaranaantarctica.com.br/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "G",
+  "status": "unverified"
+ },
+ {
+  "id": "jarritos",
+  "cat": "brand",
+  "prompt": "Jarritos",
+  "ask": "What are they selling?",
+  "truth": "Fruit-flavoured Mexican sodas such as mandarin, tamarind and lime, sold in tall ribbed glass bottles.",
+  "more": "Jarritos means 'little jugs', after the clay cups Mexicans traditionally drink from. It was founded in 1950.",
+  "key": [
+   "soda",
+   "drink",
+   "fruit",
+   "bottle"
+  ],
+  "clues": [
+   "It's something you drink.",
+   "It's Mexican and sold in taquerias around the world.",
+   "It's fizzy and sweet, and comes in flavours like tamarind and mandarin."
+  ],
+  "decoys": [
+   "Hand-painted clay pots and jugs from Puebla, sold to tourists.",
+   "Jarred salsas and pickled jalapeños for tacos.",
+   "Glass jars and lids for home canning and preserving."
+  ],
+  "url": "https://www.jarritos.com/",
+  "source": "Drafted from general knowledge; not yet re-checked online",
+  "checked": "",
+  "fun": 3,
+  "difficulty": 2,
+  "rating": "G",
+  "status": "unverified"
+ }
+]

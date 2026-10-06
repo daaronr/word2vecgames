@@ -49,6 +49,7 @@ embeddings/
 !web/data/vectors.bin
 !web/data-sense/vectors.bin
 !web/data-tokens/vectors.bin
+!whatisit/site/judge-vectors.bin
 
 # Local build output
 dist/

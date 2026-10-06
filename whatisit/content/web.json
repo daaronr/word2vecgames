@@ -1,0 +1,773 @@
+[
+  {
+    "id": "kafka-com",
+    "cat": "web",
+    "prompt": "kafka.com",
+    "ask": "What is this website?",
+    "truth": "Kafka Media Group, a marketing and public relations agency near downtown Orlando, Florida, founded in 2013.",
+    "more": "Its co-founders are Michelle and Pierce Kafka. Apache Kafka, the data software many people expect here, lives at kafka.apache.org.",
+    "key": [
+      "marketing",
+      "agency",
+      "publicity",
+      "advertising"
+    ],
+    "clues": [
+      "It's a small company that sells a service to other businesses.",
+      "Its two founders share the surname in its name.",
+      "From an office near Orlando, its staff write press releases and plan ad campaigns for clients."
+    ],
+    "decoys": [
+      "The official home of Apache Kafka, open-source software that streams data between computer systems in real time.",
+      "A Prague museum shop devoted to Franz Kafka, selling his books, prints and walking tours of his old streets.",
+      "A free online library of Franz Kafka's novels, diaries and letters, with English translations side by side."
+    ],
+    "url": "https://kafka.com",
+    "source": "https://kafka.com/",
+    "checked": "2026-10-06",
+    "fun": 3,
+    "difficulty": 3,
+    "rating": "G"
+  },
+  {
+    "id": "eelslap",
+    "cat": "web",
+    "prompt": "eelslap.com",
+    "ask": "What happens on this website?",
+    "truth": "Moving your mouse across the screen makes an eel slap a man in the face, over and over.",
+    "more": "There is no score and no goal; the slapping lasts as long as you keep moving. The page title is simply 'Eel slap!'",
+    "key": [
+      "slap",
+      "eel",
+      "face",
+      "mouse"
+    ],
+    "clues": [
+      "It's an interactive toy with no goal and no score.",
+      "You control the action by sweeping your cursor from side to side.",
+      "A slippery fish meets a man's cheek, again and again."
+    ],
+    "decoys": [
+      "You order live or smoked eels from a fishmonger, and they arrive packed in ice the next morning.",
+      "You design your own slap bracelet, choosing eels or sharks for the print, and it ships within a week.",
+      "You steer an electric eel through an underwater maze, dodging hooks and nets to reach the open sea."
+    ],
+    "url": "https://eelslap.com",
+    "source": "https://eelslap.com/",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 1,
+    "rating": "PG"
+  },
+  {
+    "id": "thisissand",
+    "cat": "web",
+    "prompt": "thisissand.com",
+    "ask": "What happens on this website?",
+    "truth": "You pour streams of colored sand onto the screen, and it piles up into layered sand art you can share.",
+    "more": "It's made by Beige Elephant, a Finnish company. There is also a phone app, and users post their 'sandscapes' for others to browse.",
+    "key": [
+      "sand",
+      "pour",
+      "art",
+      "colors",
+      "layers"
+    ],
+    "clues": [
+      "It's a creative toy that works with a mouse or a fingertip.",
+      "Press and hold, and something grainy streams down from the top of the screen.",
+      "It's like filling a souvenir bottle with stripes of colored beach material."
+    ],
+    "decoys": [
+      "You enter the size of your patio and it tells you how many bags of sand and gravel to order.",
+      "You pick a beach on the map and see today's sand quality, surf height and water temperature.",
+      "You type a word and it appears written in the sand on a beach, ready to save as a photo."
+    ],
+    "url": "https://thisissand.com",
+    "source": "https://thisissand.com/",
+    "checked": "2026-10-06",
+    "fun": 3,
+    "difficulty": 1,
+    "rating": "G"
+  },
+  {
+    "id": "koalas-to-the-max",
+    "cat": "web",
+    "prompt": "koalastothemax.com",
+    "ask": "What happens on this website?",
+    "truth": "Hovering over a big circle splits it into smaller circles, again and again, until a picture of koalas appears.",
+    "more": "Vadim Ogievetsky made it for Annie Albagli. Add a picture's web address to the link and it reveals your own image instead.",
+    "key": [
+      "circles",
+      "picture",
+      "hover",
+      "split",
+      "pixels"
+    ],
+    "clues": [
+      "It's a mouse-powered toy that ends in a reveal.",
+      "Everything starts as one big colored dot.",
+      "The more you wiggle, the finer the dots get, until furry Australian animals come into focus."
+    ],
+    "decoys": [
+      "Each click plants a eucalyptus tree for koalas left homeless by bushfires, paid for by advertisers.",
+      "A live camera shows koalas in an Australian zoo, which spend most of the day asleep in trees.",
+      "Clicking feeds a cartoon koala more and more leaves until it reaches its maximum size and falls asleep."
+    ],
+    "url": "https://www.koalastothemax.com",
+    "source": "https://github.com/vogievetsky/KoalasToTheMax",
+    "checked": "2026-10-06",
+    "fun": 5,
+    "difficulty": 2,
+    "rating": "G"
+  },
+  {
+    "id": "zombo",
+    "cat": "web",
+    "prompt": "zombo.com",
+    "ask": "What happens on this website?",
+    "truth": "A spoof intro page greets you with a booming welcome to 'Zombocom' and grand promises, then leads nowhere.",
+    "more": "The joke has lived at this address since 1999, mocking slow Flash intros. In February 2026 the domain changed hands, and new owners remade its voice and logo.",
+    "key": [
+      "welcome",
+      "intro",
+      "voice",
+      "parody",
+      "loading"
+    ],
+    "clues": [
+      "It's a famous joke site from the dial-up era.",
+      "It pokes fun at the slow animated intros that once played before a website loaded.",
+      "A voice promises that anything is possible here. Then nothing else happens."
+    ],
+    "decoys": [
+      "A zombie survival game drops you in a shopping mall to fend off wave after wave of the undead.",
+      "A horror fan page ranks every zombie movie ever made and lets visitors vote on the scariest scenes.",
+      "A Halloween shop page shows you how to do zombie makeup with fake blood and torn clothes."
+    ],
+    "url": "https://www.zombo.com",
+    "source": "https://en.wikipedia.org/wiki/Zombo.com",
+    "checked": "2026-10-06",
+    "fun": 5,
+    "difficulty": 2,
+    "rating": "G"
+  },
+  {
+    "id": "is-it-christmas",
+    "cat": "web",
+    "prompt": "isitchristmas.com",
+    "ask": "What happens on this website?",
+    "truth": "It shows one word: 'NO' on every day of the year except December 25, when it says 'YES'.",
+    "more": "Its code checks only for December 25, so Christmas Eve still gets a NO. The answer comes in your country's language: on the day, France sees OUI.",
+    "key": [
+      "holiday",
+      "answer",
+      "reply",
+      "calendar"
+    ],
+    "clues": [
+      "It's a single-purpose page that answers one yes-or-no question.",
+      "Most of the year, every visitor gets the same disappointing answer.",
+      "Come back on December 25 and the answer finally changes."
+    ],
+    "decoys": [
+      "It shows a countdown of the days, hours, minutes and seconds left until Christmas morning, with sleigh bells.",
+      "It suggests Christmas presents for everyone on your list after you answer a short quiz about them.",
+      "It tracks Santa's sleigh on a live world map as he delivers presents through Christmas Eve night."
+    ],
+    "url": "https://isitchristmas.com",
+    "source": "https://github.com/isitchristmas/web/blob/master/public/js/christmas.js",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 1,
+    "rating": "G"
+  },
+  {
+    "id": "cornify",
+    "cat": "web",
+    "prompt": "cornify.com",
+    "ask": "What happens on this website?",
+    "truth": "Each click scatters cartoon unicorns and rainbows across the page, and other websites can add the same button.",
+    "more": "It claims more than 400 million unicorns and rainbows served since 2009, and says Stack Overflow and ESPN have used it.",
+    "key": [
+      "unicorn",
+      "rainbow",
+      "button",
+      "sparkle",
+      "click"
+    ],
+    "clues": [
+      "It's a silly button that decorates web pages.",
+      "Its philosophy is a sum: two cheerful things added together equal happiness.",
+      "The name drops the first syllable of a magical horned horse."
+    ],
+    "decoys": [
+      "Each click adds a bushel of seed corn to your cart, and farmers get bulk prices delivered by truck.",
+      "Each click pops a new gourmet popcorn flavor, and you can order a sample box of your favorites.",
+      "Each click turns a photo of your face into a corn-on-the-cob cartoon you can send to friends."
+    ],
+    "url": "https://www.cornify.com",
+    "source": "https://www.cornify.com/about",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 2,
+    "rating": "G"
+  },
+  {
+    "id": "camelcamelcamel",
+    "cat": "web",
+    "prompt": "camelcamelcamel.com",
+    "ask": "What is this website?",
+    "truth": "A free price tracker that charts the price history of Amazon products and emails you when one gets cheaper.",
+    "more": "Its browser add-on is called the Camelizer. It follows Amazon's stores in eight countries, including Japan, Germany and Canada.",
+    "key": [
+      "price",
+      "tracker",
+      "shopping",
+      "alert",
+      "history"
+    ],
+    "clues": [
+      "It's a free tool for online shoppers.",
+      "It draws charts of how much things have cost over time.",
+      "Pick something on the online store named after a river, and it emails you when the price drops."
+    ],
+    "decoys": [
+      "A desert tour company offering overnight camel treks in Morocco, with a discount for groups of three riders.",
+      "A charity that rescues overworked camels and pays for traveling vets to treat them across North Africa.",
+      "A kids' learning site full of camel facts, games and coloring pages, covering animals with one hump or two."
+    ],
+    "url": "https://camelcamelcamel.com",
+    "source": "https://camelcamelcamel.com/about",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 2,
+    "rating": "G"
+  },
+  {
+    "id": "window-swap",
+    "cat": "web",
+    "prompt": "window-swap.com",
+    "ask": "What happens on this website?",
+    "truth": "It plays recorded views out of real people's windows around the world, sent in by the people who live there.",
+    "more": "It calls itself 'the calmest place on the internet'. Anyone can film the view from their own window and submit it.",
+    "key": [
+      "window",
+      "view",
+      "video",
+      "world",
+      "strangers"
+    ],
+    "clues": [
+      "It's a calm site for taking a short break.",
+      "Each click takes you to a different city and a different room.",
+      "You look through a stranger's glass at their street, garden or skyline."
+    ],
+    "decoys": [
+      "It books a window fitter who replaces your old single-pane windows with double glazing for a flat fee.",
+      "It matches families who want to swap homes with strangers abroad for a holiday, with no rent paid.",
+      "It lets neighbors trade used doors, windows and other building materials instead of sending them to the dump."
+    ],
+    "url": "https://www.window-swap.com",
+    "source": "https://www.window-swap.com/",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 2,
+    "rating": "G"
+  },
+  {
+    "id": "radio-garden",
+    "cat": "web",
+    "prompt": "radio.garden",
+    "ask": "What happens on this website?",
+    "truth": "You spin a globe covered in dots; click one and you hear a live radio station broadcasting from that place.",
+    "more": "Station owners add themselves through a submission form, so in seconds you can hop from a station in Japan to one in southern Italy.",
+    "key": [
+      "radio",
+      "globe",
+      "stations",
+      "live",
+      "listen"
+    ],
+    "clues": [
+      "It's a free way to listen to something.",
+      "You navigate it by turning the whole planet.",
+      "Pick almost any city and hear what its local stations are broadcasting right now."
+    ],
+    "decoys": [
+      "You phone in to a weekly gardening show, and experts on air answer your questions about pests and roses.",
+      "You pick a houseplant from a list, and it streams soothing music said to help that plant grow faster.",
+      "You click a vegetable on a garden map and hear an audio guide to planting and growing it."
+    ],
+    "url": "https://radio.garden",
+    "source": "https://radio.garden/browse",
+    "checked": "2026-10-06",
+    "fun": 5,
+    "difficulty": 2,
+    "rating": "G"
+  },
+  {
+    "id": "neverssl",
+    "cat": "web",
+    "prompt": "neverssl.com",
+    "ask": "What is this website?",
+    "truth": "A deliberately unencrypted page that helps hotel and cafe Wi-Fi show its login screen when nothing else will load.",
+    "more": "Secure https sites stop public Wi-Fi from redirecting you to its sign-in page. This plain old http page lets the redirect through.",
+    "key": [
+      "wifi",
+      "hotel",
+      "insecure",
+      "page",
+      "connect"
+    ],
+    "clues": [
+      "It's a practical tool, handiest when you're traveling.",
+      "It's for moments when you're connected to a network but nothing loads.",
+      "Type it in at a cafe, and the network's sign-in page finally pops up."
+    ],
+    "decoys": [
+      "A security watchdog that publicly lists big websites still sending visitors' passwords and data without any encryption.",
+      "A browser add-on that refuses to open any website lacking a valid security certificate, to keep you safe.",
+      "A hacking practice range where security students learn to break into deliberately weak websites without breaking laws."
+    ],
+    "url": "http://neverssl.com",
+    "source": "http://neverssl.com/online/",
+    "checked": "2026-10-06",
+    "fun": 3,
+    "difficulty": 3,
+    "rating": "G"
+  },
+  {
+    "id": "icanhazip",
+    "cat": "web",
+    "prompt": "icanhazip.com",
+    "ask": "What is this website?",
+    "truth": "A bare page that shows your connection's public IP address as plain text, and nothing else.",
+    "more": "The name is lolcat speak. Major Hayden built it in 2009; it got so busy he handed it to Cloudflare. It now fields billions of requests a day.",
+    "key": [
+      "address",
+      "internet",
+      "number",
+      "computer"
+    ],
+    "clues": [
+      "It's a no-frills tool that system administrators rely on.",
+      "Its name is written in the broken English of a 2000s cat meme.",
+      "It answers one question: what number does the internet see your connection as?"
+    ],
+    "decoys": [
+      "A meme archive of cats asking for cheeseburgers and other snacks in broken English.",
+      "A free tool that zips up your files into a smaller archive before you email them.",
+      "A lookup site that warns you if your ZIP code has a hazardous waste site nearby."
+    ],
+    "url": "https://icanhazip.com",
+    "source": "https://major.io/p/a-new-future-for-icanhazip",
+    "checked": "2026-10-06",
+    "fun": 3,
+    "difficulty": 3,
+    "rating": "G"
+  },
+  {
+    "id": "bongo-cat",
+    "cat": "web",
+    "prompt": "bongo.cat",
+    "ask": "What happens on this website?",
+    "truth": "Press keys on your keyboard and a cartoon cat taps out drum beats on a pair of bongos.",
+    "more": "Bongo Cat began as a meme by DitzyFlama using StrayRogue's drawing of a cat. Fans share songs written as strings of key numbers.",
+    "key": [
+      "cat",
+      "drums",
+      "bongo",
+      "keyboard",
+      "music"
+    ],
+    "clues": [
+      "It's a musical toy starring an internet-famous animal.",
+      "Your keyboard becomes a set of percussion pads.",
+      "A simple drawing of a pet slaps two small drums in time with your typing."
+    ],
+    "decoys": [
+      "Press play and a drum teacher walks you through your first bongo rhythms in short video lessons.",
+      "Press a button and a striped forest antelope called a bongo appears, with facts about where it lives.",
+      "Press keys on your keyboard and a cartoon cat meows a different note for each letter you type."
+    ],
+    "url": "https://bongo.cat",
+    "source": "https://github.com/Externalizable/bongo.cat",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 1,
+    "rating": "G"
+  },
+  {
+    "id": "http-cat",
+    "cat": "web",
+    "prompt": "http.cat",
+    "ask": "What is this website?",
+    "truth": "A set of cat pictures, one for each web status code, like 404 Not Found, for developers to link to.",
+    "more": "Put a code after the slash, like http.cat/404, and you get that code's cat. The original cat images are by Tomomi Imura.",
+    "key": [
+      "cat",
+      "error",
+      "code",
+      "pictures",
+      "website"
+    ],
+    "clues": [
+      "It's a cute reference site for people who build websites.",
+      "It covers the numbers you see when a web page goes wrong, like 404 or 500.",
+      "Each of those numbers gets its own photo of a feline."
+    ],
+    "decoys": [
+      "A rescue group's adoption page listing cats near you, with photos, ages, temperaments and a short application form.",
+      "A live webcam streaming a busy cat cafe around the clock, with feeding times posted for viewers to tune in.",
+      "A cat-care help line where volunteer vets answer owners' questions about feeding, scratching, hairballs and litter boxes."
+    ],
+    "url": "https://http.cat",
+    "source": "https://github.com/httpcats/http.cat",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 2,
+    "rating": "G"
+  },
+  {
+    "id": "dog-ceo",
+    "cat": "web",
+    "prompt": "dog.ceo",
+    "ask": "What is this website?",
+    "truth": "A free service that gives programmers random dog photos on request, sorted by breed and sub-breed.",
+    "more": "It covers nearly 100 breeds. Dog owners can add photos of their own pets by submitting them to its open image collection.",
+    "key": [
+      "dog",
+      "photos",
+      "breeds",
+      "programmers",
+      "random"
+    ],
+    "clues": [
+      "It's a tool for software developers, with a playful theme.",
+      "Ask it the right way and it answers with a picture.",
+      "Request a breed, like a pug or a husky, and you get a random photo of one."
+    ],
+    "decoys": [
+      "A small startup's website starring its official chief executive, the founder's golden retriever, in every photo.",
+      "A leadership course that teaches managers to run teams the way dogs run a pack.",
+      "A dog-walking app that lets busy executives book a walker for their dog during the work day."
+    ],
+    "url": "https://dog.ceo",
+    "source": "https://github.com/ElliottLandsborough/dog-ceo-api",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 3,
+    "rating": "G"
+  },
+  {
+    "id": "wttr-in",
+    "cat": "web",
+    "prompt": "wttr.in",
+    "ask": "What is this website?",
+    "truth": "A weather forecast you fetch from a computer's command line; it draws the forecast in plain text characters.",
+    "more": "Add a place after the slash, like wttr.in/London. Ask for wttr.in/Moon and it shows the current phase of the moon instead.",
+    "key": [
+      "weather",
+      "forecast",
+      "terminal",
+      "text",
+      "command"
+    ],
+    "clues": [
+      "It's a free tool popular with programmers, and its name is missing a few letters.",
+      "You can use it without a browser by typing one short command.",
+      "It tells you whether to pack an umbrella, drawn in plain text."
+    ],
+    "decoys": [
+      "A word game where you guess well-known phrases and movie titles with all of their vowels removed.",
+      "A dashboard of water levels in India's big reservoirs and rivers, updated every day from official data.",
+      "An Indian online shop selling water filters, purifiers and spare cartridges for home kitchens, with free delivery."
+    ],
+    "url": "https://wttr.in",
+    "source": "https://github.com/chubin/wttr.in",
+    "checked": "2026-10-06",
+    "fun": 3,
+    "difficulty": 3,
+    "rating": "G"
+  },
+  {
+    "id": "party-parrot",
+    "cat": "web",
+    "prompt": "cultofthepartyparrot.com",
+    "ask": "What is this website?",
+    "truth": "A gallery of hundreds of 'party parrot' GIFs, a head-bobbing, color-flashing parrot, made to use as chat emoji.",
+    "more": "It grew from one original party parrot. Fans keep adding versions with costumes and themes, packaged for Slack and Discord.",
+    "key": [
+      "parrot",
+      "animated",
+      "dancing",
+      "chat",
+      "smiley"
+    ],
+    "clues": [
+      "It's a collection of tiny looping animations.",
+      "Office workers use its pictures to react to messages.",
+      "Every image shows the same bird bobbing its head while its colors flash."
+    ],
+    "decoys": [
+      "A tongue-in-cheek fan club for owners of talking parrots, complete with robes, rituals and membership cards.",
+      "A pet shop selling tiny party hats, toys and birthday cakes made especially for pet parrots.",
+      "A children's party service that brings trained talking parrots to birthday parties for a half-hour show."
+    ],
+    "url": "https://cultofthepartyparrot.com",
+    "source": "https://github.com/jmhobbs/cultofthepartyparrot.com",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 2,
+    "rating": "G"
+  },
+  {
+    "id": "this-word-does-not-exist",
+    "cat": "web",
+    "prompt": "thisworddoesnotexist.com",
+    "ask": "What happens on this website?",
+    "truth": "Each visit shows an invented word with a made-up definition and example sentence, all written by an AI model.",
+    "more": "Its creator trained a version of GPT-2 to coin words. The same project can also invent a word to fit a definition you write.",
+    "key": [
+      "word",
+      "fake",
+      "definition",
+      "dictionary",
+      "imaginary"
+    ],
+    "clues": [
+      "It's a reference page with a twist.",
+      "Every entry is laid out like a real dictionary entry.",
+      "You won't find any of its entries in a real dictionary, because a computer dreamed them up."
+    ],
+    "decoys": [
+      "Each visit shows a real English word that dictionaries have dropped because nobody has used it in decades.",
+      "Each visit shows a word from another language that has no English equivalent, with a short explanation.",
+      "Each visit shows a rare real word with three fake definitions, and you guess which one is true."
+    ],
+    "url": "https://www.thisworddoesnotexist.com",
+    "source": "https://github.com/turtlesoupy/this-word-does-not-exist",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 2,
+    "rating": "G"
+  },
+  {
+    "id": "a-dark-room",
+    "cat": "web",
+    "prompt": "adarkroom.doublespeakgames.com",
+    "ask": "What happens on this website?",
+    "truth": "A minimalist text game in your browser that begins with you waking in the dark and lighting a fire.",
+    "more": "Its first words are 'awake. head throbbing. vision blurry. come light the fire.' It later came out on phones and on Steam.",
+    "key": [
+      "game",
+      "text",
+      "fire",
+      "adventure",
+      "dark"
+    ],
+    "clues": [
+      "It's something you play, with almost no pictures.",
+      "It starts out nearly empty: a few words and a button.",
+      "Your first job is to get a flame going; much more appears as you keep at it."
+    ],
+    "decoys": [
+      "A photography club's step-by-step guide to developing black-and-white film by hand in a darkroom at home.",
+      "An escape-room company's booking page for pitch-black rooms that you solve by touch and sound alone.",
+      "A sleep app that plays rain sounds over a dark screen and dims your phone to help you nod off."
+    ],
+    "url": "http://adarkroom.doublespeakgames.com",
+    "source": "https://github.com/doublespeakgames/adarkroom",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 2,
+    "rating": "G"
+  },
+  {
+    "id": "blender-org",
+    "cat": "web",
+    "prompt": "blender.org",
+    "ask": "What is this website?",
+    "truth": "The home of Blender, free open-source software for building 3D models and animations, from modeling to rendering.",
+    "more": "It covers the whole 3D pipeline, including rigging, simulation, motion tracking and video editing, and anyone can download it at no cost.",
+    "key": [
+      "animation",
+      "software",
+      "modeling",
+      "rendering",
+      "free"
+    ],
+    "clues": [
+      "It's free software built by a large open community.",
+      "Animators and game artists use it every day.",
+      "With it you can sculpt a character, give it a skeleton and render a short film."
+    ],
+    "decoys": [
+      "A kitchen appliance maker selling high-speed blenders for smoothies, soups and nut butters, with a long warranty.",
+      "A smoothie recipe community where members share and rate their favorite fruit and vegetable blends each week.",
+      "A coffee roaster that mixes custom bean blends to your taste and ships them fresh every week."
+    ],
+    "url": "https://www.blender.org",
+    "source": "https://github.com/blender/blender",
+    "checked": "2026-10-06",
+    "fun": 3,
+    "difficulty": 2,
+    "rating": "G"
+  },
+  {
+    "id": "python-org",
+    "cat": "web",
+    "prompt": "python.org",
+    "ask": "What is this website?",
+    "truth": "The home of Python, a programming language whose name comes from the comedy show Monty Python's Flying Circus.",
+    "more": "Guido van Rossum started writing it over the 1989 Christmas holidays, and was reading Monty Python scripts at the time.",
+    "key": [
+      "programming",
+      "language",
+      "code",
+      "software",
+      "comedy"
+    ],
+    "clues": [
+      "It's the official home of a free tool for writing software.",
+      "Its name has nothing to do with reptiles.",
+      "Its creator named it after a British TV comedy troupe."
+    ],
+    "decoys": [
+      "A reptile rescue that rehomes unwanted pet pythons and teaches new owners how to handle snakes safely.",
+      "A conservation project that tracks invasive Burmese pythons in the Florida Everglades and pays hunters to remove them.",
+      "A fan archive of every sketch from the Monty Python TV series and films, with scripts and photos."
+    ],
+    "url": "https://www.python.org",
+    "source": "https://github.com/python/cpython/blob/main/Doc/faq/general.rst",
+    "checked": "2026-10-06",
+    "fun": 3,
+    "difficulty": 1,
+    "rating": "G"
+  },
+  {
+    "id": "pi-hole",
+    "cat": "web",
+    "prompt": "pi-hole.net",
+    "ask": "What is this website?",
+    "truth": "Free software that blocks ads for every device on a home network, often run on a tiny Raspberry Pi computer.",
+    "more": "It describes itself as 'a black hole for Internet advertisements'. It works by refusing to look up the addresses of known ad servers.",
+    "key": [
+      "ads",
+      "blocker",
+      "network",
+      "software",
+      "internet"
+    ],
+    "clues": [
+      "It's free software that people set up at home.",
+      "It protects phones, laptops and even smart TVs all at once.",
+      "Install it on a credit-card-sized computer and banner ads vanish across the house."
+    ],
+    "decoys": [
+      "A family bakery's mail-order shop that ships fresh fruit pies anywhere in the country, packed to survive the trip.",
+      "A club for people who memorize the digits of pi, with online contests, tips and a world leaderboard.",
+      "A space science site for children that explains black holes and how they form, with games and diagrams."
+    ],
+    "url": "https://pi-hole.net",
+    "source": "https://github.com/pi-hole/pi-hole",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 3,
+    "rating": "G"
+  },
+  {
+    "id": "jellyfin",
+    "cat": "web",
+    "prompt": "jellyfin.org",
+    "ask": "What is this website?",
+    "truth": "Free software that streams your own movies, shows and music from a home computer to your TV or phone.",
+    "more": "It descends from version 3.5.2 of Emby, a rival media server, and promises no premium licenses or paid features.",
+    "key": [
+      "streaming",
+      "movies",
+      "server",
+      "software",
+      "media"
+    ],
+    "clues": [
+      "It's free software for the living room.",
+      "People use it in place of paid services like Plex.",
+      "Put your movie files on one computer and watch them on any screen in the house."
+    ],
+    "decoys": [
+      "An aquarium society's guide to keeping jellyfish at home, with advice on special round tanks and feeding.",
+      "A marine research lab's live map of jellyfish blooms along the coast, with daily sting warnings for swimmers.",
+      "A candy shop selling gummy jellyfish, sour sharks and other sea-themed sweets by the pound, shipped nationwide."
+    ],
+    "url": "https://jellyfin.org",
+    "source": "https://github.com/jellyfin/jellyfin",
+    "checked": "2026-10-06",
+    "fun": 3,
+    "difficulty": 3,
+    "rating": "G"
+  },
+  {
+    "id": "octoprint",
+    "cat": "web",
+    "prompt": "octoprint.org",
+    "ask": "What is this website?",
+    "truth": "Free software that gives a home 3D printer its own web page, so you can control prints from a browser.",
+    "more": "It's open-source and kept going by donations from its users, with a library of plugins that add extra features.",
+    "key": [
+      "printer",
+      "software",
+      "control",
+      "browser",
+      "printing"
+    ],
+    "clues": [
+      "It's free software for hobbyists and makers.",
+      "It talks to a machine that builds objects layer by layer.",
+      "Instead of walking to the workshop, you start and check on prints from your laptop."
+    ],
+    "decoys": [
+      "An aquarium's live octopus webcam, with free printable coloring pages of the octopus and its sea-creature neighbors.",
+      "A print shop that specializes in eight-color posters and fine-art prints, with next-day delivery across the country.",
+      "A kids' science site explaining how octopuses squirt clouds of ink to escape from predators, with videos."
+    ],
+    "url": "https://octoprint.org",
+    "source": "https://github.com/OctoPrint/OctoPrint",
+    "checked": "2026-10-06",
+    "fun": 3,
+    "difficulty": 3,
+    "rating": "G"
+  },
+  {
+    "id": "handbrake",
+    "cat": "web",
+    "prompt": "handbrake.fr",
+    "ask": "What is this website?",
+    "truth": "A free program that converts video files into formats that play on phones, tablets, game consoles and web browsers.",
+    "more": "It's open-source, released under the GNU GPL, and runs on Linux, Mac and Windows. Its own description calls it a video 'transcoder'.",
+    "key": [
+      "video",
+      "converter",
+      "software",
+      "convert",
+      "phones"
+    ],
+    "clues": [
+      "It's a free desktop program.",
+      "People use it when a video file won't play on their device.",
+      "Feed it a big movie file and it turns out a version your phone can play."
+    ],
+    "decoys": [
+      "A French driving school's online guide to hill starts and parking, for learners preparing for the practical test.",
+      "A car parts shop in Lyon selling brake pads, brake cables and handbrake levers for older French cars.",
+      "A French road safety campaign reminding drivers to pull the handbrake every time they park on a hill."
+    ],
+    "url": "https://handbrake.fr",
+    "source": "https://github.com/HandBrake/HandBrake",
+    "checked": "2026-10-06",
+    "fun": 2,
+    "difficulty": 3,
+    "rating": "G"
+  }
+]

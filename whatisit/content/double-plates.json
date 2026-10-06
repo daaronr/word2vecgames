@@ -1,0 +1,200 @@
+[
+ {
+  "id": "plate-altahol",
+  "cat": "double",
+  "kind": "plate",
+  "prompt": "ALTAHOL",
+  "raw": "ALTAHOL",
+  "ask": "What did the owner say it means?",
+  "truth": "Addicted to skiing at Alta, the Utah ski resort.",
+  "more": "The reviewer pulled it for resembling a rude word for a person. Approved.",
+  "key": [
+   "skiing",
+   "ski",
+   "addicted",
+   "mountain"
+  ],
+  "clues": [
+   "It's about a hobby.",
+   "Alta is a place.",
+   "Powder days in Utah."
+  ],
+  "decoys": [
+   "An alcoholic beverage company",
+   "A choir's alto section",
+   "An altar-boy reunion"
+  ],
+  "dmv": "approved",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "PG-13"
+ },
+ {
+  "id": "plate-rx4play",
+  "cat": "double",
+  "kind": "plate",
+  "prompt": "RX4PLAY",
+  "raw": "RX4PLAY",
+  "ask": "What did the owner say it means?",
+  "truth": "The owner is a pharmacist, and this is the family's fun car.",
+  "more": "The reviewer read it as something else entirely. Denied.",
+  "key": [
+   "pharmacist",
+   "fun",
+   "family",
+   "medicine"
+  ],
+  "clues": [
+   "It's about the owner's job.",
+   "RX is a symbol on prescriptions.",
+   "Work hard, play hard."
+  ],
+  "decoys": [
+   "A video game store",
+   "A theatre company",
+   "A sports physiotherapist"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 5,
+  "difficulty": 2,
+  "rating": "PG-13"
+ },
+ {
+  "id": "plate-nyomouf",
+  "cat": "double",
+  "kind": "plate",
+  "prompt": "NYOMOUF",
+  "raw": "NYOMOUF",
+  "ask": "What did the owner say it means?",
+  "truth": "The owner is a dental hygienist: \"in your mouth\".",
+  "more": "Denied.",
+  "key": [
+   "dentist",
+   "teeth",
+   "mouth",
+   "dental"
+  ],
+  "clues": [
+   "It's about the owner's job.",
+   "Say it out loud.",
+   "Floss."
+  ],
+  "decoys": [
+   "A food critic",
+   "A New York chef",
+   "A speech therapist"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 2,
+  "rating": "PG-13"
+ },
+ {
+  "id": "plate-im-topls",
+  "cat": "double",
+  "kind": "plate",
+  "prompt": "IM TOPLS",
+  "raw": "IM TOPLS",
+  "ask": "What did the owner say it means?",
+  "truth": "The car is a convertible.",
+  "more": "The reviewer read it the other way. Approved anyway.",
+  "key": [
+   "convertible",
+   "car",
+   "roof",
+   "open"
+  ],
+  "clues": [
+   "It's about the car.",
+   "Summer driving.",
+   "No roof."
+  ],
+  "decoys": [
+   "A bartender",
+   "A spinning-top collector",
+   "A mountain climber at the summit"
+  ],
+  "dmv": "approved",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 5,
+  "difficulty": 1,
+  "rating": "PG-13"
+ },
+ {
+  "id": "plate-musknkl",
+  "cat": "double",
+  "kind": "plate",
+  "prompt": "MUSKNKL",
+  "raw": "MUSKNKL",
+  "ask": "What did the owner say it means?",
+  "truth": "The owner plays on a men's hockey team called the Moose Knuckles.",
+  "more": "The reviewer knew what a moose knuckle is. Denied.",
+  "key": [
+   "hockey",
+   "team",
+   "moose",
+   "ice"
+  ],
+  "clues": [
+   "It's about a sport.",
+   "A team name.",
+   "Sticks and pucks."
+  ],
+  "decoys": [
+   "A cologne brand",
+   "A Canadian wildlife guide",
+   "A boxing gym"
+  ],
+  "dmv": "denied",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "PG-13"
+ },
+ {
+  "id": "plate-pntr8rs",
+  "cat": "double",
+  "kind": "plate",
+  "prompt": "PNTR8RS",
+  "raw": "PNTR8RS",
+  "ask": "What did the owner say it means?",
+  "truth": "Panther trailers: the owner's motorhome is a Safari Panther.",
+  "more": "The reviewer noted it is not a trailer and that it looks like \"panty raiders\". Approved.",
+  "key": [
+   "camper",
+   "panther",
+   "travel",
+   "caravan"
+  ],
+  "clues": [
+   "It's about the vehicle.",
+   "A big cat.",
+   "Holidays on wheels."
+  ],
+  "decoys": [
+   "A pirate-themed party bus",
+   "A painter's van",
+   "A home-security company"
+  ],
+  "dmv": "approved",
+  "url": "https://github.com/veltman/ca-license-plates",
+  "source": "https://github.com/veltman/ca-license-plates (applications.csv, CA DMV 2015-16)",
+  "checked": "2026-10-06",
+  "fun": 4,
+  "difficulty": 3,
+  "rating": "PG-13"
+ }
+]

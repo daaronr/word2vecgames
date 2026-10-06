@@ -1,0 +1,496 @@
+[
+  {
+    "id": "exercising-a-cat",
+    "cat": "patent",
+    "prompt": "Method of exercising a cat",
+    "number": "US 5,443,036",
+    "year": 1995,
+    "ask": "What does this invention do?",
+    "truth": "A hand-held laser pointer: you sweep its bright dot across floor and walls so the cat chases it.",
+    "more": "Claim 4 even sets the dot's speed, 5 to 25 feet per second: enough to exert the cat, the patent says, without discouraging the chase.",
+    "key": [
+      "laser",
+      "pointer",
+      "cat",
+      "chase",
+      "dot"
+    ],
+    "clues": [
+      "It is meant for indoor pets that don't get much exercise.",
+      "The owner can stay on the sofa while the pet does all the running.",
+      "A small bright spot that can never quite be caught."
+    ],
+    "decoys": [
+      "A cat-sized treadmill with a food bowl at the front that inches forward as the cat walks.",
+      "A feather on a long springy wand that the owner flicks and drags for the cat to pounce on.",
+      "A battery mouse that zigzags across the floor on a timer while the owner is out at work."
+    ],
+    "url": "https://patents.google.com/patent/US5443036A/en",
+    "source": "https://patentimages.storage.googleapis.com/pdfs/US5443036.pdf",
+    "checked": "2026-10-06",
+    "fun": 5,
+    "difficulty": 2,
+    "rating": "G"
+  },
+  {
+    "id": "swinging-on-a-swing",
+    "cat": "patent",
+    "prompt": "Method of swinging on a swing",
+    "number": "US 6,368,227",
+    "year": 2002,
+    "ask": "What does this invention do?",
+    "truth": "Swinging side to side, parallel to the branch, by pulling alternately on one chain and then the other.",
+    "more": "The inventor and his sister call it 'Tarzan' swinging, and a jungle yell is optional. A 2003 re-examination cancelled all four claims.",
+    "key": [
+      "swing",
+      "sideways",
+      "chain",
+      "pull"
+    ],
+    "clues": [
+      "Playground equipment is involved, and so is the inventor's sister.",
+      "It is about the direction you travel in.",
+      "Pull on one side, then the other."
+    ],
+    "decoys": [
+      "Swinging higher by leaning back and pumping your legs hard at the top of each forward arc.",
+      "Twisting the seat round and round, then letting go so the unwinding chains spin you fast.",
+      "Standing on the seat instead of sitting, and bending your knees to push the swing along."
+    ],
+    "url": "https://patents.google.com/patent/US6368227B1/en",
+    "source": "https://patentimages.storage.googleapis.com/pdfs/US6368227.pdf",
+    "checked": "2026-10-06",
+    "fun": 5,
+    "difficulty": 2,
+    "rating": "G"
+  },
+  {
+    "id": "animal-ear-protectors",
+    "cat": "patent",
+    "prompt": "Animal ear protectors",
+    "number": "US 4,233,942",
+    "year": 1980,
+    "ask": "What does this invention do?",
+    "truth": "Plastic tubes strapped over a long-eared dog's ears, holding them out sideways so they stay out of its food bowl.",
+    "more": "The drawing shows a poodle. The claim requires the ear tips to end up farther apart than the width of the animal's head.",
+    "key": [
+      "ears",
+      "dog",
+      "food",
+      "tube",
+      "bowl"
+    ],
+    "clues": [
+      "It is for dogs with long, droopy ears.",
+      "It matters most at dinner time.",
+      "The drawing shows a poodle with its ears held out like wings."
+    ],
+    "decoys": [
+      "Padded ear muffs for dogs that block out the noise of fireworks and thunderstorms on loud nights.",
+      "Plastic ear tags for cattle, coated with insect repellent to keep flies away all summer long.",
+      "A knitted hood for small dogs that keeps their ears warm and dry on cold winter walks."
+    ],
+    "url": "https://patents.google.com/patent/US4233942A/en",
+    "source": "https://patentimages.storage.googleapis.com/pdfs/US4233942.pdf",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 2,
+    "rating": "G"
+  },
+  {
+    "id": "animal-toy",
+    "cat": "patent",
+    "prompt": "Animal toy",
+    "number": "US 6,360,693",
+    "year": 2002,
+    "ask": "What does this invention do?",
+    "truth": "A stick: a branch-shaped dog toy for fetching and chewing, with bark texture, that floats.",
+    "more": "It has stick-like rings on one end and simulated bark along its length. A 2006 re-examination cancelled all 20 claims.",
+    "key": [
+      "stick",
+      "branch",
+      "dog",
+      "fetch",
+      "chew"
+    ],
+    "clues": [
+      "It is for dogs, mostly for playing fetch.",
+      "Dogs usually find these for free in the park.",
+      "It floats, and it has bark but no bite."
+    ],
+    "decoys": [
+      "A squeaky rubber ball with a bell inside, sized for a dog to carry in its mouth.",
+      "A rope toy with knotted ends for tug-of-war between a dog and its owner.",
+      "A puzzle box that hides treats, so a bored dog has to slide panels to find them."
+    ],
+    "url": "https://patents.google.com/patent/US6360693B1/en",
+    "source": "https://patentimages.storage.googleapis.com/pdfs/US6360693.pdf",
+    "checked": "2026-10-06",
+    "fun": 5,
+    "difficulty": 2,
+    "rating": "G"
+  },
+  {
+    "id": "concealing-baldness",
+    "cat": "patent",
+    "prompt": "Method of concealing partial baldness",
+    "number": "US 4,022,227",
+    "year": 1977,
+    "ask": "What does this invention do?",
+    "truth": "The comb-over: split the remaining hair into three sections and fold each over the bald patch in turn, with hair spray.",
+    "more": "The patent says to grow the hair 3 to 4 inches long first. Claim 4 names the object held over each layer while styling: a hand.",
+    "key": [
+      "comb",
+      "bald",
+      "hair",
+      "fold",
+      "spray"
+    ],
+    "clues": [
+      "It is a method, so there is nothing to buy.",
+      "It uses only what is already on the person's head, plus hair spray.",
+      "Three sections, each folded over the last."
+    ],
+    "decoys": [
+      "A lightweight hairpiece that clips onto the remaining hair at the sides and blends in with it.",
+      "A tinted powder dusted onto the scalp so that bare patches look like closely cropped hair.",
+      "A cap with a fringe of real hair sewn inside the brim, so only the front shows."
+    ],
+    "url": "https://patents.google.com/patent/US4022227A/en",
+    "source": "https://patentimages.storage.googleapis.com/pdfs/US4022227.pdf",
+    "checked": "2026-10-06",
+    "fun": 5,
+    "difficulty": 1,
+    "rating": "G"
+  },
+  {
+    "id": "saluting-device",
+    "cat": "patent",
+    "prompt": "Saluting device",
+    "number": "US 556,248",
+    "year": 1896,
+    "ask": "What does this invention do?",
+    "truth": "A hat with clockwork inside that lifts itself, spins and settles back on your head when you bow.",
+    "more": "A wound spring drives the gears. The inventor also pitched it for advertising: a sign on the self-moving hat would catch crowds' attention.",
+    "key": [
+      "hat",
+      "tip",
+      "bow",
+      "lift",
+      "greet"
+    ],
+    "clues": [
+      "It is worn, and it is about good manners.",
+      "It was meant for greeting people in the street without using your hands.",
+      "Bow your head and something on it rises and turns by itself."
+    ],
+    "decoys": [
+      "A spring-loaded arm worn on the shoulder that snaps into a military salute at a button press.",
+      "A flagpole bracket for parades that dips the flag automatically as each dignitary walks past.",
+      "A bicycle bell that plays a short, polite fanfare whenever the rider meets someone on the road."
+    ],
+    "url": "https://patents.google.com/patent/US556248A/en",
+    "source": "https://patentimages.storage.googleapis.com/pdfs/US556248.pdf",
+    "checked": "2026-10-06",
+    "fun": 5,
+    "difficulty": 2,
+    "rating": "G"
+  },
+  {
+    "id": "waking-from-sleep",
+    "cat": "patent",
+    "prompt": "Device for waking persons from sleep",
+    "number": "US 256,265",
+    "year": 1882,
+    "ask": "What does this invention do?",
+    "truth": "An alarm-triggered frame that drops dangling cords tipped with cork blocks onto the sleeper's face.",
+    "more": "Bells fail, the inventor argued, because sleepers get used to them. Hooked to a self-lighting gas burner, it could also light the room.",
+    "key": [
+      "drop",
+      "face",
+      "cork",
+      "alarm",
+      "wake"
+    ],
+    "clues": [
+      "It works with an ordinary alarm clock.",
+      "The inventor thought people get used to the sound of bells.",
+      "It hangs on a cord directly above the pillow."
+    ],
+    "decoys": [
+      "An alarm clock with two bells and a heavier hammer, loud enough for the deepest sleepers.",
+      "A bed frame that tilts at the set hour and slides the sleeper gently onto the floor.",
+      "A clock that opens a small tank and sprinkles cold water onto the pillow at the set time."
+    ],
+    "url": "https://patents.google.com/patent/US256265A/en",
+    "source": "https://patentimages.storage.googleapis.com/pdfs/US256265.pdf",
+    "checked": "2026-10-06",
+    "fun": 5,
+    "difficulty": 2,
+    "rating": "G"
+  },
+  {
+    "id": "pet-display-clothing",
+    "cat": "patent",
+    "prompt": "Pet display clothing",
+    "number": "US 5,901,666",
+    "year": 1999,
+    "ask": "What does this invention do?",
+    "truth": "A clear plastic vest with tunnels, so pet hamsters or mice can crawl around your body in public view.",
+    "more": "Printed scenes, such as a mouse tea party, partly hide the tunnels. Off duty, the belt version can sit on a table as the pets' home.",
+    "key": [
+      "pet",
+      "tunnel",
+      "vest",
+      "mouse",
+      "rodent"
+    ],
+    "clues": [
+      "It is something you wear.",
+      "Small rodents are involved.",
+      "Onlookers can watch them travel around the wearer's chest and back."
+    ],
+    "decoys": [
+      "Matching outfits for owners and their dogs, printed with the same pattern for shows and parades.",
+      "A coat with a deep zipped pouch on the chest for carrying a small dog around town.",
+      "A belt with clear pockets for showing off pet goldfish in small sealed bags of water."
+    ],
+    "url": "https://patents.google.com/patent/US5901666A/en",
+    "source": "https://patentimages.storage.googleapis.com/pdfs/US5901666.pdf",
+    "checked": "2026-10-06",
+    "fun": 5,
+    "difficulty": 3,
+    "rating": "G"
+  },
+  {
+    "id": "centrifugal-birth",
+    "cat": "patent",
+    "prompt": "Apparatus for facilitating the birth of a child by centrifugal force",
+    "number": "US 3,216,423",
+    "year": 1965,
+    "ask": "What does this invention do?",
+    "truth": "A motorised spinning table for women in labour, head at the centre, so the spin helps deliver the baby.",
+    "more": "When the baby lands in a cotton-lined net, its weight trips a switch that stops the motor.",
+    "key": [
+      "birth",
+      "spin",
+      "baby",
+      "table",
+      "mother"
+    ],
+    "clues": [
+      "It needs a concrete floor, a motor and a hand brake.",
+      "It is meant for the delivery room.",
+      "The patient's head sits at the centre of rotation."
+    ],
+    "decoys": [
+      "A rocking cradle driven by a spinning flywheel that keeps a newborn moving gently all night.",
+      "A rotating stall that helps cows deliver calves on large dairy farms by turning them slowly.",
+      "A hospital bed that slowly turns so that nurses can reach the mother from every side."
+    ],
+    "url": "https://patents.google.com/patent/US3216423A/en",
+    "source": "https://patentimages.storage.googleapis.com/pdfs/US3216423.pdf",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 1,
+    "rating": "PG"
+  },
+  {
+    "id": "anti-gravity-illusion",
+    "cat": "patent",
+    "prompt": "Method and means for creating anti-gravity illusion",
+    "number": "US 5,255,452",
+    "year": 1993,
+    "ask": "What does this invention do?",
+    "truth": "Shoes with heel slots that hook onto pegs rising from the stage, letting a dancer lean far forward without falling.",
+    "more": "Co-inventor Michael J. Jackson had done the lean on video using a harness and cables, a method that could not work in live shows.",
+    "key": [
+      "lean",
+      "shoes",
+      "hook",
+      "stage",
+      "dance"
+    ],
+    "clues": [
+      "A famous entertainer is one of the inventors.",
+      "It involves special shoes and holes in the stage floor.",
+      "It made a gravity-defying dance move possible in live shows."
+    ],
+    "decoys": [
+      "A hidden harness on thin wires that lifts a performer so they appear to float above the stage.",
+      "Magnetic boots that let astronauts stand and work on a spacecraft's metal floor without drifting off.",
+      "A room built on a tilt so that balls appear to roll uphill for amazed visitors."
+    ],
+    "url": "https://patents.google.com/patent/US5255452A/en",
+    "source": "https://patentimages.storage.googleapis.com/pdfs/US5255452.pdf",
+    "checked": "2026-10-06",
+    "fun": 5,
+    "difficulty": 2,
+    "rating": "G"
+  },
+  {
+    "id": "package-saver",
+    "cat": "patent",
+    "prompt": "Package saver",
+    "number": "US 4,498,586",
+    "year": 1985,
+    "ask": "What does this invention do?",
+    "truth": "The little three-legged plastic table in a pizza box that keeps the lid from sagging onto the pizza.",
+    "more": "It is moulded from heat-resistant plastic good to about 500°F, with thin legs so they barely mark the food.",
+    "key": [
+      "pizza",
+      "box",
+      "lid",
+      "table",
+      "plastic"
+    ],
+    "clues": [
+      "You have probably thrown one away without a thought.",
+      "It arrives with a takeaway meal.",
+      "It stands on three legs in a flat cardboard box."
+    ],
+    "decoys": [
+      "A cardboard corner guard that stops parcels being crushed when they are stacked in the post.",
+      "A plastic clip that reseals a half-eaten bag of snacks so that the contents stay crisp.",
+      "A padded envelope lined with air pockets that protects fragile items sent through the mail."
+    ],
+    "url": "https://patents.google.com/patent/US4498586A/en",
+    "source": "https://patentimages.storage.googleapis.com/pdfs/US4498586.pdf",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 3,
+    "rating": "G"
+  },
+  {
+    "id": "floppy-filaments",
+    "cat": "patent",
+    "prompt": "Generally spherical object with floppy filaments to promote sure capture",
+    "number": "US 4,756,529",
+    "year": 1988,
+    "ask": "What does this invention do?",
+    "truth": "A Koosh ball: a ball of floppy rubber strands that won't bounce away and is easy to catch.",
+    "more": "The strands collapse on impact, so it won't bounce, and thread between the catcher's fingers. One drawing styles it for 'humorous, critter-like visual appeal'.",
+    "key": [
+      "ball",
+      "rubber",
+      "strands",
+      "catch",
+      "toy"
+    ],
+    "clues": [
+      "It is a children's toy from the late 1980s.",
+      "It is designed for people who find catching hard.",
+      "Hundreds of floppy rubber strands sprout from a core."
+    ],
+    "decoys": [
+      "A fishing lure with dangling rubber strands that wiggle in the water and attract fish.",
+      "A mop head of loose cotton strands that traps dust and hair from the floor.",
+      "A net on a long pole for scooping up tennis balls without having to bend down."
+    ],
+    "url": "https://patents.google.com/patent/US4756529A/en",
+    "source": "https://patentimages.storage.googleapis.com/pdfs/US4756529.pdf",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 2,
+    "rating": "G"
+  },
+  {
+    "id": "players-are-pieces",
+    "cat": "patent",
+    "prompt": "Apparatus for playing a game wherein the players constitute the game pieces",
+    "number": "US 3,454,279",
+    "year": 1969,
+    "ask": "What does this invention do?",
+    "truth": "Twister: players put hands and feet on coloured spots, as a spinner dictates, until someone falls over.",
+    "more": "The patent has players entwine 'in a pretzel-like manner' around opponents, with a referee working the spinner. The first to fall loses.",
+    "key": [
+      "game",
+      "mat",
+      "spinner",
+      "hand",
+      "foot"
+    ],
+    "clues": [
+      "It is a party game.",
+      "There is a spinner and a large mat with rows of coloured circles.",
+      "Left foot, red!"
+    ],
+    "decoys": [
+      "Human chess: people in costume stand on a giant board and move when the players call out.",
+      "Musical chairs: players circle the seats and one drops out each time the music stops.",
+      "Leapfrog relay: teams vault over each other's backs in a line to reach the finish first."
+    ],
+    "url": "https://patents.google.com/patent/US3454279A/en",
+    "source": "https://patentimages.storage.googleapis.com/pdfs/US3454279.pdf",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 1,
+    "rating": "G"
+  },
+  {
+    "id": "treating-foodstuffs",
+    "cat": "patent",
+    "prompt": "Method of treating foodstuffs",
+    "number": "US 2,495,429",
+    "year": 1950,
+    "ask": "What does this invention do?",
+    "truth": "Cooking food with microwave radio waves from a magnetron: the method behind the microwave oven.",
+    "more": "The patent reports hard-boiling an egg with 2 kilowatt-seconds of energy, versus 36 conventionally, and cooking a potato with 240 versus 72,000.",
+    "key": [
+      "microwave",
+      "oven",
+      "cook",
+      "food",
+      "heat"
+    ],
+    "clues": [
+      "It is found in most kitchens.",
+      "It uses waves about ten centimetres long.",
+      "It can heat leftovers in a minute or two."
+    ],
+    "decoys": [
+      "Pickling vegetables in brine and vinegar so that they keep through the winter without spoiling.",
+      "Coating fruit with a thin layer of wax so it stays shiny and fresh on shop shelves.",
+      "Quick-freezing fish between cold metal plates so it keeps its texture when thawed."
+    ],
+    "url": "https://patents.google.com/patent/US2495429A/en",
+    "source": "https://patentimages.storage.googleapis.com/pdfs/US2495429.pdf",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 2,
+    "rating": "G"
+  },
+  {
+    "id": "display-devices",
+    "cat": "patent",
+    "prompt": "Display devices",
+    "number": "US 3,387,396",
+    "year": 1968,
+    "ask": "What does this invention do?",
+    "truth": "A lava lamp: a bulb heats a waxy blob so it rises and sinks through coloured water.",
+    "more": "The patent calls the rising shapes 'fascinating and relaxing to observe'. A wire spiral at the base merges small bubbles back into big blobs.",
+    "key": [
+      "lava",
+      "lamp",
+      "wax",
+      "heat",
+      "liquid"
+    ],
+    "clues": [
+      "It is decoration more than a tool.",
+      "It needs a light bulb, some wax and coloured water.",
+      "Blobs rise, cool and sink, over and over."
+    ],
+    "decoys": [
+      "A shop-window turntable that slowly rotates goods under a spotlight to catch passers-by.",
+      "A glass case with angled mirrors that makes a museum object look as if it is floating.",
+      "A scoreboard with flip-over number cards that ground staff turn by hand during a match."
+    ],
+    "url": "https://patents.google.com/patent/US3387396A/en",
+    "source": "https://patentimages.storage.googleapis.com/pdfs/US3387396.pdf",
+    "checked": "2026-10-06",
+    "fun": 4,
+    "difficulty": 3,
+    "rating": "G"
+  }
+]
