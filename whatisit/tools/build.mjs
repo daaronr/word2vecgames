@@ -14,7 +14,10 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (p) => readFileSync(join(ROOT, p), "utf8");
-const RAW = "https://raw.githubusercontent.com/daaronr/word2vecgames";
+// Fallback copies of the robot judge's vectors on GitHub. After the move to its own repository, set
+// WII_REPO=daaronr/whatisit and WII_DIR="" (or change the defaults here).
+const RAW = "https://raw.githubusercontent.com/" + (process.env.WII_REPO || "daaronr/word2vecgames");
+const DIR = process.env.WII_DIR ?? "whatisit/";
 const BRANCH = process.env.WII_BRANCH || "claude/quirky-brahmagupta-l9gamm";
 
 // ---------- content ----------
@@ -72,8 +75,8 @@ const config = (env) => {
     env,
     vectorUrls: env === "artifact" ? ["judge-vectors.wasm"] : [
       "judge-vectors.bin",
-      `${RAW}/main/whatisit/site/judge-vectors.bin`,
-      `${RAW}/${BRANCH}/whatisit/site/judge-vectors.bin`,
+      `${RAW}/main/${DIR}site/judge-vectors.bin`,
+      `${RAW}/${BRANCH}/${DIR}site/judge-vectors.bin`,
     ],
     shareUrl: env === "artifact" ? "" : process.env.SHARE_URL || "",
     judgeApi: env === "artifact" ? "" : "/api/judge",

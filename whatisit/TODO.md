@@ -3,6 +3,16 @@
 Open items, newest first. Done items move to the changelog on the in-game Notes page
 (`CHANGELOG` in `src/app.js`).
 
+## Handoff between sessions
+
+Several sessions work on this folder, on branch `claude/quirky-brahmagupta-l9gamm`. Before you stop,
+add two or three lines here: what you changed, what's half-done, which files you're in. Pull first.
+
+- 7 Oct, cloud session A (UI): folded options and explanations, feedback promise, changelog on the
+  Notes page, `sfx()` sound cues, tester passes (`JUDGE_PASSCODE`). Prepared the repo split:
+  `tools/split_repo.sh`, `whatisit/.gitignore`, `WII_REPO`/`WII_DIR` in `tools/build.mjs`. Not touching
+  `netlify/functions/judge.mjs` or Netlify setup (session B has those).
+
 ## Needs David
 
 - **Feedback from the 6 Oct play session.** In-game notes on the Netlify site go to Netlify Forms
@@ -18,12 +28,20 @@ Open items, newest first. Done items move to the changelog on the in-game Notes 
 
 ## Build next
 
-1. **Move to its own repo.** `git subtree split --prefix=whatisit` keeps the history. Then: point
-   `vectorUrls` in `tools/build.mjs` at the new repo, re-link the Netlify site (base directory becomes
-   the repo root), move the CLAUDE.md/AGENTS.md section into the new repo's own CLAUDE.md, and leave
-   a one-line pointer here. Reasons: it shares nothing with Word Bocce at runtime (the vectors are
-   already copied into `site/`), it has its own deploys, costs and Netlify site, and keeping the
-   content and answer keys in a private repo protects the work (this repo is public).
+1. **Move to its own repo.** Once all sessions have pushed: create an empty private repo
+   (e.g. `daaronr/whatisit`), then `bash whatisit/tools/split_repo.sh <its URL>` (keeps the history).
+   After the split, in the new repo:
+   - set the defaults in `tools/build.mjs` to `WII_REPO=daaronr/whatisit`, `WII_DIR=""`, branch `main`;
+   - add a CLAUDE.md from the `whatisit/` section of word2vecgames' CLAUDE.md, plus this file's handoff rule;
+   - `tools/build_vectors.py` reads `../web/data-sense`: keep it as a record (the vectors are already
+     built into `site/judge-vectors.bin`), or copy the source vectors over;
+   - Netlify: Project configuration > Build & deploy > Link the new repo; base directory empty;
+   - in word2vecgames, replace `whatisit/` with a one-line pointer (or leave it frozen) and drop its
+     CLAUDE.md/AGENTS.md section and `.gitignore` exceptions.
+
+   Why: it shares nothing with Word Bocce at runtime (the vectors are already copied into `site/`),
+   it has its own deploys, costs and Netlify site, and a private repo protects the content and answer
+   keys (word2vecgames is public).
 2. **Styling pass (visual and sound)** from David's style sheets: type scale, colour, motion on the
    reveal, a proper sound set (the current cues are synthesized placeholders in `sfx()`), and
    consistent habitats across the eleven categories.
