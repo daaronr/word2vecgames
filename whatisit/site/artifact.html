@@ -390,6 +390,21 @@ details.how[open] summary { margin-bottom: 8px; }
 .board.c4 .slot.x { background: var(--spot); }
 .board.c4 .slot.o { background: var(--cold); }
 
+/* ---------- folds, fine print, small controls ---------- */
+details.fold > summary { cursor: pointer; font-weight: 700; font-size: var(--step--1); color: var(--muted); list-style: none; display: inline-flex; align-items: center; gap: 6px; }
+details.fold > summary::-webkit-details-marker { display: none; }
+details.fold > summary::before { content: "+"; display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid currentColor; font-size: 0.8rem; line-height: 1; }
+details.fold[open] > summary::before { content: "\2212"; }
+details.fold[open] > summary { margin-bottom: 10px; color: var(--ink); }
+details.panel.fold > summary { font-size: var(--step-0); color: var(--ink); }
+.fine { font-size: 0.75rem; color: var(--muted); margin: 0; max-width: 60ch; }
+.linkish { background: none; border: 0; padding: 0; color: var(--focus); text-decoration: underline; cursor: pointer; font: inherit; }
+.iconbtn { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; border: 0; background: none; color: var(--muted); cursor: pointer; }
+.iconbtn:hover { background: var(--surface-2); color: var(--ink); }
+.iconbtn svg { width: 20px; height: 20px; }
+.row.tight { gap: 2px; flex-wrap: nowrap; }
+.topnav { display: flex; flex-wrap: nowrap; }
+
 @media (max-width: 520px) {
   .topnav button { padding: 5px 6px; font-size: 0.75rem; }
   .wordmark { font-size: 1.05rem; }
@@ -983,6 +998,8 @@ function svgIcon(kind) {
   const paths = {
     lock: '<rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',
     search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-4.3-4.3"/>',
+    sound: '<path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/>',
+    mute: '<path d="M11 5 6 9H3v6h3l5 4z"/><path d="m16 9 5 6"/><path d="m21 9-5 6"/>',
   };
   const span = document.createElement("span");
   span.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[kind]}</svg>`;
@@ -1063,7 +1080,7 @@ const CONTENT = (() => {
   }
   return all;
 })();
-const SETTINGS = Object.assign({ pg13: false, aiSource: "auto", apiKey: "", model: "claude-opus-5-5", players: [], pass: "" }, load("settings", {}));
+const SETTINGS = Object.assign({ pg13: false, aiSource: "auto", apiKey: "", model: "claude-opus-5-5", players: [], pass: "", sound: true }, load("settings", {}));
 function saveSettings() { save("settings", SETTINGS); }
 
 function allowed(item) { return SETTINGS.pg13 || item.rating !== "PG-13"; }
@@ -1119,6 +1136,56 @@ const Store = {
     return "local";
   },
 };
+// Shown under every feedback box.
+const FEEDBACK_PROMISE = "We read every note and change the game because of them. Suggestions that make it in will earn rewards once those are set up.";
+function feedbackNote() {
+  return h("p", { class: "fine" }, FEEDBACK_PROMISE, " ", h("button", { class: "linkish", onclick: () => go("notes") }, "What we changed so far"));
+}
+
+// ---------- sounds ----------
+// Small synthesized cues (no audio files). Off with the speaker button in the top bar.
+let AUDIO = null;
+function sfx(name, level) {
+  if (!SETTINGS.sound) return;
+  try {
+    AUDIO = AUDIO || new (window.AudioContext || window.webkitAudioContext)();
+    if (AUDIO.state === "suspended") AUDIO.resume();
+    const t0 = AUDIO.currentTime;
+    const tone = (freq, at, dur, type = "sine", vol = 0.08) => {
+      const o = AUDIO.createOscillator();
+      const g = AUDIO.createGain();
+      o.type = type;
+      o.frequency.setValueAtTime(freq, t0 + at);
+      g.gain.setValueAtTime(0.0001, t0 + at);
+      g.gain.exponentialRampToValueAtTime(vol, t0 + at + 0.015);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + at + dur);
+      o.connect(g).connect(AUDIO.destination);
+      o.start(t0 + at);
+      o.stop(t0 + at + dur + 0.02);
+    };
+    if (name === "guess") {
+      // Warmer guesses ring higher; spot on gets a little arpeggio.
+      const lv = level || 1;
+      if (lv >= 5) [523, 659, 784, 1047].forEach((f, i) => tone(f, i * 0.07, 0.25, "triangle"));
+      else tone([196, 262, 330, 392][lv - 1], 0, 0.22, lv <= 1 ? "sine" : "triangle");
+    } else if (name === "reveal") { tone(392, 0, 0.18, "triangle"); tone(587, 0.12, 0.3, "triangle"); }
+    else if (name === "award") { tone(659, 0, 0.12, "square", 0.04); tone(988, 0.09, 0.25, "square", 0.04); }
+    else if (name === "drop") { tone(330, 0, 0.08, "sine", 0.1); tone(165, 0.06, 0.18, "sine", 0.1); }
+    else if (name === "clue") tone(880, 0, 0.12, "sine", 0.05);
+    else if (name === "daily-double") [392, 494, 587, 784, 988].forEach((f, i) => tone(f, i * 0.06, 0.2, "triangle"));
+  } catch (e) { /* no audio here */ }
+}
+function soundButton() {
+  const b = h("button", { class: "iconbtn", "aria-label": "Sound", "aria-pressed": String(!!SETTINGS.sound), title: "Sound on or off", onclick: () => {
+    SETTINGS.sound = !SETTINGS.sound;
+    saveSettings();
+    b.setAttribute("aria-pressed", String(SETTINGS.sound));
+    clear(b).append(svgIcon(SETTINGS.sound ? "sound" : "mute"));
+    if (SETTINGS.sound) sfx("clue");
+  } }, svgIcon(SETTINGS.sound ? "sound" : "mute"));
+  return b;
+}
+
 function savedMsg(where) {
   return where === "shared" ? "Saved for the team" : where === "sent" ? "Sent. Thank you." : "Saved on this device";
 }
@@ -1401,6 +1468,7 @@ const REVEAL_HEAD = { phrase: "The top result", paper: "The paper", lyric: "What
 const LINK_TEXT = { plate: "The DMV dataset", patent: "Read the patent", phrase: "Search it yourself", paper: "Read the paper", lyric: "About the song", news: "See a host's take", headline: "Where it's documented", image: "The picture's source" };
 
 function revealCard(item, opts = {}) {
+  sfx("reveal");
   const parts = [h("span", { class: "eyebrow" }, REVEAL_HEAD[item.kind] || "What it is")];
   if (item.kind === "image" && item.src) parts.push(h("img", { class: "reveal-img", src: item.src, alt: item.truth }));
   parts.push(h("p", { class: "truth" }, item.truth));
@@ -1506,12 +1574,15 @@ function funRating(item, mode, extra = {}) {
   const el = h("div", { class: "rate" },
     h("div", { class: "spread" }, h("span", { class: "label" }, "How fun was that one?"), status),
     stars((n) => { rec.fun = n; later(); }, 0, "How fun"),
-    h("span", { class: "small muted" }, "What made it that way? Pick any."),
-    multiSeg(FUN_TAGS, (v) => { rec.tags = v; later(); }),
-    h("span", { class: "small muted" }, "Difficulty"),
-    seg([["easy", "Too easy"], ["right", "About right"], ["hard", "Too hard"]], "", (v) => { rec.feel = v; later(); }),
-    note,
-    item.id ? h("button", { class: "btn ghost small", style: { justifySelf: "start" }, onclick: () => { flush(); suggestScreen({ clueFor: item }); } }, "Suggest a better clue") : null);
+    h("details", { class: "fold" }, h("summary", {}, "Say why, or suggest a better clue"),
+      h("div", { class: "stack-sm" },
+        h("span", { class: "small muted" }, "What made it that way? Pick any."),
+        multiSeg(FUN_TAGS, (v) => { rec.tags = v; later(); }),
+        h("span", { class: "small muted" }, "Difficulty"),
+        seg([["easy", "Too easy"], ["right", "About right"], ["hard", "Too hard"]], "", (v) => { rec.feel = v; later(); }),
+        note,
+        item.id ? h("button", { class: "btn ghost small", style: { justifySelf: "start" }, onclick: () => { flush(); suggestScreen({ clueFor: item }); } }, "Suggest a better clue") : null,
+        feedbackNote())));
   el.flush = flush;
   return el;
 }
@@ -1530,7 +1601,8 @@ function trialRating(trial, title) {
     h("div", { class: "row" }, h("button", { class: "btn primary", onclick: async () => {
       if (!rec.stars && !rec.liked && !rec.change) { toast("Pick some stars or write a line first"); return; }
       status.textContent = savedMsg(await Store.send("trial", rec));
-    } }, "Send feedback")));
+    } }, "Send feedback")),
+    feedbackNote());
 }
 
 /** Players or teams editor. Returns {el, get()} */
@@ -1661,7 +1733,7 @@ function judgePanel(host, { round, item, players, guesses, mode, defaultJudge, o
     robotBtn.disabled = false;
     if (!scores) { toast("The robot judge couldn't load its word list."); return; }
     details = { judge: "robot", scores: scores.map((s) => (s ? s.score : null)) };
-    showScores(scores, "Free judge: the mystery's answer key where a guess matches it, word-vector closeness otherwise.");
+    showScores(scores, "Free judge.");
   } }, "Free judge");
   let auto = false; // set while the AI judge runs by default rather than by a tap
   const aiBtn = h("button", { class: "btn small", onclick: async () => {
@@ -1677,7 +1749,7 @@ function judgePanel(host, { round, item, players, guesses, mode, defaultJudge, o
       const scores = new Array(players.length).fill(null);
       out.scores.forEach((s, k) => { scores[idx[k]] = s; });
       details = { judge: "ai", source: out.source, scores: scores.map((s) => (s ? s.score : null)), comment: out.comment };
-      showScores(scores, `AI judge (${aiSourceLabel(out.source)}). ${out.comment || ""}`);
+      showScores(scores, out.comment || "AI judge.");
       if (out.funniest != null) { funniest = idx[out.funniest]; paintPicks(); }
     } catch (e) {
       if (e.message !== "cancelled") toast(e.message);
@@ -1701,6 +1773,7 @@ function judgePanel(host, { round, item, players, guesses, mode, defaultJudge, o
     if (details.judge !== "room" && typed) {
       Store.send("judge", { id: item && item.id, prompt: round.prompt, truth: round.truth, mode, guesses, judge: details.judge, scores: details.scores, winners: details.winners });
     }
+    sfx("award");
     onAward([...picked], funniest, details);
   } }, "Award and continue")));
   host.append(box);
@@ -1826,7 +1899,7 @@ function dailyScreen(opts = {}) {
         h("span", { class: "t" }, g.t),
         h("span", { class: "s lv" + w.level }, g.s),
         last && withChips && g.res ? h("div", { class: "why" }, warmthMeter(g.s)) : null,
-        last && withChips && g.res ? h("div", { class: "why" }, matchChips(g.res)) : null,
+        last && withChips && g.res ? h("details", { class: "why fold" }, h("summary", {}, "Why this score?"), matchChips(g.res)) : null,
         last && withChips && (g.by === "ai" || g.by === "key") ? h("div", { class: "why" }, warmthMeter(g.s)) : null,
         g.hint ? h("div", { class: "why small muted" }, g.hint) : null,
         g.trap ? h("div", { class: "why trapnote small" }, "That's close to a tempting wrong answer: “" + g.trap + "”") : null);
@@ -1857,6 +1930,7 @@ function dailyScreen(opts = {}) {
         entry = { t: text, s: local.score, trap: local.trap ? local.trap.decoy : null, res: { matches: local.matches, unknown: local.unknown }, by: "robot" };
       }
       r.guesses.push(entry);
+      sfx("guess", J.warmth(entry.s).level);
       if (entry.s >= 85 || r.guesses.length >= MAX_GUESSES) finish(item, r);
       persist();
       render();
@@ -1891,7 +1965,7 @@ function dailyScreen(opts = {}) {
         seg([["approved", "Approved"], ["denied", "Denied"]], r.verdict, (v) => { r.verdict = v; persist(); })));
     }
 
-    const clueBtn = h("button", { class: "btn small", disabled: r.clues >= Math.min(3, (item.clues || []).length) || !!r.mc, onclick: () => { r.clues++; persist(); render(); } },
+    const clueBtn = h("button", { class: "btn small", disabled: r.clues >= Math.min(3, (item.clues || []).length) || !!r.mc, onclick: () => { r.clues++; sfx("clue"); persist(); render(); } },
       r.clues >= (item.clues || []).length ? "No more clues" : `Clue (×${CLUE_MULT[r.clues + 1] || CLUE_MULT[3]})`);
     const mcBtn = h("button", { class: "btn small", disabled: !!r.mc || !(item.decoys && item.decoys.length), onclick: () => {
       const opts2 = rng("mc-" + item.id).shuffle([item.truth, ...item.decoys.slice(0, 3)]);
@@ -2077,15 +2151,17 @@ function partyScreen() {
             paintCats();
             paintOpts();
           })),
-        edHost, catHost, optHost,
+        edHost,
+        h("details", { class: "fold" }, h("summary", {}, "More options: categories, rules, judge, timer"),
+        h("div", { class: "stack" }, catHost, optHost,
         h("div", { class: "stack-sm" }, h("span", { class: "label" }, "Guesses"),
           seg([["typed", "Type them on this device, passing it round"], ["paper", "Paper or out loud"]], cfg.entry, (v) => { cfg.entry = v; })),
         h("div", { class: "stack-sm" }, h("span", { class: "label" }, "Judge"),
           seg([["robot", "Free judge"], ["ai", "AI"], ["room", "The room decides"]], cfg.judge, (v) => { cfg.judge = v; }),
-          h("p", { class: "small muted" }, "The free judge uses each mystery's answer key and word vectors. Judges need typed guesses; you can always overrule them by tapping a name.")),
+          h("p", { class: "small muted" }, "Judges need typed guesses. You can always overrule them by tapping a name.")),
         h("div", { class: "stack-sm" }, h("span", { class: "label" }, "Timer"),
           seg([[0, "None"], [30, "30 seconds"], [60, "60 seconds"]], cfg.timer, (v) => { cfg.timer = v; })),
-        h("label", { class: "check", for: "party-pg13" }, pg, h("span", {}, "Include ", h("b", {}, "Double take"), " (PG-13 misreadings)")),
+        h("label", { class: "check", for: "party-pg13" }, pg, h("span", {}, "Include ", h("b", {}, "Double take"), " (PG-13 misreadings)")))),
         h("div", { class: "row" }, h("button", { class: "btn primary", onclick: () => {
           SETTINGS.pg13 = pg.checked;
           const names = editor.get();
@@ -2265,6 +2341,7 @@ function partyScreen() {
       if (clues >= (item.clues || []).length) return;
       clueBox.append(h("p", { class: "clue" }, h("b", {}, "Clue " + (clues + 1) + ": "), item.clues[clues]));
       clues++;
+      sfx("clue");
       zoomTo(card, item, clues);
       paintValue();
       if (clues >= (item.clues || []).length) clueBtn.disabled = true;
@@ -2302,7 +2379,7 @@ function partyScreen() {
             const { cols, grid } = P.c4;
             if (winners.length === 1) {
               const k = grid.findIndex((m, i) => i % cols === sel.col && m === null);
-              if (k >= 0) grid[k] = winners[0];
+              if (k >= 0) { grid[k] = winners[0]; sfx("drop"); }
             }
             P.turn++;
             const winner = c4Winner();
@@ -2341,6 +2418,7 @@ function partyScreen() {
     const max = Math.max(me.score, topValue());
     clear(root);
     const input = wagerInput("dd-wager", max, Math.min(max, tile.value));
+    sfx("daily-double");
     const err = h("p", { class: "small", style: { color: "var(--bad)" } });
     root.append(h("div", { class: "panel stack dd" },
       h("span", { class: "eyebrow" }, CATS[col.cat].label),
@@ -2834,10 +2912,10 @@ function shell() {
   const app = $("#app");
   clear(app);
   const nav = h("nav", { class: "topnav", "aria-label": "Main" },
-    [["hub", "Play"], ["suggest", "Suggest"], ["notes", "Notes"], ["settings", "Settings"]].map(([k, label]) =>
+    [["suggest", "Suggest"], ["notes", "Notes"], ["settings", "Settings"]].map(([k, label]) =>
       h("button", { "data-go": k, onclick: () => go(k) }, label)));
   app.append(h("div", { class: "wrap" },
-    h("header", { class: "topbar" }, h("button", { class: "wordmark", onclick: () => go("hub"), "aria-label": "What Is It? home" }, "What Is It", h("span", { class: "q" }, "?")), nav),
+    h("header", { class: "topbar" }, h("button", { class: "wordmark", onclick: () => go("hub"), "aria-label": "What Is It? home" }, "What Is It", h("span", { class: "q" }, "?")), h("div", { class: "row tight" }, nav, soundButton())),
     h("main", { id: "main" })));
 }
 
@@ -2869,9 +2947,14 @@ function hubScreen(opts = {}) {
   root.append(
     h("section", { class: "hero" },
       h("h1", {}, "Guess what it really is", h("span", { class: "q" }, ".")),
-      h("p", { class: "lede" }, "Web addresses, brand names, licence plates, patent titles, close-up pictures, paper titles, song lines and headlines that aren't what they seem. Four early versions to try, rate and argue about.")),
+      h("p", { class: "lede" }, "A web address, a licence plate, a patent title, a blurry close-up: say what it really is, in your own words. An AI judge reads every answer and decides who came closest."),
+      h("details", { class: "fold" }, h("summary", {}, "Why this game couldn't exist a few years ago"),
+        h("div", { class: "prose small" },
+          h("p", {}, "Quiz games have always needed answers a computer can check: pick A, B, C or D, or type the exact word. Anything open-ended (\u201cwhat does this mean?\u201d, \u201cwhat is this really?\u201d) needed a human referee, so it stayed a party game with arguments."),
+          h("p", {}, "Small AI models can now read a free-text answer next to the truth and say how close it is in meaning, in about a second, for a fraction of a cent. \u201cA laser pointer for cats\u201d and \u201ca gadget to make your cat run around\u201d both count; \u201ca cat treadmill\u201d gets partial credit. That is what all of these games are built on."),
+          h("p", {}, "To keep it cheap, every mystery also has an answer key of likely guesses, scored in advance, so the AI is only asked about guesses nobody has made before.")))),
     h("section", { class: "panel" }, h("p", { class: "eyebrow", style: { marginBottom: "10px" } }, "Quick one"), tryBox),
-    h("section", { class: "stack-sm" }, h("h2", { style: { fontSize: "var(--step-1)" } }, "The trial versions"),
+    h("section", { class: "stack-sm" }, h("h2", { style: { fontSize: "var(--step-1)" } }, "Four ways to play (early versions: tell us which works)"),
       h("div", { class: "trials" }, trials.map(([tag, screen, name, desc, who]) => h("article", { class: "trial" },
         h("span", { class: "tag" }, "Trial " + tag),
         h("h2", {}, name),
@@ -2880,8 +2963,9 @@ function hubScreen(opts = {}) {
     h("section", { class: "panel stack-sm" },
       h("h2", { style: { fontSize: "var(--step-1)" } }, "Got a good one?"),
       h("p", { class: "muted" }, "Suggest a mystery or a better clue. If we use it, we'll credit you by the name you give."),
+      h("p", { class: "fine" }, FEEDBACK_PROMISE),
       h("div", { class: "row" }, h("button", { class: "btn", onclick: () => go("suggest") }, "Suggest a mystery"))),
-    h("p", { class: "small muted" }, `${CONTENT.length} mysteries so far: `, catsSummary(), "."));
+    h("details", { class: "fold small muted" }, h("summary", {}, `${CONTENT.length} mysteries so far`), h("p", {}, catsSummary(), ".")));
   return root;
 }
 function catsSummary() {
@@ -2911,7 +2995,8 @@ function suggestScreen(opts = {}) {
   root.append(
     h("div", { class: "stack-sm" }, h("span", { class: "eyebrow" }, "Suggest"),
       h("h2", {}, clueFor ? "Suggest a better clue" : "Suggest a mystery"),
-      h("p", { class: "lede" }, clueFor ? "Clues work best in a ladder: a vague one, a warmer one, and one that nearly gives it away." : "The best ones pull your guess one way and turn out to be something else. Web addresses, brands, plates, patents, phrases: anything with a surprising answer.")),
+      h("p", { class: "lede" }, clueFor ? "Clues work best in a ladder: a vague one, a warmer one, and one that nearly gives it away." : "The best ones pull your guess one way and turn out to be something else. Web addresses, brands, plates, patents, phrases: anything with a surprising answer."),
+      h("p", { class: "fine" }, FEEDBACK_PROMISE)),
     clueFor ? h("div", { class: "panel stack-sm" }, mysteryCard(clueFor), h("p", { class: "small muted" }, "Current clues: ", (clueFor.clues || []).join(" / "))) : null,
     h("div", { class: "panel stack" },
       field("sg-prompt", "The mystery", f.prompt),
@@ -2960,12 +3045,12 @@ function settingsScreen() {
     h("div", { class: "stack-sm" }, h("span", { class: "eyebrow" }, "Settings"), h("h2", {}, "Judges and content")),
     h("section", { class: "panel stack" },
       h("h3", {}, "AI judge"),
-      h("p", { class: "muted" }, "Every mystery has an answer key of likely guesses scored in advance; a guess that matches one is scored for free. New guesses go to an AI judge, which reads them like a person would. On the website it is free for players, within daily limits; you can also run it on your own AI account. The word-vector robot is the offline fallback."),
-      h("ul", { class: "small", style: { margin: 0, paddingLeft: "1.2em", display: "grid", gap: "4px" } },
+      h("p", { class: "muted" }, "Choose who judges new guesses. Guesses that match a mystery's answer key are always scored for free."),
+      h("details", { class: "fold" }, h("summary", {}, "What the options mean"), h("ul", { class: "small", style: { margin: 0, paddingLeft: "1.2em", display: "grid", gap: "4px" } },
         CONFIG.judgeApi ? h("li", {}, h("b", {}, "The game's AI judge: "), siteJudgeUsable() ? "free for players; a small model run by the site, within daily limits." : "resting right now" + (SITE_NOTE ? ": " + SITE_NOTE : ".")) : null,
         h("li", {}, h("b", {}, "Claude, on your own plan: "), RT.sample ? "available here." : "works when this page is opened inside claude.ai."),
         CONFIG.env !== "artifact" ? h("li", {}, h("b", {}, "Your Anthropic API key: "), SETTINGS.apiKey ? "saved in this browser." : "add one below. It stays in this browser and goes only to Anthropic.") : null,
-        h("li", {}, h("b", {}, "Paste into a chatbot: "), "always works. Copy the prompt into ChatGPT, Claude or Gemini and paste the reply back.")),
+        h("li", {}, h("b", {}, "Paste into a chatbot: "), "always works. Copy the prompt into ChatGPT, Claude or Gemini and paste the reply back."))),
       h("div", { class: "stack-sm" }, h("span", { class: "label" }, "Use"), seg(choices, SETTINGS.aiSource, (v) => { SETTINGS.aiSource = v; saveSettings(); })),
       h("p", { class: "small muted" }, "Right now the AI judge would use ", h("b", {}, aiSourceLabel(aiSource())), "."),
       CONFIG.judgeApi ? h("div", { class: "stack-sm" },
@@ -2993,34 +3078,46 @@ function settingsScreen() {
 // ---------- notes for testers ----------
 function notesScreen() {
   const root = h("div", { class: "stack" });
+  const fold = (title, ...body) => h("details", { class: "panel fold" }, h("summary", {}, title), h("div", { class: "prose" }, body));
   root.append(
     h("div", { class: "stack-sm" }, h("span", { class: "eyebrow" }, "Notes for testers"), h("h2", {}, "What we're trying to learn")),
     h("section", { class: "panel prose" },
-      h("p", {}, "Four versions of one idea: someone shows a cryptic string, everyone guesses what it really is, and the reveal settles it. Please play at least two, then rate each one."),
+      h("p", {}, "One idea, four ways to play: someone shows something cryptic, everyone says in their own words what it really is, and an AI judge decides who came closest. Games could not do that until recently: open-ended answers needed a human referee. Please play at least two versions and rate each one."),
       h("ul", {},
-        h("li", {}, h("b", {}, "A. Daily five: "), "is a solo, NYT-style daily fun on its own? Does the judge feel fair, and do clues and the side bets help?"),
-        h("li", {}, h("b", {}, "B. Party board: "), "does a board of categories make a good evening? Points board (with or without the Jeopardy rules), tic-tac-toe or Connect Four?"),
-        h("li", {}, h("b", {}, "C. Bring your own: "), "the original. Is it more fun with your own mysteries and live searching?"),
-        h("li", {}, h("b", {}, "D. Bluff: "), "is writing fakes more fun than guessing the truth?")),
-      h("p", {}, "After each mystery you can rate how fun it was. Those ratings are how we'll pick which mysteries and categories to keep.")),
+        h("li", {}, h("b", {}, "A. Daily five: "), "is a solo daily fun on its own? Does the judge feel fair?"),
+        h("li", {}, h("b", {}, "B. Party board: "), "points board, tic-tac-toe or Connect Four: which makes the better evening?"),
+        h("li", {}, h("b", {}, "C. Bring your own: "), "is it more fun with your own mysteries and live searching?"),
+        h("li", {}, h("b", {}, "D. Bluff: "), "is writing fakes more fun than guessing the truth?"))),
     h("section", { class: "panel prose" },
-      h("h3", {}, "Judging"),
-      h("p", {}, "Each mystery has an answer key: about ten likely guesses, scored in advance with hints. A guess that says the same thing as one of them gets that score at no cost. Other guesses go to the AI judge (a small model the site pays for, within limits, or your own AI account), which reads them like a person and also picks the funniest. When no AI is available, the robot judge compares your words with the answer's key ideas and the nearest answer-key guesses, using ConceptNet Numberbatch word vectors (the same word map as Word Bocce).")),
-    h("section", { class: "panel prose" },
-      h("h3", {}, "Where the mysteries come from"),
+      h("h3", {}, "What we changed after your feedback"),
+      h("p", { class: "small muted" }, FEEDBACK_PROMISE),
+      h("ul", {}, CHANGELOG.map(([when, what]) => h("li", {}, h("b", {}, when + ": "), what)))),
+    fold("How the judging works",
+      h("p", {}, "Each mystery has an answer key: about ten likely guesses, scored in advance with hints. A guess that says the same thing as one of them gets that score at no cost. Other guesses go to the AI judge (a small model the site pays for, within limits, or your own AI account), which reads them like a person and also picks the funniest."),
+      h("p", {}, "When no AI is available, a free word-vector \u201crobot\u201d compares your words with the answer's key ideas and the nearest answer-key guesses, using ConceptNet Numberbatch (the word map from Word Bocce).")),
+    fold("Where the mysteries come from",
       h("ul", {},
-        h("li", {}, "Licence plates: real applications to the California DMV, 2015–16, with each owner's explanation and the reviewer's notes, from Noah Veltman's public-records dataset (github.com/veltman/ca-license-plates)."),
+        h("li", {}, "Licence plates: real applications to the California DMV, 2015\u201316, with each owner's explanation, from Noah Veltman's public-records dataset."),
         h("li", {}, "Patents: checked against the patent text on Google Patents."),
         h("li", {}, "Web addresses, brands and top results: checked in October 2026. Sites change; tell us if one is out of date."),
-        h("li", {}, "Paper titles, song lines and headlines: checked through web searches in October 2026. Songs are all public domain (traditional, or published before 1931)."),
-        h("li", {}, "Late-night bits: news stories that at least two shows joked about; the joke is paraphrased."),
+        h("li", {}, "Paper titles, song lines and headlines: checked through web searches in October 2026. Songs are all public domain."),
+        h("li", {}, "Late-night bits: news stories at least two shows joked about; the joke is paraphrased."),
         h("li", {}, "Close-up pictures: Microsoft's Fluent Emoji (MIT licence)."),
-        h("li", {}, "Items marked “Draft: not yet re-checked online” are drafts; treat them with care and tell us if one is wrong."))),
-    h("section", { class: "panel prose small" },
-      h("h3", {}, "Credits"),
-      h("p", {}, "Word vectors: ConceptNet Numberbatch 19.08 by Robyn Speer, Joshua Chin and Catherine Havasi, CC BY-SA 4.0. Pictures: Fluent Emoji by Microsoft, MIT licence. API-key judge: Anthropic TypeScript SDK (MIT). Built in the word2vecgames repository alongside Word Bocce.")));
+        h("li", {}, "Items marked \u201cDraft\u201d are not yet re-checked; tell us if one is wrong."))),
+    fold("Credits",
+      h("p", { class: "small" }, "Word vectors: ConceptNet Numberbatch 19.08 by Robyn Speer, Joshua Chin and Catherine Havasi, CC BY-SA 4.0. Pictures: Fluent Emoji by Microsoft, MIT licence. API-key judge: Anthropic TypeScript SDK (MIT). Built alongside Word Bocce.")));
   return root;
 }
+
+// Shown on the Notes page so testers can see their feedback land.
+const CHANGELOG = [
+  ["7 Oct", "Less on the screen at once: options, explanations and rating details fold away. Sound effects, with a mute button."],
+  ["7 Oct", "Tester links, so friends and family get the AI judge with nothing to set up."],
+  ["6 Oct", "Jeopardy rules on the points board (unlock order, board control, Daily Double, Final with wagers) and a Connect Four board."],
+  ["6 Oct", "New categories: close-up pictures, paper titles, odd song lines, late-night bits, ambiguous headlines."],
+  ["6 Oct", "The AI judge ran out of credit; every mystery now has an answer key, so common guesses are scored for free."],
+  ["6 Oct", "\u201cHow fun was it?\u201d now asks why, separately from how hard it was."],
+];
 
 // ---------- boot ----------
 (function boot() {

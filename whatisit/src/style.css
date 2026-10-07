@@ -387,6 +387,21 @@ details.how[open] summary { margin-bottom: 8px; }
 .board.c4 .slot.x { background: var(--spot); }
 .board.c4 .slot.o { background: var(--cold); }
 
+/* ---------- folds, fine print, small controls ---------- */
+details.fold > summary { cursor: pointer; font-weight: 700; font-size: var(--step--1); color: var(--muted); list-style: none; display: inline-flex; align-items: center; gap: 6px; }
+details.fold > summary::-webkit-details-marker { display: none; }
+details.fold > summary::before { content: "+"; display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid currentColor; font-size: 0.8rem; line-height: 1; }
+details.fold[open] > summary::before { content: "\2212"; }
+details.fold[open] > summary { margin-bottom: 10px; color: var(--ink); }
+details.panel.fold > summary { font-size: var(--step-0); color: var(--ink); }
+.fine { font-size: 0.75rem; color: var(--muted); margin: 0; max-width: 60ch; }
+.linkish { background: none; border: 0; padding: 0; color: var(--focus); text-decoration: underline; cursor: pointer; font: inherit; }
+.iconbtn { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; border: 0; background: none; color: var(--muted); cursor: pointer; }
+.iconbtn:hover { background: var(--surface-2); color: var(--ink); }
+.iconbtn svg { width: 20px; height: 20px; }
+.row.tight { gap: 2px; flex-wrap: nowrap; }
+.topnav { display: flex; flex-wrap: nowrap; }
+
 @media (max-width: 520px) {
   .topnav button { padding: 5px 6px; font-size: 0.75rem; }
   .wordmark { font-size: 1.05rem; }

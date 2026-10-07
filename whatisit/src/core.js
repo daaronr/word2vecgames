@@ -35,6 +35,8 @@ function svgIcon(kind) {
   const paths = {
     lock: '<rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',
     search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-4.3-4.3"/>',
+    sound: '<path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/>',
+    mute: '<path d="M11 5 6 9H3v6h3l5 4z"/><path d="m16 9 5 6"/><path d="m21 9-5 6"/>',
   };
   const span = document.createElement("span");
   span.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[kind]}</svg>`;
@@ -115,7 +117,7 @@ const CONTENT = (() => {
   }
   return all;
 })();
-const SETTINGS = Object.assign({ pg13: false, aiSource: "auto", apiKey: "", model: "claude-opus-5-5", players: [], pass: "" }, load("settings", {}));
+const SETTINGS = Object.assign({ pg13: false, aiSource: "auto", apiKey: "", model: "claude-opus-5-5", players: [], pass: "", sound: true }, load("settings", {}));
 function saveSettings() { save("settings", SETTINGS); }
 
 function allowed(item) { return SETTINGS.pg13 || item.rating !== "PG-13"; }
@@ -171,6 +173,56 @@ const Store = {
     return "local";
   },
 };
+// Shown under every feedback box.
+const FEEDBACK_PROMISE = "We read every note and change the game because of them. Suggestions that make it in will earn rewards once those are set up.";
+function feedbackNote() {
+  return h("p", { class: "fine" }, FEEDBACK_PROMISE, " ", h("button", { class: "linkish", onclick: () => go("notes") }, "What we changed so far"));
+}
+
+// ---------- sounds ----------
+// Small synthesized cues (no audio files). Off with the speaker button in the top bar.
+let AUDIO = null;
+function sfx(name, level) {
+  if (!SETTINGS.sound) return;
+  try {
+    AUDIO = AUDIO || new (window.AudioContext || window.webkitAudioContext)();
+    if (AUDIO.state === "suspended") AUDIO.resume();
+    const t0 = AUDIO.currentTime;
+    const tone = (freq, at, dur, type = "sine", vol = 0.08) => {
+      const o = AUDIO.createOscillator();
+      const g = AUDIO.createGain();
+      o.type = type;
+      o.frequency.setValueAtTime(freq, t0 + at);
+      g.gain.setValueAtTime(0.0001, t0 + at);
+      g.gain.exponentialRampToValueAtTime(vol, t0 + at + 0.015);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + at + dur);
+      o.connect(g).connect(AUDIO.destination);
+      o.start(t0 + at);
+      o.stop(t0 + at + dur + 0.02);
+    };
+    if (name === "guess") {
+      // Warmer guesses ring higher; spot on gets a little arpeggio.
+      const lv = level || 1;
+      if (lv >= 5) [523, 659, 784, 1047].forEach((f, i) => tone(f, i * 0.07, 0.25, "triangle"));
+      else tone([196, 262, 330, 392][lv - 1], 0, 0.22, lv <= 1 ? "sine" : "triangle");
+    } else if (name === "reveal") { tone(392, 0, 0.18, "triangle"); tone(587, 0.12, 0.3, "triangle"); }
+    else if (name === "award") { tone(659, 0, 0.12, "square", 0.04); tone(988, 0.09, 0.25, "square", 0.04); }
+    else if (name === "drop") { tone(330, 0, 0.08, "sine", 0.1); tone(165, 0.06, 0.18, "sine", 0.1); }
+    else if (name === "clue") tone(880, 0, 0.12, "sine", 0.05);
+    else if (name === "daily-double") [392, 494, 587, 784, 988].forEach((f, i) => tone(f, i * 0.06, 0.2, "triangle"));
+  } catch (e) { /* no audio here */ }
+}
+function soundButton() {
+  const b = h("button", { class: "iconbtn", "aria-label": "Sound", "aria-pressed": String(!!SETTINGS.sound), title: "Sound on or off", onclick: () => {
+    SETTINGS.sound = !SETTINGS.sound;
+    saveSettings();
+    b.setAttribute("aria-pressed", String(SETTINGS.sound));
+    clear(b).append(svgIcon(SETTINGS.sound ? "sound" : "mute"));
+    if (SETTINGS.sound) sfx("clue");
+  } }, svgIcon(SETTINGS.sound ? "sound" : "mute"));
+  return b;
+}
+
 function savedMsg(where) {
   return where === "shared" ? "Saved for the team" : where === "sent" ? "Sent. Thank you." : "Saved on this device";
 }
@@ -453,6 +505,7 @@ const REVEAL_HEAD = { phrase: "The top result", paper: "The paper", lyric: "What
 const LINK_TEXT = { plate: "The DMV dataset", patent: "Read the patent", phrase: "Search it yourself", paper: "Read the paper", lyric: "About the song", news: "See a host's take", headline: "Where it's documented", image: "The picture's source" };
 
 function revealCard(item, opts = {}) {
+  sfx("reveal");
   const parts = [h("span", { class: "eyebrow" }, REVEAL_HEAD[item.kind] || "What it is")];
   if (item.kind === "image" && item.src) parts.push(h("img", { class: "reveal-img", src: item.src, alt: item.truth }));
   parts.push(h("p", { class: "truth" }, item.truth));
@@ -558,12 +611,15 @@ function funRating(item, mode, extra = {}) {
   const el = h("div", { class: "rate" },
     h("div", { class: "spread" }, h("span", { class: "label" }, "How fun was that one?"), status),
     stars((n) => { rec.fun = n; later(); }, 0, "How fun"),
-    h("span", { class: "small muted" }, "What made it that way? Pick any."),
-    multiSeg(FUN_TAGS, (v) => { rec.tags = v; later(); }),
-    h("span", { class: "small muted" }, "Difficulty"),
-    seg([["easy", "Too easy"], ["right", "About right"], ["hard", "Too hard"]], "", (v) => { rec.feel = v; later(); }),
-    note,
-    item.id ? h("button", { class: "btn ghost small", style: { justifySelf: "start" }, onclick: () => { flush(); suggestScreen({ clueFor: item }); } }, "Suggest a better clue") : null);
+    h("details", { class: "fold" }, h("summary", {}, "Say why, or suggest a better clue"),
+      h("div", { class: "stack-sm" },
+        h("span", { class: "small muted" }, "What made it that way? Pick any."),
+        multiSeg(FUN_TAGS, (v) => { rec.tags = v; later(); }),
+        h("span", { class: "small muted" }, "Difficulty"),
+        seg([["easy", "Too easy"], ["right", "About right"], ["hard", "Too hard"]], "", (v) => { rec.feel = v; later(); }),
+        note,
+        item.id ? h("button", { class: "btn ghost small", style: { justifySelf: "start" }, onclick: () => { flush(); suggestScreen({ clueFor: item }); } }, "Suggest a better clue") : null,
+        feedbackNote())));
   el.flush = flush;
   return el;
 }
@@ -582,7 +638,8 @@ function trialRating(trial, title) {
     h("div", { class: "row" }, h("button", { class: "btn primary", onclick: async () => {
       if (!rec.stars && !rec.liked && !rec.change) { toast("Pick some stars or write a line first"); return; }
       status.textContent = savedMsg(await Store.send("trial", rec));
-    } }, "Send feedback")));
+    } }, "Send feedback")),
+    feedbackNote());
 }
 
 /** Players or teams editor. Returns {el, get()} */
@@ -713,7 +770,7 @@ function judgePanel(host, { round, item, players, guesses, mode, defaultJudge, o
     robotBtn.disabled = false;
     if (!scores) { toast("The robot judge couldn't load its word list."); return; }
     details = { judge: "robot", scores: scores.map((s) => (s ? s.score : null)) };
-    showScores(scores, "Free judge: the mystery's answer key where a guess matches it, word-vector closeness otherwise.");
+    showScores(scores, "Free judge.");
   } }, "Free judge");
   let auto = false; // set while the AI judge runs by default rather than by a tap
   const aiBtn = h("button", { class: "btn small", onclick: async () => {
@@ -729,7 +786,7 @@ function judgePanel(host, { round, item, players, guesses, mode, defaultJudge, o
       const scores = new Array(players.length).fill(null);
       out.scores.forEach((s, k) => { scores[idx[k]] = s; });
       details = { judge: "ai", source: out.source, scores: scores.map((s) => (s ? s.score : null)), comment: out.comment };
-      showScores(scores, `AI judge (${aiSourceLabel(out.source)}). ${out.comment || ""}`);
+      showScores(scores, out.comment || "AI judge.");
       if (out.funniest != null) { funniest = idx[out.funniest]; paintPicks(); }
     } catch (e) {
       if (e.message !== "cancelled") toast(e.message);
@@ -753,6 +810,7 @@ function judgePanel(host, { round, item, players, guesses, mode, defaultJudge, o
     if (details.judge !== "room" && typed) {
       Store.send("judge", { id: item && item.id, prompt: round.prompt, truth: round.truth, mode, guesses, judge: details.judge, scores: details.scores, winners: details.winners });
     }
+    sfx("award");
     onAward([...picked], funniest, details);
   } }, "Award and continue")));
   host.append(box);

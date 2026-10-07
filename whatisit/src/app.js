@@ -26,10 +26,10 @@ function shell() {
   const app = $("#app");
   clear(app);
   const nav = h("nav", { class: "topnav", "aria-label": "Main" },
-    [["hub", "Play"], ["suggest", "Suggest"], ["notes", "Notes"], ["settings", "Settings"]].map(([k, label]) =>
+    [["suggest", "Suggest"], ["notes", "Notes"], ["settings", "Settings"]].map(([k, label]) =>
       h("button", { "data-go": k, onclick: () => go(k) }, label)));
   app.append(h("div", { class: "wrap" },
-    h("header", { class: "topbar" }, h("button", { class: "wordmark", onclick: () => go("hub"), "aria-label": "What Is It? home" }, "What Is It", h("span", { class: "q" }, "?")), nav),
+    h("header", { class: "topbar" }, h("button", { class: "wordmark", onclick: () => go("hub"), "aria-label": "What Is It? home" }, "What Is It", h("span", { class: "q" }, "?")), h("div", { class: "row tight" }, nav, soundButton())),
     h("main", { id: "main" })));
 }
 
@@ -61,9 +61,14 @@ function hubScreen(opts = {}) {
   root.append(
     h("section", { class: "hero" },
       h("h1", {}, "Guess what it really is", h("span", { class: "q" }, ".")),
-      h("p", { class: "lede" }, "Web addresses, brand names, licence plates, patent titles, close-up pictures, paper titles, song lines and headlines that aren't what they seem. Four early versions to try, rate and argue about.")),
+      h("p", { class: "lede" }, "A web address, a licence plate, a patent title, a blurry close-up: say what it really is, in your own words. An AI judge reads every answer and decides who came closest."),
+      h("details", { class: "fold" }, h("summary", {}, "Why this game couldn't exist a few years ago"),
+        h("div", { class: "prose small" },
+          h("p", {}, "Quiz games have always needed answers a computer can check: pick A, B, C or D, or type the exact word. Anything open-ended (\u201cwhat does this mean?\u201d, \u201cwhat is this really?\u201d) needed a human referee, so it stayed a party game with arguments."),
+          h("p", {}, "Small AI models can now read a free-text answer next to the truth and say how close it is in meaning, in about a second, for a fraction of a cent. \u201cA laser pointer for cats\u201d and \u201ca gadget to make your cat run around\u201d both count; \u201ca cat treadmill\u201d gets partial credit. That is what all of these games are built on."),
+          h("p", {}, "To keep it cheap, every mystery also has an answer key of likely guesses, scored in advance, so the AI is only asked about guesses nobody has made before.")))),
     h("section", { class: "panel" }, h("p", { class: "eyebrow", style: { marginBottom: "10px" } }, "Quick one"), tryBox),
-    h("section", { class: "stack-sm" }, h("h2", { style: { fontSize: "var(--step-1)" } }, "The trial versions"),
+    h("section", { class: "stack-sm" }, h("h2", { style: { fontSize: "var(--step-1)" } }, "Four ways to play (early versions: tell us which works)"),
       h("div", { class: "trials" }, trials.map(([tag, screen, name, desc, who]) => h("article", { class: "trial" },
         h("span", { class: "tag" }, "Trial " + tag),
         h("h2", {}, name),
@@ -72,8 +77,9 @@ function hubScreen(opts = {}) {
     h("section", { class: "panel stack-sm" },
       h("h2", { style: { fontSize: "var(--step-1)" } }, "Got a good one?"),
       h("p", { class: "muted" }, "Suggest a mystery or a better clue. If we use it, we'll credit you by the name you give."),
+      h("p", { class: "fine" }, FEEDBACK_PROMISE),
       h("div", { class: "row" }, h("button", { class: "btn", onclick: () => go("suggest") }, "Suggest a mystery"))),
-    h("p", { class: "small muted" }, `${CONTENT.length} mysteries so far: `, catsSummary(), "."));
+    h("details", { class: "fold small muted" }, h("summary", {}, `${CONTENT.length} mysteries so far`), h("p", {}, catsSummary(), ".")));
   return root;
 }
 function catsSummary() {
@@ -103,7 +109,8 @@ function suggestScreen(opts = {}) {
   root.append(
     h("div", { class: "stack-sm" }, h("span", { class: "eyebrow" }, "Suggest"),
       h("h2", {}, clueFor ? "Suggest a better clue" : "Suggest a mystery"),
-      h("p", { class: "lede" }, clueFor ? "Clues work best in a ladder: a vague one, a warmer one, and one that nearly gives it away." : "The best ones pull your guess one way and turn out to be something else. Web addresses, brands, plates, patents, phrases: anything with a surprising answer.")),
+      h("p", { class: "lede" }, clueFor ? "Clues work best in a ladder: a vague one, a warmer one, and one that nearly gives it away." : "The best ones pull your guess one way and turn out to be something else. Web addresses, brands, plates, patents, phrases: anything with a surprising answer."),
+      h("p", { class: "fine" }, FEEDBACK_PROMISE)),
     clueFor ? h("div", { class: "panel stack-sm" }, mysteryCard(clueFor), h("p", { class: "small muted" }, "Current clues: ", (clueFor.clues || []).join(" / "))) : null,
     h("div", { class: "panel stack" },
       field("sg-prompt", "The mystery", f.prompt),
@@ -152,12 +159,12 @@ function settingsScreen() {
     h("div", { class: "stack-sm" }, h("span", { class: "eyebrow" }, "Settings"), h("h2", {}, "Judges and content")),
     h("section", { class: "panel stack" },
       h("h3", {}, "AI judge"),
-      h("p", { class: "muted" }, "Every mystery has an answer key of likely guesses scored in advance; a guess that matches one is scored for free. New guesses go to an AI judge, which reads them like a person would. On the website it is free for players, within daily limits; you can also run it on your own AI account. The word-vector robot is the offline fallback."),
-      h("ul", { class: "small", style: { margin: 0, paddingLeft: "1.2em", display: "grid", gap: "4px" } },
+      h("p", { class: "muted" }, "Choose who judges new guesses. Guesses that match a mystery's answer key are always scored for free."),
+      h("details", { class: "fold" }, h("summary", {}, "What the options mean"), h("ul", { class: "small", style: { margin: 0, paddingLeft: "1.2em", display: "grid", gap: "4px" } },
         CONFIG.judgeApi ? h("li", {}, h("b", {}, "The game's AI judge: "), siteJudgeUsable() ? "free for players; a small model run by the site, within daily limits." : "resting right now" + (SITE_NOTE ? ": " + SITE_NOTE : ".")) : null,
         h("li", {}, h("b", {}, "Claude, on your own plan: "), RT.sample ? "available here." : "works when this page is opened inside claude.ai."),
         CONFIG.env !== "artifact" ? h("li", {}, h("b", {}, "Your Anthropic API key: "), SETTINGS.apiKey ? "saved in this browser." : "add one below. It stays in this browser and goes only to Anthropic.") : null,
-        h("li", {}, h("b", {}, "Paste into a chatbot: "), "always works. Copy the prompt into ChatGPT, Claude or Gemini and paste the reply back.")),
+        h("li", {}, h("b", {}, "Paste into a chatbot: "), "always works. Copy the prompt into ChatGPT, Claude or Gemini and paste the reply back."))),
       h("div", { class: "stack-sm" }, h("span", { class: "label" }, "Use"), seg(choices, SETTINGS.aiSource, (v) => { SETTINGS.aiSource = v; saveSettings(); })),
       h("p", { class: "small muted" }, "Right now the AI judge would use ", h("b", {}, aiSourceLabel(aiSource())), "."),
       CONFIG.judgeApi ? h("div", { class: "stack-sm" },
@@ -185,34 +192,46 @@ function settingsScreen() {
 // ---------- notes for testers ----------
 function notesScreen() {
   const root = h("div", { class: "stack" });
+  const fold = (title, ...body) => h("details", { class: "panel fold" }, h("summary", {}, title), h("div", { class: "prose" }, body));
   root.append(
     h("div", { class: "stack-sm" }, h("span", { class: "eyebrow" }, "Notes for testers"), h("h2", {}, "What we're trying to learn")),
     h("section", { class: "panel prose" },
-      h("p", {}, "Four versions of one idea: someone shows a cryptic string, everyone guesses what it really is, and the reveal settles it. Please play at least two, then rate each one."),
+      h("p", {}, "One idea, four ways to play: someone shows something cryptic, everyone says in their own words what it really is, and an AI judge decides who came closest. Games could not do that until recently: open-ended answers needed a human referee. Please play at least two versions and rate each one."),
       h("ul", {},
-        h("li", {}, h("b", {}, "A. Daily five: "), "is a solo, NYT-style daily fun on its own? Does the judge feel fair, and do clues and the side bets help?"),
-        h("li", {}, h("b", {}, "B. Party board: "), "does a board of categories make a good evening? Points board (with or without the Jeopardy rules), tic-tac-toe or Connect Four?"),
-        h("li", {}, h("b", {}, "C. Bring your own: "), "the original. Is it more fun with your own mysteries and live searching?"),
-        h("li", {}, h("b", {}, "D. Bluff: "), "is writing fakes more fun than guessing the truth?")),
-      h("p", {}, "After each mystery you can rate how fun it was. Those ratings are how we'll pick which mysteries and categories to keep.")),
+        h("li", {}, h("b", {}, "A. Daily five: "), "is a solo daily fun on its own? Does the judge feel fair?"),
+        h("li", {}, h("b", {}, "B. Party board: "), "points board, tic-tac-toe or Connect Four: which makes the better evening?"),
+        h("li", {}, h("b", {}, "C. Bring your own: "), "is it more fun with your own mysteries and live searching?"),
+        h("li", {}, h("b", {}, "D. Bluff: "), "is writing fakes more fun than guessing the truth?"))),
     h("section", { class: "panel prose" },
-      h("h3", {}, "Judging"),
-      h("p", {}, "Each mystery has an answer key: about ten likely guesses, scored in advance with hints. A guess that says the same thing as one of them gets that score at no cost. Other guesses go to the AI judge (a small model the site pays for, within limits, or your own AI account), which reads them like a person and also picks the funniest. When no AI is available, the robot judge compares your words with the answer's key ideas and the nearest answer-key guesses, using ConceptNet Numberbatch word vectors (the same word map as Word Bocce).")),
-    h("section", { class: "panel prose" },
-      h("h3", {}, "Where the mysteries come from"),
+      h("h3", {}, "What we changed after your feedback"),
+      h("p", { class: "small muted" }, FEEDBACK_PROMISE),
+      h("ul", {}, CHANGELOG.map(([when, what]) => h("li", {}, h("b", {}, when + ": "), what)))),
+    fold("How the judging works",
+      h("p", {}, "Each mystery has an answer key: about ten likely guesses, scored in advance with hints. A guess that says the same thing as one of them gets that score at no cost. Other guesses go to the AI judge (a small model the site pays for, within limits, or your own AI account), which reads them like a person and also picks the funniest."),
+      h("p", {}, "When no AI is available, a free word-vector \u201crobot\u201d compares your words with the answer's key ideas and the nearest answer-key guesses, using ConceptNet Numberbatch (the word map from Word Bocce).")),
+    fold("Where the mysteries come from",
       h("ul", {},
-        h("li", {}, "Licence plates: real applications to the California DMV, 2015–16, with each owner's explanation and the reviewer's notes, from Noah Veltman's public-records dataset (github.com/veltman/ca-license-plates)."),
+        h("li", {}, "Licence plates: real applications to the California DMV, 2015\u201316, with each owner's explanation, from Noah Veltman's public-records dataset."),
         h("li", {}, "Patents: checked against the patent text on Google Patents."),
         h("li", {}, "Web addresses, brands and top results: checked in October 2026. Sites change; tell us if one is out of date."),
-        h("li", {}, "Paper titles, song lines and headlines: checked through web searches in October 2026. Songs are all public domain (traditional, or published before 1931)."),
-        h("li", {}, "Late-night bits: news stories that at least two shows joked about; the joke is paraphrased."),
+        h("li", {}, "Paper titles, song lines and headlines: checked through web searches in October 2026. Songs are all public domain."),
+        h("li", {}, "Late-night bits: news stories at least two shows joked about; the joke is paraphrased."),
         h("li", {}, "Close-up pictures: Microsoft's Fluent Emoji (MIT licence)."),
-        h("li", {}, "Items marked “Draft: not yet re-checked online” are drafts; treat them with care and tell us if one is wrong."))),
-    h("section", { class: "panel prose small" },
-      h("h3", {}, "Credits"),
-      h("p", {}, "Word vectors: ConceptNet Numberbatch 19.08 by Robyn Speer, Joshua Chin and Catherine Havasi, CC BY-SA 4.0. Pictures: Fluent Emoji by Microsoft, MIT licence. API-key judge: Anthropic TypeScript SDK (MIT). Built in the word2vecgames repository alongside Word Bocce.")));
+        h("li", {}, "Items marked \u201cDraft\u201d are not yet re-checked; tell us if one is wrong."))),
+    fold("Credits",
+      h("p", { class: "small" }, "Word vectors: ConceptNet Numberbatch 19.08 by Robyn Speer, Joshua Chin and Catherine Havasi, CC BY-SA 4.0. Pictures: Fluent Emoji by Microsoft, MIT licence. API-key judge: Anthropic TypeScript SDK (MIT). Built alongside Word Bocce.")));
   return root;
 }
+
+// Shown on the Notes page so testers can see their feedback land.
+const CHANGELOG = [
+  ["7 Oct", "Less on the screen at once: options, explanations and rating details fold away. Sound effects, with a mute button."],
+  ["7 Oct", "Tester links, so friends and family get the AI judge with nothing to set up."],
+  ["6 Oct", "Jeopardy rules on the points board (unlock order, board control, Daily Double, Final with wagers) and a Connect Four board."],
+  ["6 Oct", "New categories: close-up pictures, paper titles, odd song lines, late-night bits, ambiguous headlines."],
+  ["6 Oct", "The AI judge ran out of credit; every mystery now has an answer key, so common guesses are scored for free."],
+  ["6 Oct", "\u201cHow fun was it?\u201d now asks why, separately from how hard it was."],
+];
 
 // ---------- boot ----------
 (function boot() {

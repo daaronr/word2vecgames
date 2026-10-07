@@ -92,7 +92,7 @@ function dailyScreen(opts = {}) {
         h("span", { class: "t" }, g.t),
         h("span", { class: "s lv" + w.level }, g.s),
         last && withChips && g.res ? h("div", { class: "why" }, warmthMeter(g.s)) : null,
-        last && withChips && g.res ? h("div", { class: "why" }, matchChips(g.res)) : null,
+        last && withChips && g.res ? h("details", { class: "why fold" }, h("summary", {}, "Why this score?"), matchChips(g.res)) : null,
         last && withChips && (g.by === "ai" || g.by === "key") ? h("div", { class: "why" }, warmthMeter(g.s)) : null,
         g.hint ? h("div", { class: "why small muted" }, g.hint) : null,
         g.trap ? h("div", { class: "why trapnote small" }, "That's close to a tempting wrong answer: “" + g.trap + "”") : null);
@@ -123,6 +123,7 @@ function dailyScreen(opts = {}) {
         entry = { t: text, s: local.score, trap: local.trap ? local.trap.decoy : null, res: { matches: local.matches, unknown: local.unknown }, by: "robot" };
       }
       r.guesses.push(entry);
+      sfx("guess", J.warmth(entry.s).level);
       if (entry.s >= 85 || r.guesses.length >= MAX_GUESSES) finish(item, r);
       persist();
       render();
@@ -157,7 +158,7 @@ function dailyScreen(opts = {}) {
         seg([["approved", "Approved"], ["denied", "Denied"]], r.verdict, (v) => { r.verdict = v; persist(); })));
     }
 
-    const clueBtn = h("button", { class: "btn small", disabled: r.clues >= Math.min(3, (item.clues || []).length) || !!r.mc, onclick: () => { r.clues++; persist(); render(); } },
+    const clueBtn = h("button", { class: "btn small", disabled: r.clues >= Math.min(3, (item.clues || []).length) || !!r.mc, onclick: () => { r.clues++; sfx("clue"); persist(); render(); } },
       r.clues >= (item.clues || []).length ? "No more clues" : `Clue (×${CLUE_MULT[r.clues + 1] || CLUE_MULT[3]})`);
     const mcBtn = h("button", { class: "btn small", disabled: !!r.mc || !(item.decoys && item.decoys.length), onclick: () => {
       const opts2 = rng("mc-" + item.id).shuffle([item.truth, ...item.decoys.slice(0, 3)]);

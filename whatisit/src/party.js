@@ -77,15 +77,17 @@ function partyScreen() {
             paintCats();
             paintOpts();
           })),
-        edHost, catHost, optHost,
+        edHost,
+        h("details", { class: "fold" }, h("summary", {}, "More options: categories, rules, judge, timer"),
+        h("div", { class: "stack" }, catHost, optHost,
         h("div", { class: "stack-sm" }, h("span", { class: "label" }, "Guesses"),
           seg([["typed", "Type them on this device, passing it round"], ["paper", "Paper or out loud"]], cfg.entry, (v) => { cfg.entry = v; })),
         h("div", { class: "stack-sm" }, h("span", { class: "label" }, "Judge"),
           seg([["robot", "Free judge"], ["ai", "AI"], ["room", "The room decides"]], cfg.judge, (v) => { cfg.judge = v; }),
-          h("p", { class: "small muted" }, "The free judge uses each mystery's answer key and word vectors. Judges need typed guesses; you can always overrule them by tapping a name.")),
+          h("p", { class: "small muted" }, "Judges need typed guesses. You can always overrule them by tapping a name.")),
         h("div", { class: "stack-sm" }, h("span", { class: "label" }, "Timer"),
           seg([[0, "None"], [30, "30 seconds"], [60, "60 seconds"]], cfg.timer, (v) => { cfg.timer = v; })),
-        h("label", { class: "check", for: "party-pg13" }, pg, h("span", {}, "Include ", h("b", {}, "Double take"), " (PG-13 misreadings)")),
+        h("label", { class: "check", for: "party-pg13" }, pg, h("span", {}, "Include ", h("b", {}, "Double take"), " (PG-13 misreadings)")))),
         h("div", { class: "row" }, h("button", { class: "btn primary", onclick: () => {
           SETTINGS.pg13 = pg.checked;
           const names = editor.get();
@@ -265,6 +267,7 @@ function partyScreen() {
       if (clues >= (item.clues || []).length) return;
       clueBox.append(h("p", { class: "clue" }, h("b", {}, "Clue " + (clues + 1) + ": "), item.clues[clues]));
       clues++;
+      sfx("clue");
       zoomTo(card, item, clues);
       paintValue();
       if (clues >= (item.clues || []).length) clueBtn.disabled = true;
@@ -302,7 +305,7 @@ function partyScreen() {
             const { cols, grid } = P.c4;
             if (winners.length === 1) {
               const k = grid.findIndex((m, i) => i % cols === sel.col && m === null);
-              if (k >= 0) grid[k] = winners[0];
+              if (k >= 0) { grid[k] = winners[0]; sfx("drop"); }
             }
             P.turn++;
             const winner = c4Winner();
@@ -341,6 +344,7 @@ function partyScreen() {
     const max = Math.max(me.score, topValue());
     clear(root);
     const input = wagerInput("dd-wager", max, Math.min(max, tile.value));
+    sfx("daily-double");
     const err = h("p", { class: "small", style: { color: "var(--bad)" } });
     root.append(h("div", { class: "panel stack dd" },
       h("span", { class: "eyebrow" }, CATS[col.cat].label),

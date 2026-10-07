@@ -7,7 +7,7 @@ guesses what it really is; the reveal settles it. A judge decides who was closes
 mystery's answer key (likely guesses scored in advance), a free word-vector "robot", or an AI.
 Started in this repository next to Word Bocce; self-contained so it can move out.
 
-Design notes, costs, prior art and next steps: [DESIGN.md](DESIGN.md).
+Design notes, costs, prior art and next steps: [DESIGN.md](DESIGN.md). Open items: [TODO.md](TODO.md).
 
 ## Four trial versions (one page)
 
