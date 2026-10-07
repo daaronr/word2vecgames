@@ -115,7 +115,7 @@ const CONTENT = (() => {
   }
   return all;
 })();
-const SETTINGS = Object.assign({ pg13: false, aiSource: "auto", apiKey: "", model: "claude-opus-5-5", players: [] }, load("settings", {}));
+const SETTINGS = Object.assign({ pg13: false, aiSource: "auto", apiKey: "", model: "claude-opus-5-5", players: [], pass: "" }, load("settings", {}));
 function saveSettings() { save("settings", SETTINGS); }
 
 function allowed(item) { return SETTINGS.pg13 || item.rating !== "PG-13"; }
@@ -205,7 +205,9 @@ async function siteJudge(body) {
   if (!CONFIG.judgeApi || SITE_OK === false) throw new Error("The site's AI judge isn't available here.");
   let res;
   try {
-    res = await fetch(CONFIG.judgeApi, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    const headers = { "Content-Type": "application/json" };
+    if (SETTINGS.pass) headers["X-Judge-Pass"] = SETTINGS.pass; // tester pass, from a ?pass= link
+    res = await fetch(CONFIG.judgeApi, { method: "POST", headers, body: JSON.stringify(body) });
   } catch (e) {
     throw new Error("Couldn't reach the AI judge.");
   }
@@ -216,7 +218,10 @@ async function siteJudge(body) {
       SITE_OK = false;
       SITE_NOTE = out.error || "";
     }
-    if (res.status === 429 && out.reason === "visitor") SITE_OK = false;
+    if ((res.status === 429 && out.reason === "visitor") || (res.status === 403 && out.reason === "pass")) {
+      SITE_OK = false;
+      SITE_NOTE = out.error || "";
+    }
     throw new Error(out.error || "The AI judge couldn't answer (" + res.status + ").");
   }
   SITE_OK = true;

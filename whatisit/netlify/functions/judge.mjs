@@ -15,6 +15,9 @@
 //   JUDGE_PER_VISITOR   model calls per visitor per day (default 60)
 //   JUDGE_USE_NETLIFY_CREDITS  1 to let Netlify AI Gateway's keys (and your Netlify credits) pay
 //   JUDGE_OFF           1 to switch the AI judge off; the game falls back to its free judges
+//   JUDGE_PASSCODE      tester passes, comma-separated: when set, only players who opened a tester
+//                       link (https://your-site/?pass=CODE) get AI verdicts; everyone else gets the
+//                       answer key and the robot
 //
 // Most guesses never reach a model: the browser and this function first look in the mystery's answer
 // key (example guesses scored in advance), then in a shared cache of earlier verdicts.
@@ -115,6 +118,12 @@ export default async (req, context) => {
   const free = answerKey(request);
   if (free) return reply(200, free);
   if (!switchedOn()) return resting("off");
+
+  // Tester passes: friends and family get AI verdicts, strangers get the free judges.
+  const passes = (process.env.JUDGE_PASSCODE || "").split(",").map((s) => s.trim()).filter(Boolean);
+  if (passes.length && !passes.includes((req.headers.get("x-judge-pass") || "").trim())) {
+    return reply(403, { error: "The AI judge is open to invited testers for now; the answer key and the robot are judging.", reason: "pass" });
+  }
 
   let store = null;
   try {

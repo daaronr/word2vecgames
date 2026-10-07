@@ -141,6 +141,7 @@ function settingsScreen() {
   const srcs = aiSources();
   const key = h("input", { class: "input", id: "set-key", type: "password", autocomplete: "off", placeholder: "sk-ant-…", value: SETTINGS.apiKey });
   const model = h("select", { class: "input", id: "set-model" }, MODELS.map((m) => h("option", { value: m.id, selected: m.id === SETTINGS.model }, m.label)));
+  const pass = h("input", { class: "input", id: "set-pass", autocomplete: "off", maxlength: 80, value: SETTINGS.pass });
   const pg = h("input", { type: "checkbox", id: "set-pg13", checked: SETTINGS.pg13, onchange: (e) => { SETTINGS.pg13 = e.target.checked; saveSettings(); } });
   const choices = [["auto", "Best available"]];
   if (CONFIG.judgeApi) choices.push(["site", "The game's AI judge"]);
@@ -159,6 +160,9 @@ function settingsScreen() {
         h("li", {}, h("b", {}, "Paste into a chatbot: "), "always works. Copy the prompt into ChatGPT, Claude or Gemini and paste the reply back.")),
       h("div", { class: "stack-sm" }, h("span", { class: "label" }, "Use"), seg(choices, SETTINGS.aiSource, (v) => { SETTINGS.aiSource = v; saveSettings(); })),
       h("p", { class: "small muted" }, "Right now the AI judge would use ", h("b", {}, aiSourceLabel(aiSource())), "."),
+      CONFIG.judgeApi ? h("div", { class: "stack-sm" },
+        h("div", { class: "field" }, h("label", { for: "set-pass" }, "Tester pass (from a tester link)"), pass),
+        h("div", { class: "row" }, h("button", { class: "btn small", onclick: () => { SETTINGS.pass = pass.value.trim(); SITE_OK = null; SITE_NOTE = ""; saveSettings(); toast(SETTINGS.pass ? "Pass saved" : "Pass cleared"); go("settings"); } }, "Save pass"))) : null,
       CONFIG.env !== "artifact" ? h("div", { class: "stack-sm" },
         h("div", { class: "field" }, h("label", { for: "set-key" }, "Anthropic API key (optional)"), key),
         h("div", { class: "field" }, h("label", { for: "set-model" }, "Model"), model),
@@ -212,6 +216,19 @@ function notesScreen() {
 
 // ---------- boot ----------
 (function boot() {
+  // A tester link (?pass=CODE) unlocks the site's AI judge on this device; the code is kept in
+  // Settings and taken out of the address bar so it isn't shared by accident.
+  try {
+    const u = new URL(location.href);
+    const pass = u.searchParams.get("pass");
+    if (pass) {
+      SETTINGS.pass = pass.trim().slice(0, 80);
+      saveSettings();
+      u.searchParams.delete("pass");
+      history.replaceState(null, "", u.pathname + u.search + u.hash);
+      setTimeout(() => toast("Tester pass saved: the AI judge is on for you"), 300);
+    }
+  } catch (e) { /* sandboxed */ }
   shell();
   // #daily, #party... open a screen; #try=<id> opens the home page on that mystery.
   const route = () => {

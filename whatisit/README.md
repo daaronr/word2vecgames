@@ -78,7 +78,11 @@ One-time setup in the Netlify UI:
    AI enablement**, switch AI features off or set an AI inference credit limit.
 5. **Project configuration > Forms > Enable form detection**, then redeploy, so ratings and
    suggestions land in the Forms tab.
-6. Optional limits (defaults in brackets): `JUDGE_DAILY_CAP` (200 model calls a day),
+6. **Testing with friends and family:** set `JUDGE_PASSCODE` to a code (or several, comma-separated)
+   and send people `https://your-site/?pass=CODE`. The link saves the pass on their device (it can
+   also be typed in Settings) and they get AI verdicts with nothing to set up; visitors without it
+   get the answer key and the robot, so strangers can't use up the quota.
+7. Optional limits (defaults in brackets): `JUDGE_DAILY_CAP` (200 model calls a day),
    `JUDGE_MONTHLY_CAP` (3000), `JUDGE_PER_VISITOR` (60 a day), `JUDGE_MODEL`, `JUDGE_OFF=1` to switch
    the AI off, `SHARE_URL` (link in the Daily's share text).
 

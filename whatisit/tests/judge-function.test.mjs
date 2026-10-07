@@ -56,4 +56,17 @@ if (kid) {
   assert.strictEqual(res.status, 200, "answer-key hits work even with the AI switched off");
 }
 assert.strictEqual((await post({ id: "no-such-item", guesses: ["x"] })).status, 400);
+
+// Tester passes: with JUDGE_PASSCODE set, a request without the pass is turned away before any cost.
+delete process.env.GOOGLE_GEMINI_BASE_URL;
+process.env.GEMINI_API_KEY = "own-key";
+process.env.JUDGE_PASSCODE = "family, friends";
+const fn2 = (await import("../netlify/functions/judge.mjs?pass")).default;
+const post2 = (body, pass) => fn2(new Request("http://x/api/judge", { method: "POST", body: JSON.stringify(body), headers: pass ? { "X-Judge-Pass": pass } : {} }), { ip: "1.2.3.4" });
+res = await post2({ mode: "score", id: "kewpie", guesses: ["something new and odd"] });
+assert.strictEqual(res.status, 403);
+assert.strictEqual((await res.json()).reason, "pass");
+res = await post2({ mode: "score", id: "kewpie", guesses: ["something new and odd"] }, "wrong");
+assert.strictEqual(res.status, 403);
+if (kid) assert.strictEqual((await post2({ mode: "score", id: kid, guesses: [kit.graded[0].g] })).status, 200, "answer-key hits need no pass");
 console.log("judge function: all checks passed");
