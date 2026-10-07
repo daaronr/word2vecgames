@@ -1,17 +1,19 @@
 // POST /api/judge: the game's AI judge, paid for by the site, so players need no AI account.
 //
-// Who pays: the provider whose key you put in the site's environment variables. The cheapest is a
-// free Gemini key from Google AI Studio (no card; Google stops it at its free quota, so it can't run
-// up a bill). Netlify AI Gateway can also supply keys, billed to the team's Netlify credits; on the
-// Free plan those credits also pay for deploys and bandwidth, and every project on the team pauses
-// when they run out. So the gateway is only used if you opt in with JUDGE_USE_NETLIFY_CREDITS=1.
+// Who pays: either Netlify AI Gateway, billed to the team's Netlify credits ($1 of model use = 180
+// credits), or the provider whose key you put in the site's environment variables (a free Gemini
+// key from Google AI Studio costs nothing). Netlify's team "AI usage limit" does not cover the
+// gateway, and the team's credits also pay for every other site's deploys and bandwidth, so the
+// gateway is used only if you opt in with JUDGE_USE_NETLIFY_CREDITS=1, and then within
+// JUDGE_MONTHLY_CREDITS, counted from the token use each call reports.
 //
 // Environment variables (all optional):
 //   GEMINI_API_KEY | ANTHROPIC_API_KEY | OPENAI_API_KEY   your own key; the first one found is used
 //   JUDGE_PROVIDER      gemini | anthropic | openai, to choose when several keys are set
-//   JUDGE_MODEL         default per provider below
-//   JUDGE_DAILY_CAP     model calls per UTC day, whole site (default 200)
-//   JUDGE_MONTHLY_CAP   model calls per calendar month, whole site (default 3000)
+//   JUDGE_MODEL         default per provider in netlify/lib/providers.mjs
+//   JUDGE_DAILY_CAP     model calls per UTC day, whole site (default 500)
+//   JUDGE_MONTHLY_CAP   model calls per calendar month, whole site (default 5000)
+//   JUDGE_MONTHLY_CREDITS  Netlify credits the judge may spend per calendar month (default 200)
 //   JUDGE_PER_VISITOR   model calls per visitor per day (default 60)
 //   JUDGE_USE_NETLIFY_CREDITS  1 to let Netlify AI Gateway's keys (and your Netlify credits) pay
 //   JUDGE_OFF           1 to switch the AI judge off; the game falls back to its free judges
@@ -23,12 +25,8 @@
 // key (example guesses scored in advance), then in a shared cache of earlier verdicts.
 import { getStore } from "@netlify/blobs";
 import { answerKey, BadRequest, buildRequest, cacheText, judge } from "../lib/judge-core.mjs";
+import { complete as callModel, credits, PROVIDERS } from "../lib/providers.mjs";
 
-const PROVIDERS = {
-  gemini: { keys: ["GEMINI_API_KEY", "GOOGLE_API_KEY"], gateway: "GOOGLE_GEMINI_BASE_URL", model: "gemini-3.1-flash-lite" },
-  anthropic: { keys: ["ANTHROPIC_API_KEY"], gateway: "ANTHROPIC_BASE_URL", model: "claude-haiku-4-5" },
-  openai: { keys: ["OPENAI_API_KEY"], gateway: "OPENAI_BASE_URL", model: "gpt-5-nano" },
-};
 const yes = (v) => /^(1|true|yes)$/i.test(v || "");
 // Netlify only sets a provider's base URL when it injects its own (gateway) key for that provider.
 function usable(name) {
@@ -39,48 +37,16 @@ function usable(name) {
 const PROVIDER = (process.env.JUDGE_PROVIDER || "").toLowerCase() || Object.keys(PROVIDERS).find(usable) || "gemini";
 const MODEL = process.env.JUDGE_MODEL || (PROVIDERS[PROVIDER] || PROVIDERS.gemini).model;
 const CAPS = {
-  day: Number(process.env.JUDGE_DAILY_CAP || 200),
-  month: Number(process.env.JUDGE_MONTHLY_CAP || 3000),
+  day: Number(process.env.JUDGE_DAILY_CAP || 500),
+  month: Number(process.env.JUDGE_MONTHLY_CAP || 5000),
+  credits: Number(process.env.JUDGE_MONTHLY_CREDITS || 200),
   visitor: Number(process.env.JUDGE_PER_VISITOR || 60),
 };
 const PROMPT_VERSION = "2"; // bump when the prompts change, so old cached verdicts are not reused
 
 const switchedOn = () => !yes(process.env.JUDGE_OFF) && usable(PROVIDER);
-
-let client = null;
-async function complete(prompt, mode) {
-  const maxTokens = mode === "score" ? 200 : 900;
-  if (PROVIDER === "openai") {
-    const { default: OpenAI } = await import("openai");
-    client = client || new OpenAI();
-    const res = await client.chat.completions.create({
-      model: MODEL,
-      messages: [{ role: "user", content: prompt }],
-      response_format: { type: "json_object" },
-      ...(MODEL.startsWith("gpt-5") ? { reasoning_effort: "minimal", max_completion_tokens: maxTokens + 400 } : { max_tokens: maxTokens }),
-    });
-    return res.choices[0].message.content || "";
-  }
-  if (PROVIDER === "gemini") {
-    const { GoogleGenAI } = await import("@google/genai");
-    client = client || new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY });
-    const res = await client.models.generateContent({
-      model: MODEL,
-      contents: prompt,
-      config: { responseMimeType: "application/json", maxOutputTokens: maxTokens, temperature: 0.2 },
-    });
-    return res.text || "";
-  }
-  const { default: Anthropic } = await import("@anthropic-ai/sdk");
-  client = client || new Anthropic();
-  const msg = await client.messages.create({
-    model: MODEL,
-    max_tokens: maxTokens,
-    messages: [{ role: "user", content: prompt }],
-  });
-  if (msg.stop_reason === "refusal") throw new Error("The model declined to judge this.");
-  return msg.content.filter((b) => b.type === "text").map((b) => b.text).join("");
-}
+// Only gateway calls spend Netlify credits; with your own key the provider bills you instead.
+const onGateway = () => !!process.env[(PROVIDERS[PROVIDER] || {}).gateway];
 
 /** Why a model call failed, in terms the game can act on. */
 function failure(e) {
@@ -144,16 +110,24 @@ export default async (req, context) => {
     day: "count/" + now.slice(0, 10),
     month: "month/" + now.slice(0, 7),
     visitor: "visitor/" + now.slice(0, 10) + "/" + (await sha(now.slice(0, 10) + ip)),
+    credits: "credits/" + now.slice(0, 7),
   };
-  const used = { day: 0, month: 0, visitor: 0 };
+  const used = { day: 0, month: 0, visitor: 0, credits: 0 };
   if (store) {
     try {
       await Promise.all(Object.keys(counters).map(async (k) => { used[k] = Number((await store.get(counters[k], { type: "text" })) || 0); }));
     } catch { /* counts are best effort */ }
   }
   if (used.day >= CAPS.day || used.month >= CAPS.month) return resting("cap");
+  if (onGateway() && used.credits >= CAPS.credits) return resting("budget");
   if (used.visitor >= CAPS.visitor) return reply(429, { error: "You've used today's AI verdicts. The answer key and the robot are judging instead.", reason: "visitor" });
 
+  let spent = 0;
+  const complete = async (prompt, mode) => {
+    const r = await callModel(PROVIDER, MODEL, prompt, mode);
+    spent = credits(MODEL, r.usage);
+    return r.text;
+  };
   let out;
   try {
     out = await judge(body, complete);
@@ -168,7 +142,7 @@ export default async (req, context) => {
   if (store) {
     try {
       await Promise.all([
-        ...Object.keys(counters).map((k) => store.set(counters[k], String(used[k] + 1))),
+        ...Object.keys(counters).map((k) => store.set(counters[k], String(k === "credits" ? +(used[k] + spent).toFixed(4) : used[k] + 1))),
         store.setJSON(key, out),
       ]);
     } catch { /* best effort */ }

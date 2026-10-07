@@ -71,19 +71,22 @@ One-time setup in the Netlify UI:
    redeploy. The free tier stops at its daily quota instead of billing you. An `ANTHROPIC_API_KEY` or
    `OPENAI_API_KEY` works too (set `JUDGE_PROVIDER` if you set more than one).
    Without your own key the AI judge rests and the game uses the answer keys and the robot.
-4. **Keep Netlify's own AI from spending your credits.** Netlify AI Gateway also injects provider
-   keys, billed to the team's Netlify credits; on the Free plan (300 credits a month for everything,
-   15 per production deploy) running out pauses every project on the team. The function ignores
-   those keys unless you set `JUDGE_USE_NETLIFY_CREDITS=1`. For belt and braces: **Team settings >
-   AI enablement**, switch AI features off or set an AI inference credit limit.
+4. **Or let Netlify's credits pay (current setting, provisional).** Netlify AI Gateway injects
+   provider keys into the function, billed to the team's credits at 180 credits per dollar. The
+   `daaronr` team's Open Source plan has 10,000 credits a month, shared by all its sites; running
+   out pauses every site on the team. The function ignores the gateway unless
+   `JUDGE_USE_NETLIFY_CREDITS=1`, and then stops at `JUDGE_MONTHLY_CREDITS` (default 200, 2% of the
+   month), counted from each call's token use. Netlify's team "AI usage limit" does **not** cover the
+   gateway on credit-based plans, so that budget is the only brake. Measured cost per AI verdict:
+   see `eval/run_models.mjs` and DESIGN.md.
 5. **Project configuration > Forms > Enable form detection**, then redeploy, so ratings and
    suggestions land in the Forms tab.
 6. **Testing with friends and family:** set `JUDGE_PASSCODE` to a code (or several, comma-separated)
    and send people `https://your-site/?pass=CODE`. The link saves the pass on their device (it can
    also be typed in Settings) and they get AI verdicts with nothing to set up; visitors without it
    get the answer key and the robot, so strangers can't use up the quota.
-7. Optional limits (defaults in brackets): `JUDGE_DAILY_CAP` (200 model calls a day),
-   `JUDGE_MONTHLY_CAP` (3000), `JUDGE_PER_VISITOR` (60 a day), `JUDGE_MODEL`, `JUDGE_OFF=1` to switch
+7. Optional limits (defaults in brackets): `JUDGE_DAILY_CAP` (500 model calls a day),
+   `JUDGE_MONTHLY_CAP` (5000), `JUDGE_MONTHLY_CREDITS` (200), `JUDGE_PER_VISITOR` (60 a day), `JUDGE_MODEL`, `JUDGE_OFF=1` to switch
    the AI off, `SHARE_URL` (link in the Daily's share text).
 
 Each production deploy costs 15 credits, so test locally (`cd whatisit/site && python3 -m http.server`)

@@ -12,6 +12,15 @@ add two or three lines here: what you changed, what's half-done, which files you
   Notes page, `sfx()` sound cues, tester passes (`JUDGE_PASSCODE`). Prepared the repo split:
   `tools/split_repo.sh`, `whatisit/.gitignore`, `WII_REPO`/`WII_DIR` in `tools/build.mjs`. Not touching
   `netlify/functions/judge.mjs` or Netlify setup (session B has those).
+- 7 Oct, local desktop session B (deploy + AI judge): site `whatisit-game` (team `daaronr`, Open
+  Source plan, 10,000 credits a month shared by ~85 sites). Turned form detection on (it was off, so
+  submissions were dropped). **Provisional:** the AI judge now runs Gemini 3.1 Flash-Lite through
+  Netlify AI Gateway on the team's credits (`JUDGE_USE_NETLIFY_CREDITS=1`), capped at
+  `JUDGE_MONTHLY_CREDITS=200` a month, counted from each call's token use (new
+  `netlify/lib/providers.mjs`). Model test on the 217 hand-scored guesses: `eval/run_models.mjs`,
+  results in `eval/results/api_*`. Fallback if credits become a worry: a free Gemini key from Google
+  AI Studio as `GEMINI_API_KEY` and unset `JUDGE_USE_NETLIFY_CREDITS`. Site settings live in Netlify
+  env vars, not the repo; deploy with `netlify deploy --prod` from `whatisit/` (no Git link yet).
 
 ## Needs David
 
