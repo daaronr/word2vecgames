@@ -58,3 +58,6 @@ dist/
 feedback.db
 node_modules/
 !whatisit/netlify/lib/
+
+# Local Netlify folder
+.netlify
