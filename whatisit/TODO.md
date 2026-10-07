@@ -21,12 +21,16 @@ add two or three lines here: what you changed, what's half-done, which files you
   results in `eval/results/api_*`. Fallback if credits become a worry: a free Gemini key from Google
   AI Studio as `GEMINI_API_KEY` and unset `JUDGE_USE_NETLIFY_CREDITS`. Site settings live in Netlify
   env vars, not the repo; deploy with `netlify deploy --prod` from `whatisit/` (no Git link yet).
+  Deployed to production from 1bf6c2a; 4 forms registered; judge answering. To check spend: the
+  `judge` Blobs store has `credits/YYYY-MM` (credits used this month) and `count/YYYY-MM-DD`.
+  Open: decide whether to keep Netlify credits or switch to a free Gemini key; link the site to the
+  new repo after the split (until then every deploy is manual).
 
 ## Needs David
 
-- **Feedback from the 6 Oct play session.** In-game notes on the Netlify site go to Netlify Forms
-  (Project > Forms, once form detection is on) or stay in the browser they were typed in (Settings >
-  "Copy them all"). Paste or export them into a session to act on them. Same for the hypothes.is
+- **Feedback from the 6 Oct play session.** Form detection was off until 7 Oct, so those notes never
+  reached Netlify; they are still in the browser they were typed in (Settings > "Copy them all").
+  New notes now go to Netlify Forms (Project > Forms). Paste or export them into a session to act on them. Same for the hypothes.is
   notes: export from the Hypothesis sidebar, or allow `hypothes.is` and `api.hypothes.is` in the
   environment's network settings.
 - **Style sources.** `claude_code_misc_work` (style sheets and style recommendations) isn't reachable
